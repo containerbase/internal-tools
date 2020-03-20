@@ -1,0 +1,11 @@
+name: 'Renovate Docker Builder'
+description: 'Action for building and testing renovate docker images'
+inputs:
+  command: # id of input
+    description: 'Command to execute'
+    required: true
+    default: 'build'
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
