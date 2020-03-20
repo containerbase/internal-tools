@@ -5,7 +5,7 @@ import { run } from '../src/publish-docker';
 
 jest.mock('@actions/core');
 jest.mock('@actions/github');
-// jest.mock('fancy-log');
+jest.mock('fancy-log');
 jest.mock('../src/util.ts');
 
 const core = mocked(_core);
