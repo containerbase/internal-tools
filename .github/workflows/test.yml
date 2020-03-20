@@ -82,8 +82,8 @@ jobs:
 
       - name: Codecov
         shell: bash
-        if: always() && 0 != secrets.CODECOV_TOKEN
+        if: always()
         continue-on-error: true
-        run: bash <(curl -s https://codecov.io/bash)
+        run: if [ "${CODECOV_TOKEN}" ]; then bash <(curl -s https://codecov.io/bash); fi
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
