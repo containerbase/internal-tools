@@ -54,6 +54,6 @@ jobs:
       - name: Publish
         run: |
           git checkout -b ${VERSION}
-          git add dist/*
+          git add -f dist/*
           git commit -m 'Published by pipeline'
           git push -f origin ${VERSION}:${VERSION}
