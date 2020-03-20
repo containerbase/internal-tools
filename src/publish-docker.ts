@@ -30,7 +30,7 @@ export async function run(): Promise<void> {
     throw new Error('Missing image');
   }
 
-  log(chalk.blue('Processing image:'), chalk.yellow(image));
+  log.info(chalk.blue('Processing image:'), chalk.yellow(image));
 
   log('Fetch new digest');
   const newDigest = await getDigest(image);
@@ -52,5 +52,5 @@ export async function run(): Promise<void> {
   await exec('docker', ['tag', 'tmp', image]);
   log('Publish new image');
   await exec('docker', ['push', image]);
-  log(chalk.blue('Processing image finished'));
+  log.info(chalk.blue('Processing image finished: ', newDigest));
 }

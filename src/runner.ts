@@ -6,7 +6,7 @@ import { Commands } from './types';
 
 export default async function run(): Promise<void> {
   try {
-    log(chalk.blue('Renovate Docker Builder'));
+    log.info(chalk.blue('Renovate Docker Builder'));
     // `command` input defined in action metadata file
     const cmd = _runner.getInput('command') as Commands;
     log(chalk.yellow('Executing:'), ` ${cmd}`);
