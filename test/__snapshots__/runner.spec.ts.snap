@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`catch error 1`] = `
+Array [
+  Array [
+    "command",
+  ],
+]
+`;
+
+exports[`works 1`] = `
+Array [
+  Array [
+    "command",
+  ],
+]
+`;
