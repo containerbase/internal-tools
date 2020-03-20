@@ -1,17 +1,25 @@
 import * as _runner from '@actions/core';
-import * as github from '@actions/github';
+import chalk from 'chalk';
+import log from 'fancy-log';
+import { Commands } from './types';
+// import * as github from '@actions/github';
 
-export default function run(): Promise<void> {
+export default async function run(): Promise<void> {
   try {
+    log(chalk.blue('Renovate Docker Builder'));
     // `command` input defined in action metadata file
-    const cmd = _runner.getInput('command');
-    console.log(`Executing ${cmd}!`);
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2);
-    console.log(`The event payload: ${payload}`);
+    const cmd = _runner.getInput('command') as Commands;
+    log(chalk.yellow('Executing:'), ` ${cmd}`);
+    switch (cmd) {
+      case Commands.PublishDocker:
+        await (await import('./publish-docker')).run();
+        break;
+    }
+    // // Get the JSON webhook payload for the event that triggered the workflow
+    // const payload = JSON.stringify(github.context.payload, undefined, 2);
+    // console.log(`The event payload: ${payload}`);
   } catch (error) {
+    log.error('Error', error);
     _runner.setFailed(error.message);
   }
-
-  return Promise.resolve();
 }
