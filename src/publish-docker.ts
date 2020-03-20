@@ -24,6 +24,7 @@ async function getDigest(image: string): Promise<string> {
 }
 
 export async function run(): Promise<void> {
+  const dryRun = !!getInput('dry-run');
   const image = getInput('image');
 
   if (!image) {
@@ -51,6 +52,10 @@ export async function run(): Promise<void> {
   log('Restore new image');
   await exec('docker', ['tag', 'tmp', image]);
   log('Publish new image');
-  await exec('docker', ['push', image]);
+  if (dryRun) {
+    log.warn('DRY-RUN: Would push: ', chalk.yellow(image));
+  } else {
+    await exec('docker', ['push', image]);
+  }
   log.info(chalk.blue('Processing image finished: ', newDigest));
 }

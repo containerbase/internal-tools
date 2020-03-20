@@ -18,7 +18,7 @@ describe(getName(__filename), () => {
   });
 
   it('uptodate', async () => {
-    core.getInput.mockReturnValueOnce('test/image');
+    core.getInput.mockReturnValueOnce('').mockReturnValueOnce('test/image');
     utils.exec
       .mockResolvedValueOnce({
         ...res,
@@ -39,7 +39,7 @@ describe(getName(__filename), () => {
   });
 
   it('updates digest', async () => {
-    core.getInput.mockReturnValueOnce('test/image');
+    core.getInput.mockReturnValueOnce('').mockReturnValueOnce('test/image');
     utils.exec
       .mockResolvedValueOnce({
         ...res,
@@ -59,8 +59,29 @@ describe(getName(__filename), () => {
     expect(utils.exec).toBeCalledTimes(6);
   });
 
+  it('updates digest (dry-run)', async () => {
+    core.getInput.mockReturnValueOnce('true').mockReturnValueOnce('test/image');
+    utils.exec
+      .mockResolvedValueOnce({
+        ...res,
+        stdout:
+          '[renovate/base@sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1]',
+      })
+      .mockResolvedValueOnce(res)
+      .mockResolvedValueOnce(res)
+      .mockResolvedValueOnce({
+        ...res,
+        stdout:
+          '[renovate/base@sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2]',
+      });
+
+    await run();
+
+    expect(utils.exec).toBeCalledTimes(5);
+  });
+
   it('no digest', async () => {
-    core.getInput.mockReturnValueOnce('test/image');
+    core.getInput.mockReturnValueOnce('').mockReturnValueOnce('test/image');
     expect.assertions(1);
     utils.exec.mockResolvedValueOnce({
       ...res,

@@ -4,11 +4,13 @@ inputs:
   command:
     description: 'Command to execute'
     required: true
-    default: 'build'
   image:
     description: 'docker image to operate on'
     required: true
-    default: ''
+  dry-run:
+    description: 'do not publish anything'
+    required: false
+    default: false
 
 runs:
   using: 'node12'
