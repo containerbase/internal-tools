@@ -13,14 +13,13 @@ env:
 jobs:
   test:
     name: test
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     # tests shouldn't need more than 15 min
     timeout-minutes: 15
 
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [12]
 
     steps:
@@ -66,13 +65,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node-version }}-yarn-
 
-      # Clear caches on cache miss, otherwise they will grow indefinitely
-      - name: Clear yarn cache
-        if: steps.yarn_cache_packages.outputs.cache-hit != 'true'
-        run: yarn cache clean
-
       - run: yarn install --frozen-lockfile
 
       - run: yarn lint
 
       - run: yarn compile
+
+      - run: yarn jest --maxWorkers=2 --ci --coverage
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: coverage
+          path: coverage
+
+      - name: Codecov
+        shell: bash
+        if: always()
+        continue-on-error: true
+        run: bash <(curl -s https://codecov.io/bash)
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
