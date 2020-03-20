@@ -23,14 +23,14 @@ describe(getName(__filename), () => {
       .mockResolvedValueOnce({
         ...res,
         stdout:
-          "[renovate/base@sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1]'\n",
+          "sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1'\n",
       })
       .mockResolvedValueOnce(res)
       .mockResolvedValueOnce(res)
       .mockResolvedValueOnce({
         ...res,
         stdout:
-          '[renovate/base@sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1]',
+          'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1',
       });
 
     await run();
@@ -38,20 +38,20 @@ describe(getName(__filename), () => {
     expect(utils.exec).toBeCalledTimes(4);
   });
 
-  it('updates digest', async () => {
+  it('updates image', async () => {
     core.getInput.mockReturnValueOnce('').mockReturnValueOnce('test/image');
     utils.exec
       .mockResolvedValueOnce({
         ...res,
         stdout:
-          '[renovate/base@sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1]',
+          'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1',
       })
       .mockResolvedValueOnce(res)
       .mockResolvedValueOnce(res)
       .mockResolvedValueOnce({
         ...res,
         stdout:
-          '[renovate/base@sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2]',
+          'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2',
       });
 
     await run();
@@ -59,7 +59,7 @@ describe(getName(__filename), () => {
     expect(utils.exec).toBeCalledTimes(6);
   });
 
-  it('updates digest (dry-run)', async () => {
+  it('updates image (dry-run)', async () => {
     core.getInput.mockReturnValueOnce('true').mockReturnValueOnce('test/image');
     utils.exec
       .mockResolvedValueOnce({
@@ -80,7 +80,7 @@ describe(getName(__filename), () => {
     expect(utils.exec).toBeCalledTimes(5);
   });
 
-  it('no digest', async () => {
+  it('no image id', async () => {
     core.getInput.mockReturnValueOnce('').mockReturnValueOnce('test/image');
     expect.assertions(1);
     utils.exec.mockResolvedValueOnce({

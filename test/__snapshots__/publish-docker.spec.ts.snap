@@ -2,4 +2,4 @@
 
 exports[`missing image 1`] = `[Error: Missing image]`;
 
-exports[`no digest 1`] = `[Error: Could not find new digest]`;
+exports[`no image id 1`] = `[Error: Could not find image id]`;

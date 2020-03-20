@@ -3,24 +3,20 @@ import { exec } from './util';
 import chalk from 'chalk';
 import log from 'fancy-log';
 
-// [renovate/base@sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1]
-const digestRe = /@sha256:([a-f0-9]{64})\]/;
+// sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1
+const shaRe = /sha256:([a-f0-9]{64})/;
 
-async function getDigest(image: string): Promise<string> {
-  const res = await exec('docker', [
-    'inspect',
-    "--format='{{.RepoDigests}}'",
-    image,
-  ]);
+async function getImageId(image: string): Promise<string> {
+  const res = await exec('docker', ['inspect', "--format='{{.Id}}'", image]);
 
-  const [, digest] = digestRe.exec(res.stdout) ?? [];
+  const [, id] = shaRe.exec(res.stdout) ?? [];
 
-  if (!digest) {
+  if (!id) {
     log.error(res);
-    throw new Error('Could not find new digest');
+    throw new Error('Could not find image id');
   }
 
-  return digest;
+  return id;
 }
 
 export async function run(): Promise<void> {
@@ -33,19 +29,19 @@ export async function run(): Promise<void> {
 
   log.info(chalk.blue('Processing image:'), chalk.yellow(image));
 
-  log('Fetch new digest');
-  const newDigest = await getDigest(image);
+  log('Fetch new id');
+  const newId = await getImageId(image);
 
   log('Backup new image');
   await exec('docker', ['tag', image, 'tmp']);
   log('Fetch old image');
   await exec('docker', ['pull', image]);
 
-  log('Fetch old digest');
-  const oldDigest = await getDigest(image);
+  log('Fetch old id');
+  const oldId = await getImageId(image);
 
-  if (oldDigest === newDigest) {
-    log('Digest uptodate, no push nessessary: ', chalk.yellow(oldDigest));
+  if (oldId === newId) {
+    log('Image uptodate, no push nessessary: ', chalk.yellow(oldId));
     return;
   }
 
@@ -57,5 +53,5 @@ export async function run(): Promise<void> {
   } else {
     await exec('docker', ['push', image]);
   }
-  log.info(chalk.blue('Processing image finished: ', newDigest));
+  log.info(chalk.blue('Processing image finished: ', newId));
 }
