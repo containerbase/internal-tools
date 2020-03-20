@@ -1,10 +1,16 @@
 name: 'Renovate Docker Builder'
 description: 'Action for building and testing renovate docker images'
 inputs:
-  command: # id of input
+  command:
     description: 'Command to execute'
     required: true
-    default: 'build'
+  image:
+    description: 'docker image to operate on'
+    required: true
+  dry-run:
+    description: 'do not publish anything'
+    required: false
+    default: false
 
 runs:
   using: 'node12'

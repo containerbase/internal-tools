@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`missing image 1`] = `[Error: Missing image]`;
+
+exports[`no digest 1`] = `[Error: Could not find new digest]`;

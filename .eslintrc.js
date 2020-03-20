@@ -21,6 +21,7 @@ module.exports = {
     project: ['./tsconfig.json'],
   },
   rules: {
+    curly: [2, 'all'],
     '@typescript-eslint/interface-name-prefix': 0,
     // Makes no sense to allow type inferrence for expression parameters, but require typing the response
     '@typescript-eslint/explicit-function-return-type': [
