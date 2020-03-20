@@ -82,7 +82,7 @@ jobs:
 
       - name: Codecov
         shell: bash
-        if: always()
+        if: always() && secrets.CODECOV_TOKEN
         continue-on-error: true
         run: bash <(curl -s https://codecov.io/bash)
         env:
