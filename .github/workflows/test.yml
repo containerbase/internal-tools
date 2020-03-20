@@ -65,11 +65,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node-version }}-yarn-
 
-      # Clear caches on cache miss, otherwise they will grow indefinitely
-      - name: Clear yarn cache
-        if: steps.yarn_cache_packages.outputs.cache-hit != 'true'
-        run: yarn cache clean
-
       - run: yarn install --frozen-lockfile
 
       - run: yarn lint
