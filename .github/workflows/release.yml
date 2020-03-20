@@ -55,4 +55,4 @@ jobs:
           git checkout -b ${VERSION}
           git add dist/*
           git commit -m 'Published by pipeline'
-          git push -f origin ${VERSION}
+          git push -f origin ${VERSION}:${VERSION}
