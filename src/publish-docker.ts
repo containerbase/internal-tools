@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import log from 'fancy-log';
 
 // [renovate/base@sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1]
-const digestRe = /([a-f0-9]{64})\]$/;
+const digestRe = /@sha256:([a-f0-9]{64})\]/;
 
 async function getDigest(image: string): Promise<string> {
   const res = await exec('docker', [
