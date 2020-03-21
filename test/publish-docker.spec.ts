@@ -14,6 +14,7 @@ const core = mocked(_core);
 const utils = mocked(_utils);
 const docker = mocked(_docker);
 const image = 'renovate/base';
+const tag = 'latest';
 const digest =
   'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1';
 
@@ -29,8 +30,27 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(docker.getLocalImageId).toHaveBeenCalledWith(image);
-    expect(docker.getRemoteImageId).toHaveBeenCalledWith(image);
+    expect(docker.getLocalImageId).toHaveBeenCalledWith(image, tag);
+    expect(docker.getRemoteImageId).toHaveBeenCalledWith(image, tag);
+    expect(utils.exec).not.toHaveBeenCalled();
+  });
+
+  it('uptodate multiple', async () => {
+    core.getInput.mockReturnValueOnce('test;latest');
+    docker.getLocalImageId.mockResolvedValueOnce(digest);
+    docker.getRemoteImageId
+      .mockResolvedValueOnce(digest)
+      .mockResolvedValueOnce(digest);
+
+    await run();
+
+    expect(core.getInput).toBeCalledTimes(3);
+    expect(docker.getLocalImageId).toHaveBeenNthCalledWith(1, image, 'test');
+    expect(docker.getLocalImageId).toHaveBeenNthCalledWith(2, image, tag);
+    expect(docker.getLocalImageId).toHaveBeenCalledTimes(2);
+    expect(docker.getRemoteImageId).toHaveBeenNthCalledWith(1, image, 'test');
+    expect(docker.getRemoteImageId).toHaveBeenNthCalledWith(2, image, tag);
+    expect(docker.getRemoteImageId).toHaveBeenCalledTimes(2);
     expect(utils.exec).not.toHaveBeenCalled();
   });
 
@@ -41,8 +61,8 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(docker.getLocalImageId).toHaveBeenCalledWith(image);
-    expect(docker.getRemoteImageId).toHaveBeenCalledWith(image);
+    expect(docker.getLocalImageId).toHaveBeenCalledWith(image, tag);
+    expect(docker.getRemoteImageId).toHaveBeenCalledWith(image, tag);
     expect(utils.exec).toBeCalledTimes(1);
   });
 
@@ -54,8 +74,9 @@ describe(getName(__filename), () => {
     );
     await run();
 
-    expect(docker.getLocalImageId).toHaveBeenCalledWith(image);
-    expect(docker.getRemoteImageId).toHaveBeenCalledWith(image);
+    expect(core.getInput).toBeCalledTimes(3);
+    expect(docker.getLocalImageId).toHaveBeenCalledWith(image, tag);
+    expect(docker.getRemoteImageId).toHaveBeenCalledWith(image, tag);
     expect(utils.exec).not.toHaveBeenCalled();
   });
 

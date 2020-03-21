@@ -7,6 +7,10 @@ inputs:
   image:
     description: 'docker image to operate on'
     required: true
+  tags:
+    description: 'semicolon sepearted list of docker image tags to operate on'
+    required: false
+    default: 'latest'
   dry-run:
     description: 'do not publish anything'
     required: false
