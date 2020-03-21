@@ -6,7 +6,7 @@ import { exec } from '../util';
 
 const registry = 'https://index.docker.io';
 
-type DockerManifest = {
+type DockerManifestV2 = {
   schemaVersion: number;
   config: {
     digest: string;
@@ -47,27 +47,35 @@ export async function getAuthHeaders(
   }
 }
 
+export enum DockerContentType {
+  ManifestV1 = 'application/vnd.docker.distribution.manifest.v1+json',
+  ManifestV2 = 'application/vnd.docker.distribution.manifest.v2+json',
+}
+
+const shaRe = /(sha256:[a-f0-9]{64})/;
+
 export async function getRemoteImageId(
   repository: string,
   tag = 'latest'
 ): Promise<string> {
   const headers = await getAuthHeaders(registry, repository);
-  headers.accept = 'application/vnd.docker.distribution.manifest.v2+json';
+  headers.accept = DockerContentType.ManifestV2;
   const url = `${registry}/v2/${repository}/manifests/${tag}`;
 
   try {
-    const manifestResponse = await got<DockerManifest>(url, {
+    const resp = await got<DockerManifestV2>(url, {
       headers,
       responseType: 'json',
     });
-    return manifestResponse.body.config.digest;
+    if (resp.headers['content-type'] !== DockerContentType.ManifestV2) {
+      throw new Error(`Unsupported response: ${resp.headers['content-type']}`);
+    }
+    return resp.body.config.digest;
   } catch (e) {
-    log.error('request error', e);
+    log.error(chalk.red('request error'), e);
     throw new Error('Could not find remote image id');
   }
 }
-
-const shaRe = /(sha256:[a-f0-9]{64})/;
 
 export async function getLocalImageId(
   image: string,

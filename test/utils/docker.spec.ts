@@ -4,6 +4,7 @@ import {
   getRemoteImageId,
   getAuthHeaders,
   getLocalImageId,
+  DockerContentType,
 } from '../../src/utils/docker';
 import * as _utils from '../../src/util';
 
@@ -87,6 +88,7 @@ describe(getName(__filename), () => {
                 digest,
               },
             },
+            headers: { 'content-type': DockerContentType.ManifestV2 },
           })
         );
       expect(await getRemoteImageId(image)).toEqual(digest);
@@ -100,6 +102,23 @@ describe(getName(__filename), () => {
           })
         )
         .mockRejectedValueOnce(new Error('404'));
+      await expect(getRemoteImageId(image)).rejects.toThrow(
+        'Could not find remote image id'
+      );
+    });
+
+    it('throws unsupported', async () => {
+      got
+        .mockResolvedValueOnce(
+          partial<Response<unknown>>({
+            headers: {},
+          })
+        )
+        .mockResolvedValueOnce(
+          partial<Response<unknown>>({
+            headers: { 'content-type': DockerContentType.ManifestV1 },
+          })
+        );
       await expect(getRemoteImageId(image)).rejects.toThrow(
         'Could not find remote image id'
       );
