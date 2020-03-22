@@ -1,10 +1,13 @@
 import { getName, mocked } from './utils';
+import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as util from '../src/util';
 
+jest.mock('@actions/core');
 jest.mock('@actions/exec');
 jest.mock('fancy-log');
 
+const core = mocked(_core);
 const exec = mocked(_exec);
 
 describe(getName(__filename), () => {
@@ -29,5 +32,19 @@ describe(getName(__filename), () => {
     expect.assertions(1);
     exec.exec.mockResolvedValueOnce(1);
     await expect(util.exec('dummy-cmd', [])).rejects.toThrow();
+  });
+
+  describe('isDryRun', () => {
+    it('false', () => {
+      core.getInput.mockReturnValueOnce('false');
+      expect(util.isDryRun()).toBe(false);
+      expect(util.isDryRun()).toBe(false);
+      expect(core.getInput).toBeCalledTimes(2);
+    });
+    it('true', () => {
+      core.getInput.mockReturnValueOnce('true');
+      expect(util.isDryRun()).toBe(true);
+      expect(core.getInput).toBeCalledTimes(1);
+    });
   });
 });
