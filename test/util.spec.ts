@@ -15,23 +15,26 @@ describe(getName(__filename), () => {
     jest.clearAllMocks();
   });
 
-  it('works', async () => {
-    exec.exec.mockImplementationOnce((cmd, args, opts) => {
-      opts?.listeners?.stdout && opts.listeners.stdout(Buffer.from('test'));
-      opts?.listeners?.stderr && opts.listeners.stderr(Buffer.from('testerr'));
-      return Promise.resolve(0);
+  describe('exec', () => {
+    it('works', async () => {
+      exec.exec.mockImplementationOnce((_cmd, _args, opts) => {
+        opts?.listeners?.stdout && opts.listeners.stdout(Buffer.from('test'));
+        opts?.listeners?.stderr &&
+          opts.listeners.stderr(Buffer.from('testerr'));
+        return Promise.resolve(0);
+      });
+      expect(await util.exec('dummy-cmd', [])).toEqual({
+        code: 0,
+        stdout: 'test',
+        stderr: 'testerr',
+      });
     });
-    expect(await util.exec('dummy-cmd', [])).toEqual({
-      code: 0,
-      stdout: 'test',
-      stderr: 'testerr',
-    });
-  });
 
-  it('throws', async () => {
-    expect.assertions(1);
-    exec.exec.mockResolvedValueOnce(1);
-    await expect(util.exec('dummy-cmd', [])).rejects.toThrow();
+    it('throws', async () => {
+      expect.assertions(1);
+      exec.exec.mockResolvedValueOnce(1);
+      await expect(util.exec('dummy-cmd', [])).rejects.toThrow();
+    });
   });
 
   describe('isDryRun', () => {
