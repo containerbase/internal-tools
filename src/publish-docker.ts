@@ -35,7 +35,7 @@ export async function run(): Promise<void> {
       continue;
     }
 
-    log('Publish new image');
+    log('Publish new image', `${oldId} > ${newId}`);
     if (dryRun) {
       log.warn(chalk.yellow('DRY-RUN: Would push: '), fullName);
     } else {

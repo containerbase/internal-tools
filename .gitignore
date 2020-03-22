@@ -5,3 +5,5 @@ coverage/
 
 # yarn
 yarn-error.log
+
+test.mjs
