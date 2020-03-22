@@ -1,6 +1,7 @@
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import log from 'fancy-log';
+import { getInput } from '@actions/core';
 
 export type ExecOptions = _ExecOptions;
 
@@ -36,4 +37,9 @@ export async function exec(
   }
 
   return { code, stdout, stderr };
+}
+
+export function isDryRun(): boolean {
+  const val = getInput('dry-run');
+  return !!val && val === 'true';
 }

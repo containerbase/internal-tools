@@ -21,7 +21,7 @@ const digest =
 describe(getName(__filename), () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    core.getInput.mockReturnValueOnce('').mockReturnValueOnce(image);
+    core.getInput.mockReturnValueOnce(image);
     docker.getLocalImageId.mockResolvedValueOnce(digest);
   });
 
@@ -44,7 +44,7 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(core.getInput).toBeCalledTimes(3);
+    expect(core.getInput).toBeCalledTimes(2);
     expect(docker.getLocalImageId).toHaveBeenNthCalledWith(1, image, 'test');
     expect(docker.getLocalImageId).toHaveBeenNthCalledWith(2, image, tag);
     expect(docker.getLocalImageId).toHaveBeenCalledTimes(2);
@@ -67,14 +67,13 @@ describe(getName(__filename), () => {
   });
 
   it('updates image (dry-run)', async () => {
-    core.getInput.mockReset();
-    core.getInput.mockReturnValueOnce('true').mockReturnValueOnce(image);
+    utils.isDryRun.mockReturnValueOnce(true);
     docker.getLocalImageId.mockResolvedValueOnce(
       'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2'
     );
     await run();
 
-    expect(core.getInput).toBeCalledTimes(3);
+    expect(core.getInput).toBeCalledTimes(2);
     expect(docker.getLocalImageId).toHaveBeenCalledWith(image, tag);
     expect(docker.getRemoteImageId).toHaveBeenCalledWith(image, tag);
     expect(utils.exec).not.toHaveBeenCalled();

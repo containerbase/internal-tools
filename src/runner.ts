@@ -15,7 +15,7 @@ export default async function run(): Promise<void> {
         await (await import('./publish-docker')).run();
         break;
       default:
-        log.warn(chalk.yellow('Unknown command: '), cmd);
+        log.warn(chalk.red('Unknown command:'), cmd);
         break;
     }
     // // Get the JSON webhook payload for the event that triggered the workflow
