@@ -1,4 +1,4 @@
-import got, { Headers } from 'got';
+import got, { Headers, HTTPError } from 'got';
 import wwwAuthenticate from 'www-authenticate';
 import chalk from 'chalk';
 import log from 'fancy-log';
@@ -72,6 +72,10 @@ export async function getRemoteImageId(
     }
     return resp.body.config.digest;
   } catch (e) {
+    if (e instanceof HTTPError && e.response.statusCode === 404) {
+      // no image published yet
+      return '<none>';
+    }
     log.error(chalk.red('request error'), e);
     throw new Error('Could not find remote image id');
   }

@@ -1,5 +1,5 @@
 import { getName, partial, mocked } from '../utils';
-import _got, { Response } from 'got';
+import _got, { Response, HTTPError, NormalizedOptions } from 'got';
 import {
   getRemoteImageId,
   getAuthHeaders,
@@ -34,12 +34,12 @@ describe(getName(__filename), () => {
     it('works', async () => {
       got
         .mockResolvedValueOnce(
-          partial<Response<unknown>>({
+          partial<Response>({
             headers,
           })
         )
         .mockResolvedValueOnce(
-          partial<Response<unknown>>({
+          partial<Response>({
             // eslint-disable-next-line @typescript-eslint/camelcase
             body: { access_token: 'XXX' },
           })
@@ -51,12 +51,12 @@ describe(getName(__filename), () => {
     it('fails with auth', async () => {
       got
         .mockResolvedValueOnce(
-          partial<Response<unknown>>({
+          partial<Response>({
             headers,
           })
         )
         .mockResolvedValueOnce(
-          partial<Response<unknown>>({
+          partial<Response>({
             body: {},
           })
         );
@@ -77,12 +77,12 @@ describe(getName(__filename), () => {
     it('works', async () => {
       got
         .mockResolvedValueOnce(
-          partial<Response<unknown>>({
+          partial<Response>({
             headers: {},
           })
         )
         .mockResolvedValueOnce(
-          partial<Response<unknown>>({
+          partial<Response>({
             body: {
               config: {
                 digest,
@@ -94,14 +94,30 @@ describe(getName(__filename), () => {
       expect(await getRemoteImageId(image)).toEqual(digest);
     });
 
-    it('throws', async () => {
+    it('return <none> on 404', async () => {
       got
         .mockResolvedValueOnce(
-          partial<Response<unknown>>({
+          partial<Response>({
             headers: {},
           })
         )
-        .mockRejectedValueOnce(new Error('404'));
+        .mockRejectedValueOnce(
+          Object.assign(
+            new HTTPError(partial<Response>(), partial<NormalizedOptions>()),
+            { response: { statusCode: 404 } }
+          )
+        );
+      expect(await getRemoteImageId(image)).toEqual('<none>');
+    });
+
+    it('throws', async () => {
+      got
+        .mockResolvedValueOnce(
+          partial<Response>({
+            headers: {},
+          })
+        )
+        .mockRejectedValueOnce(new Error('500'));
       await expect(getRemoteImageId(image)).rejects.toThrow(
         'Could not find remote image id'
       );
@@ -110,12 +126,12 @@ describe(getName(__filename), () => {
     it('throws unsupported', async () => {
       got
         .mockResolvedValueOnce(
-          partial<Response<unknown>>({
+          partial<Response>({
             headers: {},
           })
         )
         .mockResolvedValueOnce(
-          partial<Response<unknown>>({
+          partial<Response>({
             headers: { 'content-type': DockerContentType.ManifestV1 },
           })
         );
