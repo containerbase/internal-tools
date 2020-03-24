@@ -11,8 +11,19 @@ env:
   CI: true
 
 jobs:
+  cleanup:
+    steps:
+      - name: Cleanup
+        uses: renovatebot/gh-action@feat/gh-cleanup
+        continue-on-error: true
+        with:
+          command: github-cleanup
+          image: ${{ env.DOCKER_REPO }}
   test:
     name: test
+
+    needs: cleanup
+
     runs-on: ubuntu-latest
 
     # tests shouldn't need more than 15 min
