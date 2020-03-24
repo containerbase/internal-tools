@@ -15,6 +15,10 @@ inputs:
     description: 'do not publish anything'
     required: false
     default: false
+  token:
+    description: 'Github PAT, commands which needs a token will fail build without'
+    required: false
+    default: ''
 
 runs:
   using: 'node12'

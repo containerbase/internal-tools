@@ -14,6 +14,9 @@ export default async function run(): Promise<void> {
       case Commands.PublishDocker:
         await (await import('./publish-docker')).run();
         break;
+      case Commands.GithubCleanup:
+        await (await import('./commands/cleanup')).run();
+        break;
       default:
         log.warn(chalk.red('Unknown command:'), cmd);
         break;
