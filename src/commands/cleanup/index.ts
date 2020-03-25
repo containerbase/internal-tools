@@ -57,9 +57,8 @@ export async function run(): Promise<void> {
 
   for (const run of runs.workflow_runs) {
     if (
-      run.status !== 'in_progress' &&
-      run.status !== 'queued' &&
-      run.id !== run_id
+      (run.status !== 'in_progress' && run.status !== 'queued') ||
+      run.id === run_id
     ) {
       continue;
     }
