@@ -6,8 +6,8 @@ import { Commands } from '../src/types';
 jest.mock('@actions/core');
 jest.mock('@actions/github');
 jest.mock('../src/utils/logger');
-jest.mock('../src/publish-docker');
-jest.mock('../src/commands/cleanup');
+jest.mock('../src/commands/docker/publish');
+jest.mock('../src/commands/github/cleanup');
 
 const core = mocked(_core);
 
@@ -24,14 +24,14 @@ describe(getName(__filename), () => {
     expect(core.setFailed).not.toHaveBeenCalled();
   });
 
-  it('publish-docker', async () => {
-    core.getInput.mockReturnValueOnce(Commands.PublishDocker);
+  it(Commands.DockerPublish, async () => {
+    core.getInput.mockReturnValueOnce(Commands.DockerPublish);
     await run();
     expect(core.getInput).toBeCalledWith('command');
     expect(core.setFailed).not.toHaveBeenCalled();
   });
 
-  it('github-cleanup', async () => {
+  it(Commands.GithubCleanup, async () => {
     core.getInput.mockReturnValueOnce(Commands.GithubCleanup);
     await run();
     expect(core.getInput).toBeCalledWith('command');

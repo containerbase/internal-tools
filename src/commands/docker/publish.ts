@@ -1,8 +1,8 @@
 import { getInput } from '@actions/core';
-import { exec, isDryRun } from './util';
+import { exec, isDryRun } from '../../util';
 import chalk from 'chalk';
-import log from './utils/logger';
-import { getRemoteImageId, getLocalImageId } from './utils/docker';
+import log from '../../utils/logger';
+import { getRemoteImageId, getLocalImageId } from '../../utils/docker';
 
 export const MultiArgsSplitRe = /\s*(?:;|$)\s*/;
 export async function run(): Promise<void> {

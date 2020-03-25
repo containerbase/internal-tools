@@ -9,14 +9,21 @@ export default async function run(): Promise<void> {
     const cmd = getInput('command') as Commands;
     log.info(chalk.yellow('Executing:'), ` ${cmd}`);
     switch (cmd) {
-      case Commands.PublishDocker:
-        await (await import('./publish-docker')).run();
+      case Commands.DockerPublish:
+        await (await import('./commands/docker/publish')).run();
         break;
       case Commands.GithubCleanup:
-        await (await import('./commands/cleanup')).run();
+        await (await import('./commands/github/cleanup')).run();
         break;
+
+      /* istanbul ignore next: obsolete */
+      case Commands.PublishDocker:
+        log.warn(`Obsolete, use '${Commands.DockerPublish}' command instead`);
+        await (await import('./commands/docker/publish')).run();
+        break;
+
       default:
-        log.warn(chalk.red('Unknown command:'), cmd);
+        log.error(chalk.red('Unknown command:'), cmd);
         break;
     }
   } catch (error) {

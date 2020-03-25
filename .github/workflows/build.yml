@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Cleanup
+      - name: github-cleanup
         uses: renovatebot/gh-action@v0
         continue-on-error: true
         with:
@@ -160,12 +160,31 @@ jobs:
 
       - run: yarn compile
 
-      - name: Cleanup
+      - name: Prepare e2e
+        run: |
+          docker pull alpine
+
+      - name: github-cleanup
         uses: ./
         continue-on-error: true
         with:
           command: github-cleanup
           token: ${{ github.token }}
+          dry-run: true
+
+      - name: docker-publish
+        uses: ./
+        continue-on-error: true
+        with:
+          command: docker-publish
+          image: alpine
+          dry-run: true
+
+      - name: dummy-command
+        uses: ./
+        continue-on-error: true
+        with:
+          command: dummy
           dry-run: true
 
   release:
