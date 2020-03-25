@@ -5,7 +5,7 @@ import { run } from '../../src/commands/cleanup';
 jest.mock('@actions/core');
 jest.mock('@actions/github');
 jest.mock('../../src/util');
-jest.mock('../src/utils/logger');
+jest.mock('../../src/utils/logger');
 
 const utils = mocked(_utils);
 
