@@ -12,6 +12,7 @@ export default async function run(): Promise<void> {
       case Commands.DockerPublish:
         await (await import('./commands/docker/publish')).run();
         break;
+
       case Commands.GithubCleanup:
         await (await import('./commands/github/cleanup')).run();
         break;
