@@ -37,7 +37,7 @@ export async function run(): Promise<void> {
     branch,
   });
 
-  log.warn(
+  log.info(
     `Workflows to check: ${runs.workflow_runs.length} of ${runs.total_count}`
   );
 
