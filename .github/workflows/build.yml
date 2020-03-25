@@ -17,7 +17,8 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: renovatebot/gh-action@v0
+      - name: Cleanup
+        uses: renovatebot/gh-action@v0
         continue-on-error: true
         with:
           command: github-cleanup
