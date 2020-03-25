@@ -25,7 +25,6 @@ jobs:
         with:
           command: github-cleanup
           token: ${{ github.token }}
-          dry-run: true
 
       - name: Init platform
         id: init
