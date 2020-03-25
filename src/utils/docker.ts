@@ -1,7 +1,7 @@
 import got, { Headers, HTTPError } from 'got';
 import wwwAuthenticate from 'www-authenticate';
 import chalk from 'chalk';
-import log from 'fancy-log';
+import log from './logger';
 import { exec } from '../util';
 
 const registry = 'https://index.docker.io';

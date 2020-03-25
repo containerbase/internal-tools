@@ -1,8 +1,9 @@
 // istanbul ignore file: TODO
-import { getInput, info } from '@actions/core';
+import { getInput } from '@actions/core';
 import { context, GitHub } from '@actions/github';
 import { isDryRun } from '../../util';
 import chalk from 'chalk';
+import log from '../../utils/logger';
 
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
@@ -19,14 +20,6 @@ export async function run(): Promise<void> {
     throw new Error('Missing missing repo');
   }
 
-  // for (const key of Object.keys(process.env).filter(k =>
-  //   k.startsWith('GITHUB_')
-  // )) {
-  //   info(chalk.blue(key) + ': ' + process.env[key]);
-  // }
-
-  // console.dir(context);
-
   const api = new GitHub(token);
 
   const { data: wf } = await api.actions.getWorkflowRun({
@@ -42,36 +35,35 @@ export async function run(): Promise<void> {
     repo,
     workflow_id: parseInt(workflow_id),
     branch,
-    status: 'status',
   });
 
-  info(
+  log.info(
     `Workflows to check: ${runs.workflow_runs.length} of ${runs.total_count}`
   );
 
   for (const run of runs.workflow_runs) {
     if (run.id === run_id) {
-      info(chalk.yellow('Ignore me: ') + run.id + ' ' + run.html_url);
+      log(chalk.yellow('Ignore me: ') + run.id + ' ' + run.html_url);
       continue;
     }
     if (run.status !== 'in_progress' && run.status !== 'queued') {
-      info(chalk.yellow('Ignore finished: ') + run.id + ' ' + run.html_url);
+      log(chalk.yellow('Ignore: ') + run.id + ' ' + run.html_url);
       continue;
     }
     if (run.event !== context.eventName) {
-      info(chalk.yellow('Ignore other event: ') + run.id + ' ' + run.html_url);
+      log(chalk.yellow('Ignore other event: ') + run.id + ' ' + run.html_url);
       continue;
     }
     if (dryRun) {
-      info(
+      log.info(
         chalk.yellow('DRY_RUN: Would cancel: ') + run.id + ' ' + run.html_url
       );
       continue;
     }
 
-    info(chalk.blue('Cancel: ') + run.id + ' ' + run.html_url);
+    log.info(chalk.blue('Cancel: ') + run.id + ' ' + run.html_url);
     await api.actions.cancelWorkflowRun({ owner, repo, run_id: run.id });
   }
 
-  info(chalk.blue('Processing finished: ') + dryRun);
+  log.info(chalk.blue('Processing finished: ') + dryRun);
 }

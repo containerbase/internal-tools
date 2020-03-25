@@ -1,6 +1,6 @@
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
-import log from 'fancy-log';
+import log from './utils/logger';
 import { getInput } from '@actions/core';
 
 export type ExecOptions = _ExecOptions;
