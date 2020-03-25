@@ -128,6 +128,11 @@ jobs:
         with:
           version: ${{ env.BUILDX_VERSION }}
 
+      - name: Init platform
+        id: init
+        run: |
+          echo "::set-output name=yarn_cache::$(yarn cache dir)"
+
       - uses: actions/checkout@v2
 
       - name: Cache Yarn packages
