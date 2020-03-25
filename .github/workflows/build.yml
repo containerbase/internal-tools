@@ -150,7 +150,7 @@ jobs:
       - run: yarn compile
 
       - name: Cleanup
-        uses: .
+        uses: ./
         continue-on-error: true
         with:
           command: github-cleanup
