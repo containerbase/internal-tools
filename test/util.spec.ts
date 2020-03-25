@@ -5,7 +5,7 @@ import * as util from '../src/util';
 
 jest.mock('@actions/core');
 jest.mock('@actions/exec');
-jest.mock('fancy-log');
+jest.mock('../src/utils/logger');
 
 const core = mocked(_core);
 const exec = mocked(_exec);
@@ -48,6 +48,13 @@ describe(getName(__filename), () => {
       core.getInput.mockReturnValueOnce('true');
       expect(util.isDryRun()).toBe(true);
       expect(core.getInput).toBeCalledTimes(1);
+    });
+  });
+
+  describe('getEnv', () => {
+    it('works', () => {
+      expect(util.getEnv('NOT_FOUND_ENV_VAR')).toBe('');
+      expect(util.getEnv('PATH')).toBeDefined();
     });
   });
 });

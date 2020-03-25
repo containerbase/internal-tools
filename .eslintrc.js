@@ -37,6 +37,7 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
+    '@typescript-eslint/camelcase': 0,
   },
   overrides: [
     {

@@ -1,13 +1,13 @@
 import { getInput } from '@actions/core';
-import { exec, isDryRun } from './util';
+import { exec, isDryRun } from '../../util';
 import chalk from 'chalk';
-import log from 'fancy-log';
-import { getRemoteImageId, getLocalImageId } from './utils/docker';
+import log from '../../utils/logger';
+import { getRemoteImageId, getLocalImageId } from '../../utils/docker';
 
 export const MultiArgsSplitRe = /\s*(?:;|$)\s*/;
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
-  const image = getInput('image');
+  const image = getInput('image', { required: true });
   let tags = getInput('tags')
     ?.split(MultiArgsSplitRe)
     .filter(Boolean);
@@ -37,7 +37,7 @@ export async function run(): Promise<void> {
 
     log('Publish new image', `${oldId} => ${newId}`);
     if (dryRun) {
-      log.warn(chalk.yellow('DRY-RUN: Would push:'), fullName);
+      log.warn(chalk.yellow('[DRY_RUN]'), chalk.blue('Would push:'), fullName);
     } else {
       await exec('docker', ['push', fullName]);
     }

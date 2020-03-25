@@ -6,7 +6,8 @@ inputs:
     required: true
   image:
     description: 'docker image to operate on'
-    required: true
+    required: false
+    default:
   tags:
     description: 'semicolon sepearted list of docker image tags to operate on'
     required: false
@@ -15,6 +16,10 @@ inputs:
     description: 'do not publish anything'
     required: false
     default: false
+  token:
+    description: 'Github PAT, commands which needs a token will fail build without'
+    required: false
+    default:
 
 runs:
   using: 'node12'

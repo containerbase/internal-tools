@@ -1,14 +1,11 @@
 import * as _core from '@actions/core';
-import { getName, mocked } from './utils';
-import * as _docker from '../src/utils/docker';
-import * as _utils from '../src/util';
-import { run } from '../src/publish-docker';
+import { getName, mocked } from '../../utils';
+import * as _docker from '../../../src/utils/docker';
+import * as _utils from '../../../src/util';
+import { run } from '../../../src/commands/docker/publish';
 
-jest.mock('@actions/core');
-jest.mock('@actions/github');
-jest.mock('fancy-log');
-jest.mock('../src/util');
-jest.mock('../src/utils/docker');
+jest.mock('../../../src/util');
+jest.mock('../../../src/utils/docker');
 
 const core = mocked(_core);
 const utils = mocked(_utils);

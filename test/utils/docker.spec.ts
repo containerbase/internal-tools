@@ -8,8 +8,6 @@ import {
 } from '../../src/utils/docker';
 import * as _utils from '../../src/util';
 
-jest.mock('fancy-log');
-jest.mock('got');
 jest.mock('../../src/util');
 
 const got: jest.Mock<Promise<Response>> = _got as never;

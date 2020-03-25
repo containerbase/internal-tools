@@ -1,6 +1,6 @@
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
-import log from 'fancy-log';
+import log from './utils/logger';
 import { getInput } from '@actions/core';
 
 export type ExecOptions = _ExecOptions;
@@ -42,4 +42,13 @@ export async function exec(
 export function isDryRun(): boolean {
   const val = getInput('dry-run');
   return !!val && val === 'true';
+}
+
+/**
+ * Get environment variable or empty string.
+ * Used for easy mocking.
+ * @param key variable name
+ */
+export function getEnv(key: string): string {
+  return process.env[key] ?? '';
 }
