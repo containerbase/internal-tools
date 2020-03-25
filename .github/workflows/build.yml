@@ -168,7 +168,6 @@ jobs:
 
       - name: github-cleanup
         uses: ./
-        continue-on-error: true
         with:
           command: github-cleanup
           token: ${{ github.token }}
@@ -176,7 +175,6 @@ jobs:
 
       - name: docker-publish
         uses: ./
-        continue-on-error: true
         with:
           command: docker-publish
           image: renovate/ubuntu
@@ -185,7 +183,6 @@ jobs:
 
       - name: dummy-command
         uses: ./
-        continue-on-error: true
         with:
           command: dummy
           dry-run: true
