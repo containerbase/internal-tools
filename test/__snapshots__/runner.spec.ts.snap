@@ -8,14 +8,6 @@ Array [
 ]
 `;
 
-exports[`publish-docker 1`] = `
-Array [
-  Array [
-    "command",
-  ],
-]
-`;
-
 exports[`works 1`] = `
 Array [
   Array [

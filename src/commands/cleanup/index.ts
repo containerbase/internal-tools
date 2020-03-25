@@ -1,3 +1,4 @@
+// istanbul ignore file: TODO
 import { context, GitHub } from '@actions/github';
 import { WebhookPayloadPush } from '@octokit/webhooks';
 import { isDryRun } from '../../util';
