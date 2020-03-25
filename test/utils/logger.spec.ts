@@ -3,7 +3,7 @@ import log from '../../src/utils/logger';
 import chalk from 'chalk';
 import * as _core from '@actions/core';
 
-jest.mock('@actions/core');
+jest.unmock('../../src/utils/logger');
 
 const core = mocked(_core);
 

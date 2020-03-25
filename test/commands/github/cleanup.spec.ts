@@ -2,10 +2,7 @@ import { getName, mocked } from '../../utils';
 import * as _utils from '../../../src/util';
 import { run } from '../../../src/commands/github/cleanup';
 
-jest.mock('@actions/core');
-jest.mock('@actions/github');
 jest.mock('../../../src/util');
-jest.mock('../../../src/utils/logger');
 
 const utils = mocked(_utils);
 

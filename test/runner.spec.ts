@@ -3,9 +3,6 @@ import { getName, mocked } from './utils';
 import run from '../src/runner';
 import { Commands } from '../src/types';
 
-jest.mock('@actions/core');
-jest.mock('@actions/github');
-jest.mock('../src/utils/logger');
 jest.mock('../src/commands/docker/publish');
 jest.mock('../src/commands/github/cleanup');
 
