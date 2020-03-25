@@ -24,7 +24,7 @@ jobs:
         continue-on-error: true
         with:
           command: github-cleanup
-          token: ${{ github.token }}
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Init platform
         id: init
