@@ -7,7 +7,7 @@ import { getRemoteImageId, getLocalImageId } from './utils/docker';
 export const MultiArgsSplitRe = /\s*(?:;|$)\s*/;
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
-  const image = getInput('image');
+  const image = getInput('image', { required: true });
   let tags = getInput('tags')
     ?.split(MultiArgsSplitRe)
     .filter(Boolean);
