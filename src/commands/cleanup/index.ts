@@ -10,7 +10,7 @@ export async function run(): Promise<void> {
   const token = getInput('token', { required: true });
   const { owner, repo } = context.repo;
   const run_id = parseInt(process.env.GITHUB_RUN_ID ?? '');
-  const branch = process.env.GITHUB_HEAD_REF ?? context.ref.substr(11);
+  const branch = process.env.GITHUB_HEAD_REF || context.ref.substr(11);
 
   if (!run_id) {
     throw new Error('Missing workflow run id');
@@ -31,10 +31,10 @@ export async function run(): Promise<void> {
     info(chalk.blue(key) + ': ' + process.env[key]);
   }
 
-  console.dir(context);
+  // console.dir(context);
 
-  info(chalk.blue('branch:') + branch);
-  info(chalk.blue('run_id:') + run_id);
+  info(chalk.blue('branch: ') + branch);
+  info(chalk.blue('run_id: ') + run_id);
 
   const api = new GitHub(token);
 
