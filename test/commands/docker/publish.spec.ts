@@ -6,7 +6,6 @@ import { run } from '../../../src/commands/docker/publish';
 
 jest.mock('../../../src/util');
 jest.mock('../../../src/utils/docker');
-jest.mock('../../../src/utils/logger');
 
 const core = mocked(_core);
 const utils = mocked(_utils);

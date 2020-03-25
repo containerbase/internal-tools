@@ -1,23 +1,31 @@
-// istanbul ignore file: TODO
 import { getInput } from '@actions/core';
-import { context, GitHub } from '@actions/github';
-import { isDryRun } from '../../util';
+import { GitHub } from '@actions/github';
+import { isDryRun, getEnv } from '../../util';
 import chalk from 'chalk';
 import log from '../../utils/logger';
 
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
   const token = getInput('token', { required: true });
-  const { owner, repo } = context.repo;
-  const run_id = parseInt(process.env.GITHUB_RUN_ID ?? '');
-  const branch = process.env.GITHUB_HEAD_REF || context.ref.substr(11);
+  const [owner, repo] = getEnv('GITHUB_REPOSITORY').split('/');
+  const run_id = parseInt(getEnv('GITHUB_RUN_ID'));
+  const branch = getEnv('GITHUB_HEAD_REF') || getEnv('GITHUB_REF').substr(11);
+  const event = getEnv('GITHUB_EVENT_NAME');
 
   if (!run_id) {
     throw new Error('Missing workflow run id');
   }
 
+  if (!branch) {
+    throw new Error('Missing branch');
+  }
+
   if (!owner || !repo) {
     throw new Error('Missing missing repo');
+  }
+
+  if (!event) {
+    throw new Error('Missing event');
   }
 
   const api = new GitHub(token);
@@ -29,6 +37,10 @@ export async function run(): Promise<void> {
   });
 
   const [, workflow_id] = /\/(\d+)$/.exec(wf.workflow_url) ?? [];
+
+  if (!workflow_id) {
+    throw new Error('Missing workflow id');
+  }
 
   const { data: runs } = await api.actions.listWorkflowRuns({
     owner,
@@ -50,7 +62,7 @@ export async function run(): Promise<void> {
       log(chalk.yellow(`Ignore state:`), run.status, run.html_url);
       continue;
     }
-    if (run.event !== context.eventName) {
+    if (run.event !== event) {
       log(chalk.yellow(`Ignore event:`), run.event, run.html_url);
       continue;
     }

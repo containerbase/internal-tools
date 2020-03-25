@@ -50,4 +50,11 @@ describe(getName(__filename), () => {
       expect(core.getInput).toBeCalledTimes(1);
     });
   });
+
+  describe('getEnv', () => {
+    it('works', () => {
+      expect(util.getEnv('NOT_FOUND_ENV_VAR')).toBe('');
+      expect(util.getEnv('PATH')).toBeDefined();
+    });
+  });
 });
