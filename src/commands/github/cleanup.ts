@@ -55,28 +55,38 @@ export async function run(): Promise<void> {
 
   for (const run of runs.workflow_runs) {
     if (run.id === run_id) {
-      log(chalk.yellow('Ignore me:'), run.html_url);
+      log(chalk.yellow('Ignore me'), ':', chalk.grey(run.html_url));
       continue;
     }
     if (run.status !== 'in_progress' && run.status !== 'queued') {
-      log(chalk.yellow(`Ignore state:`), run.status, run.html_url);
+      log(
+        chalk.yellow(`Ignore state`),
+        run.status,
+        ':',
+        chalk.grey(run.html_url)
+      );
       continue;
     }
     if (run.event !== event) {
-      log(chalk.yellow(`Ignore event:`), run.event, run.html_url);
+      log(
+        chalk.yellow(`Ignore event`),
+        run.event,
+        ':',
+        chalk.grey(run.html_url)
+      );
       continue;
     }
     if (dryRun) {
-      log.info(
+      log.warn(
         chalk.yellow('[DRY_RUN]'),
-        chalk.blue('Cancel:'),
-        run.id,
-        run.html_url
+        chalk.blue('Would cancel'),
+        ':',
+        chalk.grey(run.html_url)
       );
       continue;
     }
 
-    log.info(chalk.blue('Cancel: '), run.html_url);
+    log.info(chalk.blue('Cancel: '), chalk.grey(run.html_url));
     await api.actions.cancelWorkflowRun({ owner, repo, run_id: run.id });
   }
 

@@ -37,7 +37,7 @@ export async function run(): Promise<void> {
 
     log('Publish new image', `${oldId} => ${newId}`);
     if (dryRun) {
-      log.warn(chalk.yellow('DRY-RUN: Would push:'), fullName);
+      log.warn(chalk.yellow('[DRY_RUN]'), chalk.blue('Would push:'), fullName);
     } else {
       await exec('docker', ['push', fullName]);
     }
