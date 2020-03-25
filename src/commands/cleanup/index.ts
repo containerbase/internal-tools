@@ -63,14 +63,12 @@ export async function run(): Promise<void> {
       continue;
     }
     if (dryRun) {
-      console.dir(run);
       info(
         chalk.yellow('DRY_RUN: Would cancel: ') + run.id + ' ' + run.html_url
       );
       continue;
     }
 
-    console.dir(run);
     info(chalk.red('DRY_RUN: Cancel: ') + run.id + ' ' + run.html_url);
   }
 
