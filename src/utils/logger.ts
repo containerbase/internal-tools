@@ -1,6 +1,8 @@
 // istanbul ignore file: TODO
 
 import chalk from 'chalk';
+// eslint-disable-next-line import/default
+import stripAnsi from 'strip-ansi';
 import { warning as _warn, error as _error } from '@actions/core';
 
 function write(prefix: string, ...args: unknown[]): void {
@@ -21,12 +23,12 @@ function info(msg: unknown, ...args: unknown[]): void {
 
 function warn(msg: unknown, ...args: unknown[]): void {
   write(chalk.magenta(' WARN'), msg, ...args);
-  _warn([msg, ...args].join(' '));
+  _warn(stripAnsi([msg, ...args].join(' ')));
 }
 
 function error(msg: unknown, ...args: unknown[]): void {
   write(chalk.red('ERROR'), msg, ...args);
-  _error([msg, ...args].join(' '));
+  _error(stripAnsi([msg, ...args].join(' ')));
 }
 
 const log = (m: unknown, ...args: unknown[]): void => debug(m, ...args);
