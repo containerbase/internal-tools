@@ -56,11 +56,15 @@ export async function run(): Promise<void> {
   );
 
   for (const run of runs.workflow_runs) {
-    console.dir(run);
-    if (run.status !== 'in_progress' && run.status !== 'queued') {
+    if (
+      run.status !== 'in_progress' &&
+      run.status !== 'queued' &&
+      run.id !== run_id
+    ) {
       continue;
     }
     if (dryRun) {
+      console.dir(run);
       info(
         chalk.yellow('DRY_RUN: Would cancel: ') + run.id + ' ' + run.html_url
       );
