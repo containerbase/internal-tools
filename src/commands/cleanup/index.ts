@@ -48,6 +48,7 @@ export async function run(): Promise<void> {
     repo,
     workflow_id: parseInt(workflow_id),
     branch,
+    status: 'in_progress' as never,
   };
   const { data: runs } = await api.actions.listWorkflowRuns(listWfReq);
 
