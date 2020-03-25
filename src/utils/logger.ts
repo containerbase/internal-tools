@@ -4,11 +4,11 @@ import chalk from 'chalk';
 import { warning as _warn, error as _error } from '@actions/core';
 
 function write(prefix: string, ...args: unknown[]): void {
-  process.stdout.write([`[${prefix}]`, ...args].join(' '));
+  console.log([`[${prefix}]`, ...args].join(' '));
 }
 
 function dir(obj: unknown): void {
-  write(chalk.gray('  DIR'), obj);
+  console.dir(obj);
 }
 
 function debug(msg: unknown, ...args: unknown[]): void {
