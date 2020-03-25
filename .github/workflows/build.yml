@@ -167,8 +167,6 @@ jobs:
           command: github-cleanup
           token: ${{ github.token }}
           dry-run: true
-        env:
-          RUNNER_DEBUG: 1
 
   release:
     needs: [test, e2e]
