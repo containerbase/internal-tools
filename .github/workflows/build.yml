@@ -10,6 +10,8 @@ env:
   NODE_VERSION: 12
   BUILDX_VERSION: v0.3.1
   YARN_CACHE_KEY: v0
+  # https://github.com/chalk/supports-color/issues/106
+  FORCE_COLOR: true
 
 jobs:
   cleanup:
@@ -165,6 +167,8 @@ jobs:
           command: github-cleanup
           token: ${{ github.token }}
           dry-run: true
+        env:
+          RUNNER_DEBUG: 1
 
   release:
     needs: [test, e2e]
