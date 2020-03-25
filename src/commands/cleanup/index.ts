@@ -1,4 +1,5 @@
 // istanbul ignore file: TODO
+import { getInput } from '@actions/core';
 import { context, GitHub } from '@actions/github';
 import { WebhookPayloadPush } from '@octokit/webhooks';
 import { isDryRun } from '../../util';
@@ -7,14 +8,10 @@ import log from 'fancy-log';
 
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
-  const token = process.env.GITHUB_TOKEN || '';
+  const token = getInput('token', { required: true });
   const { owner, repo } = context.repo;
   const run_id = parseInt(process.env.GITHUB_RUN_ID ?? '');
   const branch = process.env.GITHUB_HEAD_REF ?? context.ref.substr(11);
-
-  if (!token) {
-    throw new Error('Missing github token');
-  }
 
   if (!run_id) {
     throw new Error('Missing workflow run id');

@@ -21,6 +21,7 @@ jobs:
         continue-on-error: true
         with:
           command: github-cleanup
+          token: ${{ github.token }}
           dry-run: true
 
       - name: Init platform
@@ -161,6 +162,7 @@ jobs:
         continue-on-error: true
         with:
           command: github-cleanup
+          token: ${{ github.token }}
           dry-run: true
 
   release:
