@@ -5,7 +5,7 @@ import * as util from '../src/util';
 
 jest.mock('@actions/core');
 jest.mock('@actions/exec');
-jest.mock('fancy-log');
+jest.mock('../src/utils/logger');
 
 const core = mocked(_core);
 const exec = mocked(_exec);

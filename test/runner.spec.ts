@@ -5,7 +5,7 @@ import { Commands } from '../src/types';
 
 jest.mock('@actions/core');
 jest.mock('@actions/github');
-jest.mock('fancy-log');
+jest.mock('../src/utils/logger');
 jest.mock('../src/publish-docker');
 jest.mock('../src/commands/cleanup');
 

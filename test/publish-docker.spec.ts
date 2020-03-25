@@ -6,9 +6,9 @@ import { run } from '../src/publish-docker';
 
 jest.mock('@actions/core');
 jest.mock('@actions/github');
-jest.mock('fancy-log');
 jest.mock('../src/util');
 jest.mock('../src/utils/docker');
+jest.mock('../src/utils/logger');
 
 const core = mocked(_core);
 const utils = mocked(_utils);
