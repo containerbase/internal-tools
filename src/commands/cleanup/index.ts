@@ -1,5 +1,5 @@
 // istanbul ignore file: TODO
-import { getInput } from '@actions/core';
+import { getInput, debug } from '@actions/core';
 import { context, GitHub } from '@actions/github';
 import { WebhookPayloadPush } from '@octokit/webhooks';
 import { isDryRun } from '../../util';
@@ -25,6 +25,9 @@ export async function run(): Promise<void> {
     const pushPayload = context.payload as WebhookPayloadPush;
     log.info(`The head commit is: ${pushPayload.ref}`);
   }
+
+  debug(chalk.blue('branch:') + branch);
+  debug(chalk.blue('run_id:') + run_id);
 
   const api = new GitHub(token);
 
