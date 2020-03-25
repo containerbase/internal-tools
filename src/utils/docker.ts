@@ -42,7 +42,7 @@ export async function getAuthHeaders(
       authorization: `Bearer ${token}`,
     };
   } catch (err) {
-    log.error(chalk.red('auth error'), err);
+    log.error(chalk.red('auth error'), err.message);
     throw new Error('Failed to obtain docker registry token');
   }
 }
@@ -76,7 +76,7 @@ export async function getRemoteImageId(
       // no image published yet
       return '<none>';
     }
-    log.error(chalk.red('request error'), e);
+    log.error(chalk.red('request error'), e.message);
     throw new Error('Could not find remote image id');
   }
 }

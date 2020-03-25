@@ -163,6 +163,8 @@ jobs:
       - name: Prepare e2e
         run: |
           docker pull alpine
+          docker tag alpine renovate/ubuntu
+          docker tag alpine renovate/ubuntu:18.04
 
       - name: github-cleanup
         uses: ./
@@ -177,7 +179,8 @@ jobs:
         continue-on-error: true
         with:
           command: docker-publish
-          image: alpine
+          image: renovate/ubuntu
+          tags: latest;18.04
           dry-run: true
 
       - name: dummy-command
