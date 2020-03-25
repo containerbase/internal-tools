@@ -81,14 +81,15 @@ export async function run(): Promise<void> {
         chalk.yellow('[DRY_RUN]'),
         chalk.blue('Would cancel'),
         ':',
+        run.id,
         chalk.grey(run.html_url)
       );
       continue;
     }
 
-    log.info(chalk.blue('Cancel: '), chalk.grey(run.html_url));
+    log.info(chalk.blue('Cancel:'), ':', run.id, chalk.grey(run.html_url));
     await api.actions.cancelWorkflowRun({ owner, repo, run_id: run.id });
   }
 
-  log.info(chalk.blue('Processing finished:'), dryRun);
+  log.info(chalk.blue('Processing finished'));
 }
