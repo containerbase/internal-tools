@@ -4,7 +4,6 @@ import { context, GitHub } from '@actions/github';
 import { WebhookPayloadPush } from '@octokit/webhooks';
 import { isDryRun } from '../../util';
 import chalk from 'chalk';
-import log from 'fancy-log';
 
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
@@ -23,10 +22,18 @@ export async function run(): Promise<void> {
 
   if (context.eventName === 'push') {
     const pushPayload = context.payload as WebhookPayloadPush;
-    log.info(`The head commit is: ${pushPayload.ref}`);
+    info(`The head commit is: ${pushPayload.ref}`);
   }
 
-  log(chalk.blue('branch:') + branch);
+  for (const key of Object.keys(process.env).filter(k =>
+    k.startsWith('GITHUB_')
+  )) {
+    info(chalk.blue(key) + ': ' + process.env[key]);
+  }
+
+  console.dir(context);
+
+  info(chalk.blue('branch:') + branch);
   info(chalk.blue('run_id:') + run_id);
 
   const api = new GitHub(token);
@@ -47,20 +54,24 @@ export async function run(): Promise<void> {
   };
   const { data: runs } = await api.actions.listWorkflowRuns(listWfReq);
 
-  log(`Workflows to check:`, runs.total_count, runs.workflow_runs.length);
+  info(
+    `Workflows to check: ` + runs.total_count + ' ' + runs.workflow_runs.length
+  );
 
   for (const run of runs.workflow_runs) {
     if (run.status !== 'in_progress' && run.status !== 'queued') {
       continue;
     }
     if (dryRun) {
-      log.warn(chalk.yellow('DRY_RUN: Would cancel:'), run.id, run.html_url);
+      info(
+        chalk.yellow('DRY_RUN: Would cancel: ') + run.id + ' ' + run.html_url
+      );
       continue;
     }
 
-    log.dir(run);
-    log.warn(chalk.red('DRY_RUN: Cancel:'), run.id, run.html_url);
+    console.dir(run);
+    info(chalk.red('DRY_RUN: Cancel: ') + run.id + ' ' + run.html_url);
   }
 
-  log.info(chalk.blue('Processing image finished:'), dryRun);
+  info(chalk.blue('Processing image finished: ') + dryRun);
 }
