@@ -28,6 +28,8 @@ jobs:
         run: |
           echo "::set-output name=yarn_cache::$(yarn cache dir)"
 
+      - uses: actions/checkout@v2
+
       - name: Cache Yarn packages
         id: yarn_cache_packages
         uses: actions/cache@v1
