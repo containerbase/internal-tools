@@ -1,5 +1,3 @@
-// istanbul ignore file: TODO
-
 import chalk from 'chalk';
 // eslint-disable-next-line import/default
 import stripAnsi from 'strip-ansi';
