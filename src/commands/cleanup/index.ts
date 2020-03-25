@@ -37,33 +37,36 @@ export async function run(): Promise<void> {
     branch,
   });
 
-  log.info(
+  log.warn(
     `Workflows to check: ${runs.workflow_runs.length} of ${runs.total_count}`
   );
 
   for (const run of runs.workflow_runs) {
     if (run.id === run_id) {
-      log(chalk.yellow('Ignore me: ') + run.id + ' ' + run.html_url);
+      log(chalk.yellow('Ignore me:'), run.html_url);
       continue;
     }
     if (run.status !== 'in_progress' && run.status !== 'queued') {
-      log(chalk.yellow('Ignore: ') + run.id + ' ' + run.html_url);
+      log(chalk.yellow(`Ignore state:`), run.status, run.html_url);
       continue;
     }
     if (run.event !== context.eventName) {
-      log(chalk.yellow('Ignore other event: ') + run.id + ' ' + run.html_url);
+      log(chalk.yellow(`Ignore event:`), run.event, run.html_url);
       continue;
     }
     if (dryRun) {
       log.info(
-        chalk.yellow('DRY_RUN: Would cancel: ') + run.id + ' ' + run.html_url
+        chalk.yellow('[DRY_RUN]'),
+        chalk.blue('Cancel:'),
+        run.id,
+        run.html_url
       );
       continue;
     }
 
-    log.info(chalk.blue('Cancel: ') + run.id + ' ' + run.html_url);
+    log.info(chalk.blue('Cancel: '), run.html_url);
     await api.actions.cancelWorkflowRun({ owner, repo, run_id: run.id });
   }
 
-  log.info(chalk.blue('Processing finished: ') + dryRun);
+  log.info(chalk.blue('Processing finished:'), dryRun);
 }
