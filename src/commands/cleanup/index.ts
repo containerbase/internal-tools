@@ -25,16 +25,13 @@ export async function run(): Promise<void> {
     info(`The head commit is: ${pushPayload.ref}`);
   }
 
-  for (const key of Object.keys(process.env).filter(k =>
-    k.startsWith('GITHUB_')
-  )) {
-    info(chalk.blue(key) + ': ' + process.env[key]);
-  }
+  // for (const key of Object.keys(process.env).filter(k =>
+  //   k.startsWith('GITHUB_')
+  // )) {
+  //   info(chalk.blue(key) + ': ' + process.env[key]);
+  // }
 
   // console.dir(context);
-
-  info(chalk.blue('branch: ') + branch);
-  info(chalk.blue('run_id: ') + run_id);
 
   const api = new GitHub(token);
 
@@ -59,6 +56,7 @@ export async function run(): Promise<void> {
   );
 
   for (const run of runs.workflow_runs) {
+    console.dir(run);
     if (run.status !== 'in_progress' && run.status !== 'queued') {
       continue;
     }
