@@ -2,7 +2,7 @@
 
 # Renovate docker builder action
 
-Github Action used to boild the [renovate](https://github.com/renovatebot/renovate) docker images
+Github Action used to build the [renovate](https://github.com/renovatebot/renovate) docker images
 
 ## Inputs
 
