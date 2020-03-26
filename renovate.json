@@ -5,6 +5,11 @@
     {
       "depTypeList": ["devDependencies"],
       "extends": [":automergeMinor"]
+    },
+    {
+      "packageNames": ["prettier"],
+      "packagePatterns": ["^@prettier\\/", "^prettier-plugin-"],
+      "groupName": "prettier packages"
     }
   ]
 }
