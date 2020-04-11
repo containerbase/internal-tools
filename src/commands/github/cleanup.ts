@@ -58,6 +58,10 @@ export async function run(): Promise<void> {
       log(chalk.yellow('Ignore me'), ':', chalk.grey(run.html_url));
       continue;
     }
+    if (run.run_number > wf.run_number) {
+      log(chalk.yellow('Ignore newer'), ':', chalk.grey(run.html_url));
+      continue;
+    }
     if (run.status !== 'in_progress' && run.status !== 'queued') {
       log(
         chalk.yellow(`Ignore state`),
