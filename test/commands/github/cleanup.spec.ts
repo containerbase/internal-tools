@@ -38,7 +38,7 @@ describe(getName(__filename), () => {
 
     scope = nock(apiUrl)
       .get(`${actions}/runs/1234`)
-      .reply(200, { workflow_url: `${actions}/workflows/53718` })
+      .reply(200, { workflow_url: `${actions}/workflows/53718`, run_number: 5 })
       .get(`${actions}/workflows/53718/runs?branch=test%2Fbranch`)
       .reply(200, {
         total_count: 500,
@@ -47,6 +47,7 @@ describe(getName(__filename), () => {
           { id: 1235, status: 'completed' },
           { id: 1236, event: 'pull_request', status: 'queued' },
           { id: 4321, event: 'push', status: 'queued' },
+          { id: 4322, event: 'push', status: 'queued', run_number: 6 },
         ],
       });
   });
