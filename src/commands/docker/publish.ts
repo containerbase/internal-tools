@@ -8,9 +8,7 @@ export const MultiArgsSplitRe = /\s*(?:;|$)\s*/;
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
   const image = getInput('image', { required: true });
-  let tags = getInput('tags')
-    ?.split(MultiArgsSplitRe)
-    .filter(Boolean);
+  let tags = getInput('tags')?.split(MultiArgsSplitRe).filter(Boolean);
 
   if (!tags?.length) {
     tags = ['latest'];

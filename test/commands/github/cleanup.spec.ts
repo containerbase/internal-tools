@@ -32,7 +32,7 @@ describe(getName(__filename), () => {
     nock.cleanAll();
     core.getInput.mockReturnValueOnce('token');
 
-    utils.getEnv.mockImplementation(r => env[r]);
+    utils.getEnv.mockImplementation((r) => env[r]);
 
     env = { ...defaultEnv };
 
@@ -52,9 +52,7 @@ describe(getName(__filename), () => {
   });
 
   it('works', async () => {
-    const scope2 = nock(apiUrl)
-      .post(`${actions}/runs/4321/cancel`)
-      .reply(200);
+    const scope2 = nock(apiUrl).post(`${actions}/runs/4321/cancel`).reply(200);
     await run();
     expect(scope.isDone()).toBe(true);
     expect(scope2.isDone()).toBe(true);
@@ -114,9 +112,7 @@ describe(getName(__filename), () => {
     expect.assertions(2);
 
     nock.cleanAll();
-    const scope = nock(apiUrl)
-      .get(`${actions}/runs/1234`)
-      .reply(200, {});
+    const scope = nock(apiUrl).get(`${actions}/runs/1234`).reply(200, {});
 
     try {
       await run();

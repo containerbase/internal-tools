@@ -36,7 +36,7 @@ describe(getName(__filename), () => {
   });
 
   it('catch error', async () => {
-    core.getInput.mockImplementationOnce(_ => {
+    core.getInput.mockImplementationOnce((_) => {
       throw new Error('test');
     });
     await run();
