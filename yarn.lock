@@ -525,10 +525,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@octokit/webhooks@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@octokit/webhooks/-/webhooks-7.1.1.tgz#38bd5fd3e85ee9146d49b4bc6d84b102b30a0fed"
-  integrity sha512-CzBtzdQx56t6d/4IrTn8TgsKHy8M4tQZX7RQXzDmkTvln14CKwTYl3Txf99h4uwZWb6RhD1jf3KEQDkJYv/2RQ==
+"@octokit/webhooks@7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@octokit/webhooks/-/webhooks-7.2.0.tgz#8faf0ba5198a87692f87a7826d789c5331adae75"
+  integrity sha512-HDE3AY8VhAsxCK1096BH4FiLybN3M4zkqPG/dFuk+43x7I6zsAZ3Z/XM4jQ/GjCVQFzymrlcjDsnCC2fv2fF7Q==
   dependencies:
     debug "^4.0.0"
 
