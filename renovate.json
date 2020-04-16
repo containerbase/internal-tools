@@ -7,9 +7,17 @@
       "extends": [":automergeMinor"]
     },
     {
+      "depTypeList": ["dependencies"],
+      "extends": [":automergePatch"]
+    },
+    {
       "packageNames": ["prettier"],
       "packagePatterns": ["^@prettier\\/", "^prettier-plugin-"],
       "groupName": "prettier packages"
+    },
+    {
+      "packageNames": ["renovate"],
+      "extends": [":automergeMinor"]
     }
   ]
 }
