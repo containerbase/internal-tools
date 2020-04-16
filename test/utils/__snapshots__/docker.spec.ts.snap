@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` build uses cache (dry-run) 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "buildx",
+      "build",
+      "--load",
+      "--tag renovate/renovate/base:latest",
+      "--cache-from=renovate/renovate/docker-build-cache:renovate-base-latest",
+      ".",
+    ],
+  ],
+]
+`;
+
+exports[` build uses cache 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "buildx",
+      "build",
+      "--load",
+      "--tag renovate/renovate/base:latest",
+      "--cache-from=renovate/renovate/docker-build-cache:renovate-base-latest",
+      "--cache-to=type=registry,ref=renovate/renovate/docker-build-cache:renovate-base-latest,mode=max",
+      ".",
+    ],
+  ],
+]
+`;
+
+exports[` build works 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "buildx",
+      "build",
+      "--load",
+      "--tag renovate/renovate/base:latest",
+      ".",
+    ],
+  ],
+]
+`;
+
+exports[` publish uptodate 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "inspect",
+      "--format='{{.Id}}'",
+      "renovate/renovate/base:latest",
+    ],
+  ],
+]
+`;
+
+exports[` publish works (dry-run) 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "inspect",
+      "--format='{{.Id}}'",
+      "renovate/renovate/base:latest",
+    ],
+  ],
+]
+`;
+
+exports[` publish works 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "inspect",
+      "--format='{{.Id}}'",
+      "renovate/renovate/base:latest",
+    ],
+  ],
+  Array [
+    "docker",
+    Array [
+      "push",
+      "renovate/renovate/base:latest",
+    ],
+  ],
+]
+`;

@@ -20,6 +20,10 @@ inputs:
     description: 'Github PAT, commands which needs a token will fail build without'
     required: false
     default:
+  config:
+    description: 'config file for docker-builder'
+    required: false
+    default:
 
 runs:
   using: 'node12'

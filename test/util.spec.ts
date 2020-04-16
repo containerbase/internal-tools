@@ -57,4 +57,18 @@ describe(getName(__filename), () => {
       expect(util.getEnv('PATH')).toBeDefined();
     });
   });
+
+  describe('readJson', () => {
+    afterEach(() => {
+      delete process.env.GITHUB_WORKSPACE;
+    });
+    it('works', async () => {
+      process.env.GITHUB_WORKSPACE = process.cwd();
+      expect(await util.readJson('.prettierrc.json')).toEqual({
+        singleQuote: true,
+        trailingComma: 'es5',
+      });
+      expect(util.getEnv('PATH')).toBeDefined();
+    });
+  });
 });

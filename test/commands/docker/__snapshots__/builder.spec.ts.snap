@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`build-only 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArgs": Array [
+        "YARN_VERSION=1.22.4",
+      ],
+      "cache": "docker-build-cache",
+      "image": "yarn",
+      "tag": "1.22.4",
+    },
+  ],
+]
+`;
+
+exports[`build-only 2`] = `Array []`;
+
+exports[`updates image (dry-run) 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArgs": Array [
+        "YARN_VERSION=1.5.0",
+      ],
+      "cache": "docker-build-cache",
+      "image": "yarn",
+      "tag": "1.5.0",
+    },
+  ],
+]
+`;
+
+exports[`updates image (dry-run) 2`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": true,
+      "image": "yarn",
+      "tag": "1.5.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": true,
+      "image": "yarn",
+      "tag": "latest",
+    },
+  ],
+]
+`;
+
+exports[`works npm 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArgs": Array [
+        "PNPM_VERSION=5.0.0",
+      ],
+      "cache": undefined,
+      "image": "pnpm",
+      "tag": "5.0.0",
+    },
+  ],
+  Array [
+    Object {
+      "buildArgs": Array [
+        "PNPM_VERSION=4.0.0-rc.24",
+      ],
+      "cache": undefined,
+      "image": "pnpm",
+      "tag": "4.0.0-rc.24",
+    },
+  ],
+]
+`;
+
+exports[`works npm 2`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "pnpm",
+      "tag": "5.0.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "pnpm",
+      "tag": "latest",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "pnpm",
+      "tag": "4.0.0-rc.24",
+    },
+  ],
+]
+`;
+
+exports[`works yarn 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArgs": Array [
+        "YARN_VERSION=1.22.4",
+      ],
+      "cache": "docker-build-cache",
+      "image": "yarn",
+      "tag": "1.22.4",
+    },
+  ],
+]
+`;
+
+exports[`works yarn 2`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "yarn",
+      "tag": "1.22.4",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "yarn",
+      "tag": "latest",
+    },
+  ],
+]
+`;

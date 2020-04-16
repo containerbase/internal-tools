@@ -2,6 +2,7 @@ import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import log from './utils/logger';
 import { getInput } from '@actions/core';
+import { join } from 'path';
 
 export type ExecOptions = _ExecOptions;
 
@@ -51,4 +52,10 @@ export function isDryRun(): boolean {
  */
 export function getEnv(key: string): string {
   return process.env[key] ?? '';
+}
+
+export async function readJson<T = unknown>(file: string): Promise<T> {
+  const path = join(getEnv('GITHUB_WORKSPACE'), file);
+  const res = await import(path);
+  return res?.default ?? res;
 }

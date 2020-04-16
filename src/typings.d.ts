@@ -10,3 +10,10 @@ declare module 'www-authenticate' {
   }
   export = wwwAuthenticate;
 }
+
+declare namespace NodeJS {
+  interface Global {
+    renovateCache: unknown;
+    repoCache: unknown;
+  }
+}
