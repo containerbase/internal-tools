@@ -22,7 +22,7 @@ export async function exec(
   let code: number;
 
   try {
-    startGroup(cmd);
+    startGroup(`${cmd} ${args.join(' ')}`);
     code = await _exec(cmd, args, {
       ...options,
       listeners: {
