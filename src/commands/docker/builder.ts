@@ -175,7 +175,7 @@ export async function run(): Promise<void> {
     log('GitHub Actions branch detected - Force building latest, no push');
     config.lastOnly = true;
   }
-  log(config);
+  log('config:', JSON.stringify(config));
   await generateImages(config);
 
   log.info(chalk.blue('Processing image finished:'));
