@@ -1,5 +1,6 @@
 {
   "datasource": "npm",
+  "versioning": "npm",
   "startVersion": "1.22.0",
-  "image": "yarn"
+  "ignoredVersions": ["1.9.0", "1.12.2", "2.0.0-rc.24", "2.0.0-rc.27"]
 }

@@ -184,6 +184,7 @@ jobs:
         uses: ./
         with:
           command: docker-builder
+          image: yarn
           dry-run: true
 
       - name: dummy-command

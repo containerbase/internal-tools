@@ -20,6 +20,7 @@ const version = '1.22.4';
 describe(getName(__filename), () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    core.getInput.mockReturnValueOnce('dummy');
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
   });
 

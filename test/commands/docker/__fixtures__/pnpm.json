@@ -2,6 +2,5 @@
   "datasource": "npm",
   "versioning": "npm",
   "startVersion": "3.0.0",
-  "image": "pnpm",
   "buildArg": "PNPM_VERSION"
 }
