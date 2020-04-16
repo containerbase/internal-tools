@@ -8,8 +8,9 @@ Array [
       "buildx",
       "build",
       "--load",
-      "--tag renovate/renovate/base:latest",
-      "--cache-from=renovate/renovate/docker-build-cache:renovate-base-latest",
+      "--tag renovate/base:latest",
+      "--build-arg DUMMY_VERSION=latest",
+      "--cache-from=renovate/docker-build-cache:base-latest",
       ".",
     ],
   ],
@@ -24,9 +25,9 @@ Array [
       "buildx",
       "build",
       "--load",
-      "--tag renovate/renovate/base:latest",
-      "--cache-from=renovate/renovate/docker-build-cache:renovate-base-latest",
-      "--cache-to=type=registry,ref=renovate/renovate/docker-build-cache:renovate-base-latest,mode=max",
+      "--tag renovate/base:latest",
+      "--cache-from=renovate/docker-build-cache:base-latest",
+      "--cache-to=type=registry,ref=renovate/docker-build-cache:base-latest,mode=max",
       ".",
     ],
   ],
@@ -41,7 +42,7 @@ Array [
       "buildx",
       "build",
       "--load",
-      "--tag renovate/renovate/base:latest",
+      "--tag renovate/base:latest",
       ".",
     ],
   ],
@@ -55,7 +56,7 @@ Array [
     Array [
       "inspect",
       "--format='{{.Id}}'",
-      "renovate/renovate/base:latest",
+      "renovate/base:latest",
     ],
   ],
 ]
@@ -68,7 +69,7 @@ Array [
     Array [
       "inspect",
       "--format='{{.Id}}'",
-      "renovate/renovate/base:latest",
+      "renovate/base:latest",
     ],
   ],
 ]
@@ -81,14 +82,14 @@ Array [
     Array [
       "inspect",
       "--format='{{.Id}}'",
-      "renovate/renovate/base:latest",
+      "renovate/base:latest",
     ],
   ],
   Array [
     "docker",
     Array [
       "push",
-      "renovate/renovate/base:latest",
+      "renovate/base:latest",
     ],
   ],
 ]

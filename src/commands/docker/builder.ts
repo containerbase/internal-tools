@@ -106,7 +106,7 @@ async function buildAndPush(
         image,
         tag,
         cache,
-        buildArgs: [`${buildArg}=${tag}`],
+        buildArg,
       });
       if (!buildOnly) {
         await publish({ image, tag, dryRun });

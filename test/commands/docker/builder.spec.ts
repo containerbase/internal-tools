@@ -90,7 +90,10 @@ describe(getName(__filename), () => {
 
   it('unstable releases', async () => {
     utils.readJson.mockReset();
-    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/pnpm.json'));
+    utils.readJson.mockResolvedValueOnce({
+      ...require('./__fixtures__/pnpm.json'),
+      ignoredVersions: ['3.5.4'],
+    });
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version: '3.5.4' }],
     });

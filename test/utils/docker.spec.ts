@@ -17,8 +17,6 @@ const utils = mocked(_utils);
 const res = { code: 0, stdout: '', stderr: '' };
 
 const registry = 'https://index.docker.io';
-const image = 'renovate/base';
-const cache = 'renovate/docker-build-cache';
 const digest =
   'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1';
 const tag = 'latest';
@@ -29,6 +27,7 @@ describe(getName(__filename), () => {
   });
 
   describe('getAuthHeaders', () => {
+    const image = 'renovate/base';
     const headers = {
       'www-authenticate':
         'Bearer realm="https://auth.docker.io/token",service="registry.docker.io",scope="repository:renovate/base:pull"',
@@ -76,6 +75,7 @@ describe(getName(__filename), () => {
   });
 
   describe('getRemoteImageId', () => {
+    const image = 'renovate/base';
     it('works', async () => {
       got
         .mockResolvedValueOnce(
@@ -144,6 +144,7 @@ describe(getName(__filename), () => {
   });
 
   describe('getLocalImageId', () => {
+    const image = 'renovate/base';
     it('works', async () => {
       utils.exec.mockResolvedValueOnce({
         ...res,
@@ -166,6 +167,8 @@ describe(getName(__filename), () => {
   });
 
   describe('build', () => {
+    const image = 'base';
+    const cache = 'docker-build-cache';
     it('works', async () => {
       utils.exec.mockResolvedValueOnce({
         ...res,
@@ -189,12 +192,13 @@ describe(getName(__filename), () => {
         ...res,
       });
 
-      await build({ image, cache, dryRun: true });
+      await build({ image, cache, dryRun: true, buildArg: 'DUMMY_VERSION' });
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
   });
 
   describe('publish', () => {
+    const image = 'base';
     beforeEach(() => {
       got
         .mockResolvedValueOnce(

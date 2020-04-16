@@ -106,7 +106,7 @@ export type BuildOptions = {
   cache?: string;
   tag?: string;
   dryRun?: boolean;
-  buildArgs?: string[];
+  buildArg?: string;
 };
 
 export async function build({
@@ -114,15 +114,13 @@ export async function build({
   cache,
   tag = 'latest',
   dryRun,
-  buildArgs = [],
+  buildArg,
 }: BuildOptions): Promise<void> {
-  const args = [
-    'buildx',
-    'build',
-    '--load',
-    `--tag renovate/${image}:${tag}`,
-    ...buildArgs,
-  ];
+  const args = ['buildx', 'build', '--load', `--tag renovate/${image}:${tag}`];
+
+  if (buildArg) {
+    args.push(`--build-arg ${buildArg}=${tag}`);
+  }
 
   if (cache) {
     const cacheImage = `renovate/${cache}:${image.replace(/\//g, '-')}-${tag}`;
