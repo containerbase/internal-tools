@@ -47,7 +47,84 @@ Array [
 ]
 `;
 
-exports[`works npm 1`] = `
+exports[`works dummy 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArg": "DUMMY_VERSION",
+      "cache": undefined,
+      "image": "dummy",
+      "tag": "1.9.0",
+    },
+  ],
+  Array [
+    Object {
+      "buildArg": "DUMMY_VERSION",
+      "cache": undefined,
+      "image": "dummy",
+      "tag": "1.12.2",
+    },
+  ],
+  Array [
+    Object {
+      "buildArg": "DUMMY_VERSION",
+      "cache": undefined,
+      "image": "dummy",
+      "tag": "2.0.0",
+    },
+  ],
+  Array [
+    Object {
+      "buildArg": "DUMMY_VERSION",
+      "cache": undefined,
+      "image": "dummy",
+      "tag": "2.0.0-rc.27",
+    },
+  ],
+]
+`;
+
+exports[`works dummy 2`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "1.9.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "1.12.2",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "latest",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "2.0.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "2.0.0-rc.27",
+    },
+  ],
+]
+`;
+
+exports[`works pnpm 1`] = `
 Array [
   Array [
     Object {
@@ -68,7 +145,7 @@ Array [
 ]
 `;
 
-exports[`works npm 2`] = `
+exports[`works pnpm 2`] = `
 Array [
   Array [
     Object {
