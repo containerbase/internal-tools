@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`build-only 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArg": "DUMMY_VERSION",
+      "cache": "docker-build-cache",
+      "image": "dummy",
+      "tag": "1.22.4",
+    },
+  ],
+]
+`;
+
+exports[`build-only 2`] = `Array []`;
+
+exports[`updates image (dry-run) 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArg": "DUMMY_VERSION",
+      "cache": "docker-build-cache",
+      "image": "dummy",
+      "tag": "1.5.0",
+    },
+  ],
+]
+`;
+
+exports[`updates image (dry-run) 2`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": true,
+      "image": "dummy",
+      "tag": "1.5.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": true,
+      "image": "dummy",
+      "tag": "latest",
+    },
+  ],
+]
+`;
+
+exports[`works npm 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArg": "PNPM_VERSION",
+      "cache": undefined,
+      "image": "dummy",
+      "tag": "5.0.0",
+    },
+  ],
+  Array [
+    Object {
+      "buildArg": "PNPM_VERSION",
+      "cache": undefined,
+      "image": "dummy",
+      "tag": "4.0.0-rc.24",
+    },
+  ],
+]
+`;
+
+exports[`works npm 2`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "5.0.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "latest",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "4.0.0-rc.24",
+    },
+  ],
+]
+`;
+
+exports[`works yarn 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArg": "DUMMY_VERSION",
+      "cache": "docker-build-cache",
+      "image": "dummy",
+      "tag": "1.22.4",
+    },
+  ],
+]
+`;
+
+exports[`works yarn 2`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "1.22.4",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "latest",
+    },
+  ],
+]
+`;

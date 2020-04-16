@@ -26,6 +26,7 @@
     "@octokit/webhooks": "7.2.0",
     "chalk": "4.0.0",
     "got": "10.7.0",
+    "renovate": "19.211.3",
     "strip-ansi": "6.0.0",
     "www-authenticate": "0.6.2"
   },

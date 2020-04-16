@@ -10,45 +10,44 @@ jest.mock('../../../src/utils/docker');
 const core = mocked(_core);
 const utils = mocked(_utils);
 const docker = mocked(_docker);
-const image = 'renovate/base';
+const image = 'base';
 const tag = 'latest';
-const digest =
-  'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1';
+// const digest =
+//   'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1';
 
 describe(getName(__filename), () => {
   beforeEach(() => {
     jest.clearAllMocks();
     core.getInput.mockReturnValueOnce(image);
-    docker.getLocalImageId.mockResolvedValueOnce(digest);
   });
 
-  it('uptodate', async () => {
-    docker.getRemoteImageId.mockResolvedValueOnce(digest);
-
+  it('works', async () => {
     await run();
 
-    expect(docker.getLocalImageId).toHaveBeenCalledWith(image, tag);
-    expect(docker.getRemoteImageId).toHaveBeenCalledWith(image, tag);
-    expect(utils.exec).not.toHaveBeenCalled();
+    expect(docker.publish).toHaveBeenCalledWith({
+      image,
+      tag,
+      dryRun: undefined,
+    });
   });
 
-  it('uptodate multiple', async () => {
+  it('works multiple', async () => {
     core.getInput.mockReturnValueOnce('test;latest');
-    docker.getLocalImageId.mockResolvedValueOnce(digest);
-    docker.getRemoteImageId
-      .mockResolvedValueOnce(digest)
-      .mockResolvedValueOnce(digest);
 
     await run();
 
     expect(core.getInput).toBeCalledTimes(2);
-    expect(docker.getLocalImageId).toHaveBeenNthCalledWith(1, image, 'test');
-    expect(docker.getLocalImageId).toHaveBeenNthCalledWith(2, image, tag);
-    expect(docker.getLocalImageId).toHaveBeenCalledTimes(2);
-    expect(docker.getRemoteImageId).toHaveBeenNthCalledWith(1, image, 'test');
-    expect(docker.getRemoteImageId).toHaveBeenNthCalledWith(2, image, tag);
-    expect(docker.getRemoteImageId).toHaveBeenCalledTimes(2);
-    expect(utils.exec).not.toHaveBeenCalled();
+    expect(docker.publish).toHaveBeenCalledTimes(2);
+    expect(docker.publish).toHaveBeenNthCalledWith(1, {
+      image,
+      tag: 'test',
+      dryRun: undefined,
+    });
+    expect(docker.publish).toHaveBeenNthCalledWith(2, {
+      image,
+      tag,
+      dryRun: undefined,
+    });
   });
 
   it('updates image', async () => {
@@ -58,22 +57,20 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(docker.getLocalImageId).toHaveBeenCalledWith(image, tag);
-    expect(docker.getRemoteImageId).toHaveBeenCalledWith(image, tag);
-    expect(utils.exec).toBeCalledTimes(1);
+    expect(docker.publish).toHaveBeenCalledWith({
+      image,
+      tag,
+      dryRun: undefined,
+    });
   });
 
   it('updates image (dry-run)', async () => {
     utils.isDryRun.mockReturnValueOnce(true);
-    docker.getLocalImageId.mockResolvedValueOnce(
-      'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2'
-    );
+
     await run();
 
     expect(core.getInput).toBeCalledTimes(2);
-    expect(docker.getLocalImageId).toHaveBeenCalledWith(image, tag);
-    expect(docker.getRemoteImageId).toHaveBeenCalledWith(image, tag);
-    expect(utils.exec).not.toHaveBeenCalled();
+    expect(docker.publish).toHaveBeenCalledWith({ image, tag, dryRun: true });
   });
 
   it('throws no image', async () => {

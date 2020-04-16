@@ -5,6 +5,8 @@ import {
   getAuthHeaders,
   getLocalImageId,
   DockerContentType,
+  build,
+  publish,
 } from '../../src/utils/docker';
 import * as _utils from '../../src/util';
 
@@ -15,9 +17,9 @@ const utils = mocked(_utils);
 const res = { code: 0, stdout: '', stderr: '' };
 
 const registry = 'https://index.docker.io';
-const image = 'renovate/base';
 const digest =
   'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1';
+const tag = 'latest';
 
 describe(getName(__filename), () => {
   beforeEach(() => {
@@ -25,6 +27,7 @@ describe(getName(__filename), () => {
   });
 
   describe('getAuthHeaders', () => {
+    const image = 'renovate/base';
     const headers = {
       'www-authenticate':
         'Bearer realm="https://auth.docker.io/token",service="registry.docker.io",scope="repository:renovate/base:pull"',
@@ -72,6 +75,7 @@ describe(getName(__filename), () => {
   });
 
   describe('getRemoteImageId', () => {
+    const image = 'renovate/base';
     it('works', async () => {
       got
         .mockResolvedValueOnce(
@@ -140,6 +144,7 @@ describe(getName(__filename), () => {
   });
 
   describe('getLocalImageId', () => {
+    const image = 'renovate/base';
     it('works', async () => {
       utils.exec.mockResolvedValueOnce({
         ...res,
@@ -158,6 +163,90 @@ describe(getName(__filename), () => {
       await expect(getLocalImageId(image)).rejects.toThrow(
         'Could not find local image id'
       );
+    });
+  });
+
+  describe('build', () => {
+    const image = 'base';
+    const cache = 'docker-build-cache';
+    it('works', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+      });
+
+      await build({ image });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+
+    it('uses cache', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+      });
+
+      await build({ image, cache });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+
+    it('uses cache (dry-run)', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+      });
+
+      await build({ image, cache, dryRun: true, buildArg: 'DUMMY_VERSION' });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+  });
+
+  describe('publish', () => {
+    const image = 'base';
+    beforeEach(() => {
+      got
+        .mockResolvedValueOnce(
+          partial<Response>({
+            headers: {},
+          })
+        )
+        .mockResolvedValueOnce(
+          partial<Response>({
+            body: {
+              config: {
+                digest,
+              },
+            },
+            headers: { 'content-type': DockerContentType.ManifestV2 },
+          })
+        );
+    });
+    it('works', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+        stdout:
+          'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2',
+      });
+
+      await publish({ image, tag });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+
+    it('works (dry-run)', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+        stdout:
+          'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2',
+      });
+
+      await publish({ image, tag, dryRun: true });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+
+    it('uptodate', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+        stdout: digest,
+      });
+
+      await publish({ image, tag });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
     });
   });
 });

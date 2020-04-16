@@ -44,7 +44,7 @@ jobs:
 
       # Clear caches on cache miss, otherwise they will grow indefinitely
       - name: Clear yarn cache
-        if: steps.yarn_cache_packages.outputs.cache-hit != 'true'
+        if: steps.yarn_cache_packages.outputs.cache-hit != 'true' && github.ref == 'refs/heads/master'
         run: yarn cache clean
 
   test:
@@ -178,6 +178,13 @@ jobs:
           command: docker-publish
           image: renovate/ubuntu
           tags: latest;18.04
+          dry-run: true
+
+      - name: docker-builder
+        uses: ./
+        with:
+          command: docker-builder
+          image: yarn
           dry-run: true
 
       - name: dummy-command

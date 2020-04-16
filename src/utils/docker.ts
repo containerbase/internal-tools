@@ -100,3 +100,71 @@ export async function getLocalImageId(
 
   return id;
 }
+
+export type BuildOptions = {
+  image: string;
+  cache?: string;
+  tag?: string;
+  dryRun?: boolean;
+  buildArg?: string;
+};
+
+export async function build({
+  image,
+  cache,
+  tag = 'latest',
+  dryRun,
+  buildArg,
+}: BuildOptions): Promise<void> {
+  const args = ['buildx', 'build', '--load', `--tag=renovate/${image}:${tag}`];
+
+  if (buildArg) {
+    args.push(`--build-arg=${buildArg}=${tag}`);
+  }
+
+  if (cache) {
+    const cacheImage = `renovate/${cache}:${image.replace(/\//g, '-')}-${tag}`;
+    args.push(`--cache-from=${cacheImage}`);
+
+    if (!dryRun) {
+      args.push(`--cache-to=type=registry,ref=${cacheImage},mode=max`);
+    }
+  }
+
+  await exec('docker', [...args, '.']);
+}
+
+type PublishOptions = {
+  image: string;
+  tag: string;
+  dryRun?: boolean;
+};
+
+export async function publish({
+  image,
+  tag,
+  dryRun,
+}: PublishOptions): Promise<void> {
+  const imageName = `renovate/${image}`;
+  const fullName = `${imageName}:${tag}`;
+  log.info(chalk.blue('Processing image:'), chalk.yellow(fullName));
+
+  log('Fetch new id');
+  const newId = await getLocalImageId(imageName, tag);
+
+  log('Fetch old id');
+  const oldId = await getRemoteImageId(imageName, tag);
+
+  if (oldId === newId) {
+    log('Image uptodate, no push nessessary:', chalk.yellow(oldId));
+    return;
+  }
+
+  log('Publish new image', `${oldId} => ${newId}`);
+  if (dryRun) {
+    log.warn(chalk.yellow('[DRY_RUN]'), chalk.blue('Would push:'), fullName);
+  } else {
+    await exec('docker', ['push', fullName]);
+  }
+  log.info(chalk.blue('Processing image finished:', newId));
+}
