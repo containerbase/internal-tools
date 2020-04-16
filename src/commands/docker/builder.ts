@@ -4,7 +4,7 @@ import { exec, isDryRun, readJson } from '../../util';
 import chalk from 'chalk';
 import log from '../../utils/logger';
 import { init as cacheInit } from 'renovate/dist/workers/global/cache';
-import { getPkgReleases } from 'renovate/dist/datasource';
+import { getPkgReleases, ReleaseResult } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
 import { build, publish } from '../../utils/docker';
 
@@ -18,15 +18,17 @@ if (!global.renovateCache) {
 global.repoCache = {};
 let latestStable: string | undefined;
 
-// async function tagExists(image: string, version: string): Promise<boolean> {
-//   const url = `https://index.docker.io/v1/repositories/renovate/${image}/tags/${version}`;
-//   try {
-//     await got(url);
-//     return true;
-//   } catch (err) {
-//     return false;
-//   }
-// }
+function getVersions(
+  versions: string[],
+  latestVersion?: string
+): ReleaseResult {
+  return {
+    latestVersion,
+    releases: versions.map((version) => ({
+      version,
+    })),
+  };
+}
 
 async function getBuildList({
   datasource,
@@ -36,14 +38,18 @@ async function getBuildList({
   ignoredVersions,
   lastOnly,
   forceUnstable,
+  versions,
+  latestVersion,
 }: Config): Promise<string[]> {
   log('Looking up versions');
   const ver = getVersioning(versioning || 'semver');
-  const pkgResult = await getPkgReleases({
-    datasource,
-    depName,
-    versioning,
-  });
+  const pkgResult = versions
+    ? getVersions(versions, latestVersion)
+    : await getPkgReleases({
+        datasource,
+        depName,
+        versioning,
+      });
   if (!pkgResult) {
     return [];
   }
@@ -138,7 +144,9 @@ type ConfigFile = {
   cache?: string;
   buildArg?: string;
   ignoredVersions?: string[];
-  forceUnstable: boolean;
+  forceUnstable?: boolean;
+  versions?: string[];
+  latestVersion?: string;
 };
 
 type Config = {

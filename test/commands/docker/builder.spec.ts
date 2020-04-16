@@ -35,12 +35,22 @@ describe(getName(__filename), () => {
     expect(docker.publish.mock.calls).toMatchSnapshot();
   });
 
-  it('works npm', async () => {
+  it('works pnpm', async () => {
     utils.readJson.mockReset();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/pnpm.json'));
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version: '5.0.0' }, { version: '4.0.0-rc.24' }],
     });
+
+    await run();
+
+    expect(docker.build.mock.calls).toMatchSnapshot();
+    expect(docker.publish.mock.calls).toMatchSnapshot();
+  });
+
+  it('works dummy', async () => {
+    utils.readJson.mockReset();
+    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
 
     await run();
 
