@@ -38,7 +38,7 @@ async function getBuildList({
   forceUnstable,
 }: Config): Promise<string[]> {
   log('Looking up versions');
-  const ver = getVersioning(versioning);
+  const ver = getVersioning(versioning || 'semver');
   const pkgResult = await getPkgReleases({
     datasource,
     depName,
@@ -133,18 +133,20 @@ async function buildAndPush(
 type ConfigFile = {
   datasource: string;
   depName?: string;
-  versioning: string;
+  versioning?: string;
   startVersion: string;
   image: string;
   cache?: string;
-  buildArg: string;
-  ignoredVersions: string[];
+  buildArg?: string;
+  ignoredVersions?: string[];
   forceUnstable: boolean;
 };
 
 type Config = {
-  depName: string;
+  buildArg: string;
   buildOnly: boolean;
+  depName: string;
+  ignoredVersions: string[];
   lastOnly: boolean;
   dryRun: boolean;
 } & ConfigFile;
@@ -164,6 +166,7 @@ export async function run(): Promise<void> {
     ...cfg,
     depName: cfg.depName ?? cfg.image,
     buildArg: cfg.buildArg ?? cfg.image.toUpperCase() + '_VERSION',
+    ignoredVersions: cfg.ignoredVersions ?? [],
     dryRun,
     lastOnly: getInput('last-only') == 'true',
     buildOnly: getInput('build-only') == 'true',
