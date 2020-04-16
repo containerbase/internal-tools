@@ -56,7 +56,9 @@ async function getBuildList({
     return [];
   }
   allVersions = allVersions
-    .filter((v) => !ver.isLessThanRange?.(v, startVersion))
+    .filter(
+      (v) => /* istanbul ignore next */ !ver.isLessThanRange?.(v, startVersion)
+    )
     .filter((v) => !ignoredVersions.includes(v));
   log(`Found ${allVersions.length} versions within our range`);
   latestStable =
@@ -154,7 +156,7 @@ async function generateImages(config: Config): Promise<void> {
 
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
-  const configFile = getInput('config', { required: true });
+  const configFile = getInput('config') || 'builder.json';
 
   const cfg = await readJson<ConfigFile>(configFile);
 

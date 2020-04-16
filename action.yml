@@ -23,7 +23,7 @@ inputs:
   config:
     description: 'config file for docker-builder'
     required: false
-    default:
+    default: builder.json
 
 runs:
   using: 'node12'

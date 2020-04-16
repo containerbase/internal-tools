@@ -1,0 +1,3 @@
+FROM scratch
+
+ARG YARN_VERSION=1.22.4

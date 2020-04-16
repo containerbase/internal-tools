@@ -57,5 +57,6 @@ export function getEnv(key: string): string {
 export async function readJson<T = unknown>(file: string): Promise<T> {
   const path = join(getEnv('GITHUB_WORKSPACE'), file);
   const res = await import(path);
+  // istanbul ignore next
   return res?.default ?? res;
 }

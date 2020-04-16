@@ -1,0 +1,5 @@
+{
+  "datasource": "npm",
+  "startVersion": "1.22.0",
+  "image": "yarn"
+}

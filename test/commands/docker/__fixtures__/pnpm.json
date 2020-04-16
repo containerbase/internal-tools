@@ -3,5 +3,6 @@
   "versioning": "npm",
   "startVersion": "3.0.0",
   "image": "pnpm",
-  "ignoredVersions": ["3.5.4"]
+  "ignoredVersions": ["3.5.4"],
+  "buildArg": "PNPM_VERSION"
 }

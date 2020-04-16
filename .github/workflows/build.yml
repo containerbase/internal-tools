@@ -180,6 +180,12 @@ jobs:
           tags: latest;18.04
           dry-run: true
 
+      - name: docker-builder
+        uses: ./
+        with:
+          command: docker-builder
+          dry-run: true
+
       - name: dummy-command
         uses: ./
         with:

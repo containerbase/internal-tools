@@ -20,7 +20,6 @@ const version = '1.22.4';
 describe(getName(__filename), () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    core.getInput.mockReturnValueOnce('config.json');
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
   });
 
@@ -49,6 +48,7 @@ describe(getName(__filename), () => {
   });
 
   it('build-only', async () => {
+    core.getInput.mockReturnValueOnce('config.json');
     core.getInput.mockReturnValueOnce('true');
     core.getInput.mockReturnValueOnce('true');
     datasources.getPkgReleases.mockResolvedValueOnce({
