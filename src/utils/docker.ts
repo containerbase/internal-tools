@@ -116,10 +116,10 @@ export async function build({
   dryRun,
   buildArg,
 }: BuildOptions): Promise<void> {
-  const args = ['buildx', 'build', '--load', `--tag renovate/${image}:${tag}`];
+  const args = ['buildx', 'build', '--load', `--tag=renovate/${image}:${tag}`];
 
   if (buildArg) {
-    args.push(`--build-arg ${buildArg}=${tag}`);
+    args.push(`--build-arg=${buildArg}=${tag}`);
   }
 
   if (cache) {
