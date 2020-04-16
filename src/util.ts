@@ -1,7 +1,7 @@
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import log from './utils/logger';
-import { getInput } from '@actions/core';
+import { getInput, startGroup, endGroup } from '@actions/core';
 import { join } from 'path';
 
 export type ExecOptions = _ExecOptions;
@@ -19,21 +19,26 @@ export async function exec(
 ): Promise<ExecResult> {
   let stdout = '';
   let stderr = '';
+  let code: number;
 
-  const code = await _exec(cmd, args, {
-    ...options,
-    listeners: {
-      stdout: (data: Buffer) => {
-        stdout += data.toString();
+  try {
+    startGroup(`${cmd} ${args.join(' ')}`);
+    code = await _exec(cmd, args, {
+      ...options,
+      listeners: {
+        stdout: (data: Buffer) => {
+          stdout += data.toString();
+        },
+        stderr: (data: Buffer) => {
+          stderr += data.toString();
+        },
       },
-      stderr: (data: Buffer) => {
-        stderr += data.toString();
-      },
-    },
-  });
-
+    });
+  } finally {
+    endGroup();
+  }
   if (code) {
-    log.error({ code, stdout, stderr });
+    log.error({ code });
     throw new Error('Command failed');
   }
 
