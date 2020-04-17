@@ -110,6 +110,7 @@ async function buildAndPush(
         tag,
         cache,
         buildArg,
+        dryRun,
       });
       if (!buildOnly) {
         await publish({ image, tag, dryRun });
