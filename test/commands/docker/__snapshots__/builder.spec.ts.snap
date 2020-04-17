@@ -4,9 +4,9 @@ exports[`build-only: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "DUMMY_VERSION",
+      "buildArg": "YARN_VERSION",
       "cache": "docker-build-cache",
-      "image": "dummy",
+      "image": "yarn",
       "tag": "1.22.4",
     },
   ],
@@ -19,9 +19,9 @@ exports[`last-only: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "DUMMY_VERSION",
+      "buildArg": "YARN_VERSION",
       "cache": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "12",
     },
   ],
@@ -33,14 +33,14 @@ Array [
   Array [
     Object {
       "dryRun": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "12",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "latest",
     },
   ],
@@ -51,9 +51,9 @@ exports[`updates image (dry-run): build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "DUMMY_VERSION",
+      "buildArg": "YARN_VERSION",
       "cache": "docker-build-cache",
-      "image": "dummy",
+      "image": "yarn",
       "tag": "1.5.0",
     },
   ],
@@ -65,14 +65,14 @@ Array [
   Array [
     Object {
       "dryRun": true,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "1.5.0",
     },
   ],
   Array [
     Object {
       "dryRun": true,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "latest",
     },
   ],
@@ -147,7 +147,7 @@ Array [
     Object {
       "buildArg": "PNPM_VERSION",
       "cache": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "5.0.0",
     },
   ],
@@ -155,7 +155,7 @@ Array [
     Object {
       "buildArg": "PNPM_VERSION",
       "cache": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "4.0.0-rc.24",
     },
   ],
@@ -167,21 +167,21 @@ Array [
   Array [
     Object {
       "dryRun": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "5.0.0",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "latest",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "4.0.0-rc.24",
     },
   ],
@@ -192,9 +192,9 @@ exports[`works yarn: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "DUMMY_VERSION",
+      "buildArg": "YARN_VERSION",
       "cache": "docker-build-cache",
-      "image": "dummy",
+      "image": "yarn",
       "tag": "1.22.4",
     },
   ],
@@ -206,14 +206,14 @@ Array [
   Array [
     Object {
       "dryRun": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "1.22.4",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
-      "image": "dummy",
+      "image": "yarn",
       "tag": "latest",
     },
   ],

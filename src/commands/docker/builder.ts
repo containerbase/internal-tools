@@ -135,6 +135,7 @@ async function buildAndPush(
 }
 type ConfigFile = {
   datasource: string;
+  image: string;
   depName?: string;
   versioning?: string;
   startVersion: string;
@@ -163,21 +164,30 @@ async function generateImages(config: Config): Promise<void> {
 
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
-  const image = getInput('image', { required: true });
   const configFile = getInput('config') || 'builder.json';
 
   const cfg = await readJson<ConfigFile>(configFile);
 
+  if (!cfg) {
+    throw new Error('missing-config');
+  }
+
+  // TODO: validation
+  if (!cfg.image) {
+    cfg.image = getInput('image', { required: true });
+  }
+
   const config: Config = {
     ...cfg,
-    image,
-    depName: cfg.depName ?? image,
-    buildArg: cfg.buildArg ?? image.toUpperCase() + '_VERSION',
+    image: cfg.image,
+    depName: cfg.depName ?? cfg.image,
+    buildArg: cfg.buildArg ?? cfg.image.toUpperCase() + '_VERSION',
     ignoredVersions: cfg.ignoredVersions ?? [],
     dryRun,
     lastOnly: getInput('last-only') == 'true',
     buildOnly: getInput('build-only') == 'true',
   };
+
   if (dryRun) {
     log('GitHub Actions branch detected - Force building latest, no push');
     config.lastOnly = true;

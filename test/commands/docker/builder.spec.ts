@@ -20,7 +20,8 @@ const version = '1.22.4';
 describe(getName(__filename), () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    core.getInput.mockReturnValueOnce('dummy');
+    core.getInput.mockReturnValueOnce('builder.json');
+    core.getInput.mockReturnValueOnce('yarn');
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
   });
 
@@ -49,7 +50,7 @@ describe(getName(__filename), () => {
   });
 
   it('works dummy', async () => {
-    utils.readJson.mockReset();
+    jest.resetAllMocks();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
 
     await run();
@@ -60,8 +61,10 @@ describe(getName(__filename), () => {
 
   it('last-only', async () => {
     utils.readJson.mockReset();
-    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
-    core.getInput.mockReturnValueOnce('config.json');
+    utils.readJson.mockResolvedValueOnce({
+      ...require('./__fixtures__/dummy.json'),
+      image: undefined,
+    });
     core.getInput.mockReturnValueOnce('true');
 
     await run();
@@ -71,7 +74,6 @@ describe(getName(__filename), () => {
   });
 
   it('build-only', async () => {
-    core.getInput.mockReturnValueOnce('config.json');
     core.getInput.mockReturnValueOnce('true');
     core.getInput.mockReturnValueOnce('true');
     datasources.getPkgReleases.mockResolvedValueOnce({
@@ -137,6 +139,32 @@ describe(getName(__filename), () => {
       await run();
     } catch (e) {
       expect(e.message).toEqual('failed');
+    }
+  });
+
+  it('throws missing-image', async () => {
+    expect.assertions(1);
+    jest.resetAllMocks();
+    utils.readJson.mockResolvedValueOnce({});
+    core.getInput.mockReturnValueOnce('');
+    core.getInput.mockImplementationOnce(() => {
+      throw new Error('missing-image');
+    });
+    try {
+      await run();
+    } catch (e) {
+      expect(e.message).toEqual('missing-image');
+    }
+  });
+  it('throws missing-config', async () => {
+    expect.assertions(1);
+    jest.resetAllMocks();
+    utils.readJson.mockResolvedValueOnce(undefined);
+
+    try {
+      await run();
+    } catch (e) {
+      expect(e.message).toEqual('missing-config');
     }
   });
 });

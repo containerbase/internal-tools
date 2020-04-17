@@ -1,6 +1,7 @@
 {
   "datasource": "docker",
   "versioning": "docker",
+  "image": "dummy",
   "startVersion": "10",
   "latestVersion": "12",
   "versions": ["10", "12", "12-alpine", "13", "13-alpine"]

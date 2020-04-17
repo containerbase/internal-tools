@@ -194,7 +194,6 @@ jobs:
         uses: ./
         with:
           command: docker-builder
-          image: yarn
           config: e2e/yarn.json
           dry-run: true
 
