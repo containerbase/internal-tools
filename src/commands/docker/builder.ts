@@ -18,12 +18,8 @@ if (!global.renovateCache) {
 global.repoCache = {};
 let latestStable: string | undefined;
 
-function getVersions(
-  versions: string[],
-  latestVersion?: string
-): ReleaseResult {
+function getVersions(versions: string[]): ReleaseResult {
   return {
-    latestVersion,
     releases: versions.map((version) => ({
       version,
     })),
@@ -44,7 +40,7 @@ async function getBuildList({
   log('Looking up versions');
   const ver = getVersioning(versioning || 'semver');
   const pkgResult = versions
-    ? getVersions(versions, latestVersion)
+    ? getVersions(versions)
     : await getPkgReleases({
         datasource,
         depName,
@@ -55,8 +51,7 @@ async function getBuildList({
   }
   let allVersions = pkgResult.releases
     .map((v) => v.version)
-    .filter((v) => ver.isVersion(v))
-    .map((v) => v.replace(/^v/, ''));
+    .filter((v) => ver.isVersion(v) && ver.isCompatible(v, startVersion));
   log(`Found ${allVersions.length} total versions`);
   if (!allVersions.length) {
     return [];
@@ -68,13 +63,15 @@ async function getBuildList({
     .filter((v) => !ignoredVersions.includes(v));
   log(`Found ${allVersions.length} versions within our range`);
   latestStable =
-    pkgResult.latestVersion || allVersions.filter((v) => ver.isStable(v)).pop();
-  log('Latest stable version is ' + latestStable);
+    latestVersion ||
+    pkgResult.latestVersion ||
+    allVersions.filter((v) => ver.isStable(v)).pop();
+  log('Latest stable version is ', latestStable);
   const lastVersion = allVersions[allVersions.length - 1];
-  log('Most recent version is ' + latestStable);
+  log('Most recent version is ', latestStable);
   if (lastOnly) {
     log('Building last version only');
-    allVersions = [lastVersion];
+    allVersions = [latestStable && !forceUnstable ? latestStable : lastVersion];
   }
   let buildList: string[] = [];
   if (forceUnstable) {

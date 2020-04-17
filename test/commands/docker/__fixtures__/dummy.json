@@ -1,6 +1,7 @@
 {
-  "datasource": "npm",
-  "startVersion": "1.5.0",
-  "latestVersion": "1.12.2",
-  "versions": ["1.9.0", "1.12.2", "2.0.0", "2.0.0-rc.27"]
+  "datasource": "docker",
+  "versioning": "docker",
+  "startVersion": "10",
+  "latestVersion": "12",
+  "versions": ["10", "12", "12-alpine", "13", "13-alpine"]
 }
