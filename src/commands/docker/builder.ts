@@ -1,6 +1,6 @@
 import { getInput } from '@actions/core';
 import os from 'os';
-import { exec, isDryRun, readJson } from '../../util';
+import { exec, isDryRun, readJson, readFile } from '../../util';
 import chalk from 'chalk';
 import log from '../../utils/logger';
 import { init as cacheInit } from 'renovate/dist/workers/global/cache';
@@ -162,6 +162,38 @@ async function generateImages(config: Config): Promise<void> {
   await buildAndPush(config, buildList);
 }
 
+const keys: (keyof ConfigFile)[] = [
+  'datasource',
+  'depName',
+  'buildArg',
+  'versioning',
+  'latestVersion',
+];
+
+function checkArgs(
+  cfg: ConfigFile,
+  groups: Record<string, string | undefined>
+): void {
+  for (const key of keys) {
+    if (!cfg[key] && groups[key]) {
+      cfg[key] = groups[key] as never;
+    }
+  }
+}
+
+async function readDockerConfig(cfg: ConfigFile): Promise<void> {
+  const dockerFileRe = new RegExp(
+    '# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s' +
+      '(?:ENV|ARG) (?<buildArg>.*?_VERSION)=(?<latestVersion>.*)\\s',
+    'g'
+  );
+  const dockerfile = await readFile('Dockerfile');
+  const m = dockerFileRe.exec(dockerfile);
+  if (m && m.groups) {
+    checkArgs(cfg, m.groups);
+  }
+}
+
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
   const configFile = getInput('config') || 'builder.json';
@@ -171,6 +203,8 @@ export async function run(): Promise<void> {
   if (!cfg) {
     throw new Error('missing-config');
   }
+
+  await readDockerConfig(cfg);
 
   // TODO: validation
   if (!cfg.image) {

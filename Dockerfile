@@ -1,3 +1,4 @@
 FROM scratch
 
-ARG YARN_VERSION=1.22.4
+# renovate: datasource=npm depName=yarn versioning=npm
+ARG YARN_VERSION=1.22.0
