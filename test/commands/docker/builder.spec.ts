@@ -142,7 +142,7 @@ describe(getName(__filename), () => {
     }
   });
 
-  it('throws', async () => {
+  it('throws missing-image', async () => {
     expect.assertions(1);
     jest.resetAllMocks();
     utils.readJson.mockResolvedValueOnce({});
@@ -154,6 +154,17 @@ describe(getName(__filename), () => {
       await run();
     } catch (e) {
       expect(e.message).toEqual('missing-image');
+    }
+  });
+  it('throws missing-config', async () => {
+    expect.assertions(1);
+    jest.resetAllMocks();
+    utils.readJson.mockResolvedValueOnce(undefined);
+
+    try {
+      await run();
+    } catch (e) {
+      expect(e.message).toEqual('missing-config');
     }
   });
 });

@@ -168,6 +168,10 @@ export async function run(): Promise<void> {
 
   const cfg = await readJson<ConfigFile>(configFile);
 
+  if (!cfg) {
+    throw new Error('missing-config');
+  }
+
   // TODO: validation
   if (!cfg.image) {
     cfg.image = getInput('image', { required: true });
