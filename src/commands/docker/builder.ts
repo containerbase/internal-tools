@@ -18,12 +18,8 @@ if (!global.renovateCache) {
 global.repoCache = {};
 let latestStable: string | undefined;
 
-function getVersions(
-  versions: string[],
-  latestVersion?: string
-): ReleaseResult {
+function getVersions(versions: string[]): ReleaseResult {
   return {
-    latestVersion,
     releases: versions.map((version) => ({
       version,
     })),
@@ -44,7 +40,7 @@ async function getBuildList({
   log('Looking up versions');
   const ver = getVersioning(versioning || 'semver');
   const pkgResult = versions
-    ? getVersions(versions, latestVersion)
+    ? getVersions(versions)
     : await getPkgReleases({
         datasource,
         depName,

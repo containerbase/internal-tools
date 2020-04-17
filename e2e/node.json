@@ -1,0 +1,7 @@
+{
+  "datasource": "docker",
+  "versioning": "docker",
+  "startVersion": "12",
+  "cache": "docker-build-cache",
+  "latestVersion": "12"
+}

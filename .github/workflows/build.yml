@@ -180,11 +180,20 @@ jobs:
           tags: latest;18.04
           dry-run: true
 
-      - name: docker-builder
+      - name: docker-builder (node)
+        uses: ./
+        with:
+          command: docker-builder
+          image: node
+          config: e2e/node.json
+          dry-run: true
+
+      - name: docker-builder (yarn)
         uses: ./
         with:
           command: docker-builder
           image: yarn
+          config: e2e/yarn.json
           dry-run: true
 
       - name: dummy-command
