@@ -51,8 +51,7 @@ async function getBuildList({
   }
   let allVersions = pkgResult.releases
     .map((v) => v.version)
-    .filter((v) => ver.isVersion(v))
-    .map((v) => v.replace(/^v/, ''));
+    .filter((v) => ver.isVersion(v) && ver.isCompatible(v, startVersion));
   log(`Found ${allVersions.length} total versions`);
   if (!allVersions.length) {
     return [];
@@ -67,12 +66,12 @@ async function getBuildList({
     latestVersion ||
     pkgResult.latestVersion ||
     allVersions.filter((v) => ver.isStable(v)).pop();
-  log('Latest stable version is ' + latestStable);
+  log('Latest stable version is ', latestStable);
   const lastVersion = allVersions[allVersions.length - 1];
-  log('Most recent version is ' + latestStable);
+  log('Most recent version is ', latestStable);
   if (lastOnly) {
     log('Building last version only');
-    allVersions = [lastVersion];
+    allVersions = [latestStable && !forceUnstable ? latestStable : lastVersion];
   }
   let buildList: string[] = [];
   if (forceUnstable) {

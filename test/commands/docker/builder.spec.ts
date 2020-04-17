@@ -19,7 +19,7 @@ const version = '1.22.4';
 
 describe(getName(__filename), () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
     core.getInput.mockReturnValueOnce('dummy');
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
   });
@@ -31,8 +31,8 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(docker.build.mock.calls).toMatchSnapshot();
-    expect(docker.publish.mock.calls).toMatchSnapshot();
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('works pnpm', async () => {
@@ -44,8 +44,8 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(docker.build.mock.calls).toMatchSnapshot();
-    expect(docker.publish.mock.calls).toMatchSnapshot();
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('works dummy', async () => {
@@ -54,8 +54,20 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(docker.build.mock.calls).toMatchSnapshot();
-    expect(docker.publish.mock.calls).toMatchSnapshot();
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
+  });
+
+  it('last-only', async () => {
+    utils.readJson.mockReset();
+    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
+    core.getInput.mockReturnValueOnce('config.json');
+    core.getInput.mockReturnValueOnce('true');
+
+    await run();
+
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('build-only', async () => {
@@ -68,8 +80,8 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(docker.build.mock.calls).toMatchSnapshot();
-    expect(docker.publish.mock.calls).toMatchSnapshot();
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('updates image (dry-run)', async () => {
@@ -80,11 +92,12 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(docker.build.mock.calls).toMatchSnapshot();
-    expect(docker.publish.mock.calls).toMatchSnapshot();
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('no releases', async () => {
+    datasources.getPkgReleases.mockResolvedValueOnce(null);
     await run();
 
     expect(docker.build.mock.calls).toEqual([]);

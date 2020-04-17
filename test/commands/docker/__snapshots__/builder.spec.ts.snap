@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`build-only 1`] = `
+exports[`build-only: build 1`] = `
 Array [
   Array [
     Object {
@@ -13,9 +13,41 @@ Array [
 ]
 `;
 
-exports[`build-only 2`] = `Array []`;
+exports[`build-only: publish 1`] = `Array []`;
 
-exports[`updates image (dry-run) 1`] = `
+exports[`last-only: build 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArg": "DUMMY_VERSION",
+      "cache": undefined,
+      "image": "dummy",
+      "tag": "12",
+    },
+  ],
+]
+`;
+
+exports[`last-only: publish 1`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "12",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "latest",
+    },
+  ],
+]
+`;
+
+exports[`updates image (dry-run): build 1`] = `
 Array [
   Array [
     Object {
@@ -28,7 +60,7 @@ Array [
 ]
 `;
 
-exports[`updates image (dry-run) 2`] = `
+exports[`updates image (dry-run): publish 1`] = `
 Array [
   Array [
     Object {
@@ -47,14 +79,14 @@ Array [
 ]
 `;
 
-exports[`works dummy 1`] = `
+exports[`works dummy: build 1`] = `
 Array [
   Array [
     Object {
       "buildArg": "DUMMY_VERSION",
       "cache": undefined,
       "image": "dummy",
-      "tag": "1.9.0",
+      "tag": "10",
     },
   ],
   Array [
@@ -62,7 +94,7 @@ Array [
       "buildArg": "DUMMY_VERSION",
       "cache": undefined,
       "image": "dummy",
-      "tag": "1.12.2",
+      "tag": "12",
     },
   ],
   Array [
@@ -70,34 +102,26 @@ Array [
       "buildArg": "DUMMY_VERSION",
       "cache": undefined,
       "image": "dummy",
-      "tag": "2.0.0",
-    },
-  ],
-  Array [
-    Object {
-      "buildArg": "DUMMY_VERSION",
-      "cache": undefined,
-      "image": "dummy",
-      "tag": "2.0.0-rc.27",
+      "tag": "13",
     },
   ],
 ]
 `;
 
-exports[`works dummy 2`] = `
+exports[`works dummy: publish 1`] = `
 Array [
   Array [
     Object {
       "dryRun": undefined,
       "image": "dummy",
-      "tag": "1.9.0",
+      "tag": "10",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
       "image": "dummy",
-      "tag": "1.12.2",
+      "tag": "12",
     },
   ],
   Array [
@@ -111,20 +135,13 @@ Array [
     Object {
       "dryRun": undefined,
       "image": "dummy",
-      "tag": "2.0.0",
-    },
-  ],
-  Array [
-    Object {
-      "dryRun": undefined,
-      "image": "dummy",
-      "tag": "2.0.0-rc.27",
+      "tag": "13",
     },
   ],
 ]
 `;
 
-exports[`works pnpm 1`] = `
+exports[`works pnpm: build 1`] = `
 Array [
   Array [
     Object {
@@ -145,7 +162,7 @@ Array [
 ]
 `;
 
-exports[`works pnpm 2`] = `
+exports[`works pnpm: publish 1`] = `
 Array [
   Array [
     Object {
@@ -171,7 +188,7 @@ Array [
 ]
 `;
 
-exports[`works yarn 1`] = `
+exports[`works yarn: build 1`] = `
 Array [
   Array [
     Object {
@@ -184,7 +201,7 @@ Array [
 ]
 `;
 
-exports[`works yarn 2`] = `
+exports[`works yarn: publish 1`] = `
 Array [
   Array [
     Object {
