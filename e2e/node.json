@@ -2,5 +2,6 @@
   "datasource": "docker",
   "versioning": "docker",
   "startVersion": "12",
-  "latestVersion": "12"
+  "latestVersion": "12",
+  "ignoredVersions": ["13"]
 }
