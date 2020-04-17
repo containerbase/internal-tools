@@ -68,7 +68,9 @@ async function getBuildList({
     .filter((v) => !ignoredVersions.includes(v));
   log(`Found ${allVersions.length} versions within our range`);
   latestStable =
-    pkgResult.latestVersion || allVersions.filter((v) => ver.isStable(v)).pop();
+    latestVersion ||
+    pkgResult.latestVersion ||
+    allVersions.filter((v) => ver.isStable(v)).pop();
   log('Latest stable version is ' + latestStable);
   const lastVersion = allVersions[allVersions.length - 1];
   log('Most recent version is ' + latestStable);
