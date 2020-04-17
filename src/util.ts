@@ -3,6 +3,10 @@ import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import log from './utils/logger';
 import { getInput, startGroup, endGroup } from '@actions/core';
 import { join } from 'path';
+import fs from 'fs';
+import { promisify } from 'util';
+
+const readFileAsync = promisify(fs.readFile);
 
 export type ExecOptions = _ExecOptions;
 
@@ -64,4 +68,9 @@ export async function readJson<T = unknown>(file: string): Promise<T> {
   const res = await import(path);
   // istanbul ignore next
   return res?.default ?? res;
+}
+
+export async function readFile(file: string): Promise<string> {
+  const path = join(getEnv('GITHUB_WORKSPACE'), file);
+  return await readFileAsync(path, 'utf8');
 }

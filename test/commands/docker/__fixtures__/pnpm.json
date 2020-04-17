@@ -1,6 +1,5 @@
 {
   "datasource": "npm",
-  "versioning": "npm",
   "startVersion": "3.0.0",
   "buildArg": "PNPM_VERSION"
 }

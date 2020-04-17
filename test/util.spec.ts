@@ -68,7 +68,16 @@ describe(getName(__filename), () => {
         singleQuote: true,
         trailingComma: 'es5',
       });
-      expect(util.getEnv('PATH')).toBeDefined();
+    });
+  });
+
+  describe('readFile', () => {
+    afterEach(() => {
+      delete process.env.GITHUB_WORKSPACE;
+    });
+    it('works', async () => {
+      process.env.GITHUB_WORKSPACE = process.cwd();
+      expect(await util.readFile('Dockerfile')).toMatchSnapshot();
     });
   });
 });

@@ -26,6 +26,9 @@ describe(getName(__filename), () => {
   });
 
   it('works yarn', async () => {
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=npm depName=yarn versioning=npm\nARG YARN_VERSION=${version}\n`
+    );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '2.0.0-rc.24' }],
     });

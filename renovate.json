@@ -18,6 +18,10 @@
     {
       "packageNames": ["renovate"],
       "extends": [":automergeMinor"]
+    },
+    {
+      "paths": ["+(Dockerfile)"],
+      "enabled": false
     }
   ]
 }
