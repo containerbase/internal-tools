@@ -97,8 +97,7 @@ describe(getName(__filename), () => {
     });
 
     it('multi (null)', async () => {
-      core.getInput.mockReturnValueOnce(undefined as never);
-      expect(util.getArg('dockerfile', { multi: true })).toEqual(undefined);
+      expect(util.getArg('dockerfile', { multi: true })).toEqual([]);
     });
   });
 });

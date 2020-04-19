@@ -224,7 +224,7 @@ export async function run(): Promise<void> {
     depName: cfg.depName ?? cfg.image,
     buildArg: cfg.buildArg ?? cfg.image.toUpperCase() + '_VERSION',
     buildArgs: getArg('build-args', { multi: true }),
-    tagSuffix: getArg('tag-suffix'),
+    tagSuffix: getArg('tag-suffix') || undefined,
     ignoredVersions: cfg.ignoredVersions ?? [],
     dryRun,
     lastOnly: getInput('last-only') == 'true',

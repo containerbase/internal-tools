@@ -5,7 +5,7 @@ Array [
   Array [
     Object {
       "buildArg": "YARN_VERSION",
-      "buildArgs": undefined,
+      "buildArgs": Array [],
       "cache": "docker-build-cache",
       "dryRun": undefined,
       "image": "yarn",
@@ -58,7 +58,7 @@ Array [
   Array [
     Object {
       "buildArg": "YARN_VERSION",
-      "buildArgs": undefined,
+      "buildArgs": Array [],
       "cache": "docker-build-cache",
       "dryRun": true,
       "image": "yarn",
@@ -153,7 +153,7 @@ Array [
   Array [
     Object {
       "buildArg": "PNPM_VERSION",
-      "buildArgs": undefined,
+      "buildArgs": Array [],
       "cache": undefined,
       "dryRun": undefined,
       "image": "yarn",
@@ -163,7 +163,7 @@ Array [
   Array [
     Object {
       "buildArg": "PNPM_VERSION",
-      "buildArgs": undefined,
+      "buildArgs": Array [],
       "cache": undefined,
       "dryRun": undefined,
       "image": "yarn",
@@ -204,7 +204,7 @@ Array [
   Array [
     Object {
       "buildArg": "YARN_VERSION",
-      "buildArgs": undefined,
+      "buildArgs": Array [],
       "cache": "docker-build-cache",
       "dryRun": undefined,
       "image": "yarn",

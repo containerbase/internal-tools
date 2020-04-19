@@ -77,18 +77,19 @@ export async function readFile(file: string): Promise<string> {
 
 export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 
-export function getArg(
-  name: string,
-  opts?: { required?: boolean }
-): string | undefined;
+export function getArg(name: string, opts?: { required?: boolean }): string;
 export function getArg(
   name: string,
   opts?: { required?: boolean; multi: true }
-): string[] | undefined;
+): string[];
 export function getArg(
   name: string,
   opts?: { required?: boolean; multi?: boolean }
-): string | string[] | undefined {
+): string | string[];
+export function getArg(
+  name: string,
+  opts?: { required?: boolean; multi?: boolean }
+): string | string[] {
   const val = getInput(name, opts);
-  return opts?.multi ? val?.split(MultiArgsSplitRe).filter(Boolean) : val;
+  return opts?.multi ? val.split(MultiArgsSplitRe).filter(Boolean) : val;
 }

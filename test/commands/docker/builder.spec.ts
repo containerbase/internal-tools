@@ -23,6 +23,7 @@ describe(getName(__filename), () => {
     core.getInput.mockReturnValueOnce('builder.json');
     core.getInput.mockReturnValueOnce('yarn');
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
+    utils.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
   });
 
   it('works yarn', async () => {
@@ -69,8 +70,8 @@ describe(getName(__filename), () => {
       image: undefined,
     });
     core.getInput.mockReturnValueOnce('true');
-    utils.getArg.mockReturnValueOnce(['IMAGE=slim'] as never);
-    utils.getArg.mockReturnValueOnce('slim' as never);
+    utils.getArg.mockReturnValueOnce(['IMAGE=slim']);
+    utils.getArg.mockReturnValueOnce('slim');
 
     await run();
 
