@@ -197,6 +197,15 @@ jobs:
           config: e2e/yarn.json
           dry-run: true
 
+      - name: docker-builder (pnpm)
+        uses: ./
+        with:
+          command: docker-builder
+          config: e2e/pnpm.json
+          tag-suffix: 'slim'
+          build-args: 'IMAGE=slim'
+          dry-run: true
+
       - name: dummy-command
         uses: ./
         with:

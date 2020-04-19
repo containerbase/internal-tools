@@ -174,7 +174,7 @@ describe(getName(__filename), () => {
         ...res,
       });
 
-      await build({ image });
+      await build({ image, buildArgs: [] });
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
 
@@ -192,7 +192,13 @@ describe(getName(__filename), () => {
         ...res,
       });
 
-      await build({ image, cache, dryRun: true, buildArg: 'DUMMY_VERSION' });
+      await build({
+        image,
+        cache,
+        dryRun: true,
+        buildArg: 'DUMMY_VERSION',
+        buildArgs: ['IMAGE=slim'],
+      });
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
   });

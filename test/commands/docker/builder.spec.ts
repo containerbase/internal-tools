@@ -69,6 +69,8 @@ describe(getName(__filename), () => {
       image: undefined,
     });
     core.getInput.mockReturnValueOnce('true');
+    utils.getArg.mockReturnValueOnce(['IMAGE=slim'] as never);
+    utils.getArg.mockReturnValueOnce('slim' as never);
 
     await run();
 

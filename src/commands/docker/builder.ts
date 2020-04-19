@@ -1,6 +1,6 @@
 import { getInput } from '@actions/core';
 import os from 'os';
-import { exec, isDryRun, readJson, readFile } from '../../util';
+import { exec, isDryRun, readJson, readFile, getArg } from '../../util';
 import chalk from 'chalk';
 import log from '../../utils/logger';
 import { init as cacheInit } from 'renovate/dist/workers/global/cache';
@@ -96,12 +96,13 @@ async function docker(cmd: string): Promise<void> {
 }
 
 async function buildAndPush(
-  { image, buildArg, buildOnly, cache, dryRun }: Config,
+  { image, buildArg, buildArgs, buildOnly, cache, dryRun, tagSuffix }: Config,
   versions: string[]
 ): Promise<void> {
   const built = [];
   const failed = [];
-  for (const tag of versions) {
+  for (const version of versions) {
+    let tag = [version, tagSuffix].filter(Boolean).join('-');
     const imageVersion = `renovate/${image}:${tag}`;
     log(`Building ${imageVersion}`);
     try {
@@ -110,20 +111,22 @@ async function buildAndPush(
         tag,
         cache,
         buildArg,
+        buildArgs,
         dryRun,
       });
       if (!buildOnly) {
         await publish({ image, tag, dryRun });
-        if (tag === latestStable) {
-          await docker(`tag ${imageVersion} renovate/${image}:latest`);
-          await publish({ image, tag: 'latest', dryRun });
+        if (version === latestStable) {
+          tag = tagSuffix ?? 'latest';
+          await docker(`tag ${imageVersion} renovate/${image}:${tag}`);
+          await publish({ image, tag, dryRun });
         }
       }
       log(`Built ${imageVersion}`);
-      built.push(tag);
+      built.push(version);
     } catch (err) {
       log.error(err);
-      failed.push(tag);
+      failed.push(version);
     }
   }
   if (built.length) {
@@ -150,7 +153,9 @@ type ConfigFile = {
 
 type Config = {
   buildArg: string;
+  buildArgs?: string[];
   buildOnly: boolean;
+  tagSuffix?: string;
   depName: string;
   image: string;
   ignoredVersions: string[];
@@ -183,9 +188,10 @@ function checkArgs(
 }
 
 async function readDockerConfig(cfg: ConfigFile): Promise<void> {
+  const buildArg = cfg.buildArg ?? '(?<buildArg>.*?_VERSION)';
   const dockerFileRe = new RegExp(
     '# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s' +
-      '(?:ENV|ARG) (?<buildArg>.*?_VERSION)=(?<latestVersion>.*)\\s',
+      `(?:ENV|ARG) ${buildArg}=(?<latestVersion>.*)\\s`,
     'g'
   );
   const dockerfile = await readFile('Dockerfile');
@@ -217,6 +223,8 @@ export async function run(): Promise<void> {
     image: cfg.image,
     depName: cfg.depName ?? cfg.image,
     buildArg: cfg.buildArg ?? cfg.image.toUpperCase() + '_VERSION',
+    buildArgs: getArg('build-args', { multi: true }),
+    tagSuffix: getArg('tag-suffix'),
     ignoredVersions: cfg.ignoredVersions ?? [],
     dryRun,
     lastOnly: getInput('last-only') == 'true',

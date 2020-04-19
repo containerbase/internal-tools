@@ -80,4 +80,25 @@ describe(getName(__filename), () => {
       expect(await util.readFile('Dockerfile')).toMatchSnapshot();
     });
   });
+
+  describe('getArg', () => {
+    it('single', async () => {
+      core.getInput.mockReturnValueOnce('test;latest;slim');
+      expect(util.getArg('dockerfile')).toBe('test;latest;slim');
+    });
+
+    it('multi', async () => {
+      core.getInput.mockReturnValueOnce('test;latest;slim');
+      expect(util.getArg('dockerfile', { multi: true })).toEqual([
+        'test',
+        'latest',
+        'slim',
+      ]);
+    });
+
+    it('multi (null)', async () => {
+      core.getInput.mockReturnValueOnce(undefined as never);
+      expect(util.getArg('dockerfile', { multi: true })).toEqual(undefined);
+    });
+  });
 });
