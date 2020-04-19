@@ -21,9 +21,25 @@ inputs:
     required: false
     default:
   config:
-    description: 'config file for docker-builder'
+    description: 'docker-builder: config file'
     required: false
     default: builder.json
+  last-only:
+    description: 'docker-builder: build only latest version'
+    required: false
+    default: false
+  build-only:
+    description: 'docker-builder: no docker push'
+    required: false
+    default: false
+  build-args:
+    description: 'docker-builder: additional docker build args'
+    required: false
+    default:
+  tag-suffix:
+    description: 'docker-builder: additional docker tag suffix to append'
+    required: false
+    default:
 
 runs:
   using: 'node12'

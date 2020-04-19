@@ -5,6 +5,7 @@ Array [
   Array [
     Object {
       "buildArg": "YARN_VERSION",
+      "buildArgs": Array [],
       "cache": "docker-build-cache",
       "dryRun": undefined,
       "image": "yarn",
@@ -21,10 +22,13 @@ Array [
   Array [
     Object {
       "buildArg": "YARN_VERSION",
+      "buildArgs": Array [
+        "IMAGE=slim",
+      ],
       "cache": undefined,
       "dryRun": undefined,
       "image": "yarn",
-      "tag": "12",
+      "tag": "12-slim",
     },
   ],
 ]
@@ -36,14 +40,14 @@ Array [
     Object {
       "dryRun": undefined,
       "image": "yarn",
-      "tag": "12",
+      "tag": "12-slim",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
       "image": "yarn",
-      "tag": "latest",
+      "tag": "slim",
     },
   ],
 ]
@@ -54,6 +58,7 @@ Array [
   Array [
     Object {
       "buildArg": "YARN_VERSION",
+      "buildArgs": Array [],
       "cache": "docker-build-cache",
       "dryRun": true,
       "image": "yarn",
@@ -80,6 +85,7 @@ Array [
   Array [
     Object {
       "buildArg": "DUMMY_VERSION",
+      "buildArgs": undefined,
       "cache": undefined,
       "dryRun": undefined,
       "image": "dummy",
@@ -89,6 +95,7 @@ Array [
   Array [
     Object {
       "buildArg": "DUMMY_VERSION",
+      "buildArgs": undefined,
       "cache": undefined,
       "dryRun": undefined,
       "image": "dummy",
@@ -98,6 +105,7 @@ Array [
   Array [
     Object {
       "buildArg": "DUMMY_VERSION",
+      "buildArgs": undefined,
       "cache": undefined,
       "dryRun": undefined,
       "image": "dummy",
@@ -145,6 +153,7 @@ Array [
   Array [
     Object {
       "buildArg": "PNPM_VERSION",
+      "buildArgs": Array [],
       "cache": undefined,
       "dryRun": undefined,
       "image": "yarn",
@@ -154,6 +163,7 @@ Array [
   Array [
     Object {
       "buildArg": "PNPM_VERSION",
+      "buildArgs": Array [],
       "cache": undefined,
       "dryRun": undefined,
       "image": "yarn",
@@ -194,6 +204,7 @@ Array [
   Array [
     Object {
       "buildArg": "YARN_VERSION",
+      "buildArgs": Array [],
       "cache": "docker-build-cache",
       "dryRun": undefined,
       "image": "yarn",

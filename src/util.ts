@@ -74,3 +74,22 @@ export async function readFile(file: string): Promise<string> {
   const path = join(getEnv('GITHUB_WORKSPACE'), file);
   return await readFileAsync(path, 'utf8');
 }
+
+export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
+
+export function getArg(name: string, opts?: { required?: boolean }): string;
+export function getArg(
+  name: string,
+  opts?: { required?: boolean; multi: true }
+): string[];
+export function getArg(
+  name: string,
+  opts?: { required?: boolean; multi?: boolean }
+): string | string[];
+export function getArg(
+  name: string,
+  opts?: { required?: boolean; multi?: boolean }
+): string | string[] {
+  const val = getInput(name, opts);
+  return opts?.multi ? val.split(MultiArgsSplitRe).filter(Boolean) : val;
+}

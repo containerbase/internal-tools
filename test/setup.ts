@@ -1,12 +1,17 @@
 import nock from 'nock';
+import * as _core from '@actions/core';
+import { mocked } from './utils';
 
 jest.mock('got');
 jest.mock('@actions/core');
 jest.mock('@actions/github');
 jest.mock('../src/utils/logger');
 
+const core = mocked(_core);
+
 beforeAll(() => {
   nock.disableNetConnect();
+  core.getInput.mockReturnValue('');
 });
 
 afterAll(() => {
