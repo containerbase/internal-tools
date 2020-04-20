@@ -1,4 +1,5 @@
 import { getInput } from '@actions/core';
+import is from '@sindresorhus/is';
 import os from 'os';
 import { exec, isDryRun, readJson, readFile, getArg } from '../../util';
 import chalk from 'chalk';
@@ -181,17 +182,16 @@ function checkArgs(
   groups: Record<string, string | undefined>
 ): void {
   for (const key of keys) {
-    if (!cfg[key] && groups[key]) {
+    if (!is.string(cfg[key]) && is.nonEmptyString(groups[key])) {
       cfg[key] = groups[key] as never;
     }
   }
 }
 
 async function readDockerConfig(cfg: ConfigFile): Promise<void> {
-  const buildArg = cfg.buildArg ?? '(?<buildArg>.*?_VERSION)';
   const dockerFileRe = new RegExp(
     '# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s' +
-      `(?:ENV|ARG) ${buildArg}=(?<latestVersion>.*)\\s`,
+      `(?:ENV|ARG) ${cfg.buildArg}=(?<latestVersion>.*)\\s`,
     'g'
   );
   const dockerfile = await readFile('Dockerfile');
@@ -207,22 +207,26 @@ export async function run(): Promise<void> {
 
   const cfg = await readJson<ConfigFile>(configFile);
 
-  if (!cfg) {
+  if (!is.object(cfg)) {
     throw new Error('missing-config');
   }
 
-  await readDockerConfig(cfg);
-
   // TODO: validation
-  if (!cfg.image) {
+  if (!is.string(cfg.image)) {
     cfg.image = getInput('image', { required: true });
   }
+
+  if (!is.string(cfg.buildArg)) {
+    cfg.buildArg = cfg.image.toUpperCase() + '_VERSION';
+  }
+
+  await readDockerConfig(cfg);
 
   const config: Config = {
     ...cfg,
     image: cfg.image,
     depName: cfg.depName ?? cfg.image,
-    buildArg: cfg.buildArg ?? cfg.image.toUpperCase() + '_VERSION',
+    buildArg: cfg.buildArg,
     buildArgs: getArg('build-args', { multi: true }),
     tagSuffix: getArg('tag-suffix') || undefined,
     ignoredVersions: cfg.ignoredVersions ?? [],
