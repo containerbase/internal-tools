@@ -43,8 +43,23 @@ describe(getName(__filename), () => {
   it('works pnpm', async () => {
     utils.readJson.mockReset();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/pnpm.json'));
+    utils.getArg.mockReturnValueOnce(['IMAGE=slim']);
+    utils.getArg.mockReturnValueOnce('slim');
     datasources.getPkgReleases.mockResolvedValueOnce({
-      releases: [{ version: '5.0.0' }, { version: '4.0.0-rc.24' }],
+      releases: [{ version: '4.0.0-rc.24' }, { version: '5.0.0' }],
+    });
+
+    await run();
+
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
+  });
+
+  it('works gradle', async () => {
+    utils.readJson.mockReset();
+    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/gradle.json'));
+    datasources.getPkgReleases.mockResolvedValueOnce({
+      releases: [{ version: '3.5.4' }, { version: '6.0' }],
     });
 
     await run();
@@ -94,7 +109,7 @@ describe(getName(__filename), () => {
   it('updates image yarn (dry-run)', async () => {
     utils.isDryRun.mockReturnValueOnce(true);
     datasources.getPkgReleases.mockResolvedValueOnce({
-      releases: [{ version }, { version: '1.5.0' }],
+      releases: [{ version: '1.5.0' }, { version }],
     });
 
     await run();

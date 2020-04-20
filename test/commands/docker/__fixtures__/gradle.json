@@ -1,0 +1,6 @@
+{
+  "datasource": "gradle-version",
+  "versioning": "gradle",
+  "image": "gradle",
+  "startVersion": "3.5.4"
+}
