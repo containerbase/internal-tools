@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`build-only: build 1`] = `
+exports[`build-only yarn: build 1`] = `
 Array [
   Array [
     Object {
@@ -15,45 +15,45 @@ Array [
 ]
 `;
 
-exports[`build-only: publish 1`] = `Array []`;
+exports[`build-only yarn: publish 1`] = `Array []`;
 
-exports[`last-only: build 1`] = `
+exports[`last-only dummy: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "YARN_VERSION",
+      "buildArg": "DUMMY_VERSION",
       "buildArgs": Array [
         "IMAGE=slim",
       ],
       "cache": undefined,
       "dryRun": undefined,
-      "image": "yarn",
+      "image": "dummy",
       "tag": "12-slim",
     },
   ],
 ]
 `;
 
-exports[`last-only: publish 1`] = `
+exports[`last-only dummy: publish 1`] = `
 Array [
   Array [
     Object {
       "dryRun": undefined,
-      "image": "yarn",
+      "image": "dummy",
       "tag": "12-slim",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
-      "image": "yarn",
+      "image": "dummy",
       "tag": "slim",
     },
   ],
 ]
 `;
 
-exports[`updates image (dry-run): build 1`] = `
+exports[`updates image yarn (dry-run): build 1`] = `
 Array [
   Array [
     Object {
@@ -68,7 +68,7 @@ Array [
 ]
 `;
 
-exports[`updates image (dry-run): publish 1`] = `
+exports[`updates image yarn (dry-run): publish 1`] = `
 Array [
   Array [
     Object {
@@ -156,7 +156,7 @@ Array [
       "buildArgs": Array [],
       "cache": undefined,
       "dryRun": undefined,
-      "image": "yarn",
+      "image": "pnpm",
       "tag": "5.0.0",
     },
   ],
@@ -166,7 +166,7 @@ Array [
       "buildArgs": Array [],
       "cache": undefined,
       "dryRun": undefined,
-      "image": "yarn",
+      "image": "pnpm",
       "tag": "4.0.0-rc.24",
     },
   ],
@@ -178,21 +178,21 @@ Array [
   Array [
     Object {
       "dryRun": undefined,
-      "image": "yarn",
+      "image": "pnpm",
       "tag": "5.0.0",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
-      "image": "yarn",
+      "image": "pnpm",
       "tag": "latest",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
-      "image": "yarn",
+      "image": "pnpm",
       "tag": "4.0.0-rc.24",
     },
   ],

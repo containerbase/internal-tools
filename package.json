@@ -24,6 +24,7 @@
     "@actions/github": "2.1.1",
     "@actions/io": "1.0.2",
     "@octokit/webhooks": "7.2.0",
+    "@sindresorhus/is": "2.1.1",
     "chalk": "4.0.0",
     "got": "10.7.0",
     "renovate": "19.212.4",

@@ -63,12 +63,11 @@ describe(getName(__filename), () => {
     expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
-  it('last-only', async () => {
+  it('last-only dummy', async () => {
     utils.readJson.mockReset();
-    utils.readJson.mockResolvedValueOnce({
-      ...require('./__fixtures__/dummy.json'),
-      image: undefined,
-    });
+    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
+    core.getInput.mockReset();
+    core.getInput.mockReturnValueOnce('builder.json');
     core.getInput.mockReturnValueOnce('true');
     utils.getArg.mockReturnValueOnce(['IMAGE=slim']);
     utils.getArg.mockReturnValueOnce('slim');
@@ -79,7 +78,7 @@ describe(getName(__filename), () => {
     expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
-  it('build-only', async () => {
+  it('build-only yarn', async () => {
     core.getInput.mockReturnValueOnce('true');
     core.getInput.mockReturnValueOnce('true');
     datasources.getPkgReleases.mockResolvedValueOnce({
@@ -92,7 +91,7 @@ describe(getName(__filename), () => {
     expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
-  it('updates image (dry-run)', async () => {
+  it('updates image yarn (dry-run)', async () => {
     utils.isDryRun.mockReturnValueOnce(true);
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '1.5.0' }],
