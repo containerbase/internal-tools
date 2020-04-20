@@ -62,7 +62,7 @@ Array [
       "cache": "docker-build-cache",
       "dryRun": true,
       "image": "yarn",
-      "tag": "1.5.0",
+      "tag": "1.22.4",
     },
   ],
 ]
@@ -74,7 +74,28 @@ Array [
     Object {
       "dryRun": true,
       "image": "yarn",
-      "tag": "1.5.0",
+      "tag": "1.22.4",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": true,
+      "image": "yarn",
+      "tag": "1",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": true,
+      "image": "yarn",
+      "tag": "1.22",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": true,
+      "image": "yarn",
+      "tag": "latest",
     },
   ],
 ]
@@ -148,26 +169,90 @@ Array [
 ]
 `;
 
+exports[`works gradle: build 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArg": "GRADLE_VERSION",
+      "buildArgs": Array [],
+      "cache": undefined,
+      "dryRun": undefined,
+      "image": "gradle",
+      "tag": "3.5.4",
+    },
+  ],
+  Array [
+    Object {
+      "buildArg": "GRADLE_VERSION",
+      "buildArgs": Array [],
+      "cache": undefined,
+      "dryRun": undefined,
+      "image": "gradle",
+      "tag": "6.0",
+    },
+  ],
+]
+`;
+
+exports[`works gradle: publish 1`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "gradle",
+      "tag": "3.5.4",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "gradle",
+      "tag": "3",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "gradle",
+      "tag": "3.5",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "gradle",
+      "tag": "6.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "gradle",
+      "tag": "6",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "gradle",
+      "tag": "latest",
+    },
+  ],
+]
+`;
+
 exports[`works pnpm: build 1`] = `
 Array [
   Array [
     Object {
       "buildArg": "PNPM_VERSION",
-      "buildArgs": Array [],
+      "buildArgs": Array [
+        "IMAGE=slim",
+      ],
       "cache": undefined,
       "dryRun": undefined,
       "image": "pnpm",
-      "tag": "5.0.0",
-    },
-  ],
-  Array [
-    Object {
-      "buildArg": "PNPM_VERSION",
-      "buildArgs": Array [],
-      "cache": undefined,
-      "dryRun": undefined,
-      "image": "pnpm",
-      "tag": "4.0.0-rc.24",
+      "tag": "5.0.0-slim",
     },
   ],
 ]
@@ -179,21 +264,28 @@ Array [
     Object {
       "dryRun": undefined,
       "image": "pnpm",
-      "tag": "5.0.0",
+      "tag": "5.0.0-slim",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
       "image": "pnpm",
-      "tag": "latest",
+      "tag": "5-slim",
     },
   ],
   Array [
     Object {
       "dryRun": undefined,
       "image": "pnpm",
-      "tag": "4.0.0-rc.24",
+      "tag": "5.0-slim",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "pnpm",
+      "tag": "slim",
     },
   ],
 ]
@@ -221,6 +313,20 @@ Array [
       "dryRun": undefined,
       "image": "yarn",
       "tag": "1.22.4",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "yarn",
+      "tag": "1",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "yarn",
+      "tag": "1.22",
     },
   ],
   Array [

@@ -39,7 +39,7 @@ async function getBuildList({
   latestVersion,
 }: Config): Promise<string[]> {
   log('Looking up versions');
-  const ver = getVersioning(versioning || 'semver');
+  const ver = getVersioning(versioning as never);
   const pkgResult = versions
     ? getVersions(versions)
     : await getPkgReleases({
@@ -97,13 +97,25 @@ async function docker(cmd: string): Promise<void> {
 }
 
 async function buildAndPush(
-  { image, buildArg, buildArgs, buildOnly, cache, dryRun, tagSuffix }: Config,
+  {
+    image,
+    buildArg,
+    buildArgs,
+    buildOnly,
+    cache,
+    dryRun,
+    tagSuffix,
+    versioning,
+  }: Config,
   versions: string[]
 ): Promise<void> {
-  const built = [];
-  const failed = [];
+  const built: string[] = [];
+  const failed: string[] = [];
+  const ver = getVersioning(versioning || 'semver');
   for (const version of versions) {
-    let tag = [version, tagSuffix].filter(Boolean).join('-');
+    const tag = is.nonEmptyString(tagSuffix)
+      ? `${version}-${tagSuffix}`
+      : version;
     const imageVersion = `renovate/${image}:${tag}`;
     log(`Building ${imageVersion}`);
     try {
@@ -117,8 +129,32 @@ async function buildAndPush(
       });
       if (!buildOnly) {
         await publish({ image, tag, dryRun });
+        let tags = [];
+
+        const minor = ver.getMinor(version);
+        const major = ver.getMajor(version);
+
+        if (is.number(major) && `${major}` !== version) {
+          tags.push(`${major}`);
+        }
+
+        if (
+          is.number(major) &&
+          is.number(minor) &&
+          `${major}.${minor}` !== version
+        ) {
+          tags.push(`${major}.${minor}`);
+        }
+
+        if (is.nonEmptyString(tagSuffix)) {
+          tags = tags.map((v) => `${v}-${tagSuffix}`);
+        }
+
         if (version === latestStable) {
-          tag = tagSuffix ?? 'latest';
+          tags.push(tagSuffix ?? 'latest');
+        }
+
+        for (const tag of tags) {
           await docker(`tag ${imageVersion} renovate/${image}:${tag}`);
           await publish({ image, tag, dryRun });
         }
