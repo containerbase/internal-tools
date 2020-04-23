@@ -31,7 +31,7 @@ export async function run(): Promise<void> {
     '--name',
     'renovatebot-builder',
     '--driver',
-    ' docker-container',
+    'docker-container',
     '--use'
   );
 
