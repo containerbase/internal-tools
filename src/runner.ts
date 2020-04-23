@@ -13,6 +13,10 @@ export default async function run(): Promise<void> {
         await (await import('./commands/docker/builder')).run();
         break;
 
+      case Commands.DockerConfig:
+        await (await import('./commands/docker/config')).run();
+        break;
+
       case Commands.DockerPublish:
         await (await import('./commands/docker/publish')).run();
         break;

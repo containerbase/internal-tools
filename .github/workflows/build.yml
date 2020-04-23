@@ -8,7 +8,6 @@ env:
   CI: true
   VERSION: v0
   NODE_VERSION: 12
-  BUILDX_VERSION: v0.3.1
   YARN_CACHE_KEY: v0
   # https://github.com/chalk/supports-color/issues/106
   FORCE_COLOR: true
@@ -127,12 +126,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: crazy-max/ghaction-docker-buildx@v1
-        with:
-          version: ${{ env.BUILDX_VERSION }}
-
       - name: Init platform
         id: init
         run: |
@@ -160,6 +153,11 @@ jobs:
       - run: yarn install --frozen-lockfile --link-duplicates
 
       - run: yarn compile
+
+      - name: docker-config
+        uses: ./
+        with:
+          command: docker-config
 
       - name: Prepare e2e
         run: |
