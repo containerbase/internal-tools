@@ -5,6 +5,7 @@ import { getInput, startGroup, endGroup } from '@actions/core';
 import { join } from 'path';
 import fs from 'fs';
 import { promisify } from 'util';
+import findUp = require('find-up');
 
 const readFileAsync = promisify(fs.readFile);
 
@@ -92,4 +93,22 @@ export function getArg(
 ): string | string[] {
   const val = getInput(name, opts);
   return opts?.multi ? val.split(MultiArgsSplitRe).filter(Boolean) : val;
+}
+
+let _pkg: Promise<string | undefined>;
+
+/**
+ * Resolve path for a file relative to renovate root directory (our package.json)
+ * @param file a file to resolve
+ */
+export async function resolveFile(file: string): Promise<string> {
+  if (!_pkg) {
+    _pkg = findUp('package.json', { cwd: __dirname, type: 'file' });
+  }
+  const pkg = await _pkg;
+  // istanbul ignore if
+  if (!pkg) {
+    throw new Error('Missing package.json');
+  }
+  return join(pkg, '../', file);
 }

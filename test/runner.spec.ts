@@ -4,6 +4,7 @@ import run from '../src/runner';
 import { Commands } from '../src/types';
 
 jest.mock('../src/commands/docker/publish');
+jest.mock('../src/commands/docker/config');
 jest.mock('../src/commands/docker/builder');
 jest.mock('../src/commands/github/cleanup');
 
@@ -22,15 +23,22 @@ describe(getName(__filename), () => {
     expect(core.setFailed).not.toHaveBeenCalled();
   });
 
-  it(Commands.DockerPublish, async () => {
-    core.getInput.mockReturnValueOnce(Commands.DockerPublish);
+  it(Commands.DockerBuilder, async () => {
+    core.getInput.mockReturnValueOnce(Commands.DockerBuilder);
     await run();
     expect(core.getInput).toBeCalledWith('command');
     expect(core.setFailed).not.toHaveBeenCalled();
   });
 
-  it(Commands.DockerBuilder, async () => {
-    core.getInput.mockReturnValueOnce(Commands.DockerBuilder);
+  it(Commands.DockerConfig, async () => {
+    core.getInput.mockReturnValueOnce(Commands.DockerConfig);
+    await run();
+    expect(core.getInput).toBeCalledWith('command');
+    expect(core.setFailed).not.toHaveBeenCalled();
+  });
+
+  it(Commands.DockerPublish, async () => {
+    core.getInput.mockReturnValueOnce(Commands.DockerPublish);
     await run();
     expect(core.getInput).toBeCalledWith('command');
     expect(core.setFailed).not.toHaveBeenCalled();

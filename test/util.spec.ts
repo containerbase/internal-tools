@@ -2,6 +2,7 @@ import { getName, mocked } from './utils';
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as util from '../src/util';
+import { existsSync } from 'fs';
 
 jest.mock('@actions/core');
 jest.mock('@actions/exec');
@@ -98,6 +99,18 @@ describe(getName(__filename), () => {
 
     it('multi (null)', async () => {
       expect(util.getArg('dockerfile', { multi: true })).toEqual([]);
+    });
+  });
+
+  describe('resolveFile', () => {
+    it('works', async () => {
+      const file = await util.resolveFile('bin/configure-docker.sh');
+      expect(file).toBeDefined();
+      expect(existsSync(file)).toBe(true);
+
+      const file2 = await util.resolveFile('bin/dummy.sh');
+      expect(file2).toBeDefined();
+      expect(existsSync(file2)).toBe(false);
     });
   });
 });
