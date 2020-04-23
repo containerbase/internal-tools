@@ -2,7 +2,6 @@
 
 set -e
 
-echo "::group::buildx-install"
 
 # renovate: datasource=github-releases depName=docker/buildx
 BUILDX_VERSION=v0.3.1
@@ -13,13 +12,10 @@ TARGET=$HOME/.docker/cli-plugins/docker-buildx
 curl -sSL https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.${BUILDX_DISTRO} -o $TARGET
 chmod +x $TARGET
 
-echo "::endgroup::"
 
-echo "::group::docker-config"
 sudo systemctl stop docker
 cat /etc/docker/daemon.json | jq '. + { "data-root": "/mnt/docker" }' | sudo tee /etc/docker/daemon.json
 sudo rm -rf /var/lib/docker
 sudo mkdir -p /mnt/docker
 sudo systemctl start docker || sudo journalctl -u docker.service
-echo "::endgroup::"
 
