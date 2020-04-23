@@ -1,4 +1,4 @@
-![Build status](https://github.com/renovatebot/gh-action/workflows/build/badge.svg)
+[![Build status](https://github.com/renovatebot/internal-tools/workflows/build/badge.svg)](https://github.com/renovatebot/internal-tools/actions?query=workflow%3Abuild)
 
 # Renovate docker builder action
 
@@ -25,7 +25,16 @@ Publish image to docker registry only if image id has changed.
 ```yml
 - uses: renovatebot/gh-action@v0
   with:
+    command: docker-publish
     image: renovate/ubuntu
     tags: latest;18.04
-  dry-run: ${{github.ref != 'refs/heads/master'}}
+    dry-run: ${{github.ref != 'refs/heads/master'}}
+```
+
+Configure docker with buildx on second harddrive.
+
+```yml
+- uses: renovatebot/gh-action@v0
+  with:
+    command: docker-config
 ```
