@@ -3,10 +3,6 @@
   "extends": ["github>renovatebot/presets-internal:docker-images"],
   "packageRules": [
     {
-      "depTypeList": ["devDependencies"],
-      "extends": [":automergeMinor"]
-    },
-    {
       "depTypeList": ["dependencies"],
       "extends": [":automergePatch"]
     },
@@ -17,7 +13,8 @@
     },
     {
       "packageNames": ["renovate"],
-      "extends": [":automergeMinor"]
+      "extends": [":automergeMinor"],
+      "masterIssueApproval": false
     },
     {
       "paths": ["+(Dockerfile)"],
