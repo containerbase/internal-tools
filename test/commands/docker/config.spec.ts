@@ -17,6 +17,6 @@ describe(getName(__filename), () => {
   it('works', async () => {
     utils.resolveFile.mockResolvedValue('./bin/file.sh');
     await run();
-    expect(_utils.exec).toBeCalledWith('./bin/file.sh', []);
+    expect(utils.exec.mock.calls).toMatchSnapshot();
   });
 });
