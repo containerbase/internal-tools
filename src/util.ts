@@ -5,6 +5,7 @@ import { getInput, startGroup, endGroup } from '@actions/core';
 import { join } from 'path';
 import fs from 'fs';
 import { promisify } from 'util';
+// eslint-disable-next-line import/default
 import findUp from 'find-up';
 
 const readFileAsync = promisify(fs.readFile);
