@@ -549,11 +549,6 @@
   dependencies:
     xregexp "4.2.0"
 
-"@sindresorhus/is@2.1.0", "@sindresorhus/is@^2.0.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-2.1.0.tgz#6ad4ca610f696098e92954ab431ff83bea0ce13f"
-  integrity sha512-lXKXfypKo644k4Da4yXkPCrwcvn6SlUW2X2zFbuflKHNjf0w9htru01bo26uMhleMXsDmnZ12eJLdrAZa9MANg==
-
 "@sindresorhus/is@2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-2.1.1.tgz#ceff6a28a5b4867c2dd4a1ba513de278ccbe8bb1"
@@ -563,6 +558,11 @@
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
+
+"@sindresorhus/is@^2.0.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-2.1.0.tgz#6ad4ca610f696098e92954ab431ff83bea0ce13f"
+  integrity sha512-lXKXfypKo644k4Da4yXkPCrwcvn6SlUW2X2zFbuflKHNjf0w9htru01bo26uMhleMXsDmnZ12eJLdrAZa9MANg==
 
 "@sinonjs/commons@^1.7.0":
   version "1.7.1"
@@ -6707,13 +6707,13 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@19.212.4:
-  version "19.212.4"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-19.212.4.tgz#d0dfc85f2e2e6ed9b3f5885c4159f40b8436f68f"
-  integrity sha512-Zv+j/Ucu/rrEZNEsdrRa0jwNpYSut9ZBP48Jvpv4t8eMD3g5KhDjuY2txeQKt67qBxpDsmy/9ojCR2Pyft+JzQ==
+renovate@19.216.9:
+  version "19.216.9"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-19.216.9.tgz#96716c41aac4e78d982e8518571eab37a9776981"
+  integrity sha512-kk8w36L0xm1XkfZuiZs1v5p22HZsoteFFuZdIdh4gALAgDAK2JlzDI2Go0COK464yzbWe1+CIbEbFK4ys5QcLw==
   dependencies:
     "@renovate/pep440" "0.4.1"
-    "@sindresorhus/is" "2.1.0"
+    "@sindresorhus/is" "2.1.1"
     "@snyk/ruby-semver" "2.1.0"
     "@yarnpkg/lockfile" "1.1.0"
     aws-sdk "2.656.0"
