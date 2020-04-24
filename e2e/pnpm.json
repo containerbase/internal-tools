@@ -1,5 +1,0 @@
-{
-  "image": "pnpm",
-  "startVersion": "4.0.0",
-  "buildArg": "PNPM_VERSION"
-}

@@ -195,11 +195,11 @@ jobs:
           config: e2e/yarn.json
           dry-run: true
 
-      - name: docker-builder (pnpm)
+      - name: docker-builder (python)
         uses: ./
         with:
           command: docker-builder
-          config: e2e/pnpm.json
+          config: e2e/python.json
           tag-suffix: 'slim'
           build-args: 'IMAGE=slim'
           dry-run: true

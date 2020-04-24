@@ -63,6 +63,7 @@ async function getBuildList({
     )
     .filter((v) => !ignoredVersions.includes(v));
   log(`Found ${allVersions.length} versions within our range`);
+  log(`Candidates:`, allVersions.join(' '));
   latestStable =
     latestVersion ||
     pkgResult.latestVersion ||
@@ -84,7 +85,7 @@ async function getBuildList({
   }
 
   if (buildList.length) {
-    log('Build list: ' + buildList.join(' '));
+    log('Build list: ', buildList.join(' '));
   } else {
     log('Nothing to build');
   }
