@@ -97,6 +97,10 @@ async function docker(cmd: string): Promise<void> {
   await exec('docker', cmd.split(' '));
 }
 
+function createTag(tagSuffix: string | undefined, version: string): string {
+  return is.nonEmptyString(tagSuffix) ? `${version}-${tagSuffix}` : version;
+}
+
 async function buildAndPush(
   {
     image,
@@ -107,16 +111,16 @@ async function buildAndPush(
     dryRun,
     tagSuffix,
     versioning,
+    majorMinor,
   }: Config,
   versions: string[]
 ): Promise<void> {
   const built: string[] = [];
   const failed: string[] = [];
   const ver = getVersioning(versioning || 'semver');
+  const tagsMap = new Map<string, string>();
   for (const version of versions) {
-    const tag = is.nonEmptyString(tagSuffix)
-      ? `${version}-${tagSuffix}`
-      : version;
+    const tag = createTag(tagSuffix, version);
     const imageVersion = `renovate/${image}:${tag}`;
     log(`Building ${imageVersion}`);
     try {
@@ -130,13 +134,12 @@ async function buildAndPush(
       });
       if (!buildOnly) {
         await publish({ image, tag, dryRun });
-        let tags = [];
 
         const minor = ver.getMinor(version);
         const major = ver.getMajor(version);
 
         if (is.number(major) && `${major}` !== version) {
-          tags.push(`${major}`);
+          tagsMap.set(createTag(tagSuffix, `${major}`), tag);
         }
 
         if (
@@ -144,20 +147,11 @@ async function buildAndPush(
           is.number(minor) &&
           `${major}.${minor}` !== version
         ) {
-          tags.push(`${major}.${minor}`);
-        }
-
-        if (is.nonEmptyString(tagSuffix)) {
-          tags = tags.map((v) => `${v}-${tagSuffix}`);
+          tagsMap.set(createTag(tagSuffix, `${major}.${minor}`), tag);
         }
 
         if (version === latestStable) {
-          tags.push(tagSuffix ?? 'latest');
-        }
-
-        for (const tag of tags) {
-          await docker(`tag ${imageVersion} renovate/${image}:${tag}`);
-          await publish({ image, tag, dryRun });
+          tagsMap.set(tagSuffix ?? 'latest', tag);
         }
       }
       log(`Built ${imageVersion}`);
@@ -167,14 +161,26 @@ async function buildAndPush(
       failed.push(version);
     }
   }
+
   if (built.length) {
     log('Build list: ' + built.join(' '));
   }
+
+  if (majorMinor) {
+    log.info(`Publish <major> and <major>.<minor> tags:`, tagsMap.size);
+    for (const [tag, source] of tagsMap) {
+      log(`Publish renovate/${image}:${tag}`);
+      await docker(`tag renovate/${image}:${source} renovate/${image}:${tag}`);
+      await publish({ image, tag, dryRun });
+    }
+  }
+
   if (failed.length) {
     log.warn('Failed list: ' + failed.join(' '));
     throw new Error('failed');
   }
 }
+
 type ConfigFile = {
   datasource: string;
   image: string;
@@ -197,6 +203,7 @@ type Config = {
   depName: string;
   image: string;
   ignoredVersions: string[];
+  majorMinor: boolean;
   lastOnly: boolean;
   dryRun: boolean;
 } & ConfigFile;
@@ -270,6 +277,7 @@ export async function run(): Promise<void> {
     dryRun,
     lastOnly: getInput('last-only') == 'true',
     buildOnly: getInput('build-only') == 'true',
+    majorMinor: getArg('major-minor') !== 'false',
   };
 
   if (dryRun) {

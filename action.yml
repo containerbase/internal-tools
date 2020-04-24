@@ -40,6 +40,10 @@ inputs:
     description: 'docker-builder: additional docker tag suffix to append'
     required: false
     default:
+  major-minor:
+    description: 'docker-builder: push major and major.minor tags'
+    required: false
+    default: true
 
 runs:
   using: 'node12'
