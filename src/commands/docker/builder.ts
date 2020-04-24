@@ -167,7 +167,7 @@ async function buildAndPush(
   }
 
   if (majorMinor) {
-    log(`Publish <major> and <major>.<minor> tags`);
+    log.info(`Publish <major> and <major>.<minor> tags:`, tagsMap.size);
     for (const [tag, source] of tagsMap) {
       log(`Publish renovate/${image}:${tag}`);
       await docker(`tag renovate/${image}:${source} renovate/${image}:${tag}`);
