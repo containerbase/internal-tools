@@ -3,6 +3,7 @@ import wwwAuthenticate from 'www-authenticate';
 import chalk from 'chalk';
 import log from './logger';
 import { exec } from '../util';
+import is from '@sindresorhus/is/dist';
 
 const registry = 'https://index.docker.io';
 
@@ -104,6 +105,7 @@ export async function getLocalImageId(
 export type BuildOptions = {
   image: string;
   cache?: string;
+  cacheTags?: string[];
   tag?: string;
   dryRun?: boolean;
   buildArg?: string;
@@ -113,6 +115,7 @@ export type BuildOptions = {
 export async function build({
   image,
   cache,
+  cacheTags,
   tag = 'latest',
   dryRun,
   buildArg,
@@ -129,11 +132,17 @@ export async function build({
   }
 
   if (cache) {
-    const cacheImage = `renovate/${cache}:${image.replace(/\//g, '-')}-${tag}`;
-    args.push(`--cache-from=${cacheImage}`);
+    const cacheImage = `renovate/${cache}:${image.replace(/\//g, '-')}`;
+    args.push(`--cache-from=${cacheImage}-${tag}`);
+
+    if (is.array(cacheTags)) {
+      for (const ctag of cacheTags) {
+        args.push(`--cache-from=${cacheImage}-${ctag}`);
+      }
+    }
 
     if (!dryRun) {
-      args.push(`--cache-to=type=registry,ref=${cacheImage},mode=max`);
+      args.push(`--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max`);
     }
   }
 

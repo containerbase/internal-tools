@@ -195,6 +195,7 @@ describe(getName(__filename), () => {
       await build({
         image,
         cache,
+        cacheTags: ['dummy'],
         dryRun: true,
         buildArg: 'DUMMY_VERSION',
         buildArgs: ['IMAGE=slim'],
