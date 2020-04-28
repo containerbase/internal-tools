@@ -12,9 +12,12 @@
       "groupName": "prettier packages"
     },
     {
+      "description": "Automerge renovate minor and patch updates",
       "packageNames": ["renovate"],
-      "extends": [":automergeMinor"],
-      "masterIssueApproval": false
+      "updateTypes": ["minor", "patch"],
+      "automerge": true,
+      "masterIssueApproval": false,
+      "separateMinorPatch": false
     },
     {
       "paths": ["+(Dockerfile)"],
