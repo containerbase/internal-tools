@@ -4,8 +4,9 @@ exports[`build-only yarn: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "YARN_VERSION",
-      "buildArgs": Array [],
+      "buildArgs": Array [
+        "YARN_VERSION=1.22.4",
+      ],
       "cache": "docker-build-cache",
       "cacheTags": Array [
         "latest",
@@ -26,9 +27,9 @@ exports[`last-only dummy: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "DUMMY_VERSION",
       "buildArgs": Array [
         "IMAGE=slim",
+        "DUMMY_VERSION=12",
       ],
       "cache": undefined,
       "cacheTags": Array [
@@ -58,8 +59,9 @@ exports[`updates image yarn (dry-run): build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "YARN_VERSION",
-      "buildArgs": Array [],
+      "buildArgs": Array [
+        "YARN_VERSION=1.22.4",
+      ],
       "cache": "docker-build-cache",
       "cacheTags": Array [
         "latest",
@@ -111,8 +113,9 @@ exports[`works dummy: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "DUMMY_VERSION",
-      "buildArgs": undefined,
+      "buildArgs": Array [
+        "DUMMY_VERSION=10",
+      ],
       "cache": undefined,
       "cacheTags": Array [
         "latest",
@@ -124,8 +127,9 @@ Array [
   ],
   Array [
     Object {
-      "buildArg": "DUMMY_VERSION",
-      "buildArgs": undefined,
+      "buildArgs": Array [
+        "DUMMY_VERSION=12",
+      ],
       "cache": undefined,
       "cacheTags": Array [
         "latest",
@@ -137,8 +141,9 @@ Array [
   ],
   Array [
     Object {
-      "buildArg": "DUMMY_VERSION",
-      "buildArgs": undefined,
+      "buildArgs": Array [
+        "DUMMY_VERSION=13",
+      ],
       "cache": undefined,
       "cacheTags": Array [
         "latest",
@@ -188,8 +193,9 @@ exports[`works gradle: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "GRADLE_VERSION",
-      "buildArgs": Array [],
+      "buildArgs": Array [
+        "GRADLE_VERSION=3.5.4",
+      ],
       "cache": undefined,
       "cacheTags": Array [
         "latest",
@@ -203,8 +209,9 @@ Array [
   ],
   Array [
     Object {
-      "buildArg": "GRADLE_VERSION",
-      "buildArgs": Array [],
+      "buildArgs": Array [
+        "GRADLE_VERSION=6.0",
+      ],
       "cache": undefined,
       "cacheTags": Array [
         "latest",
@@ -269,9 +276,9 @@ exports[`works pnpm: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "PNPM_VERSION",
       "buildArgs": Array [
         "IMAGE=slim",
+        "PNPM_VERSION=5.0.0",
       ],
       "cache": undefined,
       "cacheTags": Array [
@@ -324,8 +331,9 @@ exports[`works yarn: build 1`] = `
 Array [
   Array [
     Object {
-      "buildArg": "YARN_VERSION",
-      "buildArgs": Array [],
+      "buildArgs": Array [
+        "YARN_VERSION=1.22.4",
+      ],
       "cache": "docker-build-cache",
       "cacheTags": Array [
         "latest",
