@@ -182,7 +182,6 @@ describe(getName(__filename), () => {
         cache,
         cacheTags: ['dummy'],
         dryRun: true,
-        buildArg: 'DUMMY_VERSION',
         buildArgs: ['IMAGE=slim'],
       });
       expect(utils.exec.mock.calls).toMatchSnapshot();

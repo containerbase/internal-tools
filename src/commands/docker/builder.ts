@@ -153,8 +153,7 @@ async function buildAndPush(
         tag,
         cache,
         cacheTags,
-        buildArg,
-        buildArgs,
+        buildArgs: [...(buildArgs ?? []), `${buildArg}=${version}`],
         dryRun,
       });
       if (!buildOnly) {
