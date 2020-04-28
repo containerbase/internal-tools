@@ -559,10 +559,10 @@
   dependencies:
     type-detect "4.0.8"
 
-"@snyk/ruby-semver@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@snyk/ruby-semver/-/ruby-semver-2.1.0.tgz#d76cc02fc20860c224da2646fe9cc1bb0b0d1d15"
-  integrity sha512-u8ez8kWyqge+N+FxRDx/uPBmcHzY7BMfODvzEVeoTOeoD0CHPymEaVlkEKA8ZHtxzXjUzPIl2I8f2siZEzLjYg==
+"@snyk/ruby-semver@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@snyk/ruby-semver/-/ruby-semver-2.1.2.tgz#5c85a388d927a86c6ea3022b02ba77c4cac1098b"
+  integrity sha512-hYiNnwzNJ5DYM9JydeK3d2rd0lupgB/r5Nh154uazsV6EJn+lcba49X8+pdMMQIBhGQNvLtWLqYpeGfG07WcGQ==
   dependencies:
     lodash "^4.17.14"
 
@@ -1089,10 +1089,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-aws-sdk@2.656.0:
-  version "2.656.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.656.0.tgz#0d74664ddbf30701073be9f9913ee7266afef3b4"
-  integrity sha512-UzqDvvt6i7gpuzEdK0GT/JOfBJcsCPranzZWdQ9HR4+5E0m5kf5gybZ6OX+UseIAE2/WND6Dv0aHgiI21AKenw==
+aws-sdk@2.662.0:
+  version "2.662.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.662.0.tgz#c41c809648104b8aba6276e12eb7ad43a6fca40d"
+  integrity sha512-emZOIKHCV2EHByRNAm7d++1ugzRpLx4WhMm+T9ydy/OyKcOGVAAMPVW0Mib5GXuWpC6A6aE7ACi3pZTjK9LMQA==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -1751,10 +1751,10 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-5.0.0.tgz#dbf1909b49e5044f8fdaf0adc809f0c0722bdfd0"
-  integrity sha512-JrDGPAKjMGSP1G0DUoaceEJ3DZgAfr/q6X7FVk4+U5KxUSKviYGM2k6zWkfyyBHy5rAtzgYJFa1ro2O9PtoxwQ==
+commander@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-5.1.0.tgz#46abbd1652f8e059bddaef99bbdcb2ad9cf179ae"
+  integrity sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
 
 commander@~2.20.3:
   version "2.20.3"
@@ -6688,23 +6688,23 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@19.216.9:
-  version "19.216.9"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-19.216.9.tgz#96716c41aac4e78d982e8518571eab37a9776981"
-  integrity sha512-kk8w36L0xm1XkfZuiZs1v5p22HZsoteFFuZdIdh4gALAgDAK2JlzDI2Go0COK464yzbWe1+CIbEbFK4ys5QcLw==
+renovate@19.221.0:
+  version "19.221.0"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-19.221.0.tgz#bcc9fe94bf56617c2aefb8c76b518ea6e0c3f6b6"
+  integrity sha512-Qyd94/7dSKpTLMxZgBVPLvz92VbZYWNksinNayA8p4Nb1DNGP7Nt0rz1K3dGzWo2N83ZZ7vNdXKlmg6oDIf2+g==
   dependencies:
     "@renovate/pep440" "0.4.1"
     "@sindresorhus/is" "2.1.1"
-    "@snyk/ruby-semver" "2.1.0"
+    "@snyk/ruby-semver" "2.1.2"
     "@yarnpkg/lockfile" "1.1.0"
-    aws-sdk "2.656.0"
+    aws-sdk "2.662.0"
     azure-devops-node-api "10.1.1"
     bunyan "1.8.12"
     cacache "15.0.0"
     chalk "4.0.0"
     changelog-filename-regex "2.0.1"
     clean-git-ref "2.0.1"
-    commander "5.0.0"
+    commander "5.1.0"
     conventional-commits-detector "1.0.2"
     convert-hrtime "3.0.0"
     deepmerge "4.2.2"
