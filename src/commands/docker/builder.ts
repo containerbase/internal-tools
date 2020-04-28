@@ -124,35 +124,41 @@ async function buildAndPush(
     const imageVersion = `renovate/${image}:${tag}`;
     log(`Building ${imageVersion}`);
     try {
+      const minor = ver.getMinor(version);
+      const major = ver.getMajor(version);
+      const cacheTags: string[] = [tagSuffix ?? 'latest'];
+
+      if (is.number(major) && `${major}` !== version) {
+        const nTag = createTag(tagSuffix, `${major}`);
+        tagsMap.set(nTag, tag);
+        cacheTags.push(nTag);
+      }
+
+      if (
+        is.number(major) &&
+        is.number(minor) &&
+        `${major}.${minor}` !== version
+      ) {
+        const nTag = createTag(tagSuffix, `${major}.${minor}`);
+        tagsMap.set(nTag, tag);
+        cacheTags.push(nTag);
+      }
+
+      if (version === latestStable) {
+        tagsMap.set(tagSuffix ?? 'latest', tag);
+      }
+
       await build({
         image,
         tag,
         cache,
+        cacheTags,
         buildArg,
         buildArgs,
         dryRun,
       });
       if (!buildOnly) {
         await publish({ image, tag, dryRun });
-
-        const minor = ver.getMinor(version);
-        const major = ver.getMajor(version);
-
-        if (is.number(major) && `${major}` !== version) {
-          tagsMap.set(createTag(tagSuffix, `${major}`), tag);
-        }
-
-        if (
-          is.number(major) &&
-          is.number(minor) &&
-          `${major}.${minor}` !== version
-        ) {
-          tagsMap.set(createTag(tagSuffix, `${major}.${minor}`), tag);
-        }
-
-        if (version === latestStable) {
-          tagsMap.set(tagSuffix ?? 'latest', tag);
-        }
       }
       log(`Built ${imageVersion}`);
       built.push(version);
@@ -171,7 +177,9 @@ async function buildAndPush(
     for (const [tag, source] of tagsMap) {
       log(`Publish renovate/${image}:${tag}`);
       await docker(`tag renovate/${image}:${source} renovate/${image}:${tag}`);
-      await publish({ image, tag, dryRun });
+      if (!buildOnly) {
+        await publish({ image, tag, dryRun });
+      }
     }
   }
 

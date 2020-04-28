@@ -3,6 +3,7 @@ import wwwAuthenticate from 'www-authenticate';
 import chalk from 'chalk';
 import log from './logger';
 import { exec } from '../util';
+import is from '@sindresorhus/is';
 
 const registry = 'https://index.docker.io';
 
@@ -104,6 +105,7 @@ export async function getLocalImageId(
 export type BuildOptions = {
   image: string;
   cache?: string;
+  cacheTags?: string[];
   tag?: string;
   dryRun?: boolean;
   buildArg?: string;
@@ -113,6 +115,7 @@ export type BuildOptions = {
 export async function build({
   image,
   cache,
+  cacheTags,
   tag = 'latest',
   dryRun,
   buildArg,
@@ -120,20 +123,26 @@ export async function build({
 }: BuildOptions): Promise<void> {
   const args = ['buildx', 'build', '--load', `--tag=renovate/${image}:${tag}`];
 
-  if (buildArg) {
+  if (is.nonEmptyString(buildArg)) {
     args.push(`--build-arg=${buildArg}=${tag}`);
   }
 
-  if (buildArgs) {
+  if (is.nonEmptyArray(buildArgs)) {
     args.push(...buildArgs.map((b) => `--build-arg=${b}`));
   }
 
-  if (cache) {
-    const cacheImage = `renovate/${cache}:${image.replace(/\//g, '-')}-${tag}`;
-    args.push(`--cache-from=${cacheImage}`);
+  if (is.string(cache)) {
+    const cacheImage = `renovate/${cache}:${image.replace(/\//g, '-')}`;
+    args.push(`--cache-from=${cacheImage}-${tag}`);
+
+    if (is.nonEmptyArray(cacheTags)) {
+      for (const ctag of cacheTags) {
+        args.push(`--cache-from=${cacheImage}-${ctag}`);
+      }
+    }
 
     if (!dryRun) {
-      args.push(`--cache-to=type=registry,ref=${cacheImage},mode=max`);
+      args.push(`--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max`);
     }
   }
 

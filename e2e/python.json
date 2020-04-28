@@ -3,5 +3,6 @@
   "startVersion": "3.7.0",
   "latestVersion": "3.7.5",
   "buildArg": "PYTHON_VERSION",
+  "cache": "docker-build-cache",
   "ignoredVersions": ["3.7.0b1", "3.8.0b1"]
 }
