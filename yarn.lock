@@ -535,13 +535,6 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@octokit/webhooks@7.2.0":
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@octokit/webhooks/-/webhooks-7.2.0.tgz#8faf0ba5198a87692f87a7826d789c5331adae75"
-  integrity sha512-HDE3AY8VhAsxCK1096BH4FiLybN3M4zkqPG/dFuk+43x7I6zsAZ3Z/XM4jQ/GjCVQFzymrlcjDsnCC2fv2fF7Q==
-  dependencies:
-    debug "^4.0.0"
-
 "@renovate/pep440@0.4.1":
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/@renovate/pep440/-/pep440-0.4.1.tgz#0b0d2c30547f3ecc6ac0083cd7afd15db04979be"
@@ -2005,7 +1998,7 @@ debug@^3.1.0:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1:
+debug@^4.0.1, debug@^4.1.0, debug@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
