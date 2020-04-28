@@ -1,5 +1,5 @@
 import { getName, partial, mocked } from '../utils';
-import _got, { Response, HTTPError, NormalizedOptions } from 'got';
+import _got, { Response, HTTPError } from 'got';
 import {
   getRemoteImageId,
   getAuthHeaders,
@@ -104,10 +104,9 @@ describe(getName(__filename), () => {
           })
         )
         .mockRejectedValueOnce(
-          Object.assign(
-            new HTTPError(partial<Response>(), partial<NormalizedOptions>()),
-            { response: { statusCode: 404 } }
-          )
+          Object.assign(new HTTPError(partial<Response>()), {
+            response: { statusCode: 404 },
+          })
         );
       expect(await getRemoteImageId(image)).toEqual('<none>');
     });
