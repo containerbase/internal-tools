@@ -3,7 +3,7 @@ import wwwAuthenticate from 'www-authenticate';
 import chalk from 'chalk';
 import log from './logger';
 import { exec } from '../util';
-import is from '@sindresorhus/is/dist';
+import is from '@sindresorhus/is';
 
 const registry = 'https://index.docker.io';
 
@@ -123,19 +123,19 @@ export async function build({
 }: BuildOptions): Promise<void> {
   const args = ['buildx', 'build', '--load', `--tag=renovate/${image}:${tag}`];
 
-  if (buildArg) {
+  if (is.nonEmptyString(buildArg)) {
     args.push(`--build-arg=${buildArg}=${tag}`);
   }
 
-  if (buildArgs) {
+  if (is.nonEmptyArray(buildArgs)) {
     args.push(...buildArgs.map((b) => `--build-arg=${b}`));
   }
 
-  if (cache) {
+  if (is.string(cache)) {
     const cacheImage = `renovate/${cache}:${image.replace(/\//g, '-')}`;
     args.push(`--cache-from=${cacheImage}-${tag}`);
 
-    if (is.array(cacheTags)) {
+    if (is.nonEmptyArray(cacheTags)) {
       for (const ctag of cacheTags) {
         args.push(`--cache-from=${cacheImage}-${ctag}`);
       }
