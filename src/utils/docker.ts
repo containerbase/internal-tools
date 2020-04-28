@@ -5,9 +5,9 @@ import log from './logger';
 import { exec } from '../util';
 import is from '@sindresorhus/is';
 
-const registry = 'https://index.docker.io';
+export const registry = 'https://index.docker.io';
 
-type DockerManifestV2 = {
+export type DockerManifestV2 = {
   schemaVersion: number;
   config: {
     digest: string;

@@ -1,5 +1,4 @@
-import { getName, partial, mocked } from '../utils';
-import _got, { Response, HTTPError } from 'got';
+import { getName, mocked } from '../utils';
 import {
   getRemoteImageId,
   getAuthHeaders,
@@ -7,138 +6,125 @@ import {
   DockerContentType,
   build,
   publish,
+  registry,
 } from '../../src/utils/docker';
 import * as _utils from '../../src/util';
+import nock from 'nock';
 
 jest.mock('../../src/util');
 
-const got: jest.Mock<Promise<Response>> = _got as never;
 const utils = mocked(_utils);
 const res = { code: 0, stdout: '', stderr: '' };
 
-const registry = 'https://index.docker.io';
 const digest =
   'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1';
 const tag = 'latest';
+const realm = 'https://auth.docker.io';
 
 describe(getName(__filename), () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    nock.cleanAll();
   });
 
+  afterEach(() => {
+    nock.abortPendingRequests();
+  });
   describe('getAuthHeaders', () => {
     const image = 'renovate/base';
     const headers = {
-      'www-authenticate':
-        'Bearer realm="https://auth.docker.io/token",service="registry.docker.io",scope="repository:renovate/base:pull"',
+      'www-authenticate': `Bearer realm="${realm}/token",service="registry.docker.io",scope="repository:${image}:pull"`,
     };
     it('works', async () => {
-      got
-        .mockResolvedValueOnce(
-          partial<Response>({
-            headers,
-          })
-        )
-        .mockResolvedValueOnce(
-          partial<Response>({
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            body: { access_token: 'XXX' },
-          })
-        );
+      nock(registry).get('/v2/').reply(200, {}, headers);
+      nock(realm)
+        .get(`/token?service=registry.docker.io&scope=repository:${image}:pull`)
+        .reply(200, { access_token: 'XXX' });
       expect(await getAuthHeaders(registry, image)).toEqual({
         authorization: 'Bearer XXX',
       });
+
+      expect(nock.isDone()).toBe(true);
     });
     it('fails with auth', async () => {
-      got
-        .mockResolvedValueOnce(
-          partial<Response>({
-            headers,
-          })
-        )
-        .mockResolvedValueOnce(
-          partial<Response>({
-            body: {},
-          })
-        );
+      nock(registry).get('/v2/').reply(200, {}, headers);
+      nock(realm)
+        .get(`/token?service=registry.docker.io&scope=repository:${image}:pull`)
+        .reply(200, {});
       await expect(getAuthHeaders(registry, image)).rejects.toThrow(
         'Failed to obtain docker registry token'
       );
+
+      expect(nock.isDone()).toBe(true);
     });
 
     it('fails with http error', async () => {
-      got.mockRejectedValueOnce(new Error('404'));
+      nock(registry).get('/v2/').reply(200, {}, headers);
+      nock(realm)
+        .get(`/token?service=registry.docker.io&scope=repository:${image}:pull`)
+        .reply(418);
       await expect(getAuthHeaders(registry, image)).rejects.toThrow(
         'Failed to obtain docker registry token'
       );
+
+      expect(nock.isDone()).toBe(true);
     });
   });
 
   describe('getRemoteImageId', () => {
     const image = 'renovate/base';
     it('works', async () => {
-      got
-        .mockResolvedValueOnce(
-          partial<Response>({
-            headers: {},
-          })
-        )
-        .mockResolvedValueOnce(
-          partial<Response>({
-            body: {
-              config: {
-                digest,
-              },
+      nock(registry)
+        .get('/v2/')
+        .reply(200, {})
+        .get(`/v2/${image}/manifests/${tag}`)
+        .reply(
+          200,
+          {
+            config: {
+              digest,
             },
-            headers: { 'content-type': DockerContentType.ManifestV2 },
-          })
+          },
+          { 'content-type': DockerContentType.ManifestV2 }
         );
       expect(await getRemoteImageId(image)).toEqual(digest);
+      expect(nock.isDone()).toBe(true);
     });
 
     it('return <none> on 404', async () => {
-      got
-        .mockResolvedValueOnce(
-          partial<Response>({
-            headers: {},
-          })
-        )
-        .mockRejectedValueOnce(
-          Object.assign(new HTTPError(partial<Response>()), {
-            response: { statusCode: 404 },
-          })
-        );
+      nock(registry)
+        .get('/v2/')
+        .reply(200)
+        .get(`/v2/${image}/manifests/${tag}`)
+        .reply(404);
+
       expect(await getRemoteImageId(image)).toEqual('<none>');
+      expect(nock.isDone()).toBe(true);
     });
 
     it('throws', async () => {
-      got
-        .mockResolvedValueOnce(
-          partial<Response>({
-            headers: {},
-          })
-        )
-        .mockRejectedValueOnce(new Error('500'));
+      nock(registry)
+        .get('/v2/')
+        .reply(200)
+        .get(`/v2/${image}/manifests/${tag}`)
+        .reply(418);
       await expect(getRemoteImageId(image)).rejects.toThrow(
         'Could not find remote image id'
       );
+      expect(nock.isDone()).toBe(true);
     });
 
     it('throws unsupported', async () => {
-      got
-        .mockResolvedValueOnce(
-          partial<Response>({
-            headers: {},
-          })
-        )
-        .mockResolvedValueOnce(
-          partial<Response>({
-            headers: { 'content-type': DockerContentType.ManifestV1 },
-          })
-        );
+      nock(registry)
+        .get('/v2/')
+        .reply(200, {})
+        .get(`/v2/${image}/manifests/${tag}`)
+        .reply(200, {}, { 'content-type': DockerContentType.ManifestV1 });
+
       await expect(getRemoteImageId(image)).rejects.toThrow(
         'Could not find remote image id'
       );
+      expect(nock.isDone()).toBe(true);
     });
   });
 
@@ -206,23 +192,21 @@ describe(getName(__filename), () => {
   describe('publish', () => {
     const image = 'base';
     beforeEach(() => {
-      got
-        .mockResolvedValueOnce(
-          partial<Response>({
-            headers: {},
-          })
-        )
-        .mockResolvedValueOnce(
-          partial<Response>({
-            body: {
-              config: {
-                digest,
-              },
+      nock(registry)
+        .get('/v2/')
+        .reply(200, {})
+        .get(`/v2/renovate/${image}/manifests/${tag}`)
+        .reply(
+          200,
+          {
+            config: {
+              digest,
             },
-            headers: { 'content-type': DockerContentType.ManifestV2 },
-          })
+          },
+          { 'content-type': DockerContentType.ManifestV2 }
         );
     });
+
     it('works', async () => {
       utils.exec.mockResolvedValueOnce({
         ...res,
@@ -232,6 +216,8 @@ describe(getName(__filename), () => {
 
       await publish({ image, tag });
       expect(utils.exec.mock.calls).toMatchSnapshot();
+
+      expect(nock.isDone()).toBe(true);
     });
 
     it('works (dry-run)', async () => {
@@ -243,6 +229,8 @@ describe(getName(__filename), () => {
 
       await publish({ image, tag, dryRun: true });
       expect(utils.exec.mock.calls).toMatchSnapshot();
+
+      expect(nock.isDone()).toBe(true);
     });
 
     it('uptodate', async () => {
@@ -253,6 +241,8 @@ describe(getName(__filename), () => {
 
       await publish({ image, tag });
       expect(utils.exec.mock.calls).toMatchSnapshot();
+
+      expect(nock.isDone()).toBe(true);
     });
   });
 });
