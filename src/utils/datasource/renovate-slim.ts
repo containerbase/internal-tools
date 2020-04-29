@@ -4,7 +4,6 @@ import {
   GetReleasesConfig,
 } from 'renovate/dist/datasource';
 import { compare, valid } from 'semver';
-import log from '../logger';
 
 export const id = 'renovate-slim';
 
@@ -31,11 +30,9 @@ export async function getReleases(
         valid(version, { loose: false, includePrerelease: false }) === null ||
         suffix !== 'slim'
       ) {
-        log('skiping: ', release.version);
         continue;
       }
 
-      log('use: ', release.version);
       versions.add(version);
 
       ret.releases.push({ ...release, version });
