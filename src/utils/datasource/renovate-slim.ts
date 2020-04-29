@@ -14,6 +14,7 @@ export async function getReleases(
   const ret = await getPkgReleases({
     ...cfg,
     depName: 'renovate/renovate',
+    lookupName: 'renovate/renovate',
     datasource: 'docker',
     versioning: 'docker',
   });
