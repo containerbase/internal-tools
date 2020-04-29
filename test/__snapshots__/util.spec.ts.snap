@@ -11,5 +11,8 @@ ARG PNPM_VERSION=4.0.0
 
 # renovate: datasource=docker depName=python versioning=docker
 ARG PYTHON_VERSION=3.7.7
+
+# renovate: datasource=renovate depName=renovate versioning=semver
+ARG RENOVATE_VERSION=19.221.1
 "
 `;
