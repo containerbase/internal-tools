@@ -1,0 +1,7 @@
+{
+  "image": "renovate",
+  "datasource": "renovate-slim",
+  "depName": "renovate",
+  "versioning": "semver",
+  "startVersion": "19.220.0"
+}

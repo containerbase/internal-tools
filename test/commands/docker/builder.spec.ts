@@ -10,6 +10,7 @@ jest.mock('renovate/dist/workers/global/cache');
 jest.mock('renovate/dist/datasource');
 jest.mock('../../../src/util');
 jest.mock('../../../src/utils/docker');
+jest.mock('../../../src/utils/datasource');
 
 const core = mocked(_core);
 const utils = mocked(_utils);

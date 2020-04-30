@@ -8,6 +8,9 @@ import { init as cacheInit } from 'renovate/dist/workers/global/cache';
 import { getPkgReleases, ReleaseResult } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
 import { build, publish } from '../../utils/docker';
+import * as ds from '../../utils/datasource';
+
+ds.register();
 
 export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 
@@ -62,34 +65,42 @@ async function getBuildList({
       (v) => /* istanbul ignore next */ !ver.isLessThanRange?.(v, startVersion)
     )
     .filter((v) => !ignoredVersions.includes(v));
+
+  if (!forceUnstable) {
+    log('Filter unstable versions');
+    allVersions = allVersions.filter((v) => ver.isStable(v));
+  }
+
   log(`Found ${allVersions.length} versions within our range`);
-  log(`Candidates:`, allVersions.join(' '));
+  log(`Candidates:`, allVersions.join(', '));
+
   latestStable =
     latestVersion ||
     pkgResult.latestVersion ||
     allVersions.filter((v) => ver.isStable(v)).pop();
   log('Latest stable version is ', latestStable);
+
+  if (latestStable && !allVersions.includes(latestStable)) {
+    log.warn(
+      `LatestStable '${latestStable}' not buildable, candidates: `,
+      allVersions.join(', ')
+    );
+  }
+
   const lastVersion = allVersions[allVersions.length - 1];
   log('Most recent version is ', lastVersion);
+
   if (lastOnly) {
     log('Building last version only');
     allVersions = [latestStable && !forceUnstable ? latestStable : lastVersion];
   }
-  let buildList: string[] = [];
-  if (forceUnstable) {
-    log('Force building all versions');
-    buildList = allVersions;
-  } else {
-    log('Force building all stable versions');
-    buildList = allVersions.filter((v) => v === lastVersion || ver.isStable(v));
-  }
 
-  if (buildList.length) {
-    log('Build list: ', buildList.join(' '));
+  if (allVersions.length) {
+    log('Build list: ', allVersions.join(', '));
   } else {
     log('Nothing to build');
   }
-  return buildList;
+  return allVersions;
 }
 
 async function docker(cmd: string): Promise<void> {

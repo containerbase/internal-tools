@@ -208,6 +208,13 @@ jobs:
           build-args: 'IMAGE=slim'
           dry-run: true
 
+      - name: docker-builder (renovate)
+        uses: ./
+        with:
+          command: docker-builder
+          config: e2e/renovate.json
+          dry-run: true
+
       - name: dummy-command
         uses: ./
         with:
