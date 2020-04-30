@@ -72,13 +72,20 @@ async function getBuildList({
   }
 
   log(`Found ${allVersions.length} versions within our range`);
-  log(`Candidates:`, allVersions.join(' '));
+  log(`Candidates:`, allVersions.join(', '));
 
   latestStable =
     latestVersion ||
     pkgResult.latestVersion ||
     allVersions.filter((v) => ver.isStable(v)).pop();
   log('Latest stable version is ', latestStable);
+
+  if (latestStable && !allVersions.includes(latestStable)) {
+    log.warn(
+      `LatestStable '${latestStable}' not buildable, candidates: `,
+      allVersions.join(', ')
+    );
+  }
 
   const lastVersion = allVersions[allVersions.length - 1];
   log('Most recent version is ', lastVersion);
@@ -89,7 +96,7 @@ async function getBuildList({
   }
 
   if (allVersions.length) {
-    log('Build list: ', allVersions.join(' '));
+    log('Build list: ', allVersions.join(', '));
   } else {
     log('Nothing to build');
   }

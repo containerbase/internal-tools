@@ -128,20 +128,6 @@ Array [
   Array [
     Object {
       "buildArgs": Array [
-        "DUMMY_VERSION=12",
-      ],
-      "cache": undefined,
-      "cacheTags": Array [
-        "latest",
-      ],
-      "dryRun": undefined,
-      "image": "dummy",
-      "tag": "12",
-    },
-  ],
-  Array [
-    Object {
-      "buildArgs": Array [
         "DUMMY_VERSION=13",
       ],
       "cache": undefined,
@@ -169,21 +155,7 @@ Array [
     Object {
       "dryRun": undefined,
       "image": "dummy",
-      "tag": "12",
-    },
-  ],
-  Array [
-    Object {
-      "dryRun": undefined,
-      "image": "dummy",
       "tag": "13",
-    },
-  ],
-  Array [
-    Object {
-      "dryRun": undefined,
-      "image": "dummy",
-      "tag": "latest",
     },
   ],
 ]
