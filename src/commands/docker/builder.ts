@@ -65,34 +65,35 @@ async function getBuildList({
       (v) => /* istanbul ignore next */ !ver.isLessThanRange?.(v, startVersion)
     )
     .filter((v) => !ignoredVersions.includes(v));
+
+  if (!forceUnstable) {
+    log('Filter unstable versions');
+    allVersions = allVersions.filter((v) => ver.isStable(v));
+  }
+
   log(`Found ${allVersions.length} versions within our range`);
   log(`Candidates:`, allVersions.join(' '));
+
   latestStable =
     latestVersion ||
     pkgResult.latestVersion ||
     allVersions.filter((v) => ver.isStable(v)).pop();
   log('Latest stable version is ', latestStable);
+
   const lastVersion = allVersions[allVersions.length - 1];
   log('Most recent version is ', lastVersion);
+
   if (lastOnly) {
     log('Building last version only');
     allVersions = [latestStable && !forceUnstable ? latestStable : lastVersion];
   }
-  let buildList: string[] = [];
-  if (forceUnstable) {
-    log('Force building all versions');
-    buildList = allVersions;
-  } else {
-    log('Force building all stable versions');
-    buildList = allVersions.filter((v) => v === lastVersion || ver.isStable(v));
-  }
 
-  if (buildList.length) {
-    log('Build list: ', buildList.join(' '));
+  if (allVersions.length) {
+    log('Build list: ', allVersions.join(' '));
   } else {
     log('Nothing to build');
   }
-  return buildList;
+  return allVersions;
 }
 
 async function docker(cmd: string): Promise<void> {
