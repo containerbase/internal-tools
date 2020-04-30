@@ -137,15 +137,17 @@ async function buildAndPush(
     try {
       const minor = ver.getMinor(version);
       const major = ver.getMajor(version);
+      const isStable = ver.isStable(version);
       const cacheTags: string[] = [tagSuffix ?? 'latest'];
 
-      if (is.number(major) && `${major}` !== version) {
+      if (isStable && is.number(major) && `${major}` !== version) {
         const nTag = createTag(tagSuffix, `${major}`);
         tagsMap.set(nTag, tag);
         cacheTags.push(nTag);
       }
 
       if (
+        isStable &&
         is.number(major) &&
         is.number(minor) &&
         `${major}.${minor}` !== version
