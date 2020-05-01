@@ -4,6 +4,7 @@ import {
   GetReleasesConfig,
 } from 'renovate/dist/datasource';
 import { compare, valid } from 'semver';
+import { readFile } from '../../util';
 
 export const id = 'renovate-slim';
 
@@ -39,6 +40,16 @@ export async function getReleases(
     }
 
     ret.releases.sort((a, b) => compare(a.version, b.version));
+
+    const dockerFileRe = new RegExp(
+      'FROM renovate/renovate:(?<latestVersion>\\d+\\.\\d+\\.\\d+)-slim',
+      'g'
+    );
+    const dockerfile = await readFile('Dockerfile');
+    const m = dockerFileRe.exec(dockerfile);
+    if (m?.groups) {
+      ret.latestVersion = m.groups.latestVersion;
+    }
   }
   return ret;
 }
