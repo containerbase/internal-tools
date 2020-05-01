@@ -4,7 +4,7 @@ set -e
 
 
 # renovate: datasource=github-releases depName=docker/buildx
-BUILDX_VERSION=v0.3.1
+BUILDX_VERSION=v0.4.1
 BUILDX_DISTRO=linux-amd64
 
 mkdir -p $HOME/.docker/cli-plugins
