@@ -44,9 +44,9 @@ jobs:
       # Clear caches on cache miss, otherwise they will grow indefinitely
       - name: Clear yarn cache
         if: steps.yarn_cache_packages.outputs.cache-hit != 'true' && github.ref == 'refs/heads/master'
-        run: |
-          yarn cache clean
-          yarn install --frozen-lockfile --link-duplicates
+        run: yarn cache clean
+
+      - run: yarn install --frozen-lockfile --link-duplicates
 
   test:
     needs: cleanup
