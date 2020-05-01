@@ -13,6 +13,7 @@ env:
   VERSION: v0
   NODE_VERSION: 12
   YARN_CACHE_KEY: v0
+  YARN_CACHE_FOLDER: .cache/yarn
   # https://github.com/chalk/supports-color/issues/106
   FORCE_COLOR: true
 
@@ -29,18 +30,13 @@ jobs:
           command: github-cleanup
           token: ${{ secrets.GH_TOKEN }}
 
-      - name: Init platform
-        id: init
-        run: |
-          echo "::set-output name=yarn_cache::$(yarn cache dir)"
-
       - uses: actions/checkout@v2
 
       - name: Cache Yarn packages
         id: yarn_cache_packages
         uses: actions/cache@v1
         with:
-          path: ${{ steps.init.outputs.yarn_cache }}
+          path: ${{ env.YARN_CACHE_FOLDER }}
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
@@ -69,7 +65,6 @@ jobs:
         id: init
         shell: bash
         run: |
-          echo "::set-output name=yarn_cache::$(yarn cache dir)"
           git config --global core.autocrlf false
           git config --global core.symlinks true
           git config --global user.email 'bot@renovateapp.com'
@@ -83,7 +78,7 @@ jobs:
         id: yarn_cache_packages
         uses: actions/cache@v1
         with:
-          path: ${{ steps.init.outputs.yarn_cache }}
+          path: ${{ env.YARN_CACHE_FOLDER }}
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
@@ -130,18 +125,13 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Init platform
-        id: init
-        run: |
-          echo "::set-output name=yarn_cache::$(yarn cache dir)"
-
       - uses: actions/checkout@v2
 
       - name: Cache Yarn packages
         id: yarn_cache_packages
         uses: actions/cache@v1
         with:
-          path: ${{ steps.init.outputs.yarn_cache }}
+          path: ${{ env.YARN_CACHE_FOLDER }}
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
@@ -238,7 +228,6 @@ jobs:
         id: init
         shell: bash
         run: |
-          echo "::set-output name=yarn_cache::$(yarn cache dir)"
           git config --global core.autocrlf false
           git config --global core.symlinks true
           git config --global user.email 'bot@renovateapp.com'
@@ -251,7 +240,7 @@ jobs:
         id: yarn_cache_packages
         uses: actions/cache@v1
         with:
-          path: ${{ steps.init.outputs.yarn_cache }}
+          path: ${{ env.YARN_CACHE_FOLDER }}
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
