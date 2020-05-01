@@ -1,5 +1,3 @@
-FROM renovate/renovate:19.225.3-slim
-
 FROM scratch
 
 # renovate: datasource=npm depName=yarn versioning=npm
