@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[` readFile works 1`] = `
-"FROM renovate/renovate:19.225.3-slim
-
-FROM scratch
+"FROM scratch
 
 # renovate: datasource=npm depName=yarn versioning=npm
 ARG YARN_VERSION=1.22.0
