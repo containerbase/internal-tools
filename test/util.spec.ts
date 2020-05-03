@@ -39,7 +39,11 @@ describe(getName(__filename), () => {
   });
 
   describe('isDryRun', () => {
+    afterEach(() => {
+      delete process.env.CI;
+    });
     it('false', () => {
+      process.env.CI = 'true';
       core.getInput.mockReturnValueOnce('false');
       expect(util.isDryRun()).toBe(false);
       expect(util.isDryRun()).toBe(false);
@@ -56,6 +60,17 @@ describe(getName(__filename), () => {
     it('works', () => {
       expect(util.getEnv('NOT_FOUND_ENV_VAR')).toBe('');
       expect(util.getEnv('PATH')).toBeDefined();
+    });
+  });
+
+  describe('getWorkspace', () => {
+    afterEach(() => {
+      delete process.env.GITHUB_WORKSPACE;
+    });
+    it('works', () => {
+      expect(util.getWorkspace()).toBe(process.cwd());
+      process.env.GITHUB_WORKSPACE = '/var/test';
+      expect(util.getWorkspace()).toBe('/var/test');
     });
   });
 

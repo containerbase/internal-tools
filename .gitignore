@@ -6,4 +6,6 @@ coverage/
 # yarn
 yarn-error.log
 
+# test files
 test.mjs
+builder.json

@@ -8,9 +8,9 @@ import { init as cacheInit } from 'renovate/dist/workers/global/cache';
 import { getPkgReleases, ReleaseResult } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
 import { build, publish } from '../../utils/docker';
-import * as ds from '../../utils/datasource';
+import * as renovate from '../../utils/renovate';
 
-ds.register();
+renovate.register();
 
 export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 

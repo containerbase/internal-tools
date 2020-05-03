@@ -12,6 +12,8 @@ Github Action used to build the [renovate](https://github.com/renovatebot/renova
 
 ## Example usage
 
+### github-cleanup
+
 Stop previous pending and running workflows.
 
 ```yml
@@ -19,6 +21,8 @@ Stop previous pending and running workflows.
   with:
     command: github-cleanup
 ```
+
+### docker-publish
 
 Publish image to docker registry only if image id has changed.
 
@@ -31,10 +35,21 @@ Publish image to docker registry only if image id has changed.
     dry-run: ${{github.ref != 'refs/heads/master'}}
 ```
 
+### docker-config
+
 Configure docker with buildx on second harddrive.
 
 ```yml
 - uses: renovatebot/gh-action@v0
   with:
     command: docker-config
+```
+
+## local testing
+
+Without setting `CI=true` the action will always run in dry-run mode. Input must be prefixed with `INPUT_` and uppercase name.
+
+```sh
+export INPUT_COMMAND=docker-builder
+yarn start
 ```

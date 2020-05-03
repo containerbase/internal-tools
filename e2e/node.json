@@ -1,8 +1,9 @@
 {
-  "datasource": "docker",
-  "versioning": "docker",
-  "startVersion": "12",
-  "latestVersion": "12",
-  "ignoredVersions": ["13"],
+  "image": "node",
+  "datasource": "npm",
+  "versioning": "node-lts",
+  "startVersion": "12.16.0",
+  "latestVersion": "12.16.3",
+  "ignoredVersions": ["14.0.0"],
   "buildArg": "NODE_VERSION"
 }
