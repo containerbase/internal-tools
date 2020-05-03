@@ -41,6 +41,14 @@ jobs:
           restore-keys: |
             ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
 
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node-version }}-yarn-
+
       # Clear caches on cache miss, otherwise they will grow indefinitely
       - name: Clear yarn cache
         if: steps.yarn_cache_packages.outputs.cache-hit != 'true' && github.ref == 'refs/heads/master'
