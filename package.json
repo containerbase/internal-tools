@@ -16,7 +16,8 @@
     "eslint:fix": "yarn eslint --fix",
     "lint": "run-s eslint prettier",
     "prettier": "prettier \"{**/*,*}.*\" --list-different",
-    "prettier:fix": "prettier \"{**/*,*}.*\" --write"
+    "prettier:fix": "prettier \"{**/*,*}.*\" --write",
+    "start": "run-s compile && node dist"
   },
   "dependencies": {
     "@actions/core": "1.2.4",
