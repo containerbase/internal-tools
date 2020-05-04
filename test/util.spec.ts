@@ -64,8 +64,13 @@ describe(getName(__filename), () => {
   });
 
   describe('getWorkspace', () => {
-    afterEach(() => {
+    let ws: string | undefined;
+    beforeEach(() => {
+      ws = process.env.GITHUB_WORKSPACE;
       delete process.env.GITHUB_WORKSPACE;
+    });
+    afterEach(() => {
+      process.env.GITHUB_WORKSPACE = ws;
     });
     it('works', () => {
       expect(util.getWorkspace()).toBe(process.cwd());
