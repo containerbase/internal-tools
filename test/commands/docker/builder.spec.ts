@@ -6,7 +6,6 @@ import * as _utils from '../../../src/util';
 import { run } from '../../../src/commands/docker/builder';
 import * as _datasources from 'renovate/dist/datasource';
 
-jest.mock('renovate/dist/workers/global/cache');
 jest.mock('renovate/dist/datasource');
 jest.mock('../../../src/util');
 jest.mock('../../../src/utils/docker');
