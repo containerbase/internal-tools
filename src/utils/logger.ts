@@ -1,7 +1,7 @@
+import { error as _error, warning as _warn } from '@actions/core';
 import chalk from 'chalk';
 // eslint-disable-next-line import/default
 import stripAnsi from 'strip-ansi';
-import { warning as _warn, error as _error } from '@actions/core';
 
 function write(prefix: string, ...args: unknown[]): void {
   console.log([`[${prefix}]`, ...args].join(' '));

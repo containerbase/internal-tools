@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as _core from '@actions/core';
-import { getName, mocked } from '../../utils';
-import * as _docker from '../../../src/utils/docker';
-import * as _utils from '../../../src/util';
-import { run } from '../../../src/commands/docker/builder';
 import * as _datasources from 'renovate/dist/datasource';
+import { run } from '../../../src/commands/docker/builder';
+import * as _utils from '../../../src/util';
+import * as _docker from '../../../src/utils/docker';
+import { getName, mocked } from '../../utils';
 
 jest.mock('renovate/dist/datasource');
 jest.mock('../../../src/util');
@@ -59,7 +59,13 @@ describe(getName(__filename), () => {
     utils.readJson.mockReset();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/gradle.json'));
     datasources.getPkgReleases.mockResolvedValueOnce({
-      releases: [{ version: '3.5.4' }, { version: '6.0' }],
+      releases: [
+        { version: '0.7' },
+        { version: '2.3' },
+        { version: '3.0' },
+        { version: '3.5.4' },
+        { version: '6.0' },
+      ],
     });
 
     await run();

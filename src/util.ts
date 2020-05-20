@@ -1,10 +1,10 @@
+import fs from 'fs';
+import { join } from 'path';
+import { promisify } from 'util';
+import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import log from './utils/logger';
-import { getInput, startGroup, endGroup } from '@actions/core';
-import { join } from 'path';
-import fs from 'fs';
-import { promisify } from 'util';
 import findUp = require('find-up');
 
 const readFileAsync = promisify(fs.readFile);
@@ -110,6 +110,7 @@ let _pkg: Promise<string | undefined>;
  * @param file a file to resolve
  */
 export async function resolveFile(file: string): Promise<string> {
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   if (!_pkg) {
     _pkg = findUp('package.json', { cwd: __dirname, type: 'file' });
   }

@@ -1,7 +1,7 @@
 import { getInput } from '@actions/core';
 import { GitHub } from '@actions/github';
-import { isDryRun, getEnv } from '../../util';
 import chalk from 'chalk';
+import { getEnv, isDryRun } from '../../util';
 import log from '../../utils/logger';
 
 export async function run(): Promise<void> {

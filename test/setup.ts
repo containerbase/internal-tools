@@ -1,5 +1,5 @@
-import nock from 'nock';
 import * as _core from '@actions/core';
+import nock from 'nock';
 import { mocked } from './utils';
 
 jest.mock('@actions/core');

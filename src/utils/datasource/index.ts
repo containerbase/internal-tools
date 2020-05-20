@@ -1,6 +1,6 @@
 import { getDatasources } from 'renovate/dist/datasource';
-import * as renovate from './renovate-slim';
 import log from '../logger';
+import * as renovate from './renovate-slim';
 
 export function register(): void {
   log('register datasources');

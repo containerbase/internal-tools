@@ -1,8 +1,8 @@
-import * as renovate from './datasource';
-import * as v from './versioning';
-import log from './logger';
 import os from 'os';
 import { init as cacheInit } from 'renovate/dist/util/cache/global/file';
+import * as renovate from './datasource';
+import log from './logger';
+import * as v from './versioning';
 
 // istanbul ignore if
 if (!global.renovateCache) {

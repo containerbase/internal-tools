@@ -1,8 +1,8 @@
 import * as _core from '@actions/core';
-import { getName, mocked } from '../../utils';
-import * as _docker from '../../../src/utils/docker';
-import * as _utils from '../../../src/util';
 import { run } from '../../../src/commands/docker/publish';
+import * as _utils from '../../../src/util';
+import * as _docker from '../../../src/utils/docker';
+import { getName, mocked } from '../../utils';
 
 jest.mock('../../../src/util');
 jest.mock('../../../src/utils/docker');
@@ -36,7 +36,7 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(core.getInput).toBeCalledTimes(2);
+    expect(core.getInput).toHaveBeenCalledTimes(2);
     expect(docker.publish).toHaveBeenCalledTimes(2);
     expect(docker.publish).toHaveBeenNthCalledWith(1, {
       image,
@@ -69,7 +69,7 @@ describe(getName(__filename), () => {
 
     await run();
 
-    expect(core.getInput).toBeCalledTimes(2);
+    expect(core.getInput).toHaveBeenCalledTimes(2);
     expect(docker.publish).toHaveBeenCalledWith({ image, tag, dryRun: true });
   });
 

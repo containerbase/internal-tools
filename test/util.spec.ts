@@ -1,8 +1,8 @@
-import { getName, mocked } from './utils';
+import { existsSync } from 'fs';
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as util from '../src/util';
-import { existsSync } from 'fs';
+import { getName, mocked } from './utils';
 
 jest.mock('@actions/core');
 jest.mock('@actions/exec');
@@ -47,12 +47,12 @@ describe(getName(__filename), () => {
       core.getInput.mockReturnValueOnce('false');
       expect(util.isDryRun()).toBe(false);
       expect(util.isDryRun()).toBe(false);
-      expect(core.getInput).toBeCalledTimes(2);
+      expect(core.getInput).toHaveBeenCalledTimes(2);
     });
     it('true', () => {
       core.getInput.mockReturnValueOnce('true');
       expect(util.isDryRun()).toBe(true);
-      expect(core.getInput).toBeCalledTimes(1);
+      expect(core.getInput).toHaveBeenCalledTimes(1);
     });
   });
 

@@ -1,7 +1,7 @@
 import {
+  GetReleasesConfig,
   ReleaseResult,
   getPkgReleases,
-  GetReleasesConfig,
 } from 'renovate/dist/datasource';
 import { compare, valid } from 'semver';
 import { readFile } from '../../util';
