@@ -103,12 +103,12 @@ describe(getName(__filename), () => {
   });
 
   describe('getArg', () => {
-    it('single', async () => {
+    it('single', () => {
       core.getInput.mockReturnValueOnce('test;latest;slim');
       expect(util.getArg('dockerfile')).toBe('test;latest;slim');
     });
 
-    it('multi', async () => {
+    it('multi', () => {
       core.getInput.mockReturnValueOnce('test;latest;slim');
       expect(util.getArg('dockerfile', { multi: true })).toEqual([
         'test',
@@ -117,7 +117,7 @@ describe(getName(__filename), () => {
       ]);
     });
 
-    it('multi (null)', async () => {
+    it('multi (null)', () => {
       expect(util.getArg('dockerfile', { multi: true })).toEqual([]);
     });
   });
