@@ -1,10 +1,8 @@
 import { getInput } from '@actions/core';
 import is from '@sindresorhus/is';
-import os from 'os';
 import { exec, isDryRun, readJson, readFile, getArg } from '../../util';
 import chalk from 'chalk';
 import log from '../../utils/logger';
-import { init as cacheInit } from 'renovate/dist/workers/global/cache';
 import { getPkgReleases, ReleaseResult } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
 import { build, publish } from '../../utils/docker';
@@ -14,12 +12,6 @@ renovate.register();
 
 export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 
-// istanbul ignore if
-if (!global.renovateCache) {
-  cacheInit(os.tmpdir());
-}
-
-global.repoCache = {};
 let latestStable: string | undefined;
 
 function getVersions(versions: string[]): ReleaseResult {
