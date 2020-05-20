@@ -1,15 +1,15 @@
-import { getName, mocked } from '../utils';
+import nock from 'nock';
+import * as _utils from '../../src/util';
 import {
-  getRemoteImageId,
-  getAuthHeaders,
-  getLocalImageId,
   DockerContentType,
   build,
+  getAuthHeaders,
+  getLocalImageId,
+  getRemoteImageId,
   publish,
   registry,
 } from '../../src/utils/docker';
-import * as _utils from '../../src/util';
-import nock from 'nock';
+import { getName, mocked } from '../utils';
 
 jest.mock('../../src/util');
 

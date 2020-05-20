@@ -1,8 +1,8 @@
 import * as _core from '@actions/core';
 import nock from 'nock';
-import { getName, mocked } from '../../utils';
-import * as _utils from '../../../src/util';
 import { run } from '../../../src/commands/github/cleanup';
+import * as _utils from '../../../src/util';
+import { getName, mocked } from '../../utils';
 
 jest.mock('../../../src/util');
 jest.unmock('@actions/github');

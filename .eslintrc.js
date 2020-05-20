@@ -10,18 +10,39 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
+    'plugin:jest/style',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:promise/recommended',
     'prettier',
     'prettier/@typescript-eslint',
   ],
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: ['./tsconfig.json'],
+    project: ['./tsconfig.lint.json'],
   },
   rules: {
     curly: [2, 'all'],
+
+    'sort-imports': [
+      'error',
+      {
+        ignoreCase: false,
+        ignoreDeclarationSort: true, // conflicts with our other import ordering rules
+        ignoreMemberSort: false,
+        memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
+      },
+    ],
+    'import/order': [
+      'error',
+      {
+        alphabetize: {
+          order: 'asc',
+        },
+      },
+    ],
+
     '@typescript-eslint/interface-name-prefix': 0,
     // Makes no sense to allow type inferrence for expression parameters, but require typing the response
     '@typescript-eslint/explicit-function-return-type': [
@@ -38,6 +59,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/no-floating-promises': 2,
   },
   overrides: [
     {

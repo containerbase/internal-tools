@@ -1,11 +1,11 @@
 import { getInput } from '@actions/core';
 import is from '@sindresorhus/is';
-import { exec, isDryRun, readJson, readFile, getArg } from '../../util';
 import chalk from 'chalk';
-import log from '../../utils/logger';
-import { getPkgReleases, ReleaseResult } from 'renovate/dist/datasource';
+import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
+import { exec, getArg, isDryRun, readFile, readJson } from '../../util';
 import { build, publish } from '../../utils/docker';
+import log from '../../utils/logger';
 import * as renovate from '../../utils/renovate';
 
 renovate.register();
@@ -53,9 +53,7 @@ async function getBuildList({
     return [];
   }
   allVersions = allVersions
-    .filter(
-      (v) => /* istanbul ignore next */ !ver.isLessThanRange?.(v, startVersion)
-    )
+    .filter((v) => v === startVersion || ver.isGreaterThan(v, startVersion))
     .filter((v) => !ignoredVersions.includes(v));
 
   if (!forceUnstable) {

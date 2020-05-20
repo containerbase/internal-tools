@@ -1,7 +1,7 @@
-import { getName, mocked } from '../../utils';
 import * as _datasources from 'renovate/dist/datasource';
-import { getReleases } from '../../../src/utils/datasource/renovate-slim';
 import * as _utils from '../../../src/util';
+import { getReleases } from '../../../src/utils/datasource/renovate-slim';
+import { getName, mocked } from '../../utils';
 
 jest.mock('renovate/dist/datasource');
 jest.mock('../../../src/util');
@@ -20,7 +20,7 @@ describe(getName(__filename), () => {
   it('works', async () => {
     datasources.getPkgReleases.mockResolvedValueOnce(null);
 
-    expect(await getReleases({ lookupName: '' })).toEqual(null);
+    expect(await getReleases({ lookupName: '' })).toBeNull();
   });
 
   it('filters releases', async () => {

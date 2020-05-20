@@ -1,8 +1,8 @@
-import { getName, mocked } from './utils';
+import { existsSync } from 'fs';
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as util from '../src/util';
-import { existsSync } from 'fs';
+import { getName, mocked } from './utils';
 
 jest.mock('@actions/core');
 jest.mock('@actions/exec');
@@ -47,12 +47,12 @@ describe(getName(__filename), () => {
       core.getInput.mockReturnValueOnce('false');
       expect(util.isDryRun()).toBe(false);
       expect(util.isDryRun()).toBe(false);
-      expect(core.getInput).toBeCalledTimes(2);
+      expect(core.getInput).toHaveBeenCalledTimes(2);
     });
     it('true', () => {
       core.getInput.mockReturnValueOnce('true');
       expect(util.isDryRun()).toBe(true);
-      expect(core.getInput).toBeCalledTimes(1);
+      expect(core.getInput).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -103,12 +103,12 @@ describe(getName(__filename), () => {
   });
 
   describe('getArg', () => {
-    it('single', async () => {
+    it('single', () => {
       core.getInput.mockReturnValueOnce('test;latest;slim');
       expect(util.getArg('dockerfile')).toBe('test;latest;slim');
     });
 
-    it('multi', async () => {
+    it('multi', () => {
       core.getInput.mockReturnValueOnce('test;latest;slim');
       expect(util.getArg('dockerfile', { multi: true })).toEqual([
         'test',
@@ -117,7 +117,7 @@ describe(getName(__filename), () => {
       ]);
     });
 
-    it('multi (null)', async () => {
+    it('multi (null)', () => {
       expect(util.getArg('dockerfile', { multi: true })).toEqual([]);
     });
   });

@@ -1,6 +1,6 @@
-import { getName, mocked } from '../../utils';
-import * as _utils from '../../../src/util';
 import { run } from '../../../src/commands/docker/config';
+import * as _utils from '../../../src/util';
+import { getName, mocked } from '../../utils';
 
 jest.mock('renovate/dist/datasource');
 jest.mock('../../../src/util');

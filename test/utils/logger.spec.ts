@@ -1,7 +1,7 @@
-import { getName, mocked } from '../utils';
-import log from '../../src/utils/logger';
-import chalk from 'chalk';
 import * as _core from '@actions/core';
+import chalk from 'chalk';
+import log from '../../src/utils/logger';
+import { getName, mocked } from '../utils';
 
 jest.unmock('../../src/utils/logger');
 
@@ -16,7 +16,7 @@ describe(getName(__filename), () => {
     console.dir = logger;
   });
 
-  it('works', async () => {
+  it('works', () => {
     log('test');
     log.dir({ name: 'test', code: 1 });
     log.info(chalk.gray('test'), 'it');
@@ -24,7 +24,7 @@ describe(getName(__filename), () => {
     log.error(chalk.red('test'));
 
     expect(logger.mock.calls).toMatchSnapshot();
-    expect(core.warning).toBeCalledWith('test it');
-    expect(core.error).toBeCalledWith('test');
+    expect(core.warning).toHaveBeenCalledWith('test it');
+    expect(core.error).toHaveBeenCalledWith('test');
   });
 });

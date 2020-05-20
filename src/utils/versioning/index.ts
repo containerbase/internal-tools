@@ -1,6 +1,6 @@
 import { getVersionings } from 'renovate/dist/versioning';
-import * as node from './node';
 import log from '../logger';
+import * as node from './node';
 
 export function register(): void {
   log('register versionings');

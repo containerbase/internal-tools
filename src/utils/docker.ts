@@ -1,9 +1,9 @@
-import got, { Headers, HTTPError } from 'got';
-import wwwAuthenticate from 'www-authenticate';
-import chalk from 'chalk';
-import log from './logger';
-import { exec } from '../util';
 import is from '@sindresorhus/is';
+import chalk from 'chalk';
+import got, { HTTPError, Headers } from 'got';
+import wwwAuthenticate from 'www-authenticate';
+import { exec } from '../util';
+import log from './logger';
 
 export const registry = 'https://index.docker.io';
 
