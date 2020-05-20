@@ -12,7 +12,7 @@
   },
   "scripts": {
     "compile": "cd src && ncc build ./index.ts -o ../dist",
-    "eslint": "eslint . --ext .js,.mjs,.ts",
+    "eslint": "eslint .",
     "eslint:fix": "yarn eslint --fix",
     "lint": "run-s eslint prettier",
     "prettier": "prettier \"{**/*,*}.*\" --list-different",
