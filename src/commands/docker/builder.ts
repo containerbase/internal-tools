@@ -96,7 +96,9 @@ async function getBuildList({
 }
 
 function createTag(tagSuffix: string | undefined, version: string): string {
-  return is.nonEmptyString(tagSuffix) ? `${version}-${tagSuffix}` : version;
+  return is.nonEmptyString(tagSuffix) && tagSuffix !== 'latest'
+    ? `${version}-${tagSuffix}`
+    : version;
 }
 
 async function buildAndPush(
