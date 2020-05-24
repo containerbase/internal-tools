@@ -177,7 +177,11 @@ async function buildAndPush(
     log.info(`Publish <major> and <major>.<minor> tags:`, tagsMap.size);
     for (const [tag, source] of tagsMap) {
       log(`Publish renovate/${image}:${tag}`);
-      await docker(`tag renovate/${image}:${source} renovate/${image}:${tag}`);
+      await docker(
+        'tag',
+        `renovate/${image}:${source}`,
+        `renovate/${image}:${tag}`
+      );
       if (!buildOnly) {
         await publish({ image, tag, dryRun });
       }
