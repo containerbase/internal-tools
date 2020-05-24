@@ -166,6 +166,7 @@ jobs:
           image: node
           config: e2e/node.json
           dry-run: true
+          prune: true
 
       - name: docker-builder (yarn)
         uses: ./

@@ -44,10 +44,10 @@ inputs:
     description: 'docker-builder: push major and major.minor tags'
     required: false
     default: true
-  # prune:
-  #   description: 'docker-builder: prune docker system after build'
-  #   required: false
-  #   default: false
+  prune:
+    description: 'docker-builder: prune docker system after build'
+    required: false
+    default: false
 
 runs:
   using: 'node12'
