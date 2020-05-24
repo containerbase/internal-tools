@@ -9,7 +9,6 @@ on:
   pull_request:
 
 env:
-  CI: true
   VERSION: v0
   NODE_VERSION: 12
   YARN_CACHE_KEY: v0
@@ -18,18 +17,11 @@ env:
   FORCE_COLOR: true
 
 jobs:
-  cleanup:
+  prepare:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
-      - name: github-cleanup
-        uses: renovatebot/gh-action@v0
-        continue-on-error: true
-        with:
-          command: github-cleanup
-          token: ${{ secrets.GH_TOKEN }}
-
       - uses: actions/checkout@v2
 
       - name: Cache Yarn packages
@@ -57,7 +49,7 @@ jobs:
       - run: yarn install --frozen-lockfile --link-duplicates
 
   test:
-    needs: cleanup
+    needs: prepare
     runs-on: ubuntu-latest
 
     # tests shouldn't need more than 15 min
@@ -123,7 +115,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   e2e:
-    needs: cleanup
+    needs: prepare
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
