@@ -3,10 +3,8 @@ import run from '../src/runner';
 import { Commands } from '../src/types';
 import { getName, mocked } from './utils';
 
-jest.mock('../src/commands/docker/publish');
 jest.mock('../src/commands/docker/config');
 jest.mock('../src/commands/docker/builder');
-jest.mock('../src/commands/github/cleanup');
 
 const core = mocked(_core);
 
@@ -32,20 +30,6 @@ describe(getName(__filename), () => {
 
   it(Commands.DockerConfig, async () => {
     core.getInput.mockReturnValueOnce(Commands.DockerConfig);
-    await run();
-    expect(core.getInput).toHaveBeenCalledWith('command');
-    expect(core.setFailed).not.toHaveBeenCalled();
-  });
-
-  it(Commands.DockerPublish, async () => {
-    core.getInput.mockReturnValueOnce(Commands.DockerPublish);
-    await run();
-    expect(core.getInput).toHaveBeenCalledWith('command');
-    expect(core.setFailed).not.toHaveBeenCalled();
-  });
-
-  it(Commands.GithubCleanup, async () => {
-    core.getInput.mockReturnValueOnce(Commands.GithubCleanup);
     await run();
     expect(core.getInput).toHaveBeenCalledWith('command');
     expect(core.setFailed).not.toHaveBeenCalled();

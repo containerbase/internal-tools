@@ -1,12 +1,9 @@
 import { run } from '../../../src/commands/docker/config';
-import * as _utils from '../../../src/util';
-import { getName, mocked } from '../../utils';
+import { getName } from '../../utils';
 
-jest.mock('renovate/dist/datasource');
-jest.mock('../../../src/util');
-jest.mock('../../../src/utils/docker');
-
-const utils = mocked(_utils);
+jest.mock('../../../src/utils/docker/buildx', () => ({
+  init: () => Promise.resolve(),
+}));
 
 describe(getName(__filename), () => {
   beforeEach(() => {
@@ -14,8 +11,6 @@ describe(getName(__filename), () => {
   });
 
   it('works', async () => {
-    utils.resolveFile.mockResolvedValue('./bin/file.sh');
-    await run();
-    expect(utils.exec.mock.calls).toMatchSnapshot();
+    await expect(run()).resolves.toBeUndefined();
   });
 });
