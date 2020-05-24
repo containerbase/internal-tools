@@ -52,6 +52,13 @@ Array [
       "tag": "12-slim",
     },
   ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "dummy",
+      "tag": "slim",
+    },
+  ],
 ]
 `;
 
@@ -210,13 +217,6 @@ Array [
     Object {
       "dryRun": undefined,
       "image": "gradle",
-      "tag": "6.0",
-    },
-  ],
-  Array [
-    Object {
-      "dryRun": undefined,
-      "image": "gradle",
       "tag": "3",
     },
   ],
@@ -225,6 +225,13 @@ Array [
       "dryRun": undefined,
       "image": "gradle",
       "tag": "3.5",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "gradle",
+      "tag": "6.0",
     },
   ],
   Array [
