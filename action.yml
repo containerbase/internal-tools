@@ -9,7 +9,7 @@ inputs:
     required: false
     default:
   tags:
-    description: 'semicolon sepearted list of docker image tags to operate on'
+    description: 'semicolon separated list of docker image tags to operate on'
     required: false
     default: 'latest'
   dry-run:
@@ -44,6 +44,10 @@ inputs:
     description: 'docker-builder: push major and major.minor tags'
     required: false
     default: true
+  # prune:
+  #   description: 'docker-builder: prune docker system after build'
+  #   required: false
+  #   default: false
 
 runs:
   using: 'node12'

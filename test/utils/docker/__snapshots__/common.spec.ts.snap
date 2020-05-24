@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dockerDf 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "system",
+      "df",
+    ],
+  ],
+]
+`;
+
+exports[`dockerPrune 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "system",
+      "prune",
+      "--force",
+      "--all",
+    ],
+  ],
+]
+`;

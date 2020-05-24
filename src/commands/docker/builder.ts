@@ -3,9 +3,10 @@ import is from '@sindresorhus/is';
 import chalk from 'chalk';
 import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
-import { exec, getArg, isDryRun, readFile, readJson } from '../../util';
+import { getArg, isDryRun, readFile, readJson } from '../../util';
 import { build, publish } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';
+import { docker, dockerDf } from '../../utils/docker/common';
 import log from '../../utils/logger';
 import * as renovate from '../../utils/renovate';
 
@@ -94,11 +95,6 @@ async function getBuildList({
   return allVersions;
 }
 
-async function docker(cmd: string): Promise<void> {
-  log('docker ' + cmd);
-  await exec('docker', cmd.split(' '));
-}
-
 function createTag(tagSuffix: string | undefined, version: string): string {
   return is.nonEmptyString(tagSuffix) ? `${version}-${tagSuffix}` : version;
 }
@@ -169,6 +165,8 @@ async function buildAndPush(
       log.error(err);
       failed.push(version);
     }
+
+    await dockerDf();
   }
 
   if (built.length) {
