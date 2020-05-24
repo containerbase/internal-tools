@@ -186,7 +186,7 @@ async function buildAndPush(
         if (!buildOnly) {
           await publish({ image, tag, dryRun });
         }
-      } catch (err) {
+      } catch (err) /* istanbul ignore next */ {
         log.error(err);
         failed.push(tag);
       }
