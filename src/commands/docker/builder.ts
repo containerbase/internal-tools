@@ -6,7 +6,7 @@ import { get as getVersioning } from 'renovate/dist/versioning';
 import { getArg, isDryRun, readFile, readJson } from '../../util';
 import { build, publish } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';
-import { docker, dockerDf } from '../../utils/docker/common';
+import { dockerDf, dockerPrune, dockerTag } from '../../utils/docker/common';
 import log from '../../utils/logger';
 import * as renovate from '../../utils/renovate';
 
@@ -110,27 +110,22 @@ async function buildAndPush(
     tagSuffix,
     versioning,
     majorMinor,
+    prune,
   }: Config,
   versions: string[]
 ): Promise<void> {
-  const built: string[] = [];
+  const builds: string[] = [];
   const failed: string[] = [];
   const ver = getVersioning(versioning || 'semver');
-  const tagsMap = new Map<string, string>();
-  for (const version of versions) {
-    const tag = createTag(tagSuffix, version);
-    const imageVersion = `renovate/${image}:${tag}`;
-    log(`Building ${imageVersion}`);
-    try {
+  const versionsMap = new Map<string, string>();
+  if (majorMinor) {
+    for (const version of versions) {
       const minor = ver.getMinor(version);
       const major = ver.getMajor(version);
       const isStable = ver.isStable(version);
-      const cacheTags: string[] = [tagSuffix ?? 'latest'];
 
       if (isStable && is.number(major) && `${major}` !== version) {
-        const nTag = createTag(tagSuffix, `${major}`);
-        tagsMap.set(nTag, tag);
-        cacheTags.push(nTag);
+        versionsMap.set(`${major}`, version);
       }
 
       if (
@@ -139,13 +134,34 @@ async function buildAndPush(
         is.number(minor) &&
         `${major}.${minor}` !== version
       ) {
-        const nTag = createTag(tagSuffix, `${major}.${minor}`);
-        tagsMap.set(nTag, tag);
+        versionsMap.set(`${major}.${minor}`, version);
+      }
+    }
+  }
+  for (const version of versions) {
+    const tag = createTag(tagSuffix, version);
+    const imageVersion = `renovate/${image}:${tag}`;
+    log(`Building ${imageVersion}`);
+    try {
+      const minor = ver.getMinor(version);
+      const major = ver.getMajor(version);
+      const cacheTags: string[] = [tagSuffix ?? 'latest'];
+      const tags: string[] = [];
+
+      if (majorMinor && versionsMap.get(`${major}`) === version) {
+        const nTag = createTag(tagSuffix, `${major}`);
         cacheTags.push(nTag);
+        tags.push(nTag);
+      }
+
+      if (majorMinor && versionsMap.get(`${major}.${minor}`) === version) {
+        const nTag = createTag(tagSuffix, `${major}.${minor}`);
+        cacheTags.push(nTag);
+        tags.push(nTag);
       }
 
       if (version === latestStable) {
-        tagsMap.set(tagSuffix ?? 'latest', tag);
+        tags.push(tagSuffix ?? 'latest');
       }
 
       await build({
@@ -156,11 +172,24 @@ async function buildAndPush(
         buildArgs: [...(buildArgs ?? []), `${buildArg}=${version}`],
         dryRun,
       });
+
       if (!buildOnly) {
         await publish({ image, tag, dryRun });
+        const source = tag;
+
+        for (const tag of tags) {
+          log(`Publish ${source} as ${tag}`);
+          await dockerTag({ image, src: source, tgt: tag });
+          await publish({ image, tag, dryRun });
+        }
       }
-      log(`Built ${imageVersion}`);
-      built.push(version);
+
+      log(`Build ${imageVersion}`);
+      builds.push(version);
+
+      if (prune) {
+        await dockerPrune();
+      }
     } catch (err) {
       log.error(err);
       failed.push(version);
@@ -169,28 +198,8 @@ async function buildAndPush(
     await dockerDf();
   }
 
-  if (built.length) {
-    log('Build list: ' + built.join(' '));
-  }
-
-  if (majorMinor) {
-    log.info(`Publish <major> and <major>.<minor> tags:`, tagsMap.size);
-    for (const [tag, source] of tagsMap) {
-      log(`Publish renovate/${image}:${tag}`);
-      try {
-        await docker(
-          'tag',
-          `renovate/${image}:${source}`,
-          `renovate/${image}:${tag}`
-        );
-        if (!buildOnly) {
-          await publish({ image, tag, dryRun });
-        }
-      } catch (err) /* istanbul ignore next */ {
-        log.error(err);
-        failed.push(tag);
-      }
-    }
+  if (builds.length) {
+    log('Build list: ' + builds.join(' '));
   }
 
   if (failed.length) {
@@ -224,6 +233,7 @@ type Config = {
   majorMinor: boolean;
   lastOnly: boolean;
   dryRun: boolean;
+  prune: boolean;
 } & ConfigFile;
 
 async function generateImages(config: Config): Promise<void> {
@@ -296,6 +306,7 @@ export async function run(): Promise<void> {
     lastOnly: getInput('last-only') == 'true',
     buildOnly: getInput('build-only') == 'true',
     majorMinor: getArg('major-minor') !== 'false',
+    prune: getArg('prune') === 'true',
   };
 
   if (dryRun) {

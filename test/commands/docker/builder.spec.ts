@@ -96,6 +96,7 @@ describe(getName(__filename), () => {
     utils.getArg.mockReturnValueOnce(['IMAGE=slim']);
     utils.getArg.mockReturnValueOnce('slim');
     utils.getArg.mockReturnValueOnce('false');
+    utils.getArg.mockReturnValueOnce('true');
 
     await run();
 
@@ -164,7 +165,7 @@ describe(getName(__filename), () => {
       releases: [{ version }],
     });
 
-    docker.build.mockRejectedValueOnce({});
+    docker.build.mockRejectedValueOnce(new Error('failure'));
     try {
       await run();
     } catch (e) {

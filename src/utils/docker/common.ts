@@ -12,6 +12,24 @@ export async function dockerBuildx(...args: string[]): Promise<void> {
   await docker('buildx', ...args);
 }
 
+type DockerTagConfig = {
+  image: string;
+  src: string;
+  tgt: string;
+};
+
+export async function dockerTag({
+  image,
+  src,
+  tgt,
+}: DockerTagConfig): Promise<ExecResult> {
+  return await exec('docker', [
+    'tag',
+    `renovate/${image}:${src}`,
+    `renovate/${image}:${tgt}`,
+  ]);
+}
+
 export async function dockerPrune(): Promise<void> {
   log('Pruning docker system');
   await docker('system', 'prune', '--force', '--all');
