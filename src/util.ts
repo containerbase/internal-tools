@@ -1,13 +1,10 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import { join } from 'path';
-import { promisify } from 'util';
 import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import log from './utils/logger';
 import findUp = require('find-up');
-
-const readFileAsync = promisify(fs.readFile);
 
 export type ExecOptions = _ExecOptions;
 
@@ -81,7 +78,7 @@ export async function readJson<T = unknown>(file: string): Promise<T> {
 
 export async function readFile(file: string): Promise<string> {
   const path = join(getWorkspace(), file);
-  return await readFileAsync(path, 'utf8');
+  return await fs.readFile(path, 'utf8');
 }
 
 export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;

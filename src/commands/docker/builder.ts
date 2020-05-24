@@ -5,6 +5,7 @@ import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
 import { exec, getArg, isDryRun, readFile, readJson } from '../../util';
 import { build, publish } from '../../utils/docker';
+import { init } from '../../utils/docker/buildx';
 import log from '../../utils/logger';
 import * as renovate from '../../utils/renovate';
 
@@ -295,6 +296,9 @@ export async function run(): Promise<void> {
     config.lastOnly = true;
   }
   log('config:', JSON.stringify(config));
+
+  await init();
+
   await generateImages(config);
 
   log.info(chalk.blue('Processing image finished:'));

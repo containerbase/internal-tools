@@ -2,7 +2,7 @@ import is from '@sindresorhus/is';
 import chalk from 'chalk';
 import got, { HTTPError, Headers } from 'got';
 import wwwAuthenticate from 'www-authenticate';
-import { exec } from '../util';
+import { docker } from './docker/common';
 import log from './logger';
 
 export const registry = 'https://index.docker.io';
@@ -86,11 +86,7 @@ export async function getLocalImageId(
   image: string,
   tag = 'latest'
 ): Promise<string> {
-  const res = await exec('docker', [
-    'inspect',
-    "--format='{{.Id}}'",
-    `${image}:${tag}`,
-  ]);
+  const res = await docker('inspect', "--format='{{.Id}}'", `${image}:${tag}`);
 
   const [, id] = shaRe.exec(res.stdout) ?? [];
 
@@ -140,7 +136,7 @@ export async function build({
     }
   }
 
-  await exec('docker', [...args, '.']);
+  await docker(...args, '.');
 }
 
 type PublishOptions = {
@@ -173,7 +169,7 @@ export async function publish({
   if (dryRun) {
     log.warn(chalk.yellow('[DRY_RUN]'), chalk.blue('Would push:'), fullName);
   } else {
-    await exec('docker', ['push', fullName]);
+    await docker('push', fullName);
   }
   log.info(chalk.blue('Processing image finished:', newId));
 }

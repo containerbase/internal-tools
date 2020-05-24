@@ -17,20 +17,6 @@ export default async function run(): Promise<void> {
         await (await import('./commands/docker/config')).run();
         break;
 
-      case Commands.DockerPublish:
-        await (await import('./commands/docker/publish')).run();
-        break;
-
-      case Commands.GithubCleanup:
-        await (await import('./commands/github/cleanup')).run();
-        break;
-
-      /* istanbul ignore next: obsolete */
-      case Commands.PublishDocker:
-        log.warn(`Obsolete, use '${Commands.DockerPublish}' command instead`);
-        await (await import('./commands/docker/publish')).run();
-        break;
-
       default:
         log.error(chalk.red('Unknown command:'), cmd);
         break;

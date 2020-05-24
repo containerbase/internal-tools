@@ -9,6 +9,9 @@ import { getName, mocked } from '../../utils';
 jest.mock('renovate/dist/datasource');
 jest.mock('../../../src/util');
 jest.mock('../../../src/utils/docker');
+jest.mock('../../../src/utils/docker/buildx', () => ({
+  init: () => Promise.resolve(),
+}));
 jest.mock('../../../src/utils/renovate');
 
 const core = mocked(_core);

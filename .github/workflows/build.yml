@@ -159,21 +159,6 @@ jobs:
           docker tag alpine renovate/ubuntu
           docker tag alpine renovate/ubuntu:18.04
 
-      - name: github-cleanup
-        uses: ./
-        with:
-          command: github-cleanup
-          token: ${{ github.token }}
-          dry-run: true
-
-      - name: docker-publish
-        uses: ./
-        with:
-          command: docker-publish
-          image: renovate/ubuntu
-          tags: latest;18.04
-          dry-run: true
-
       - name: docker-builder (node)
         uses: ./
         with:
