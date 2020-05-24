@@ -308,5 +308,5 @@ export async function run(): Promise<void> {
 
   await generateImages(config);
 
-  log.info(chalk.blue('Processing image finished:'));
+  log.info(chalk.blue('Processing done:', config.image));
 }
