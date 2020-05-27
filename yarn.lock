@@ -4322,10 +4322,10 @@ node-fetch@^2.3.0:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
-node-html-parser@1.2.16:
-  version "1.2.16"
-  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-1.2.16.tgz#009ffb38915a8aed01693bec2e39933aeb7f6aba"
-  integrity sha512-TrLpGov7J9hBdWWREudBreragmRPq2Q5b19Ly66XoZVUZbb8JXkIqHkPbTHKicuVC8jNnkP4bRnNVik4mkPahw==
+node-html-parser@1.2.17:
+  version "1.2.17"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-1.2.17.tgz#09c440d3a4b294435bcf0d02b66921afc086b111"
+  integrity sha512-bT+TuWhGuasJFTBeYNGaI43dREHfazdgpuQCY1HPpdBjnQhq0Rgkla6Not/8XvaYmE5mafDsUGFarBAMT/Stfw==
   dependencies:
     he "1.1.1"
 
@@ -5167,10 +5167,10 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@20.5.1:
-  version "20.5.1"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-20.5.1.tgz#47b6c49f22b8e0df367001536af687256cc8082c"
-  integrity sha512-/TuM/hQinmkQmeCMJ2HLpfLUHahGJ6LYT3ZsKcunbpEDqfyjFzW6snKxwilgaOoeITvNQ0Zu3Chot3Z/fmuasA==
+renovate@20.5.3:
+  version "20.5.3"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-20.5.3.tgz#51e0f595f678b80e46e7d3eeb2b02f0a6ab1aed0"
+  integrity sha512-49PZk1dLIbgbj2F6Y+4kADcyVVSpvOpMedNCq6Wctd5Qw7MarI1xaYqdFYvCp3XQ79JBmIvj0o6QCx/amcP8wQ==
   dependencies:
     "@renovate/pep440" "0.4.1"
     "@sindresorhus/is" "2.1.1"
@@ -5213,7 +5213,7 @@ renovate@20.5.1:
     moment "2.25.3"
     moment-timezone "0.5.31"
     node-emoji "1.10.0"
-    node-html-parser "1.2.16"
+    node-html-parser "1.2.17"
     p-all "2.1.0"
     p-map "4.0.0"
     parse-diff "0.7.0"
