@@ -43,7 +43,7 @@ export async function getAuthHeaders(
       authorization: `Bearer ${token}`,
     };
   } catch (err) {
-    log.error(chalk.red('auth error'), err.message);
+    log.error(chalk.red('auth error'), (err as Error).message);
     throw new Error('Failed to obtain docker registry token');
   }
 }
@@ -69,7 +69,9 @@ export async function getRemoteImageId(
       responseType: 'json',
     });
     if (resp.headers['content-type'] !== DockerContentType.ManifestV2) {
-      throw new Error(`Unsupported response: ${resp.headers['content-type']}`);
+      throw new Error(
+        `Unsupported response: ${resp.headers['content-type'] as string}`
+      );
     }
     return resp.body.config.digest;
   } catch (e) {
@@ -77,7 +79,7 @@ export async function getRemoteImageId(
       // no image published yet
       return '<none>';
     }
-    log.error(chalk.red('request error'), e.message);
+    log.error(chalk.red('request error'), (e as Error).message);
     throw new Error('Could not find remote image id');
   }
 }

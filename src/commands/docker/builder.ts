@@ -150,13 +150,22 @@ async function buildAndPush(
       const cacheTags: string[] = [tagSuffix ?? 'latest'];
       const tags: string[] = [];
 
-      if (majorMinor && versionsMap.get(`${major}`) === version) {
+      if (
+        is.number(major) &&
+        majorMinor &&
+        versionsMap.get(`${major}`) === version
+      ) {
         const nTag = createTag(tagSuffix, `${major}`);
         cacheTags.push(nTag);
         tags.push(nTag);
       }
 
-      if (majorMinor && versionsMap.get(`${major}.${minor}`) === version) {
+      if (
+        is.number(major) &&
+        is.number(minor) &&
+        majorMinor &&
+        versionsMap.get(`${major}.${minor}`) === version
+      ) {
         const nTag = createTag(tagSuffix, `${major}.${minor}`);
         cacheTags.push(nTag);
         tags.push(nTag);
@@ -265,7 +274,7 @@ function checkArgs(
 async function readDockerConfig(cfg: ConfigFile): Promise<void> {
   const dockerFileRe = new RegExp(
     '# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s' +
-      `(?:ENV|ARG) ${cfg.buildArg}=(?<latestVersion>.*)\\s`,
+      `(?:ENV|ARG) ${cfg.buildArg as string}=(?<latestVersion>.*)\\s`,
     'g'
   );
   const dockerfile = await readFile('Dockerfile');

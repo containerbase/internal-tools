@@ -71,9 +71,9 @@ export function getWorkspace(): string {
 
 export async function readJson<T = unknown>(file: string): Promise<T> {
   const path = join(getWorkspace(), file);
-  const res = await import(path);
+  const res = (await import(path)) as T | { default: T };
   // istanbul ignore next
-  return res?.default ?? res;
+  return 'default' in res ? res?.default : res;
 }
 
 export async function readFile(file: string): Promise<string> {
