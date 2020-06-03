@@ -4,6 +4,7 @@ import got, { HTTPError, Headers } from 'got';
 import wwwAuthenticate from 'www-authenticate';
 import { docker } from './docker/common';
 import log from './logger';
+import { ExecError } from './types';
 
 export const registry = 'https://index.docker.io';
 
@@ -109,6 +110,12 @@ export type BuildOptions = {
   buildArgs?: string[];
 };
 
+const errors = ['unexpected status: 400 Bad Request'];
+
+function canRetry(err: ExecError): boolean {
+  return errors.some((str) => err.stderr.includes(str));
+}
+
 export async function build({
   image,
   cache,
@@ -138,7 +145,18 @@ export async function build({
     }
   }
 
-  await docker(...args, '.');
+  for (let build = 0; ; build++) {
+    try {
+      await docker(...args, '.');
+      break;
+    } catch (e) {
+      log.error(chalk.red(`docker build error on try ${build}`), e);
+      if (e instanceof ExecError && canRetry(e) && build < 2) {
+        continue;
+      }
+      throw e;
+    }
+  }
 }
 
 type PublishOptions = {

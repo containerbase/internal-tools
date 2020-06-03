@@ -9,6 +9,7 @@ import {
   publish,
   registry,
 } from '../../src/utils/docker';
+import { ExecError } from '../../src/utils/types';
 import { getName, mocked } from '../utils';
 
 jest.mock('../../src/util');
@@ -23,7 +24,7 @@ const realm = 'https://auth.docker.io';
 
 describe(getName(__filename), () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
     nock.cleanAll();
   });
 
@@ -184,6 +185,29 @@ describe(getName(__filename), () => {
         dryRun: true,
         buildArgs: ['IMAGE=slim'],
       });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+
+    it('retries', async () => {
+      utils.exec.mockRejectedValueOnce(
+        new ExecError(1, 'failed', 'unexpected status: 400 Bad Request', '')
+      );
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+      });
+
+      await build({ image });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+
+    it('throws', async () => {
+      utils.exec.mockRejectedValueOnce(
+        new ExecError(1, 'failed', 'unexpected status: 400 Bad Request', '')
+      );
+      utils.exec.mockRejectedValueOnce(new Error('failure'));
+
+      await expect(build({ image })).rejects.toThrow('failure');
+
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
   });
