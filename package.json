@@ -28,7 +28,7 @@
     "chalk": "4.0.0",
     "find-up": "4.1.0",
     "got": "11.2.0",
-    "renovate": "20.25.0",
+    "renovate": "20.25.1",
     "semver": "7.3.2",
     "strip-ansi": "6.0.0",
     "www-authenticate": "0.6.2"
