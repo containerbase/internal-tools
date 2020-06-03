@@ -1,12 +1,16 @@
-import { getInput, setFailed } from '@actions/core';
+import { setFailed } from '@actions/core';
 import chalk from 'chalk';
 import { Commands } from './types';
+import { getArg, initCli, isCli } from './utils/cli';
 import log from './utils/logger';
 
 export default async function run(): Promise<void> {
   try {
     log.info(chalk.blue('Renovate Docker Builder'));
-    const cmd = getInput('command') as Commands;
+    if (isCli()) {
+      await initCli();
+    }
+    const cmd = getArg('command') as Commands;
     log.info(chalk.yellow('Executing:'), ` ${cmd}`);
     switch (cmd) {
       case Commands.DockerBuilder:

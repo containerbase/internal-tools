@@ -3,7 +3,9 @@ import * as _core from '@actions/core';
 import * as _datasources from 'renovate/dist/datasource';
 import { run } from '../../../src/commands/docker/builder';
 import * as _utils from '../../../src/util';
+import * as _cli from '../../../src/utils/cli';
 import * as _docker from '../../../src/utils/docker';
+import * as _fs from '../../../src/utils/fs';
 import { getName, mocked } from '../../utils';
 
 jest.mock('renovate/dist/datasource');
@@ -17,6 +19,8 @@ jest.mock('../../../src/utils/renovate');
 const core = mocked(_core);
 const utils = mocked(_utils);
 const docker = mocked(_docker);
+const fs = mocked(_fs);
+const cli = mocked(_cli);
 const datasources = mocked(_datasources);
 const version = '1.22.4';
 
@@ -25,12 +29,12 @@ describe(getName(__filename), () => {
     jest.resetAllMocks();
     core.getInput.mockReturnValueOnce('builder.json');
     core.getInput.mockReturnValueOnce('yarn');
-    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
-    utils.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
+    fs.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
+    cli.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
   });
 
   it('works yarn', async () => {
-    utils.readFile.mockResolvedValue(
+    fs.readFile.mockResolvedValue(
       `# renovate: datasource=npm depName=yarn versioning=npm\nARG YARN_VERSION=${version}\n`
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
@@ -44,10 +48,10 @@ describe(getName(__filename), () => {
   });
 
   it('works pnpm', async () => {
-    utils.readJson.mockReset();
-    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/pnpm.json'));
-    utils.getArg.mockReturnValueOnce(['IMAGE=slim']);
-    utils.getArg.mockReturnValueOnce('slim');
+    fs.readJson.mockReset();
+    fs.readJson.mockResolvedValueOnce(require('./__fixtures__/pnpm.json'));
+    cli.getArg.mockReturnValueOnce(['IMAGE=slim']);
+    cli.getArg.mockReturnValueOnce('slim');
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version: '4.0.0-rc.24' }, { version: '5.0.0' }],
     });
@@ -59,8 +63,8 @@ describe(getName(__filename), () => {
   });
 
   it('works gradle', async () => {
-    utils.readJson.mockReset();
-    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/gradle.json'));
+    fs.readJson.mockReset();
+    fs.readJson.mockResolvedValueOnce(require('./__fixtures__/gradle.json'));
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [
         { version: '0.7' },
@@ -79,7 +83,7 @@ describe(getName(__filename), () => {
 
   it('works dummy', async () => {
     jest.resetAllMocks();
-    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
+    fs.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
 
     await run();
 
@@ -88,15 +92,15 @@ describe(getName(__filename), () => {
   });
 
   it('last-only dummy', async () => {
-    utils.readJson.mockReset();
-    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
+    fs.readJson.mockReset();
+    fs.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
     core.getInput.mockReset();
     core.getInput.mockReturnValueOnce('builder.json');
     core.getInput.mockReturnValueOnce('true');
-    utils.getArg.mockReturnValueOnce(['IMAGE=slim']);
-    utils.getArg.mockReturnValueOnce('slim');
-    utils.getArg.mockReturnValueOnce('false');
-    utils.getArg.mockReturnValueOnce('true');
+    cli.getArg.mockReturnValueOnce(['IMAGE=slim']);
+    cli.getArg.mockReturnValueOnce('slim');
+    cli.getArg.mockReturnValueOnce('false');
+    cli.getArg.mockReturnValueOnce('true');
 
     await run();
 
@@ -146,8 +150,8 @@ describe(getName(__filename), () => {
   });
 
   it('unstable releases', async () => {
-    utils.readJson.mockReset();
-    utils.readJson.mockResolvedValueOnce({
+    fs.readJson.mockReset();
+    fs.readJson.mockResolvedValueOnce({
       ...require('./__fixtures__/pnpm.json'),
       ignoredVersions: ['3.5.4'],
     });
@@ -176,7 +180,7 @@ describe(getName(__filename), () => {
   it('throws missing-image', async () => {
     expect.assertions(1);
     jest.resetAllMocks();
-    utils.readJson.mockResolvedValueOnce({});
+    fs.readJson.mockResolvedValueOnce({});
     core.getInput.mockReturnValueOnce('');
     core.getInput.mockImplementationOnce(() => {
       throw new Error('missing-image');
@@ -190,7 +194,7 @@ describe(getName(__filename), () => {
   it('throws missing-config', async () => {
     expect.assertions(1);
     jest.resetAllMocks();
-    utils.readJson.mockResolvedValueOnce(undefined);
+    fs.readJson.mockResolvedValueOnce(undefined);
 
     try {
       await run();

@@ -2,6 +2,7 @@ import { existsSync } from 'fs';
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as util from '../src/util';
+import * as fs from '../src/utils/fs';
 import { getName, mocked } from './utils';
 
 jest.mock('@actions/core');
@@ -56,13 +57,6 @@ describe(getName(__filename), () => {
     });
   });
 
-  describe('getEnv', () => {
-    it('works', () => {
-      expect(util.getEnv('NOT_FOUND_ENV_VAR')).toBe('');
-      expect(util.getEnv('PATH')).toBeDefined();
-    });
-  });
-
   describe('getWorkspace', () => {
     let ws: string | undefined;
     beforeEach(() => {
@@ -85,7 +79,7 @@ describe(getName(__filename), () => {
     });
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
-      expect(await util.readJson('.prettierrc.json')).toEqual({
+      expect(await fs.readJson('.prettierrc.json')).toEqual({
         singleQuote: true,
         trailingComma: 'es5',
       });
@@ -98,37 +92,17 @@ describe(getName(__filename), () => {
     });
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
-      expect(await util.readFile('Dockerfile')).toMatchSnapshot();
-    });
-  });
-
-  describe('getArg', () => {
-    it('single', () => {
-      core.getInput.mockReturnValueOnce('test;latest;slim');
-      expect(util.getArg('dockerfile')).toBe('test;latest;slim');
-    });
-
-    it('multi', () => {
-      core.getInput.mockReturnValueOnce('test;latest;slim');
-      expect(util.getArg('dockerfile', { multi: true })).toEqual([
-        'test',
-        'latest',
-        'slim',
-      ]);
-    });
-
-    it('multi (null)', () => {
-      expect(util.getArg('dockerfile', { multi: true })).toEqual([]);
+      expect(await fs.readFile('Dockerfile')).toMatchSnapshot();
     });
   });
 
   describe('resolveFile', () => {
     it('works', async () => {
-      const file = await util.resolveFile('bin/configure-docker.sh');
+      const file = await fs.resolveFile('bin/configure-docker.sh');
       expect(file).toBeDefined();
       expect(existsSync(file)).toBe(true);
 
-      const file2 = await util.resolveFile('bin/dummy.sh');
+      const file2 = await fs.resolveFile('bin/dummy.sh');
       expect(file2).toBeDefined();
       expect(existsSync(file2)).toBe(false);
     });

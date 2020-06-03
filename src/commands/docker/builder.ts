@@ -1,12 +1,13 @@
-import { getInput } from '@actions/core';
 import is from '@sindresorhus/is';
 import chalk from 'chalk';
 import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
-import { exec, getArg, isDryRun, readFile, readJson } from '../../util';
+import { exec,   isDryRun } from '../../util';
+import { getArg } from '../../utils/cli';
 import { build, publish } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';
 import { dockerDf, dockerPrune, dockerTag } from '../../utils/docker/common';
+import { readFile, readJson } from '../../utils/fs';
 import log from '../../utils/logger';
 import * as renovate from '../../utils/renovate';
 
@@ -291,7 +292,7 @@ async function readDockerConfig(cfg: ConfigFile): Promise<void> {
 
 export async function run(): Promise<void> {
   const dryRun = isDryRun();
-  const configFile = getInput('config') || 'builder.json';
+  const configFile = getArg('config') || 'builder.json';
 
   const cfg = await readJson<ConfigFile>(configFile);
 
@@ -301,7 +302,7 @@ export async function run(): Promise<void> {
 
   // TODO: validation
   if (!is.string(cfg.image)) {
-    cfg.image = getInput('image', { required: true });
+    cfg.image = getArg('image', { required: true });
   }
 
   if (!is.string(cfg.buildArg)) {
@@ -319,8 +320,8 @@ export async function run(): Promise<void> {
     tagSuffix: getArg('tag-suffix') || undefined,
     ignoredVersions: cfg.ignoredVersions ?? [],
     dryRun,
-    lastOnly: getInput('last-only') == 'true',
-    buildOnly: getInput('build-only') == 'true',
+    lastOnly: getArg('last-only') == 'true',
+    buildOnly: getArg('build-only') == 'true',
     majorMinor: getArg('major-minor') !== 'false',
     prune: getArg('prune') === 'true',
   };

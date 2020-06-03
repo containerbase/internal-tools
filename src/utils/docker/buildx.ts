@@ -1,6 +1,8 @@
 import { existsSync } from 'fs';
+import { platform } from 'os';
 import { join } from 'path';
-import { exec, resolveFile } from '../../util';
+import { exec } from '../../util';
+import { resolveFile } from '../fs';
 import log from '../logger';
 import { docker, dockerBuildx, dockerRun } from './common';
 
@@ -9,6 +11,12 @@ export async function init(): Promise<void> {
     process.env.HOME as string,
     `.docker/cli-plugins/docker-buildx`
   );
+
+  // istanbul ignore if
+  if (platform() !== 'linux') {
+    log.warn('Buildx support only on linux');
+    return;
+  }
 
   // istanbul ignore if
   if (existsSync(buildx)) {
