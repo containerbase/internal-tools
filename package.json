@@ -26,6 +26,7 @@
     "@actions/io": "1.0.2",
     "@sindresorhus/is": "2.1.1",
     "chalk": "4.0.0",
+    "delay": "4.3.0",
     "find-up": "4.1.0",
     "got": "11.2.0",
     "renovate": "20.25.8",
