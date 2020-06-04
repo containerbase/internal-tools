@@ -5,12 +5,14 @@ export type ExecResult = {
 };
 
 export class ExecError extends Error implements ExecResult {
+  readonly name = 'ExecError';
+
   constructor(
     public readonly code: number,
     public readonly stdout: string,
     public readonly stderr: string,
     public readonly cmd: string
   ) {
-    super();
+    super('ExecError: ' + stderr);
   }
 }

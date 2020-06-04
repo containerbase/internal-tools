@@ -1,5 +1,6 @@
 import is from '@sindresorhus/is';
 import chalk from 'chalk';
+import delay = require('delay');
 import got, { HTTPError, Headers } from 'got';
 import wwwAuthenticate from 'www-authenticate';
 import { docker } from './docker/common';
@@ -110,7 +111,7 @@ export type BuildOptions = {
   buildArgs?: string[];
 };
 
-const errors = ['unexpected status: 400 Bad Request'];
+const errors = ['unexpected status: 400 Bad Request', ': no response'];
 
 function canRetry(err: ExecError): boolean {
   return errors.some((str) => err.stderr.includes(str));
@@ -150,8 +151,9 @@ export async function build({
       await docker(...args, '.');
       break;
     } catch (e) {
-      log.error(chalk.red(`docker build error on try ${build}`), e);
       if (e instanceof ExecError && canRetry(e) && build < 2) {
+        log.error(chalk.red(`docker build error on try ${build}`), e);
+        await delay(5000);
         continue;
       }
       throw e;

@@ -12,6 +12,7 @@ import {
 import { ExecError } from '../../src/utils/types';
 import { getName, mocked } from '../utils';
 
+jest.mock('delay', () => () => Promise.resolve());
 jest.mock('../../src/util');
 
 const utils = mocked(_utils);
