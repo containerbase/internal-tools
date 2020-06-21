@@ -45,7 +45,7 @@
     "eslint": "7.3.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "2.20.2",
-    "eslint-plugin-jest": "23.15.0",
+    "eslint-plugin-jest": "23.16.0",
     "eslint-plugin-promise": "4.2.1",
     "husky": "4.2.5",
     "jest": "26.0.1",
