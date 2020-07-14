@@ -3,8 +3,8 @@ import { join } from 'path';
 import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
-import log from './utils/logger';
 import findUp = require('find-up');
+import log from './utils/logger';
 import { ExecError, ExecResult } from './utils/types';
 
 export type ExecOptions = _ExecOptions;
