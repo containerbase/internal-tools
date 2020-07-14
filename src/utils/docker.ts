@@ -111,7 +111,11 @@ export type BuildOptions = {
   buildArgs?: string[];
 };
 
-const errors = ['unexpected status: 400 Bad Request', ': no response'];
+const errors = [
+  'unexpected status: 400 Bad Request',
+  ': no response',
+  'error writing layer blob',
+];
 
 function canRetry(err: ExecError): boolean {
   return errors.some((str) => err.stderr.includes(str));
