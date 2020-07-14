@@ -13,6 +13,6 @@ export class ExecError extends Error implements ExecResult {
     public readonly stderr: string,
     public readonly cmd: string
   ) {
-    super('ExecError: ' + stderr);
+    super(`ExecError: (${code}) ` + stderr.split('\n').slice(-10).join('\n'));
   }
 }

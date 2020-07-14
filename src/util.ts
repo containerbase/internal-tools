@@ -36,7 +36,6 @@ export async function exec(
     endGroup();
   }
   if (code) {
-    log.error({ code });
     throw new ExecError(code, stdout, stderr, `${cmd} ${args.join(' ')}`);
   }
 
