@@ -5,5 +5,5 @@ import * as renovate from './renovate-slim';
 export function register(): void {
   log('register datasources');
   const ds = getDatasources();
-  ds.set(renovate.id, Promise.resolve(renovate));
+  ds.set(renovate.id, renovate);
 }
