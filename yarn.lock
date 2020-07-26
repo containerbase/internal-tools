@@ -5317,10 +5317,10 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@22.3.2:
-  version "22.3.2"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-22.3.2.tgz#bc9f1cfd8b2bbad98bd132836f3584abd760dd12"
-  integrity sha512-lWQEhlatC9aZKECZ3+iyAFnEWUSa04bHoZAyvzMwJbUPfIdfgo5wujDW13ojr+tA4fIqzmrNnM8Xe4Q061QkcA==
+renovate@22.3.3:
+  version "22.3.3"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-22.3.3.tgz#7a49b8873ec0a6fd51bd25d41b3229abf4707646"
+  integrity sha512-Gb07ZaEaG/XSZbvhx8Vu3mYKR/83HAVsWpA8I/l0LFfImV/qg58aJ6suIOzwFV+sazeO3xFhyXqLpFww5VlbTA==
   dependencies:
     "@renovate/pep440" "0.4.1"
     "@renovatebot/ruby-semver" "0.2.1"
@@ -5376,7 +5376,7 @@ renovate@22.3.2:
     semver-utils "1.1.4"
     shlex "2.0.2"
     shortid "2.2.15"
-    simple-git "2.14.0"
+    simple-git "2.15.0"
     slugify "1.4.4"
     toml "3.0.0"
     traverse "0.6.6"
@@ -5721,10 +5721,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
-simple-git@2.14.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.14.0.tgz#0dcd455451b9ad63542bf3f0599a01d57764d2e4"
-  integrity sha512-uhZUUrgw+5TlF6WYxGCbsnsdKeA8eu6UY48ynWk5/X5m/B2L5n/1eyc0e2G2hP6LFAIRGYnO3CCzgWng7OkOhg==
+simple-git@2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.15.0.tgz#62636209e92a172f66a03e23f8505e3822c01898"
+  integrity sha512-a1IE3q8pWsGhQR0/ugAkXls2ekbB7LDhJnFnrS/R+5zFZZbN4bfdIp3Vdht4x/z1oIH/8IHiKdjilN55FGL70g==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
