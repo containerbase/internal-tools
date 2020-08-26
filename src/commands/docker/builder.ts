@@ -3,7 +3,7 @@ import is from '@sindresorhus/is';
 import chalk from 'chalk';
 import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
-import { getArg, isDryRun, readFile, readJson } from '../../util';
+import { exec, getArg, isDryRun, readFile, readJson } from '../../util';
 import { build, publish } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';
 import { dockerDf, dockerPrune, dockerTag } from '../../utils/docker/common';
@@ -197,16 +197,17 @@ async function buildAndPush(
 
       log(`Build ${imageVersion}`);
       builds.push(version);
-
-      if (prune) {
-        await dockerPrune();
-      }
     } catch (err) {
       log.error(err);
       failed.push(version);
     }
 
     await dockerDf();
+    await exec('df', ['-h']);
+
+    if (prune) {
+      await dockerPrune();
+    }
   }
 
   if (builds.length) {
