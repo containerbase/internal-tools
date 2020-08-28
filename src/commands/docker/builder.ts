@@ -140,6 +140,9 @@ async function buildAndPush(
       }
     }
   }
+
+  await exec('df', ['-h']);
+
   for (const version of versions) {
     const tag = createTag(tagSuffix, version);
     const imageVersion = `renovate/${image}:${tag}`;
@@ -207,6 +210,7 @@ async function buildAndPush(
 
     if (prune) {
       await dockerPrune();
+      await exec('df', ['-h']);
     }
   }
 
