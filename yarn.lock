@@ -4725,15 +4725,20 @@ moment-timezone@0.5.31:
   dependencies:
     moment ">= 2.9.0"
 
-moment@2.27.0, moment@^2.19.3:
-  version "2.27.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
-  integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
+moment@2.28.0:
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.28.0.tgz#cdfe73ce01327cee6537b0fafac2e0f21a237d75"
+  integrity sha512-Z5KOjYmnHyd/ukynmFd/WwyXHd7L4J9vTI/nn5Ap9AVUgaAE15VvQ9MOGmJJygEUklupqIrFnor/tjTwRU+tQw==
 
 "moment@>= 2.9.0":
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
+moment@^2.19.3:
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
+  integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
 
 mri@^1.1.5:
   version "1.1.6"
@@ -5765,10 +5770,10 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@23.28.0:
-  version "23.28.0"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.28.0.tgz#d508e8b09f6c8a07d793fa0894212bab7b5dfc9a"
-  integrity sha512-TOlCbRGX/chqs1O3+PUggUgB74s/eae4ltnmNbQLLBnwu7WY6EGxhRmsIZS2jQoffUB2M0XsOqo6YoF6ne7IdA==
+renovate@23.28.2:
+  version "23.28.2"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.28.2.tgz#64083ef28d2ad8982b1d3981fc46c32731de04fe"
+  integrity sha512-drqlKwHzWGsOUXd946B2O9EOVai9F+3ejO6y/Oui1ZWaM6bLpb7R4Vpsgni2NrSIFApRCDYYrB5K6ZvFoDdIyA==
   dependencies:
     "@renovate/pep440" "0.4.1"
     "@renovatebot/ruby-semver" "0.2.1"
@@ -5811,7 +5816,7 @@ renovate@23.28.0:
     markdown-it "11.0.0"
     markdown-table "2.0.0"
     minimatch "3.0.4"
-    moment "2.27.0"
+    moment "2.28.0"
     moment-timezone "0.5.31"
     node-emoji "1.10.0"
     p-all "3.0.0"
