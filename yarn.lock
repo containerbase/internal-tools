@@ -5766,10 +5766,10 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@23.31.3:
-  version "23.31.3"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.31.3.tgz#3649b3d6e0a8f830b554243f88c1e5444ddcf3a3"
-  integrity sha512-3C16auv4CQBjNQ9rCCSTMcddfQJAiKAbG2/5xLtdmAtIruKNq0NC209ggaYnsJzFmkDZxfufj6Nrt/6nWJsfzQ==
+renovate@23.31.4:
+  version "23.31.4"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.31.4.tgz#0915dcd9d8075d1d2e4996b9915ec4340e8ed145"
+  integrity sha512-e8B7iHYtQb507rImnAxOs+NBtvWwXvK9rOhH7P4c4YFiI1NTEWFyM7G0s7oz+rm6YljkKYzKdBkpZcMK/qwD7A==
   dependencies:
     "@renovate/pep440" "0.4.1"
     "@renovatebot/ruby-semver" "0.2.1"
