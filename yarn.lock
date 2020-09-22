@@ -1361,10 +1361,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-aws-sdk@2.754.0:
-  version "2.754.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.754.0.tgz#8a224d24d8597b084d01a76e2496533c73a45630"
-  integrity sha512-87WVpDOY9LlJtbN6/RszHrr8NxN/M/Qb5luNX3IayUUt+emkBrl6ZKPrG+N1s+WXEyLxkNE4fxiBkiS/5/TiEg==
+aws-sdk@2.757.0:
+  version "2.757.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.757.0.tgz#2523b7a78fa3d439dd62d97dfa64f436b3438013"
+  integrity sha512-umJ4/kzQZll4TB7ePBi68vLN7aAD01+FElqA7/7hiZrzSchXoL4/T3tY0vAsBzXAT8b71Ha9SzhIygB3Qr+/OA==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -5749,17 +5749,17 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@23.32.1:
-  version "23.32.1"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.32.1.tgz#c44c6a670679e225fb92d6d0093bab6f21b16e41"
-  integrity sha512-JQx3H0K3pUFuAWiWqEBRLoB/3ekiYGyazqiZCHI+zNe8S8ecKwv9axM7fgbLZzQCegyjGDFVIbQdutvaCa/l9A==
+renovate@23.32.2:
+  version "23.32.2"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.32.2.tgz#794923232040abf38931cc4f4937aa8f4e728107"
+  integrity sha512-h63TC7j02tFKx/Q9Yyy6vTTtEBVwL7Tq8vbpFTo12ShR2wibJ3KghGd06CYR/LdcNeABfBIjJzqssa8MkqmxCg==
   dependencies:
     "@renovate/pep440" "0.4.1"
     "@renovatebot/ruby-semver" "0.2.1"
     "@sindresorhus/is" "3.1.2"
     "@yarnpkg/core" "2.2.2"
     "@yarnpkg/parsers" "2.2.0"
-    aws-sdk "2.754.0"
+    aws-sdk "2.757.0"
     azure-devops-node-api "10.1.1"
     bunyan "1.8.14"
     cacache "15.0.5"
