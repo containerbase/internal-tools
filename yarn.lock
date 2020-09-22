@@ -2983,23 +2983,6 @@ globby@^11.0.1:
     merge2 "^1.3.0"
     slash "^3.0.0"
 
-got@11.6.2:
-  version "11.6.2"
-  resolved "https://registry.yarnpkg.com/got/-/got-11.6.2.tgz#79d7bb8c11df212b97f25565407a1f4ae73210ec"
-  integrity sha512-/21qgUePCeus29Jk7MEti8cgQUNXFSWfIevNIk4H7u1wmXNDrGPKPY6YsPY+o9CIT/a2DjCjRz0x1nM9FtS2/A==
-  dependencies:
-    "@sindresorhus/is" "^3.1.1"
-    "@szmarczak/http-timer" "^4.0.5"
-    "@types/cacheable-request" "^6.0.1"
-    "@types/responselike" "^1.0.0"
-    cacheable-lookup "^5.0.3"
-    cacheable-request "^7.0.1"
-    decompress-response "^6.0.0"
-    http2-wrapper "^1.0.0-beta.5.2"
-    lowercase-keys "^2.0.0"
-    p-cancelable "^2.0.0"
-    responselike "^2.0.0"
-
 got@11.7.0:
   version "11.7.0"
   resolved "https://registry.yarnpkg.com/got/-/got-11.7.0.tgz#a386360305571a74548872e674932b4ef70d3b24"
@@ -5766,10 +5749,10 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@23.32.0:
-  version "23.32.0"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.32.0.tgz#c1a434c4fd09461776c5ba19560aca48e98c0fe0"
-  integrity sha512-DjBM/twoF/WKsBcjUZMPHLc20gO3ZaGhRx3yb5BMBm1YXI/3stGiGBNCHLQGrlYA61vOiMS5FTYXunlSp5lerQ==
+renovate@23.32.1:
+  version "23.32.1"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.32.1.tgz#c44c6a670679e225fb92d6d0093bab6f21b16e41"
+  integrity sha512-JQx3H0K3pUFuAWiWqEBRLoB/3ekiYGyazqiZCHI+zNe8S8ecKwv9axM7fgbLZzQCegyjGDFVIbQdutvaCa/l9A==
   dependencies:
     "@renovate/pep440" "0.4.1"
     "@renovatebot/ruby-semver" "0.2.1"
@@ -5795,7 +5778,7 @@ renovate@23.32.0:
     fs-extra "9.0.1"
     github-url-from-git "1.5.0"
     global-agent "2.1.12"
-    got "11.6.2"
+    got "11.7.0"
     handlebars "4.7.6"
     handy-redis "1.8.3"
     hasha "5.2.0"
