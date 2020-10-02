@@ -3,16 +3,10 @@ import { join } from 'path';
 import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
-import log from './utils/logger';
 import findUp = require('find-up');
+import { ExecError, ExecResult } from './utils/types';
 
 export type ExecOptions = _ExecOptions;
-
-export type ExecResult = {
-  readonly code: number;
-  readonly stdout: string;
-  readonly stderr: string;
-};
 
 export async function exec(
   cmd: string,
@@ -27,6 +21,7 @@ export async function exec(
     startGroup(`${cmd} ${args.join(' ')}`);
     code = await _exec(cmd, args, {
       ...options,
+      ignoreReturnCode: true,
       listeners: {
         stdout: (data: Buffer) => {
           stdout += data.toString();
@@ -40,8 +35,7 @@ export async function exec(
     endGroup();
   }
   if (code) {
-    log.error({ code });
-    throw new Error('Command failed');
+    throw new ExecError(code, stdout, stderr, `${cmd} ${args.join(' ')}`);
   }
 
   return { code, stdout, stderr };

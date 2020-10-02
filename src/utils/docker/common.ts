@@ -1,5 +1,6 @@
-import { ExecResult, exec } from '../../util';
+import { exec } from '../../util';
 import log from '../logger';
+import { ExecResult } from '../types';
 
 export async function docker(...args: string[]): Promise<ExecResult> {
   return await exec('docker', [...args]);

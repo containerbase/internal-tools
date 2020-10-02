@@ -1,5 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[` build retries 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "buildx",
+      "build",
+      "--load",
+      "--tag=renovate/base:latest",
+      ".",
+    ],
+  ],
+  Array [
+    "docker",
+    Array [
+      "buildx",
+      "build",
+      "--load",
+      "--tag=renovate/base:latest",
+      ".",
+    ],
+  ],
+]
+`;
+
+exports[` build throws 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "buildx",
+      "build",
+      "--load",
+      "--tag=renovate/base:latest",
+      ".",
+    ],
+  ],
+  Array [
+    "docker",
+    Array [
+      "buildx",
+      "build",
+      "--load",
+      "--tag=renovate/base:latest",
+      ".",
+    ],
+  ],
+]
+`;
+
 exports[` build uses cache (dry-run) 1`] = `
 Array [
   Array [
