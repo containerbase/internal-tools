@@ -35,7 +35,7 @@
     "www-authenticate": "0.6.2"
   },
   "devDependencies": {
-    "@jest/globals": "26.4.2",
+    "@jest/globals": "26.5.0",
     "@types/jest": "26.0.14",
     "@types/node": "12.12.62",
     "@types/semver": "7.3.4",
@@ -48,7 +48,7 @@
     "eslint-plugin-jest": "24.0.2",
     "eslint-plugin-promise": "4.2.1",
     "husky": "4.3.0",
-    "jest": "26.4.2",
+    "jest": "26.5.0",
     "nock": "13.0.4",
     "npm-run-all": "4.1.5",
     "prettier": "2.1.2",
