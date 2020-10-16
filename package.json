@@ -37,7 +37,7 @@
   "devDependencies": {
     "@jest/globals": "26.5.3",
     "@types/jest": "26.0.14",
-    "@types/node": "12.12.67",
+    "@types/node": "12.12.68",
     "@types/semver": "7.3.4",
     "@typescript-eslint/eslint-plugin": "4.4.1",
     "@typescript-eslint/parser": "4.4.1",
