@@ -12,6 +12,7 @@ TARGET=$HOME/.docker/cli-plugins/docker-buildx
 curl -sSL https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.${BUILDX_DISTRO} -o $TARGET
 chmod +x $TARGET
 
+docker system prune --force --all
 
 # sudo systemctl stop docker
 # cat /etc/docker/daemon.json | jq '. + { "data-root": "/mnt/docker" }' | sudo tee /etc/docker/daemon.json
