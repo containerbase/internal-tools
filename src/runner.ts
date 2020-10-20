@@ -18,6 +18,7 @@ export default async function run(): Promise<void> {
         break;
 
       default:
+        log(chalk.yellow('args:'), chalk.grey(...process.argv));
         log.error(chalk.red('Unknown command:'), cmd);
         break;
     }
