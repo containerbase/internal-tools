@@ -13,10 +13,3 @@ curl -sSL https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/b
 chmod +x $TARGET
 
 docker system prune --force --all
-
-# sudo systemctl stop docker
-# cat /etc/docker/daemon.json | jq '. + { "data-root": "/mnt/docker" }' | sudo tee /etc/docker/daemon.json
-# sudo rm -rf /var/lib/docker
-# sudo mkdir -p /mnt/docker
-# sudo systemctl restart docker || sudo journalctl -u docker.service
-
