@@ -2,5 +2,6 @@
   "datasource": "gradle-version",
   "versioning": "gradle",
   "image": "gradle",
-  "startVersion": "3.5.4"
+  "startVersion": "3.5.4",
+  "maxVersions": 3
 }

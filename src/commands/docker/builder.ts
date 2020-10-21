@@ -34,6 +34,7 @@ async function getBuildList({
   forceUnstable,
   versions,
   latestVersion,
+  maxVersions,
 }: Config): Promise<string[]> {
   log('Looking up versions');
   const ver = getVersioning(versioning as never);
@@ -81,6 +82,11 @@ async function getBuildList({
 
   const lastVersion = allVersions[allVersions.length - 1];
   log('Most recent version is', lastVersion);
+
+  if (is.number(maxVersions) && maxVersions > 0) {
+    log(`Building last ${maxVersions} version only`);
+    allVersions = allVersions.slice(-maxVersions);
+  }
 
   if (lastOnly) {
     log('Building last version only');
@@ -236,6 +242,7 @@ type ConfigFile = {
   forceUnstable?: boolean;
   versions?: string[];
   latestVersion?: string;
+  maxVersions?: number;
 };
 
 type Config = {

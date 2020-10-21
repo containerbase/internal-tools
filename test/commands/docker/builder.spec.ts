@@ -67,12 +67,20 @@ describe(getName(__filename), () => {
         { version: '2.3' },
         { version: '3.0' },
         { version: '3.5.4' },
+        { version: '3.5.5' },
+        { version: '4.5' },
         { version: '6.0' },
       ],
     });
 
     await run();
 
+    expect(docker.build.mock.calls).toHaveLength(3);
+    expect(docker.build.mock.calls.map(([args]) => args.tag)).toEqual([
+      '3.5.5',
+      '4.5',
+      '6.0',
+    ]);
     expect(docker.build.mock.calls).toMatchSnapshot('build');
     expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
