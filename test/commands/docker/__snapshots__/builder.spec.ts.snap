@@ -306,6 +306,97 @@ Array [
 ]
 `;
 
+exports[`works ubuntu: build 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArgs": Array [
+        "UBUNTU_VERSION=bionic",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+        "18",
+        "18.4",
+      ],
+      "dryRun": undefined,
+      "image": "ubuntu",
+      "tag": "bionic",
+    },
+  ],
+  Array [
+    Object {
+      "buildArgs": Array [
+        "UBUNTU_VERSION=focal",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+        "20",
+        "20.4",
+      ],
+      "dryRun": undefined,
+      "image": "ubuntu",
+      "tag": "focal",
+    },
+  ],
+]
+`;
+
+exports[`works ubuntu: publish 1`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "ubuntu",
+      "tag": "bionic",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "ubuntu",
+      "tag": "18",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "ubuntu",
+      "tag": "18.4",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "ubuntu",
+      "tag": "focal",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "ubuntu",
+      "tag": "20",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "ubuntu",
+      "tag": "20.4",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "ubuntu",
+      "tag": "latest",
+    },
+  ],
+]
+`;
+
 exports[`works yarn: build 1`] = `
 Array [
   Array [

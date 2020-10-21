@@ -12,7 +12,7 @@ jest.mock('../../../src/utils/docker');
 jest.mock('../../../src/utils/docker/buildx', () => ({
   init: () => Promise.resolve(),
 }));
-jest.mock('../../../src/utils/renovate');
+jest.mock('../../../src/utils/datasource');
 
 const core = mocked(_core);
 const utils = mocked(_utils);
@@ -80,6 +80,16 @@ describe(getName(__filename), () => {
   it('works dummy', async () => {
     jest.resetAllMocks();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
+
+    await run();
+
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
+  });
+
+  it('works ubuntu', async () => {
+    jest.resetAllMocks();
+    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/ubuntu.json'));
 
     await run();
 
