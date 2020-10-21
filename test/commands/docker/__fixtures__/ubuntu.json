@@ -1,0 +1,7 @@
+{
+  "datasource": "docker",
+  "versioning": "ubuntu",
+  "image": "ubuntu",
+  "startVersion": "bionic",
+  "versions": ["bionic", "focal"]
+}

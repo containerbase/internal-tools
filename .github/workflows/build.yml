@@ -191,6 +191,13 @@ jobs:
           config: e2e/renovate.json
           dry-run: true
 
+      - name: docker-builder (ubuntu)
+        uses: ./
+        with:
+          command: docker-builder
+          config: e2e/ubuntu.json
+          dry-run: true
+
       - name: dummy-command
         uses: ./
         with:

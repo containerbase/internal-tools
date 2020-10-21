@@ -12,7 +12,7 @@ jest.mock('../../../src/utils/docker');
 jest.mock('../../../src/utils/docker/buildx', () => ({
   init: () => Promise.resolve(),
 }));
-jest.mock('../../../src/utils/renovate');
+jest.mock('../../../src/utils/datasource');
 
 const core = mocked(_core);
 const utils = mocked(_utils);
@@ -67,12 +67,20 @@ describe(getName(__filename), () => {
         { version: '2.3' },
         { version: '3.0' },
         { version: '3.5.4' },
+        { version: '3.5.5' },
+        { version: '4.5' },
         { version: '6.0' },
       ],
     });
 
     await run();
 
+    expect(docker.build.mock.calls).toHaveLength(3);
+    expect(docker.build.mock.calls.map(([args]) => args.tag)).toEqual([
+      '3.5.5',
+      '4.5',
+      '6.0',
+    ]);
     expect(docker.build.mock.calls).toMatchSnapshot('build');
     expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
@@ -80,6 +88,16 @@ describe(getName(__filename), () => {
   it('works dummy', async () => {
     jest.resetAllMocks();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
+
+    await run();
+
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
+  });
+
+  it('works ubuntu', async () => {
+    jest.resetAllMocks();
+    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/ubuntu.json'));
 
     await run();
 
