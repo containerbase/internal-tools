@@ -234,7 +234,7 @@ jobs:
 
       - name: Merge
         run: |
-          git merge --no-ff -m 'chore(release): merge (${{ github.sha }})' ${{ github.sha }}
+          git merge --no-ff -m 'chore(release): merge (${{ github.sha }}) [skip release]' ${{ github.sha }}
 
       - name: Cache Yarn packages
         id: yarn_cache_packages
@@ -255,7 +255,7 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - run: yarn lint
+      - run: rm -rf dist
 
       - run: yarn release
         if: ${{github.ref == 'refs/heads/master'}}
