@@ -263,9 +263,11 @@ jobs:
         if: ${{github.ref == 'refs/heads/master'}}
 
       - name: Release
-        run: yarn release
+        run: |
+          env
+          # override for semantic-release
+          export GITHUB_REF=refs/heads/release GITHUB_SHA=${{ steps.merge.outputs.commit }}
+          yarn release
         if: ${{github.ref == 'refs/heads/master'}}
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          GITHUB_REF: refs/heads/release # override for semantic-release
-          GITHUB_SHA: ${{ steps.merge.outputs.commit }} # override for semantic-release
