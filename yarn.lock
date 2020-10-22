@@ -3161,7 +3161,7 @@ ini@1.3.5, ini@~1.3.0:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
 
-install-artifact-from-github@^1.1.1:
+install-artifact-from-github@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/install-artifact-from-github/-/install-artifact-from-github-1.1.3.tgz#552f1ec3e693f970726e3f68018ff5885665ec9e"
   integrity sha512-iNuncO/pI1w0UOrebs9dwwVpXqERkszPcb7AYq2hbsJDS3X+XdZ+E5kE91EBSc98mjvCMWOoBa1Zk3hVeP1ddA==
@@ -4583,7 +4583,7 @@ mv@~2:
     ncp "~2.0.0"
     rimraf "~2.4.0"
 
-nan@^2.14.0, nan@^2.14.1:
+nan@^2.14.0, nan@^2.14.2:
   version "2.14.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
@@ -4652,7 +4652,7 @@ node-fetch@^2.6.1:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
-node-gyp@^7.1.0:
+node-gyp@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-7.1.2.tgz#21a810aebb187120251c3bcec979af1587b188ae"
   integrity sha512-CbpcIo7C3eMu3dL1c3d0xw449fHIGALIJsRP4DDPHpyiW8vcriNY7ubh9TE4zEKfSxscY7PjeFnshE7h75ynjQ==
@@ -5313,14 +5313,14 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-re2@1.15.6:
-  version "1.15.6"
-  resolved "https://registry.yarnpkg.com/re2/-/re2-1.15.6.tgz#838f86ea4205ffec47c7f5802b12a8fee33472b3"
-  integrity sha512-SsxGuKiizqOPBwm2YkMfh+Wsj+02sqP9y8xydC9KbZqHuY2qdjEyoJAfBapKSTK130gZMXVE6Qm+GTlOfjwqJw==
+re2@1.15.8:
+  version "1.15.8"
+  resolved "https://registry.yarnpkg.com/re2/-/re2-1.15.8.tgz#654dfbd889acc2649773a2b32dfb9feb357ca9bc"
+  integrity sha512-CZm4HMuNbY+LP5LjFQvBxbQmvS7iJiVR3w23Bk3jYxZFUj6wPiYRvDikyVpqHYLioVAWcgjG6F90Pk4z7ehUSg==
   dependencies:
-    install-artifact-from-github "^1.1.1"
-    nan "^2.14.1"
-    node-gyp "^7.1.0"
+    install-artifact-from-github "^1.1.3"
+    nan "^2.14.2"
+    node-gyp "^7.1.2"
 
 react-is@^16.12.0:
   version "16.13.1"
@@ -5539,10 +5539,10 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@23.56.0:
-  version "23.56.0"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.56.0.tgz#ebfea5a0a41ebfc22a641a045e854347f9984913"
-  integrity sha512-TSE3+w2G/AhNEc/UexKL4FEyYbIevckI9GTj13scTKzbxeiisGg8Y4/8DiLp+kecPjRNcGhte7MTJSEqveLJIA==
+renovate@23.56.1:
+  version "23.56.1"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.56.1.tgz#8245b22d81998b3150fe1366f6fcd4d85e80b246"
+  integrity sha512-xpyeIOmqWov1QzAbITAE6a1KuGYstKU/Tr8P9KArrUlj/NniZnT76FIAkzK9hr02a+rdgaWxvFcxR/moYcB/KQ==
   dependencies:
     "@renovate/pep440" "0.4.1"
     "@renovatebot/ruby-semver" "0.2.1"
@@ -5608,7 +5608,7 @@ renovate@23.56.0:
     www-authenticate "0.6.2"
     xmldoc "1.1.2"
   optionalDependencies:
-    re2 "1.15.6"
+    re2 "1.15.8"
 
 repeat-element@^1.1.2:
   version "1.1.3"
