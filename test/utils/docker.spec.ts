@@ -104,32 +104,14 @@ describe(getName(__filename), () => {
       expect(nock.isDone()).toBe(true);
     });
 
-    it('return digest on manifest v1', async () => {
-      nock(registry)
-        .get('/v2/')
-        .reply(200, {})
-        .get(`/v2/${image}/manifests/${tag}`)
-        .reply(
-          200,
-          {},
-          {
-            'content-type': DockerContentType.ManifestV1,
-            'docker-content-digest': digest,
-          }
-        );
-
-      expect(await getRemoteImageId(image)).toEqual(digest);
-      expect(nock.isDone()).toBe(true);
-    });
-
-    it('return <none> on manifest v1 no digest', async () => {
+    it('return <error> on manifest v1', async () => {
       nock(registry)
         .get('/v2/')
         .reply(200, {})
         .get(`/v2/${image}/manifests/${tag}`)
         .reply(200, {}, { 'content-type': DockerContentType.ManifestV1 });
 
-      expect(await getRemoteImageId(image)).toEqual('<none>');
+      expect(await getRemoteImageId(image)).toEqual('<error>');
       expect(nock.isDone()).toBe(true);
     });
 
