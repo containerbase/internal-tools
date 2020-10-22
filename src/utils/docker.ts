@@ -52,6 +52,7 @@ export async function getAuthHeaders(
 
 export enum DockerContentType {
   ManifestV1 = 'application/vnd.docker.distribution.manifest.v1+json',
+  ManifestV1Signed = 'application/vnd.docker.distribution.manifest.v1+prettyjws',
   ManifestV2 = 'application/vnd.docker.distribution.manifest.v2+json',
 }
 
@@ -70,12 +71,28 @@ export async function getRemoteImageId(
       headers,
       responseType: 'json',
     });
-    if (resp.headers['content-type'] !== DockerContentType.ManifestV2) {
-      throw new Error(
-        `Unsupported response: ${resp.headers['content-type'] as string}`
-      );
+
+    switch (resp.headers['content-type']) {
+      case DockerContentType.ManifestV2:
+        return resp.body.config.digest;
+
+      case DockerContentType.ManifestV1:
+      case DockerContentType.ManifestV1Signed:
+        if (is.nonEmptyString(resp.headers['docker-content-digest'])) {
+          return resp.headers['docker-content-digest'];
+        }
+        // something wrong, we need to overwrite existing
+        log.warn(
+          chalk.yellow('Wrong response'),
+          `Wrong response: ${resp.headers['content-type'] as string}`
+        );
+        return '<none>';
+
+      default:
+        throw new Error(
+          `Unsupported response: ${resp.headers['content-type'] as string}`
+        );
     }
-    return resp.body.config.digest;
   } catch (e) {
     if (e instanceof HTTPError && e.response.statusCode === 404) {
       // no image published yet

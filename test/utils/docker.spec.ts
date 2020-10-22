@@ -104,6 +104,35 @@ describe(getName(__filename), () => {
       expect(nock.isDone()).toBe(true);
     });
 
+    it('return digest on manifest v1', async () => {
+      nock(registry)
+        .get('/v2/')
+        .reply(200, {})
+        .get(`/v2/${image}/manifests/${tag}`)
+        .reply(
+          200,
+          {},
+          {
+            'content-type': DockerContentType.ManifestV1,
+            'docker-content-digest': digest,
+          }
+        );
+
+      expect(await getRemoteImageId(image)).toEqual(digest);
+      expect(nock.isDone()).toBe(true);
+    });
+
+    it('return <none> on manifest v1 no digest', async () => {
+      nock(registry)
+        .get('/v2/')
+        .reply(200, {})
+        .get(`/v2/${image}/manifests/${tag}`)
+        .reply(200, {}, { 'content-type': DockerContentType.ManifestV1 });
+
+      expect(await getRemoteImageId(image)).toEqual('<none>');
+      expect(nock.isDone()).toBe(true);
+    });
+
     it('throws', async () => {
       nock(registry)
         .get('/v2/')
@@ -121,7 +150,7 @@ describe(getName(__filename), () => {
         .get('/v2/')
         .reply(200, {})
         .get(`/v2/${image}/manifests/${tag}`)
-        .reply(200, {}, { 'content-type': DockerContentType.ManifestV1 });
+        .reply(200, {}, { 'content-type': 'unsupported' });
 
       await expect(getRemoteImageId(image)).rejects.toThrow(
         'Could not find remote image id'
