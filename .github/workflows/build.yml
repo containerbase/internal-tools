@@ -233,16 +233,39 @@ jobs:
           git fetch origin ${{ github.ref }}
 
       - name: Merge
+        id: merge
         run: |
           git merge --no-ff -m 'chore(release): merge (${{ github.sha }}) [skip release]' ${{ github.sha }}
+          commit=$(git rev-parse HEAD)
+          echo "::set-output name=commit::${commit}"
 
-      - name: Push release
+      - name: Cache Yarn packages
+        id: yarn_cache_packages
+        uses: actions/cache@v2.1.2
+        with:
+          path: ${{ env.YARN_CACHE_FOLDER }}
+          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
+
+      - name: Cache node_modules
+        uses: actions/cache@v2.1.2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Push release branch
         run: git push origin release:release
         if: ${{github.ref == 'refs/heads/master'}}
 
-      - name: Trigger release
-        uses: peter-evans/repository-dispatch@v1.1.2
+      - name: Release
+        run: yarn release
         if: ${{github.ref == 'refs/heads/master'}}
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          event-type: publish
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REF: refs/heads/release # override for semantic-release
+          GITHUB_SHA: ${{ steps.merge.outputs.commit }} # override for semantic-release
