@@ -46,7 +46,7 @@ jobs:
         if: steps.yarn_cache_packages.outputs.cache-hit != 'true' && github.ref == 'refs/heads/master'
         run: yarn cache clean
 
-      - run: yarn install --frozen-lockfile --link-duplicates
+      - run: yarn install --frozen-lockfile
 
   test:
     needs: prepare
@@ -91,7 +91,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
 
-      - run: yarn install --frozen-lockfile --link-duplicates
+      - run: yarn install --frozen-lockfile
 
       - run: yarn lint
 
@@ -144,7 +144,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node-version }}-yarn-
 
-      - run: yarn install --frozen-lockfile --link-duplicates
+      - run: yarn install --frozen-lockfile
 
       - run: yarn compile
 
@@ -246,7 +246,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
 
-      - run: yarn install --frozen-lockfile --link-duplicates
+      - run: yarn install --frozen-lockfile
 
       - run: yarn lint
 
