@@ -107,12 +107,7 @@ jobs:
           path: coverage
 
       - name: Codecov
-        shell: bash
-        if: always()
-        continue-on-error: true
-        run: bash <(curl -s https://codecov.io/bash)
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        uses: codecov/codecov-action@v1.0.14
 
   e2e:
     needs: prepare
