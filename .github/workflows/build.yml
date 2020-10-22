@@ -253,5 +253,6 @@ jobs:
       - run: yarn lint
 
       - run: yarn release
+        if: ${{github.ref == 'refs/heads/master'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
