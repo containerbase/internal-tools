@@ -239,17 +239,6 @@ jobs:
           commit=$(git rev-parse HEAD)
           echo "::set-output name=commit::${commit}"
 
-      - name: Release
-        run: |
-          env
-          # override for semantic-release
-          export GITHUB_REF=refs/heads/release GITHUB_SHA=${{ steps.merge.outputs.commit }}
-          echo "----------------"
-          env
-        env:
-          GITHUB_REF: refs/heads/release # override for semantic-release
-          GITHUB_SHA: ${{ steps.merge.outputs.commit }} # override for semantic-release
-
       - name: Cache Yarn packages
         id: yarn_cache_packages
         uses: actions/cache@v2.1.2
@@ -278,9 +267,7 @@ jobs:
           env
           # override for semantic-release
           export GITHUB_REF=refs/heads/release GITHUB_SHA=${{ steps.merge.outputs.commit }}
-          yarn release --debug
+          yarn release
         if: ${{github.ref == 'refs/heads/master'}}
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          GITHUB_REF: refs/heads/release # override for semantic-release
-          GITHUB_SHA: ${{ steps.merge.outputs.commit }} # override for semantic-release
