@@ -227,9 +227,15 @@ jobs:
           fetch-depth: 0
           ref: 'release'
 
-      - name: Merge master
+      - name: Merge branch
+        if: ${{github.event_name != 'pull_request'}}
         run: |
-          git merge -m 'chore(release): merge (${{ github.sha }})' ${{ github.sha }}
+          git merge -m 'chore(release): merge branch (${{ github.sha }})' ${{ github.sha }}
+
+      - name: Merge pr
+        if: ${{github.event_name == 'pull_request'}}
+        run: |
+          git merge -m 'chore(release): merge pr (${{ github.head_ref }})' ${{ github.head_ref }}
 
       - name: Cache Yarn packages
         id: yarn_cache_packages
