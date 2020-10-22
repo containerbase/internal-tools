@@ -236,28 +236,13 @@ jobs:
         run: |
           git merge --no-ff -m 'chore(release): merge (${{ github.sha }}) [skip release]' ${{ github.sha }}
 
-      - name: Cache Yarn packages
-        id: yarn_cache_packages
-        uses: actions/cache@v2.1.2
-        with:
-          path: ${{ env.YARN_CACHE_FOLDER }}
-          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
-
-      - name: Cache node_modules
-        uses: actions/cache@v2.1.2
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
-
-      - run: yarn install --frozen-lockfile
-
-      - run: rm -rf dist
-
-      - run: yarn release
+      - name: Push release
+        run: git push origin release:release
         if: ${{github.ref == 'refs/heads/master'}}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Trigger release
+        uses: peter-evans/repository-dispatch@v1.1.2
+        if: ${{github.ref == 'refs/heads/master'}}
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          event-type: publish
