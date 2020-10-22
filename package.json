@@ -11,15 +11,15 @@
     "yarn": ">=1.22.0"
   },
   "scripts": {
+    "clean": "rm -rf dist",
     "compile": "cd src && ncc build ./index.ts -o ../dist",
     "eslint": "eslint .",
     "eslint:fix": "yarn eslint --fix",
-    "get-version": "echo $npm_package_version",
     "lint": "run-s eslint prettier",
-    "prerelease": "run-s compile",
+    "prerelease": "run-s clean compile",
     "prettier": "prettier \"{**/*,*}.*\" --list-different",
     "prettier:fix": "prettier \"{**/*,*}.*\" --write",
-    "release": "git add -f dist/* && semantic-release",
+    "release": "semantic-release",
     "start": "run-s compile && node dist"
   },
   "dependencies": {
