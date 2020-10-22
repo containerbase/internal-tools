@@ -1,24 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>renovatebot/presets-internal:docker-images"],
+  "extends": ["github>renovatebot/presets-internal"],
   "packageRules": [
-    {
-      "depTypeList": ["dependencies"],
-      "extends": [":automergePatch"]
-    },
-    {
-      "packageNames": ["prettier"],
-      "packagePatterns": ["^@prettier\\/", "^prettier-plugin-"],
-      "groupName": "prettier packages"
-    },
-    {
-      "description": "Automerge renovate minor and patch updates",
-      "packageNames": ["renovate"],
-      "updateTypes": ["minor", "patch"],
-      "automerge": true,
-      "masterIssueApproval": false,
-      "separateMinorPatch": false
-    },
     {
       "paths": ["+(Dockerfile)"],
       "enabled": false
