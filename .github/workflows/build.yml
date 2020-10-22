@@ -230,12 +230,12 @@ jobs:
       - name: Merge branch
         if: ${{github.event_name != 'pull_request'}}
         run: |
-          git merge -m 'chore(release): merge branch (${{ github.sha }})' ${{ github.sha }}
+          git merge --no-ff -m 'chore(release): merge branch (${{ github.sha }})' ${{ github.sha }}
 
       - name: Merge pr
         if: ${{github.event_name == 'pull_request'}}
         run: |
-          git merge -m 'chore(release): merge pr (${{ github.head_ref }})' ${{ github.head_ref }}
+          git merge --no-ff -m 'chore(release): merge pr (${{ github.head_ref }})' ${{ github.head_ref }}
 
       - name: Cache Yarn packages
         id: yarn_cache_packages
