@@ -78,15 +78,12 @@ export async function getRemoteImageId(
 
       case DockerContentType.ManifestV1:
       case DockerContentType.ManifestV1Signed:
-        if (is.nonEmptyString(resp.headers['docker-content-digest'])) {
-          return resp.headers['docker-content-digest'];
-        }
         // something wrong, we need to overwrite existing
         log.warn(
           chalk.yellow('Wrong response'),
           `Wrong response: ${resp.headers['content-type'] as string}`
         );
-        return '<none>';
+        return '<error>';
 
       default:
         throw new Error(
