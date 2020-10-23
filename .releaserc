@@ -28,6 +28,10 @@
       {
         "type": "build",
         "release": "patch"
+      },
+      {
+        "type": "skip",
+        "release": false
       }
     ]
   },
@@ -81,6 +85,10 @@
       {
         "type": "ci",
         "section": "Continuous Integration"
+      },
+      {
+        "type": "skip",
+        "hidden": true
       }
     ]
   }
