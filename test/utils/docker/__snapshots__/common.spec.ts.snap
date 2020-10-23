@@ -25,3 +25,15 @@ Array [
   ],
 ]
 `;
+
+exports[`dockerRun 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "run",
+      "--rm",
+    ],
+  ],
+]
+`;

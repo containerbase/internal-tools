@@ -9,8 +9,8 @@ export async function dockerRun(...args: string[]): Promise<void> {
   await docker('run', '--rm', ...args);
 }
 
-export async function dockerBuildx(...args: string[]): Promise<void> {
-  await docker('buildx', ...args);
+export async function dockerBuildx(...args: string[]): Promise<ExecResult> {
+  return await docker('buildx', ...args);
 }
 
 type DockerTagConfig = {

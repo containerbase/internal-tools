@@ -1,5 +1,9 @@
 import * as _utils from '../../../src/util';
-import { dockerDf, dockerPrune } from '../../../src/utils/docker/common';
+import {
+  dockerDf,
+  dockerPrune,
+  dockerRun,
+} from '../../../src/utils/docker/common';
 import { getName, mocked } from '../../utils';
 
 jest.mock('../../../src/util');
@@ -18,6 +22,11 @@ describe(getName(__filename), () => {
 
   it('dockerDf', async () => {
     await dockerDf();
+    expect(utils.exec.mock.calls).toMatchSnapshot();
+  });
+
+  it('dockerRun', async () => {
+    await dockerRun();
     expect(utils.exec.mock.calls).toMatchSnapshot();
   });
 });

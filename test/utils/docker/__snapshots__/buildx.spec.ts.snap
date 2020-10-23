@@ -1,10 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`already initialized 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "buildx",
+      "ls",
+    ],
+  ],
+]
+`;
+
 exports[`works 1`] = `
 Array [
   Array [
-    "./bin/file.sh",
-    Array [],
+    "docker",
+    Array [
+      "buildx",
+      "ls",
+    ],
   ],
   Array [
     "docker",
@@ -17,18 +32,6 @@ Array [
     Array [
       "buildx",
       "version",
-    ],
-  ],
-  Array [
-    "docker",
-    Array [
-      "run",
-      "--rm",
-      "--privileged",
-      "multiarch/qemu-user-static",
-      "--reset",
-      "-p",
-      "yes",
     ],
   ],
   Array [

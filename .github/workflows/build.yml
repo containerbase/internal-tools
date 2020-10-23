@@ -264,7 +264,6 @@ jobs:
 
       - name: Release
         run: |
-          env
           # override for semantic-release
           export GITHUB_REF=refs/heads/release GITHUB_SHA=${{ steps.merge.outputs.commit }}
           yarn release
