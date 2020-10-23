@@ -5,6 +5,10 @@
     {
       "paths": ["+(Dockerfile)"],
       "enabled": false
+    },
+    {
+      "updateTypes": ["lockFileMaintenance"],
+      "semanticCommitType": "build"
     }
   ]
 }
