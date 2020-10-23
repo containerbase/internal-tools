@@ -124,7 +124,7 @@ describe(getName(__filename), () => {
 
   describe('resolveFile', () => {
     it('works', async () => {
-      const file = await util.resolveFile('bin/configure-docker.sh');
+      const file = await util.resolveFile('package.json');
       expect(file).toBeDefined();
       expect(existsSync(file)).toBe(true);
 
