@@ -1,4 +1,3 @@
-import fs from 'fs';
 import * as _utils from '../../../src/util';
 import { init } from '../../../src/utils/docker/buildx';
 import { getName, mocked } from '../../utils';
@@ -13,14 +12,25 @@ describe(getName(__filename), () => {
   });
 
   it('works', async () => {
-    utils.resolveFile.mockResolvedValue('./bin/file.sh');
+    utils.exec.mockResolvedValueOnce({
+      code: 0,
+      stdout:
+        'NAME/NODE           DRIVER/ENDPOINT                STATUS   PLATFORMS\n',
+      stderr: '',
+    });
     await init();
     expect(utils.exec.mock.calls).toMatchSnapshot();
   });
 
   it('already initialized', async () => {
-    jest.spyOn(fs, 'existsSync').mockReturnValueOnce(true);
+    utils.exec.mockResolvedValueOnce({
+      code: 0,
+      stdout:
+        'NAME/NODE           DRIVER/ENDPOINT                STATUS   PLATFORMS\nrenovatebot-builder    docker-container\n',
+      stderr: '',
+    });
     await init();
-    expect(utils.exec.mock.calls).toEqual([]);
+    expect(utils.exec).toHaveBeenCalledTimes(1);
+    expect(utils.exec.mock.calls).toMatchSnapshot();
   });
 });
