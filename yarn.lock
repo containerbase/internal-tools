@@ -3766,10 +3766,10 @@ handlebars@4.7.6, handlebars@^4.7.6:
   optionalDependencies:
     uglify-js "^3.1.4"
 
-handy-redis@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/handy-redis/-/handy-redis-2.0.1.tgz#d6ee2c655e06b667fec138b8c5bff94d77e8bad4"
-  integrity sha512-KEf4AQ+QaYMuRI8GwUfopbcRN6q8V8NEOt09nXN7dv13SEj4NDtzTq1fB7BTpuu8yu2MhC4S0P2u8EzAkt6qdg==
+handy-redis@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/handy-redis/-/handy-redis-2.0.2.tgz#233e33cb428f9b3a5898e338e7d0a6de257cb4d7"
+  integrity sha512-EYug7OQBwvgXFxWam2rNt0Naep2YpRicWzHdXfVCXWBHsW39x86fdSWbeY9Q474J15OVXQfAU48C9YYedsWSdw==
   dependencies:
     "@types/redis" "^2.8.27"
 
@@ -7546,10 +7546,10 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@23.61.5:
-  version "23.61.5"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.61.5.tgz#c4e5174c6edc9ac6888fe9014eb78186ed5a7e20"
-  integrity sha512-7K0pZIMkeMREqRw1+fiwzr2LmGMWawyzpEphVzOVxHK4RA1XtRWdEDQGq6EBt5jjb/Ba+GnxaUtWtU+GRQS5nw==
+renovate@23.63.0:
+  version "23.63.0"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-23.63.0.tgz#556e5fbe1d42e3f46cefce6e30a879e36b05bcce"
+  integrity sha512-zqWZkzYyggIedcFX6/f9k49vEBY5BvwqCD+nCmmDDJNRoSkfqDgzJAujwCQp2SvIsvG5VKyeAFnk7OD0YO7PNg==
   dependencies:
     "@breejs/later" "4.0.2"
     "@iarna/toml" "2.2.5"
@@ -7579,7 +7579,7 @@ renovate@23.61.5:
     global-agent "2.1.12"
     got "11.8.0"
     handlebars "4.7.6"
-    handy-redis "2.0.1"
+    handy-redis "2.0.2"
     hasha "5.2.2"
     ignore "5.1.8"
     ini "1.3.5"
