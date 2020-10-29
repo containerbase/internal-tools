@@ -9,6 +9,10 @@
     {
       "updateTypes": ["lockFileMaintenance"],
       "semanticCommitType": "build"
+    },
+    {
+      "packageNames": ["renovate"],
+      "extends": ["schedule:weekly"]
     }
   ]
 }
