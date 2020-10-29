@@ -230,7 +230,7 @@ jobs:
       - name: fetch pr
         if: ${{github.event_name == 'pull_request'}}
         run: |
-          git fetch origin ${{ github.ref }}
+          git fetch origin +${{ github.sha }}:${{ github.ref }}
 
       - name: Merge
         id: merge
