@@ -22,6 +22,11 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v1.4.4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - uses: actions/checkout@v2.3.3
 
       - name: Cache Yarn packages
@@ -37,9 +42,9 @@ jobs:
         uses: actions/cache@v2.1.2
         with:
           path: node_modules
-          key: ${{ runner.os }}-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-yarn-
+            ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
 
       # Clear caches on cache miss, otherwise they will grow indefinitely
       - name: Clear yarn cache
