@@ -12,7 +12,9 @@
     },
     {
       "packageNames": ["renovate"],
-      "extends": ["schedule:weekly"]
+      "extends": ["schedule:weekly"],
+      "automerge": true,
+      "separateMinorPatch": false
     }
   ]
 }
