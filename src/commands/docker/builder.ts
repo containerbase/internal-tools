@@ -35,6 +35,7 @@ async function getBuildList({
   versions,
   latestVersion,
   maxVersions,
+  extractVersion,
 }: Config): Promise<string[]> {
   log('Looking up versions');
   const ver = getVersioning(versioning as never);
@@ -44,6 +45,7 @@ async function getBuildList({
         datasource,
         depName,
         versioning,
+        extractVersion,
       });
   if (!pkgResult) {
     return [];
@@ -243,6 +245,7 @@ type ConfigFile = {
   versions?: string[];
   latestVersion?: string;
   maxVersions?: number;
+  extractVersion?: string;
 };
 
 type Config = {

@@ -193,6 +193,13 @@ jobs:
           config: e2e/ubuntu.json
           dry-run: true
 
+      - name: docker-builder (helm)
+        uses: ./
+        with:
+          command: docker-builder
+          config: e2e/helm.json
+          dry-run: true
+
       - name: dummy-command
         uses: ./
         with:
