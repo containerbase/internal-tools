@@ -63,7 +63,7 @@
     "pretty-quick": "3.1.0",
     "semantic-release": "17.3.0",
     "ts-jest": "26.4.4",
-    "typescript": "4.1.2"
+    "typescript": "4.1.3"
   },
   "resolutions": {
     "**/lock-verify/@iarna/cli": ">=2"
