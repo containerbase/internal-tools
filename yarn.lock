@@ -7747,10 +7747,10 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@24.11.3:
-  version "24.11.3"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-24.11.3.tgz#6e42e2196b5ec3c7237c1617f79c044625900995"
-  integrity sha512-lJMvY8N19WlSg0KYudCaos962vtDDriupNZ/LD24FYRBexkuCSvFVQMZariwArTGOjE75rJ/XBsZw7evrl0OQQ==
+renovate@24.14.0:
+  version "24.14.0"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-24.14.0.tgz#4cab4d0dfe843d6200e4273bf9432a418ac58790"
+  integrity sha512-jfLp3SCrgXxC21NDyoyuARDauM1yYvMgGeFoMXxsALEvX9idqwIc1PXHXfGAf2uqZ00Gx3qZF+R+yR1ksAg4dA==
   dependencies:
     "@breejs/later" "4.0.2"
     "@iarna/toml" "2.2.5"
