@@ -32,7 +32,7 @@
     "delay": "4.4.0",
     "find-up": "5.0.0",
     "got": "11.8.1",
-    "renovate": "24.14.0",
+    "renovate": "24.27.4",
     "semver": "7.3.4",
     "strip-ansi": "6.0.0",
     "www-authenticate": "0.6.2"
