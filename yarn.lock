@@ -3518,17 +3518,7 @@ fs-constants@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
   integrity sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
 
-fs-extra@9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.0.1.tgz#910da0062437ba4c39fedd863f1675ccfefcb9fc"
-  integrity sha512-h2iAoN838FqAFJY2/qVpzFXy+EBxfVE220PalAqQLDVsFOHLJrZvut5puAbCdNv6WJk+B8ihI+k0c7JK5erwqQ==
-  dependencies:
-    at-least-node "^1.0.0"
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^1.0.0"
-
-fs-extra@^9.0.0:
+fs-extra@9.1.0, fs-extra@^9.0.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
   integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
@@ -7735,10 +7725,10 @@ remove-trailing-separator@^1.0.1:
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
-renovate@24.27.4:
-  version "24.27.4"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-24.27.4.tgz#ce1e6ec961176a72c719e34476d25cd5cdee42e6"
-  integrity sha512-w2LJfGDM8JY8sXFeImFuy0cx4Y30r3XoLAlxvtMk0R0yCQSzBw6SU2IYOeC7TvN8wL2e19QrGmkWz248IU0GZA==
+renovate@24.32.0:
+  version "24.32.0"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-24.32.0.tgz#23fc26c45d2380b98d4152d543f7739c36415533"
+  integrity sha512-HCea+Pq1h5FDiBLfNRe9mkRM93gmlnchGVayIiYcXdt7ZHYgKJa1GJRx6c31i18ggmCADQE9xDRElJqFnTLijQ==
   dependencies:
     "@breejs/later" "4.0.2"
     "@iarna/toml" "2.2.5"
@@ -7764,7 +7754,7 @@ renovate@24.27.4:
     fast-deep-equal "3.1.3"
     fast-safe-stringify "2.0.7"
     find-up "5.0.0"
-    fs-extra "9.0.1"
+    fs-extra "9.1.0"
     git-url-parse "11.4.3"
     github-url-from-git "1.5.0"
     global-agent "2.1.12"
@@ -9267,11 +9257,6 @@ universal-user-agent@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/universal-user-agent/-/universal-user-agent-6.0.0.tgz#3381f8503b251c0d9cd21bc1de939ec9df5480ee"
   integrity sha512-isyNax3wXoKaulPDZWHQqbmIx1k2tb9fb3GGDBRxCscfYV2Ch7WxPArBsFEG8s/safwXTT7H4QGhaIkTp9447w==
-
-universalify@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/universalify/-/universalify-1.0.0.tgz#b61a1da173e8435b2fe3c67d29b9adf8594bd16d"
-  integrity sha512-rb6X1W158d7pRQBg5gkR8uPaSfiids68LTJQYOtEUhoJUWBdaQHsuT/EUduxXYxcrt4r5PJ4fuHW1MHT6p0qug==
 
 universalify@^2.0.0:
   version "2.0.0"
