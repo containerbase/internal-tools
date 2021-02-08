@@ -391,6 +391,24 @@ Object {
     48,
     10,
     10,
+    65,
+    82,
+    71,
+    32,
+    70,
+    76,
+    65,
+    86,
+    79,
+    82,
+    61,
+    108,
+    97,
+    116,
+    101,
+    115,
+    116,
+    10,
     69,
     78,
     84,
@@ -409,6 +427,22 @@ Object {
     99,
     104,
     111,
+    34,
+    44,
+    32,
+    34,
+    36,
+    123,
+    70,
+    76,
+    65,
+    86,
+    79,
+    82,
+    125,
+    32,
+    124,
+    32,
     34,
     32,
     93,
@@ -435,6 +469,7 @@ ARG PYTHON_VERSION=3.7.7
 # renovate: datasource=github-releases depName=helm/helm
 ARG HELM_VERSION=3.4.0
 
-ENTRYPOINT [ \\"echo\\" ]
+ARG FLAVOR=latest
+ENTRYPOINT [ \\"echo\\", \\"\${FLAVOR} | \\" ]
 "
 `;
