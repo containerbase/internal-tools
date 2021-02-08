@@ -63,6 +63,10 @@ export function getWorkspace(): string {
   return getEnv('GITHUB_WORKSPACE') || process.cwd();
 }
 
+export function getUbuntuFlavor(): string {
+  return getEnv('FLAVOR') || 'latest';
+}
+
 export async function readJson<T = unknown>(file: string): Promise<T> {
   const path = join(getWorkspace(), file);
   const res = (await import(path)) as T | { default: T };
@@ -73,6 +77,11 @@ export async function readJson<T = unknown>(file: string): Promise<T> {
 export async function readFile(file: string): Promise<string> {
   const path = join(getWorkspace(), file);
   return await fs.readFile(path, 'utf8');
+}
+
+export async function readBuffer(file: string): Promise<Buffer> {
+  const path = join(getWorkspace(), file);
+  return await fs.readFile(path);
 }
 
 export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;

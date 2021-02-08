@@ -1,0 +1,10 @@
+{
+  "datasource": "docker",
+  "versioning": "docker",
+  "image": "dummy",
+  "startVersion": "10",
+  "latestVersion": "15",
+  "latestStable": "12",
+  "forceUnstable": true,
+  "versions": ["10", "12-alpine", "13", "13-alpine"]
+}
