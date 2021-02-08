@@ -200,6 +200,13 @@ jobs:
           config: e2e/helm.json
           dry-run: true
 
+      - name: binary-builder (python)
+        uses: ./
+        with:
+          command: binary-builder
+          config: e2e/python.json
+          dry-run: true
+
       - name: dummy-command
         uses: ./
         with:

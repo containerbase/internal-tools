@@ -17,8 +17,8 @@
     "eslint:fix": "yarn eslint --fix",
     "lint": "run-s eslint prettier",
     "prerelease": "run-s clean compile",
-    "prettier": "prettier \"{**/*,*}.*\" --list-different",
-    "prettier:fix": "prettier \"{**/*,*}.*\" --write",
+    "prettier": "prettier \"{**/*,*}.*\" --check --ignore-unknown",
+    "prettier:fix": "prettier \"{**/*,*}.*\" --write --ignore-unknown",
     "release": "semantic-release",
     "start": "run-s compile && node dist"
   },
@@ -34,6 +34,8 @@
     "got": "11.8.1",
     "renovate": "24.42.1",
     "semver": "7.3.4",
+    "shelljs": "0.8.4",
+    "source-map-support": "0.5.19",
     "strip-ansi": "6.0.0",
     "www-authenticate": "0.6.2"
   },
@@ -45,6 +47,7 @@
     "@types/jest": "26.0.20",
     "@types/node": "12.19.15",
     "@types/semver": "7.3.4",
+    "@types/shelljs": "0.8.8",
     "@typescript-eslint/eslint-plugin": "4.6.0",
     "@typescript-eslint/parser": "4.6.0",
     "@zeit/ncc": "0.22.3",

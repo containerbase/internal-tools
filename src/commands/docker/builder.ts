@@ -3,12 +3,14 @@ import is from '@sindresorhus/is';
 import chalk from 'chalk';
 import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
-import { exec, getArg, isDryRun, readFile, readJson } from '../../util';
+import { exec, getArg, isDryRun, readJson } from '../../util';
+import { readDockerConfig } from '../../utils/config';
 import { build, publish } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';
 import { dockerDf, dockerPrune, dockerTag } from '../../utils/docker/common';
 import log from '../../utils/logger';
 import * as renovate from '../../utils/renovate';
+import { Config, ConfigFile } from '../../utils/types';
 
 renovate.register();
 
@@ -232,71 +234,9 @@ async function buildAndPush(
   }
 }
 
-type ConfigFile = {
-  datasource: string;
-  image: string;
-  depName?: string;
-  versioning?: string;
-  startVersion: string;
-  cache?: string;
-  buildArg?: string;
-  ignoredVersions?: string[];
-  forceUnstable?: boolean;
-  versions?: string[];
-  latestVersion?: string;
-  maxVersions?: number;
-  extractVersion?: string;
-};
-
-type Config = {
-  buildArg: string;
-  buildArgs?: string[];
-  buildOnly: boolean;
-  tagSuffix?: string;
-  depName: string;
-  image: string;
-  ignoredVersions: string[];
-  majorMinor: boolean;
-  lastOnly: boolean;
-  dryRun: boolean;
-  prune: boolean;
-} & ConfigFile;
-
 async function generateImages(config: Config): Promise<void> {
   const buildList = await getBuildList(config);
   await buildAndPush(config, buildList);
-}
-
-const keys: (keyof ConfigFile)[] = [
-  'datasource',
-  'depName',
-  'buildArg',
-  'versioning',
-  'latestVersion',
-];
-
-function checkArgs(
-  cfg: ConfigFile,
-  groups: Record<string, string | undefined>
-): void {
-  for (const key of keys) {
-    if (!is.string(cfg[key]) && is.nonEmptyString(groups[key])) {
-      cfg[key] = groups[key] as never;
-    }
-  }
-}
-
-async function readDockerConfig(cfg: ConfigFile): Promise<void> {
-  const dockerFileRe = new RegExp(
-    '# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s' +
-      `(?:ENV|ARG) ${cfg.buildArg as string}=(?<latestVersion>.*)\\s`,
-    'g'
-  );
-  const dockerfile = await readFile('Dockerfile');
-  const m = dockerFileRe.exec(dockerfile);
-  if (m && m.groups) {
-    checkArgs(cfg, m.groups);
-  }
 }
 
 export async function run(): Promise<void> {

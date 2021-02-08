@@ -9,6 +9,9 @@ export default async function run(): Promise<void> {
     const cmd = getInput('command') as Commands;
     log.info(chalk.yellow('Executing:'), ` ${cmd}`);
     switch (cmd) {
+      case Commands.BinaryBuilder:
+        await (await import('./commands/binary')).run();
+        break;
       case Commands.DockerBuilder:
         await (await import('./commands/docker/builder')).run();
         break;

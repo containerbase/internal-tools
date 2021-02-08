@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dummy 1`] = `
+Object {
+  "datasource": "docker",
+  "dryRun": undefined,
+  "forceUnstable": true,
+  "ignoredVersions": Array [],
+  "image": "dummy",
+  "lastOnly": false,
+  "latestStable": "12",
+  "latestVersion": "15",
+  "startVersion": "10",
+  "versioning": "docker",
+  "versions": Array [
+    "10",
+    "12-alpine",
+    "13",
+    "13-alpine",
+  ],
+}
+`;
+
+exports[`ruby 1`] = `
+Object {
+  "dryRun": undefined,
+  "ignoredVersions": Array [
+    "2.5.0-preview1",
+    "2.5.0-rc1",
+    "2.5.2",
+  ],
+  "image": "ruby",
+  "lastOnly": false,
+  "startVersion": "2.5.0",
+}
+`;
