@@ -1,5 +1,5 @@
 import 'source-map-support/register';
-import { getInput, setFailed } from '@actions/core';
+import { setFailed } from '@actions/core';
 import chalk from 'chalk';
 import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
