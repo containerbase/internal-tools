@@ -5,6 +5,7 @@ import { getName, mocked } from './utils';
 
 jest.mock('../src/commands/docker/config');
 jest.mock('../src/commands/docker/builder');
+jest.mock('../src/commands/binary');
 
 const core = mocked(_core);
 
@@ -18,6 +19,13 @@ describe(getName(__filename), () => {
     await run();
 
     expect(core.getInput.mock.calls).toMatchSnapshot();
+    expect(core.setFailed).not.toHaveBeenCalled();
+  });
+
+  it(Commands.BinaryBuilder, async () => {
+    core.getInput.mockReturnValueOnce(Commands.BinaryBuilder);
+    await run();
+    expect(core.getInput).toHaveBeenCalledWith('command');
     expect(core.setFailed).not.toHaveBeenCalled();
   });
 

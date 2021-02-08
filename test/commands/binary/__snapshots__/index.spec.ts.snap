@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`catch errors 1`] = `
+Array [
+  Array [
+    "dummy",
+  ],
+]
+`;
+
+exports[`works dummy: docker 1`] = `
+Array [
+  Array [
+    "--name",
+    "builder",
+    "--volume",
+    "undefined/.cache:/cache",
+    "builder",
+    "13",
+  ],
+]
+`;
+
+exports[`works python (dry-run): docker 1`] = `
+Array [
+  Array [
+    "--name",
+    "builder",
+    "--volume",
+    "undefined/.cache:/cache",
+    "builder",
+    "3.1.0-rc",
+  ],
+]
+`;
+
+exports[`works ruby (dry-run): docker 1`] = `
+Array [
+  Array [
+    "--name",
+    "builder",
+    "--volume",
+    "undefined/.cache:/cache",
+    "builder",
+    "2.9.0",
+  ],
+]
+`;
+
+exports[`works ruby (no-assets): docker 1`] = `
+Array [
+  Array [
+    "--name",
+    "builder",
+    "--volume",
+    "undefined/.cache:/cache",
+    "builder",
+    "2.7.2",
+  ],
+]
+`;
+
+exports[`works ruby: docker 1`] = `Array []`;

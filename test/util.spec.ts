@@ -79,6 +79,10 @@ describe(getName(__filename), () => {
     });
   });
 
+  it('getUbuntuFlavor', () => {
+    expect(util.getUbuntuFlavor()).toBe('latest');
+  });
+
   describe('readJson', () => {
     afterEach(() => {
       delete process.env.GITHUB_WORKSPACE;
@@ -99,6 +103,16 @@ describe(getName(__filename), () => {
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
       expect(await util.readFile('Dockerfile')).toMatchSnapshot();
+    });
+  });
+
+  describe('readBuffer', () => {
+    afterEach(() => {
+      delete process.env.GITHUB_WORKSPACE;
+    });
+    it('works', async () => {
+      process.env.GITHUB_WORKSPACE = process.cwd();
+      expect(await util.readBuffer('Dockerfile')).toMatchSnapshot();
     });
   });
 

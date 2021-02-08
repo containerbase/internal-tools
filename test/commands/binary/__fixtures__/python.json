@@ -1,0 +1,10 @@
+{
+  "datasource": "docker",
+  "versioning": "semver",
+  "image": "python",
+  "startVersion": "2.7.0",
+  "latestVersion": "3.1.0-rc",
+  "latestStable": "3.0.0",
+  "forceUnstable": true,
+  "versions": ["2.7.0", "3.0.0", "3.1.0-rc"]
+}

@@ -73,6 +73,8 @@ jobs:
           echo "Yarn $(yarn --version)"
 
       - uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 10 # required by codecov
 
       - name: Cache Yarn packages
         id: yarn_cache_packages
@@ -199,6 +201,14 @@ jobs:
           command: docker-builder
           config: e2e/helm.json
           dry-run: true
+
+      - name: binary-builder (python)
+        uses: ./
+        with:
+          command: binary-builder
+          config: e2e/python.json
+          dry-run: true
+          token: ${{ github.token }}
 
       - name: dummy-command
         uses: ./
