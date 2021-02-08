@@ -411,6 +411,27 @@ Object {
     10,
     69,
     78,
+    86,
+    32,
+    70,
+    76,
+    65,
+    86,
+    79,
+    82,
+    61,
+    36,
+    123,
+    70,
+    76,
+    65,
+    86,
+    79,
+    82,
+    125,
+    10,
+    69,
+    78,
     84,
     82,
     89,
@@ -470,6 +491,7 @@ ARG PYTHON_VERSION=3.7.7
 ARG HELM_VERSION=3.4.0
 
 ARG FLAVOR=latest
+ENV FLAVOR=\${FLAVOR}
 ENTRYPOINT [ \\"echo\\", \\"\${FLAVOR} | \\" ]
 "
 `;
