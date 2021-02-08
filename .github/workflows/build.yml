@@ -209,6 +209,7 @@ jobs:
           config: e2e/python.json
           dry-run: true
           token: ${{ github.token }}
+          build-args: 'FLAVOR=focal'
 
       - name: dummy-command
         uses: ./

@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as _core from '@actions/core';
-import { getConfig } from '../../../src/commands/binary/utils';
+import {
+  createBuilderImage,
+  getConfig,
+} from '../../../src/commands/binary/utils';
 import * as _utils from '../../../src/util';
-import { getName, mocked } from '../../utils';
+import * as _docker from '../../../src/utils/docker/common';
+import { BinaryBuilderConfig } from '../../../src/utils/types';
+import { getName, mocked, partial } from '../../utils';
 
-jest.mock('renovate/dist/datasource');
 jest.mock('../../../src/util');
-jest.mock('../../../src/utils/docker');
-jest.mock('../../../src/utils/docker/buildx', () => ({
-  init: () => Promise.resolve(),
-}));
-jest.mock('../../../src/utils/datasource');
+jest.mock('../../../src/utils/docker/common');
 
 const core = mocked(_core);
+const docker = mocked(_docker);
 const utils = mocked(_utils);
 
 jest.mock('../../../src/util');
@@ -33,5 +34,21 @@ describe(getName(__filename), () => {
   it('dummy', async () => {
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
     expect(await getConfig('builder.json')).toMatchSnapshot();
+  });
+
+  describe('createBuilderImage', () => {
+    it('works', async () => {
+      await createBuilderImage('', partial<BinaryBuilderConfig>({}));
+    });
+
+    it('works with build args', async () => {
+      await createBuilderImage(
+        '',
+        partial<BinaryBuilderConfig>({ buildArgs: ['FLAVOR=focal'] })
+      );
+
+      expect(docker.dockerBuildx).toHaveBeenCalled();
+      expect(docker.dockerBuildx.mock.calls).toMatchSnapshot();
+    });
   });
 });

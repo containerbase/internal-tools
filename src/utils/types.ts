@@ -48,6 +48,7 @@ export type Config = {
 } & ConfigFile;
 
 export type BinaryBuilderConfig = {
+  buildArgs?: string[];
   depName: string;
   ignoredVersions: string[];
   lastOnly: boolean;

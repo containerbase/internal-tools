@@ -112,7 +112,9 @@ describe(getName(__filename), () => {
     });
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
-      expect(await util.readBuffer('Dockerfile')).toMatchSnapshot();
+      expect(
+        (await util.readBuffer('Dockerfile')).toString()
+      ).toMatchSnapshot();
     });
   });
 
