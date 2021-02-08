@@ -13,8 +13,20 @@ Array [
 ]
 `;
 
-exports[`dummy 1`] = `
+exports[` getConfig dummy (no-image) 1`] = `
 Object {
+  "buildArg": "DUMMY_VERSION",
+  "buildArgs": Array [],
+  "dryRun": undefined,
+  "ignoredVersions": Array [],
+  "image": "dummy",
+  "lastOnly": false,
+}
+`;
+
+exports[` getConfig dummy 1`] = `
+Object {
+  "buildArg": "DUMMY_VERSION",
   "buildArgs": Array [],
   "datasource": "docker",
   "dryRun": undefined,
@@ -35,8 +47,9 @@ Object {
 }
 `;
 
-exports[`ruby 1`] = `
+exports[` getConfig ruby 1`] = `
 Object {
+  "buildArg": "RUBY_VERSION",
   "buildArgs": Array [],
   "dryRun": undefined,
   "ignoredVersions": Array [

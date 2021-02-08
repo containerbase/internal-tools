@@ -21,10 +21,11 @@ const github = mocked(_github);
 const version = '2.7.2';
 
 describe(getName(__filename), () => {
+  let input: Record<string, string>;
   beforeEach(() => {
     jest.resetAllMocks();
-    core.getInput.mockReturnValueOnce('builder.json');
-    core.getInput.mockReturnValueOnce('yarn');
+    input = {};
+    core.getInput.mockImplementation((k) => input[k]);
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/ruby.json'));
     utils.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
   });
@@ -93,7 +94,9 @@ describe(getName(__filename), () => {
     utils.isDryRun.mockReturnValueOnce(true);
     utils.readJson.mockReset();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/python.json'));
-    utils.readFile.mockResolvedValue(``);
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=docker depName=python versioning=docker\nARG PYTHON_VERSION=3.9.1`
+    );
 
     github.hasAsset.mockResolvedValueOnce(true);
 

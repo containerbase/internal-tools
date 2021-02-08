@@ -117,7 +117,7 @@ export async function run(): Promise<void> {
     log.info('Builder started');
     const ws = getWorkspace();
 
-    const cfg = await getConfig(getInput('config') || 'builder.json');
+    const cfg = await getConfig();
 
     if (cfg.dryRun) {
       log.warn(chalk.yellow('[DRY_RUN] detected'));
