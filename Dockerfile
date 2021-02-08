@@ -14,4 +14,6 @@ ARG PYTHON_VERSION=3.7.7
 # renovate: datasource=github-releases depName=helm/helm
 ARG HELM_VERSION=3.4.0
 
-ENTRYPOINT [ "echo" ]
+ARG FLAVOR=latest
+RUN echo FLAVOR=$FLAVOR
+ENTRYPOINT ["echo" ]

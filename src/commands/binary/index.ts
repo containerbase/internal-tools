@@ -133,7 +133,7 @@ export async function run(): Promise<void> {
 
     shell.mkdir('-p', `${ws}/.cache`);
 
-    await createBuilderImage(ws);
+    await createBuilderImage(ws, cfg);
 
     for (const version of versions) {
       await updateRelease(api, cfg, version);

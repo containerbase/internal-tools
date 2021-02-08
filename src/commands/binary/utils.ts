@@ -1,4 +1,5 @@
-import { getArg, getUbuntuFlavor, isDryRun, readJson } from '../../util';
+import is from '@sindresorhus/is';
+import { getArg, isDryRun, readJson } from '../../util';
 import { readDockerConfig } from '../../utils/config';
 import { dockerBuildx } from '../../utils/docker/common';
 import log from '../../utils/logger';
@@ -14,19 +15,18 @@ export async function getConfig(file: string): Promise<BinaryBuilderConfig> {
     ignoredVersions: cfg.ignoredVersions ?? [],
     dryRun: isDryRun(),
     lastOnly: getArg('last-only') == 'true',
+    buildArgs: getArg('build-args', { multi: true }),
   } as BinaryBuilderConfig;
 }
 
-export async function createBuilderImage(ws: string): Promise<void> {
-  const flavor = getUbuntuFlavor();
-  log('Creating builder for flavor', flavor);
-  await dockerBuildx(
-    'build',
-    '--load',
-    '-t',
-    'builder',
-    '--build-arg',
-    flavor,
-    ws
-  );
+export async function createBuilderImage(
+  ws: string,
+  { buildArgs }: BinaryBuilderConfig
+): Promise<void> {
+  log('Creating builder image');
+  const args = ['build', '--load', '-t', 'builder'];
+  if (is.nonEmptyArray(buildArgs)) {
+    args.push(...buildArgs.map((b) => `--build-arg=${b}`));
+  }
+  await dockerBuildx(...args, ws);
 }

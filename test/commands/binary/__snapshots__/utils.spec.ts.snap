@@ -1,7 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[` createBuilderImage works with build args 1`] = `
+Array [
+  Array [
+    "build",
+    "--load",
+    "-t",
+    "builder",
+    "--build-arg=FLAVOR=focal",
+    "",
+  ],
+]
+`;
+
 exports[`dummy 1`] = `
 Object {
+  "buildArgs": Array [],
   "datasource": "docker",
   "dryRun": undefined,
   "forceUnstable": true,
@@ -23,6 +37,7 @@ Object {
 
 exports[`ruby 1`] = `
 Object {
+  "buildArgs": Array [],
   "dryRun": undefined,
   "ignoredVersions": Array [
     "2.5.0-preview1",
