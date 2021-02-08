@@ -19,21 +19,38 @@ const utils = mocked(_utils);
 jest.mock('../../../src/util');
 
 describe(getName(__filename), () => {
+  let input: Record<string, string>;
+
   beforeEach(() => {
     jest.resetAllMocks();
-    core.getInput.mockReturnValueOnce('builder.json');
-    core.getInput.mockReturnValueOnce('yarn');
+    input = {};
+    core.getInput.mockImplementation((k) => input[k]);
     utils.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
   });
 
-  it('ruby', async () => {
-    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/ruby.json'));
-    expect(await getConfig('builder.json')).toMatchSnapshot();
-  });
+  describe('getConfig', () => {
+    it('ruby', async () => {
+      utils.readJson.mockResolvedValueOnce(require('./__fixtures__/ruby.json'));
+      expect(await getConfig()).toMatchSnapshot();
+    });
 
-  it('dummy', async () => {
-    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
-    expect(await getConfig('builder.json')).toMatchSnapshot();
+    it('dummy', async () => {
+      utils.readJson.mockResolvedValueOnce(
+        require('./__fixtures__/dummy.json')
+      );
+      expect(await getConfig()).toMatchSnapshot();
+    });
+
+    it('dummy (no-image)', async () => {
+      input.image = 'dummy';
+      utils.readJson.mockResolvedValueOnce({});
+      expect(await getConfig()).toMatchSnapshot();
+    });
+
+    it('throws', async () => {
+      utils.readJson.mockResolvedValueOnce(null);
+      await expect(getConfig()).rejects.toThrow();
+    });
   });
 
   describe('createBuilderImage', () => {
