@@ -1,5 +1,5 @@
 import 'source-map-support/register';
-import { getInput, setFailed } from '@actions/core';
+import { setFailed } from '@actions/core';
 import chalk from 'chalk';
 import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
@@ -117,7 +117,7 @@ export async function run(): Promise<void> {
     log.info('Builder started');
     const ws = getWorkspace();
 
-    const cfg = await getConfig(getInput('config') || 'builder.json');
+    const cfg = await getConfig();
 
     if (cfg.dryRun) {
       log.warn(chalk.yellow('[DRY_RUN] detected'));

@@ -42,7 +42,7 @@ Array [
     "--volume",
     "undefined/.cache:/cache",
     "builder",
-    "2.9.0",
+    "2.7.2",
   ],
 ]
 `;
