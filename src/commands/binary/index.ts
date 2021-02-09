@@ -131,6 +131,11 @@ export async function run(): Promise<void> {
 
     const versions = await getBuildList(cfg);
 
+    if (versions.length === 0) {
+      setFailed(`No versions found.`);
+      return;
+    }
+
     shell.mkdir('-p', `${ws}/.cache`);
 
     await createBuilderImage(ws, cfg);

@@ -113,12 +113,16 @@ describe(getName(__filename), () => {
 
     await run();
     expect(docker.dockerRun).not.toHaveBeenCalled();
+    expect(github.updateRelease).not.toHaveBeenCalled();
+    expect(core.setFailed).toHaveBeenCalledWith('No versions found.');
   });
 
   it('null releases', async () => {
     datasources.getPkgReleases.mockResolvedValueOnce(null);
     await run();
     expect(docker.dockerRun).not.toHaveBeenCalled();
+    expect(github.updateRelease).not.toHaveBeenCalled();
+    expect(core.setFailed).toHaveBeenCalledWith('No versions found.');
   });
 
   it('catch errors', async () => {

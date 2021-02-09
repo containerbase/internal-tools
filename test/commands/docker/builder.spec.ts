@@ -151,7 +151,8 @@ describe(getName(__filename), () => {
     datasources.getPkgReleases.mockResolvedValueOnce(null);
     await run();
 
-    expect(docker.build.mock.calls).toEqual([]);
+    expect(docker.build).not.toHaveBeenCalled();
+    expect(core.setFailed).toHaveBeenCalledWith('No versions found.');
   });
 
   it('empty releases', async () => {
@@ -160,7 +161,9 @@ describe(getName(__filename), () => {
     });
 
     await run();
-    expect(docker.build.mock.calls).toEqual([]);
+
+    expect(docker.build).not.toHaveBeenCalled();
+    expect(core.setFailed).toHaveBeenCalledWith('No versions found.');
   });
 
   it('unstable releases', async () => {
