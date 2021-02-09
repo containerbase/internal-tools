@@ -1,4 +1,4 @@
-import { getInput } from '@actions/core';
+import { getInput, setFailed } from '@actions/core';
 import is from '@sindresorhus/is';
 import chalk from 'chalk';
 import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
@@ -236,6 +236,12 @@ async function buildAndPush(
 
 async function generateImages(config: Config): Promise<void> {
   const buildList = await getBuildList(config);
+
+  if (buildList.length === 0) {
+    setFailed(`No versions found.`);
+    return;
+  }
+
   await buildAndPush(config, buildList);
 }
 
