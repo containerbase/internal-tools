@@ -1,5 +1,4 @@
 {
-  "image": "node",
   "datasource": "npm",
   "versioning": "node-lts",
   "startVersion": "12.16.0",
