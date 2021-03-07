@@ -52,7 +52,6 @@ describe(getName(__filename), () => {
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '3.0.0-rc.24' }],
-      latestVersion: '2.9.0',
     });
 
     github.hasAsset.mockResolvedValueOnce(true);

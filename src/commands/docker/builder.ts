@@ -73,7 +73,8 @@ async function getBuildList({
 
   latestStable =
     latestVersion ||
-    pkgResult.latestVersion ||
+    /* istanbul ignore next: not testable ts */
+    pkgResult.tags?.latest ||
     allVersions.filter((v) => ver.isStable(v)).pop();
   log('Latest stable version is', latestStable);
 
