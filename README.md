@@ -32,7 +32,7 @@ Publish image to docker registry only if image id has changed.
     command: docker-publish
     image: renovate/ubuntu
     tags: latest;18.04
-    dry-run: ${{github.ref != 'refs/heads/master'}}
+    dry-run: ${{github.ref != 'refs/heads/main'}}
 ```
 
 ### docker-config
