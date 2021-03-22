@@ -4,6 +4,7 @@ import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import findUp = require('find-up');
+import { DockerArch } from './utils/docker/common';
 import { ExecError, ExecResult } from './utils/types';
 
 export type ExecOptions = _ExecOptions;
@@ -69,8 +70,8 @@ export function getDistro(): string {
   return getEnv('DISTRO') || getEnv('FLAVOR') || DEFAULT_DISTRO;
 }
 
-export function getArch(): string {
-  return getEnv('ARCH');
+export function getArch(): DockerArch {
+  return getEnv('ARCH') as DockerArch;
 }
 
 export async function readJson<T = unknown>(file: string): Promise<T> {

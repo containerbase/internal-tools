@@ -3,6 +3,7 @@ import * as _core from '@actions/core';
 import {
   createBuilderImage,
   getConfig,
+  runBuilder,
 } from '../../../src/commands/binary/utils';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
@@ -59,13 +60,24 @@ describe(getName(__filename), () => {
     });
 
     it('works with build args', async () => {
+      utils.getArch.mockReturnValueOnce('aarch64');
       await createBuilderImage(
         '',
         partial<BinaryBuilderConfig>({ buildArgs: ['FLAVOR=focal'] })
       );
 
-      expect(docker.dockerBuildx).toHaveBeenCalled();
+      expect(docker.dockerBuildx).toHaveBeenCalledTimes(1);
       expect(docker.dockerBuildx.mock.calls).toMatchSnapshot();
+    });
+  });
+
+  describe('runBuilder', () => {
+    it('works with build args', async () => {
+      utils.getArch.mockReturnValueOnce('aarch64');
+      await runBuilder('', '1.2.3');
+
+      expect(docker.dockerRun).toHaveBeenCalledTimes(1);
+      expect(docker.dockerRun.mock.calls).toMatchSnapshot();
     });
   });
 });

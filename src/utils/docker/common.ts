@@ -2,6 +2,13 @@ import { exec } from '../../util';
 import log from '../logger';
 import { ExecResult } from '../types';
 
+export enum DockerPlatform {
+  x86_64 = 'linux/amd64',
+  aarch64 = 'linux/arm64',
+}
+
+export type DockerArch = 'x86_64' | 'aarch64';
+
 export async function docker(...args: string[]): Promise<ExecResult> {
   return await exec('docker', [...args]);
 }
