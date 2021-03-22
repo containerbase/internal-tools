@@ -141,6 +141,8 @@ export async function run(): Promise<void> {
 
     await createBuilderImage(ws, cfg);
 
+    const failed: string[] = [];
+
     for (const version of versions) {
       await updateRelease(api, cfg, version);
       if (await hasAsset(api, cfg, version)) {
@@ -163,18 +165,28 @@ export async function run(): Promise<void> {
 
       log.info('Processing version:', version);
 
-      log('Runing builder:', version);
-      await runBuilder(ws, version);
+      try {
+        log('Runing builder:', version);
+        await runBuilder(ws, version);
 
-      if (cfg.dryRun) {
-        log.warn(
-          chalk.yellow('[DRY_RUN] Would upload release asset:'),
-          version
-        );
-      } else {
-        log('Uploading release:', version);
-        await uploadAsset(api, cfg, version);
+        if (cfg.dryRun) {
+          log.warn(
+            chalk.yellow('[DRY_RUN] Would upload release asset:'),
+            version
+          );
+        } else {
+          log('Uploading release:', version);
+          await uploadAsset(api, cfg, version);
+        }
+      } catch (e) {
+        failed.push(version);
+        // eslint-disable-next-line
+        log(`Version ${version} failed: ${e.message}`, e.stack);
       }
+    }
+
+    if (failed.length) {
+      setFailed(`Versions failed: ${failed.join(', ')}`);
     }
   } catch (error) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

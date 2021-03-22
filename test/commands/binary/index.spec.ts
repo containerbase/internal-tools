@@ -125,12 +125,34 @@ describe(getName(__filename), () => {
   });
 
   it('catch errors', async () => {
-    core.getInput.mockReset();
-    utils.readFile.mockRejectedValueOnce(new Error('dummy'));
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+    );
+    datasources.getPkgReleases.mockResolvedValueOnce({
+      releases: [{ version }, { version: '3.0.0-rc.24' }],
+    });
+
+    github.hasAsset.mockRejectedValueOnce(new Error('dummy'));
 
     await run();
 
-    expect(core.setFailed).toHaveBeenCalled();
+    expect(core.setFailed).toHaveBeenCalledTimes(1);
+    expect(core.setFailed.mock.calls).toMatchSnapshot();
+  });
+
+  it('continues on errors', async () => {
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+    );
+    datasources.getPkgReleases.mockResolvedValueOnce({
+      releases: [{ version }, { version: '3.0.0-rc.24' }],
+    });
+
+    docker.dockerRun.mockRejectedValueOnce(new Error('dummy'));
+
+    await run();
+
+    expect(core.setFailed).toHaveBeenCalledTimes(1);
     expect(core.setFailed.mock.calls).toMatchSnapshot();
   });
 });
