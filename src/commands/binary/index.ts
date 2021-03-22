@@ -5,6 +5,7 @@ import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
 import shell from 'shelljs';
 import { getArg, getWorkspace } from '../../util';
+import { init } from '../../utils/docker/buildx';
 import {
   getOctokit,
   hasAsset,
@@ -127,6 +128,8 @@ export async function run(): Promise<void> {
     }
 
     shell.mkdir('-p', `${ws}/.cache`);
+
+    await init();
 
     await createBuilderImage(ws, cfg);
 
