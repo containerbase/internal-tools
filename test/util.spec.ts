@@ -79,8 +79,12 @@ describe(getName(__filename), () => {
     });
   });
 
-  it('getUbuntuFlavor', () => {
-    expect(util.getUbuntuFlavor()).toBe('latest');
+  it('getDistro', () => {
+    expect(util.getDistro()).toBe('focal');
+  });
+
+  it('getArch', () => {
+    expect(util.getArch()).toBe('');
   });
 
   describe('readJson', () => {
