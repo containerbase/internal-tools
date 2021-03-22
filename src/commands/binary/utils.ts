@@ -1,8 +1,12 @@
 import { getInput } from '@actions/core';
 import is from '@sindresorhus/is';
-import { getArg, isDryRun, readJson } from '../../util';
+import { getArch, getArg, getDistro, isDryRun, readJson } from '../../util';
 import { readDockerConfig } from '../../utils/config';
-import { dockerBuildx } from '../../utils/docker/common';
+import {
+  DockerPlatform,
+  dockerBuildx,
+  dockerRun,
+} from '../../utils/docker/common';
 import log from '../../utils/logger';
 import { BinaryBuilderConfig, ConfigFile } from '../../utils/types';
 
@@ -39,9 +43,29 @@ export async function createBuilderImage(
   { buildArgs }: BinaryBuilderConfig
 ): Promise<void> {
   log('Creating builder image');
-  const args = ['build', '--load', '-t', 'builder'];
+  const args = [
+    'build',
+    '--load',
+    '-t',
+    'builder',
+    '--build-arg',
+    `DISTRO=${getDistro()}`,
+  ];
+  const arch = getArch();
+  if (is.nonEmptyString(arch)) {
+    args.push('--platform', DockerPlatform[arch]);
+  }
   if (is.nonEmptyArray(buildArgs)) {
     args.push(...buildArgs.map((b) => `--build-arg=${b}`));
   }
   await dockerBuildx(...args, ws);
+}
+
+export async function runBuilder(ws: string, version: string): Promise<void> {
+  const args = ['--name', 'builder', '--volume', `${ws}/.cache:/cache`];
+  const arch = getArch();
+  if (is.nonEmptyString(arch)) {
+    args.push('--platform', DockerPlatform[arch]);
+  }
+  await dockerRun(...args, 'builder', version);
 }

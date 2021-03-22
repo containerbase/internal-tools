@@ -145,6 +145,8 @@ jobs:
 
       - run: yarn compile
 
+      - run: docker run --rm --privileged tonistiigi/binfmt
+
       - name: docker-config
         uses: ./
         with:
@@ -202,6 +204,9 @@ jobs:
           config: e2e/python.json
           dry-run: true
           token: ${{ github.token }}
+        env:
+          DISTRO: focal
+          ARCH: aarch64
 
       - name: dummy-command
         uses: ./
