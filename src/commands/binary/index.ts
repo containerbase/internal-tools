@@ -163,17 +163,24 @@ export async function run(): Promise<void> {
 
       log.info('Processing version:', version);
 
-      log('Runing builder:', version);
-      await runBuilder(ws, version);
+      try {
+        log('Runing builder:', version);
+        await runBuilder(ws, version);
 
-      if (cfg.dryRun) {
-        log.warn(
-          chalk.yellow('[DRY_RUN] Would upload release asset:'),
-          version
-        );
-      } else {
-        log('Uploading release:', version);
-        await uploadAsset(api, cfg, version);
+        if (cfg.dryRun) {
+          log.warn(
+            chalk.yellow('[DRY_RUN] Would upload release asset:'),
+            version
+          );
+        } else {
+          log('Uploading release:', version);
+          await uploadAsset(api, cfg, version);
+        }
+      } catch (e) {
+        // eslint-disable-next-line
+        log(`Version ${version} failed.`, e.stack);
+        // eslint-disable-next-line
+        setFailed(`Version ${version} failed: ${e.message}`);
       }
     }
   } catch (error) {
