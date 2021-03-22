@@ -24,6 +24,10 @@ async function runBuilder(ws: string, version: string): Promise<void> {
     'builder',
     '--volume',
     `${ws}/.cache:/cache`,
+    '-e',
+    'DISTRO',
+    '-e',
+    'ARCH',
     'builder',
     version
   );

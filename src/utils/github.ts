@@ -2,7 +2,8 @@
 import { context, getOctokit } from '@actions/github';
 import { GitHub } from '@actions/github/lib/utils';
 import { RestEndpointMethodTypes } from '@octokit/plugin-rest-endpoint-methods';
-import { getUbuntuFlavor, readBuffer } from '../util';
+import is from '@sindresorhus/is';
+import { getArch, getDistro, readBuffer } from '../util';
 import { BinaryBuilderConfig } from './types';
 
 export { getOctokit };
@@ -12,8 +13,15 @@ type ReposCreateReleaseResponseData = RestEndpointMethodTypes['repos']['createRe
 
 type GitHubOctokit = InstanceType<typeof GitHub>;
 
-function getName(cfg: BinaryBuilderConfig, version: string): string {
-  return `${cfg.image}-${version}-${getUbuntuFlavor()}.tar.xz`;
+export function getBinaryName(
+  cfg: BinaryBuilderConfig,
+  version: string
+): string {
+  const arch = getArch();
+  if (is.nonEmptyString(arch)) {
+    return `${cfg.image}-${version}-${getDistro()}-${arch}.tar.xz`;
+  }
+  return `${cfg.image}-${version}-${getDistro()}.tar.xz`;
 }
 
 function getBody(cfg: BinaryBuilderConfig, version: string): string {
@@ -87,7 +95,7 @@ export async function uploadAsset(
       release_id = id;
     }
 
-    const name = getName(cfg, version);
+    const name = getBinaryName(cfg, version);
     // fake because api issues
     const data: string = (await readBuffer(`.cache/${name}`)) as never;
 
@@ -115,7 +123,7 @@ export async function hasAsset(
   version: string
 ): Promise<boolean> {
   const rel = await findRelease(api, version);
-  const name = getName(cfg, version);
+  const name = getBinaryName(cfg, version);
 
   return rel?.assets.some((a) => a.name === name) ?? false;
 }
