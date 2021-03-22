@@ -8,6 +8,8 @@ import { ExecError, ExecResult } from './utils/types';
 
 export type ExecOptions = _ExecOptions;
 
+const DEFAULT_DISTRO = 'focal';
+
 export async function exec(
   cmd: string,
   args: string[],
@@ -63,8 +65,12 @@ export function getWorkspace(): string {
   return getEnv('GITHUB_WORKSPACE') || process.cwd();
 }
 
-export function getUbuntuFlavor(): string {
-  return getEnv('FLAVOR') || 'latest';
+export function getDistro(): string {
+  return getEnv('DISTRO') || getEnv('FLAVOR') || DEFAULT_DISTRO;
+}
+
+export function getArch(): string {
+  return getEnv('ARCH');
 }
 
 export async function readJson<T = unknown>(file: string): Promise<T> {
