@@ -7,6 +7,10 @@ Array [
     "--load",
     "-t",
     "builder",
+    "--build-arg",
+    "DISTRO=undefined",
+    "--platform",
+    "linux/arm64",
     "--build-arg=FLAVOR=focal",
     "",
   ],
@@ -61,4 +65,19 @@ Object {
   "lastOnly": false,
   "startVersion": "2.5.0",
 }
+`;
+
+exports[` runBuilder works with build args 1`] = `
+Array [
+  Array [
+    "--name",
+    "builder",
+    "--volume",
+    "/.cache:/cache",
+    "--platform",
+    "linux/arm64",
+    "builder",
+    "1.2.3",
+  ],
+]
 `;

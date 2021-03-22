@@ -5,7 +5,6 @@ import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
 import shell from 'shelljs';
 import { getArg, getWorkspace } from '../../util';
-import { dockerRun } from '../../utils/docker/common';
 import {
   getOctokit,
   hasAsset,
@@ -14,24 +13,10 @@ import {
 } from '../../utils/github';
 import log from '../../utils/logger';
 import { BinaryBuilderConfig } from '../../utils/types';
-import { createBuilderImage, getConfig } from './utils';
+import { createBuilderImage, getConfig, runBuilder } from './utils';
 
 let builds = 99;
 
-async function runBuilder(ws: string, version: string): Promise<void> {
-  await dockerRun(
-    '--name',
-    'builder',
-    '--volume',
-    `${ws}/.cache:/cache`,
-    '-e',
-    'DISTRO',
-    '-e',
-    'ARCH',
-    'builder',
-    version
-  );
-}
 let latestStable: string | undefined;
 
 function getVersions(versions: string[]): ReleaseResult {
