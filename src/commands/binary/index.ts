@@ -1,6 +1,7 @@
 import 'source-map-support/register';
 import { setFailed } from '@actions/core';
 import chalk from 'chalk';
+import { fail } from 'node:assert';
 import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
 import shell from 'shelljs';
@@ -141,6 +142,8 @@ export async function run(): Promise<void> {
 
     await createBuilderImage(ws, cfg);
 
+    const failed: string[] = [];
+
     for (const version of versions) {
       await updateRelease(api, cfg, version);
       if (await hasAsset(api, cfg, version)) {
@@ -177,11 +180,14 @@ export async function run(): Promise<void> {
           await uploadAsset(api, cfg, version);
         }
       } catch (e) {
+        failed.push(version);
         // eslint-disable-next-line
-        log(`Version ${version} failed.`, e.stack);
-        // eslint-disable-next-line
-        setFailed(`Version ${version} failed: ${e.message}`);
+        log(`Version ${version} failed: ${e.message}`, e.stack);
       }
+    }
+
+    if (failed.length) {
+      setFailed(`Versions failed: ${failed.join(', ')}`);
     }
   } catch (error) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
