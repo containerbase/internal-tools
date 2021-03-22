@@ -30,6 +30,17 @@ Array [
   Array [
     "docker",
     Array [
+      "run",
+      "--rm",
+      "--privileged",
+      "tonistiigi/binfmt",
+      "--install",
+      "arm64",
+    ],
+  ],
+  Array [
+    "docker",
+    Array [
       "buildx",
       "version",
     ],

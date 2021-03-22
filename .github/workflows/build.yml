@@ -145,6 +145,8 @@ jobs:
 
       - run: yarn compile
 
+      - run: docker run --rm --privileged tonistiigi/binfmt
+
       - name: docker-config
         uses: ./
         with:
