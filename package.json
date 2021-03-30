@@ -33,7 +33,7 @@
     "find-up": "5.0.0",
     "got": "11.8.2",
     "renovate": "24.74.4",
-    "semver": "7.3.4",
+    "semver": "7.3.5",
     "shelljs": "0.8.4",
     "strip-ansi": "6.0.0",
     "www-authenticate": "0.6.2"
