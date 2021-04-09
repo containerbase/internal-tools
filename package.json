@@ -26,7 +26,7 @@
     "@actions/core": "1.2.6",
     "@actions/exec": "1.0.4",
     "@actions/github": "4.0.0",
-    "@actions/io": "1.0.2",
+    "@actions/io": "1.1.0",
     "@sindresorhus/is": "4.0.0",
     "chalk": "4.1.0",
     "delay": "5.0.0",
