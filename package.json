@@ -27,7 +27,7 @@
     "@actions/exec": "1.0.4",
     "@actions/github": "4.0.0",
     "@actions/io": "1.1.0",
-    "@sindresorhus/is": "4.0.0",
+    "@sindresorhus/is": "4.0.1",
     "chalk": "4.1.1",
     "delay": "5.0.0",
     "find-up": "5.0.0",
