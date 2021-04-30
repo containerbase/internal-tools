@@ -118,6 +118,7 @@ export async function getLocalImageId(
 
 export type BuildOptions = {
   image: string;
+  imagePrefix: string;
   cache?: string;
   cacheTags?: string[];
   tag?: string;
@@ -137,20 +138,26 @@ function canRetry(err: ExecError): boolean {
 
 export async function build({
   image,
+  imagePrefix,
   cache,
   cacheTags,
   tag = 'latest',
   dryRun,
   buildArgs,
 }: BuildOptions): Promise<void> {
-  const args = ['buildx', 'build', '--load', `--tag=renovate/${image}:${tag}`];
+  const args = [
+    'buildx',
+    'build',
+    '--load',
+    `--tag=${imagePrefix}/${image}:${tag}`,
+  ];
 
   if (is.nonEmptyArray(buildArgs)) {
     args.push(...buildArgs.map((b) => `--build-arg=${b}`));
   }
 
   if (is.string(cache)) {
-    const cacheImage = `renovate/${cache}:${image.replace(/\//g, '-')}`;
+    const cacheImage = `${imagePrefix}/${cache}:${image.replace(/\//g, '-')}`;
     args.push(`--cache-from=${cacheImage}-${tag}`);
 
     if (is.nonEmptyArray(cacheTags)) {
@@ -181,16 +188,18 @@ export async function build({
 
 type PublishOptions = {
   image: string;
+  imagePrefix: string;
   tag: string;
   dryRun?: boolean;
 };
 
 export async function publish({
   image,
+  imagePrefix,
   tag,
   dryRun,
 }: PublishOptions): Promise<void> {
-  const imageName = `renovate/${image}`;
+  const imageName = `${imagePrefix}/${image}`;
   const fullName = `${imageName}:${tag}`;
   log.info(chalk.blue('Processing image:'), chalk.yellow(fullName));
 

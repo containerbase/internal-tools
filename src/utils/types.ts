@@ -39,6 +39,7 @@ export type Config = {
   buildOnly: boolean;
   tagSuffix?: string;
   depName: string;
+  imagePrefix: string;
   image: string;
   ignoredVersions: string[];
   majorMinor: boolean;

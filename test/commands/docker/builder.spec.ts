@@ -21,12 +21,14 @@ const datasources = mocked(_datasources);
 const version = '1.22.4';
 
 describe(getName(__filename), () => {
+  let args: Record<string, string | string[]> = {};
   beforeEach(() => {
     jest.resetAllMocks();
     core.getInput.mockReturnValueOnce('builder.json');
     core.getInput.mockReturnValueOnce('yarn');
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
-    utils.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
+    args = {};
+    utils.getArg.mockImplementation((n, o) => args[n] ?? (o?.multi ? [] : ''));
   });
 
   it('works yarn', async () => {
@@ -46,8 +48,12 @@ describe(getName(__filename), () => {
   it('works pnpm', async () => {
     utils.readJson.mockReset();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/pnpm.json'));
-    utils.getArg.mockReturnValueOnce(['IMAGE=slim']);
-    utils.getArg.mockReturnValueOnce('slim');
+    args = {
+      ...args,
+      'image-prefix': 'ghcr.io/renovatebot/',
+      'build-args': ['IMAGE=slim'],
+      'tag-suffix': 'slim',
+    };
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version: '4.0.0-rc.24' }, { version: '5.0.0' }],
     });
@@ -111,10 +117,14 @@ describe(getName(__filename), () => {
     core.getInput.mockReset();
     core.getInput.mockReturnValueOnce('builder.json');
     core.getInput.mockReturnValueOnce('true');
-    utils.getArg.mockReturnValueOnce(['IMAGE=slim']);
-    utils.getArg.mockReturnValueOnce('slim');
-    utils.getArg.mockReturnValueOnce('false');
-    utils.getArg.mockReturnValueOnce('true');
+
+    args = {
+      ...args,
+      'build-args': ['IMAGE=slim'],
+      'tag-suffix': 'slim',
+      'major-minor': 'false',
+      prune: 'true',
+    };
 
     await run();
 
