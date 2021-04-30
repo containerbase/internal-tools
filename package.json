@@ -35,7 +35,7 @@
     "renovate": "25.5.0",
     "semver": "7.3.5",
     "shelljs": "0.8.4",
-    "strip-ansi": "6.0.0",
+    "strip-ansi": "7.0.0",
     "www-authenticate": "0.6.2"
   },
   "devDependencies": {
