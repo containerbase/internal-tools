@@ -4,10 +4,13 @@ inputs:
   command:
     description: 'Command to execute'
     required: true
+  image-prefix:
+    description: 'docker image prefix to use'
+    required: false
+    default: renovate
   image:
     description: 'docker image to operate on'
     required: false
-    default:
   tags:
     description: 'semicolon separated list of docker image tags to operate on'
     required: false
@@ -15,11 +18,10 @@ inputs:
   dry-run:
     description: 'do not publish anything'
     required: false
-    default: false
+    default: 'false'
   token:
     description: 'Github PAT, commands which needs a token will fail build without'
     required: false
-    default:
   config:
     description: 'docker-builder: config file'
     required: false
@@ -27,27 +29,25 @@ inputs:
   last-only:
     description: 'docker-builder: build only latest version'
     required: false
-    default: false
+    default: 'false'
   build-only:
     description: 'docker-builder: no docker push'
     required: false
-    default: false
+    default: 'false'
   build-args:
     description: 'docker-builder: additional docker build args'
     required: false
-    default:
   tag-suffix:
     description: 'docker-builder: additional docker tag suffix to append'
     required: false
-    default:
   major-minor:
     description: 'docker-builder: push major and major.minor tags'
     required: false
-    default: true
+    default: 'false'
   prune:
     description: 'docker-builder: prune docker system after build'
     required: false
-    default: false
+    default: 'false'
 
 runs:
   using: 'node12'

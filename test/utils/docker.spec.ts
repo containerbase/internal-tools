@@ -18,6 +18,7 @@ jest.mock('../../src/util');
 const utils = mocked(_utils);
 const res = { code: 0, stdout: '', stderr: '' };
 
+const imagePrefix = 'renovate';
 const digest =
   'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1';
 const tag = 'latest';
@@ -172,7 +173,7 @@ describe(getName(__filename), () => {
         ...res,
       });
 
-      await build({ image, buildArgs: [] });
+      await build({ imagePrefix, image, buildArgs: [] });
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
 
@@ -181,7 +182,7 @@ describe(getName(__filename), () => {
         ...res,
       });
 
-      await build({ image, cache });
+      await build({ imagePrefix, image, cache });
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
 
@@ -191,6 +192,7 @@ describe(getName(__filename), () => {
       });
 
       await build({
+        imagePrefix,
         image,
         cache,
         cacheTags: ['dummy'],
@@ -208,7 +210,7 @@ describe(getName(__filename), () => {
         ...res,
       });
 
-      await build({ image });
+      await build({ imagePrefix, image });
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
 
@@ -218,7 +220,7 @@ describe(getName(__filename), () => {
       );
       utils.exec.mockRejectedValueOnce(new Error('failure'));
 
-      await expect(build({ image })).rejects.toThrow('failure');
+      await expect(build({ imagePrefix, image })).rejects.toThrow('failure');
 
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
@@ -249,7 +251,7 @@ describe(getName(__filename), () => {
           'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2',
       });
 
-      await publish({ image, tag });
+      await publish({ imagePrefix, image, tag });
       expect(utils.exec.mock.calls).toMatchSnapshot();
 
       expect(nock.isDone()).toBe(true);
@@ -262,7 +264,7 @@ describe(getName(__filename), () => {
           'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2',
       });
 
-      await publish({ image, tag, dryRun: true });
+      await publish({ imagePrefix, image, tag, dryRun: true });
       expect(utils.exec.mock.calls).toMatchSnapshot();
 
       expect(nock.isDone()).toBe(true);
@@ -274,7 +276,7 @@ describe(getName(__filename), () => {
         stdout: digest,
       });
 
-      await publish({ image, tag });
+      await publish({ imagePrefix, image, tag });
       expect(utils.exec.mock.calls).toMatchSnapshot();
 
       expect(nock.isDone()).toBe(true);

@@ -114,6 +114,7 @@ function createTag(tagSuffix: string | undefined, version: string): string {
 
 async function buildAndPush(
   {
+    imagePrefix,
     image,
     buildArg,
     buildArgs,
@@ -156,7 +157,7 @@ async function buildAndPush(
 
   for (const version of versions) {
     const tag = createTag(tagSuffix, version);
-    const imageVersion = `renovate/${image}:${tag}`;
+    const imageVersion = `${imagePrefix}/${image}:${tag}`;
     log(`Building ${imageVersion}`);
     try {
       const minor = ver.getMinor(version);
@@ -191,6 +192,7 @@ async function buildAndPush(
 
       await build({
         image,
+        imagePrefix,
         tag,
         cache,
         cacheTags,
@@ -199,13 +201,13 @@ async function buildAndPush(
       });
 
       if (!buildOnly) {
-        await publish({ image, tag, dryRun });
+        await publish({ image, imagePrefix, tag, dryRun });
         const source = tag;
 
         for (const tag of tags) {
           log(`Publish ${source} as ${tag}`);
-          await dockerTag({ image, src: source, tgt: tag });
-          await publish({ image, tag, dryRun });
+          await dockerTag({ image, imagePrefix, src: source, tgt: tag });
+          await publish({ image, imagePrefix, tag, dryRun });
         }
       }
 
@@ -269,6 +271,7 @@ export async function run(): Promise<void> {
 
   const config: Config = {
     ...cfg,
+    imagePrefix: getArg('image-prefix')?.replace(/\/$/, '') || 'renovate',
     image: cfg.image,
     depName: cfg.depName ?? cfg.image,
     buildArg: cfg.buildArg,
