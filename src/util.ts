@@ -3,13 +3,22 @@ import { join } from 'path';
 import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
-import findUp = require('find-up');
+import findUp from 'find-up';
 import { DockerArch } from './utils/docker/common';
 import { ExecError, ExecResult } from './utils/types';
 
 export type ExecOptions = _ExecOptions;
 
 const DEFAULT_DISTRO = 'focal';
+
+/** webpack workaround for dynamic require */
+const _require = eval('require') as typeof require;
+
+type Module<T> = T | { default: T };
+
+function _import<T>(path: string): Promise<Module<T>> {
+  return Promise.resolve(_require(path)) as Promise<Module<T>>;
+}
 
 export async function exec(
   cmd: string,
@@ -76,7 +85,7 @@ export function getArch(): DockerArch {
 
 export async function readJson<T = unknown>(file: string): Promise<T> {
   const path = join(getWorkspace(), file);
-  const res = (await import(path)) as T | { default: T };
+  const res = await _import<T>(path);
   // istanbul ignore next
   return 'default' in res ? res?.default : res;
 }
