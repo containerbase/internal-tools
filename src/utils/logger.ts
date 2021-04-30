@@ -1,6 +1,5 @@
 import { error as _error, warning as _warn } from '@actions/core';
 import chalk from 'chalk';
-// eslint-disable-next-line import/default
 import stripAnsi from 'strip-ansi';
 
 function write(prefix: string, ...args: unknown[]): void {
