@@ -160,7 +160,7 @@ jobs:
         uses: ./
         with:
           command: docker-builder
-          image-prefix: ghcr.io/containerbase
+          image-prefix: ghcr.io/renovatebot/
           image: node
           config: e2e/node.json
           dry-run: true
