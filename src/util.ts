@@ -76,7 +76,9 @@ export function getArch(): DockerArch {
 
 export async function readJson<T = unknown>(file: string): Promise<T> {
   const path = join(getWorkspace(), file);
-  const res = (await import(path)) as T | { default: T };
+  const res = (await import(/* webpackIgnore: true */ path)) as
+    | T
+    | { default: T };
   // istanbul ignore next
   return 'default' in res ? res?.default : res;
 }
