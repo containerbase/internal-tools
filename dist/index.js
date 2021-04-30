@@ -395,24 +395,6 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 45067:
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = ({onlyFirst = false} = {}) => {
-	const pattern = [
-		'[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
-		'(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))'
-	].join('|');
-
-	return new RegExp(pattern, onlyFirst ? undefined : 'g');
-};
-
-
-/***/ }),
-
 /***/ 27566:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -2225,18 +2207,6 @@ module.exports = (flag, argv = process.argv) => {
 
 /***/ }),
 
-/***/ 18941:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-const ansiRegex = __nccwpck_require__(45067);
-
-module.exports = string => typeof string === 'string' ? string.replace(ansiRegex(), '') : string;
-
-
-/***/ }),
-
 /***/ 92227:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -2380,22 +2350,45 @@ module.exports = {
 
 /***/ }),
 
-/***/ 42722:
+/***/ 33433:
 /***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
 
 "use strict";
-/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(75316);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var chalk__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(10816);
-/* harmony import */ var chalk__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(chalk__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var strip_ansi__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(18941);
-/* harmony import */ var strip_ansi__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nccwpck_require__.n(strip_ansi__WEBPACK_IMPORTED_MODULE_2__);
+
+// EXPORTS
+__nccwpck_require__.d(__webpack_exports__, {
+  "Z": () => (/* binding */ logger)
+});
+
+// EXTERNAL MODULE: ../node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(75316);
+// EXTERNAL MODULE: ../node_modules/chalk/source/index.js
+var source = __nccwpck_require__(10816);
+var source_default = /*#__PURE__*/__nccwpck_require__.n(source);
+;// CONCATENATED MODULE: ../node_modules/strip-ansi/node_modules/ansi-regex/index.js
+function ansiRegex({onlyFirst = false} = {}) {
+	const pattern = [
+		'[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
+		'(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))'
+	].join('|');
+
+	return new RegExp(pattern, onlyFirst ? undefined : 'g');
+}
+
+;// CONCATENATED MODULE: ../node_modules/strip-ansi/index.js
 
 
-// eslint-disable-next-line import/default
+function stripAnsi(string) {
+	if (typeof string !== 'string') {
+		throw new TypeError(`Expected a \`string\`, got \`${typeof string}\``);
+	}
+
+	return string.replace(ansiRegex(), '');
+}
+
+;// CONCATENATED MODULE: ./utils/logger.ts
+
+
 
 function write(prefix, ...args) {
     console.log([`[${prefix}]`, ...args].join(' '));
@@ -2404,25 +2397,25 @@ function dir(obj) {
     console.dir(obj);
 }
 function debug(msg, ...args) {
-    write(chalk__WEBPACK_IMPORTED_MODULE_1___default().blue('DEBUG'), msg, ...args);
+    write(source_default().blue('DEBUG'), msg, ...args);
 }
 function info(msg, ...args) {
-    write(chalk__WEBPACK_IMPORTED_MODULE_1___default().green(' INFO'), msg, ...args);
+    write(source_default().green(' INFO'), msg, ...args);
 }
 function warn(msg, ...args) {
-    write(chalk__WEBPACK_IMPORTED_MODULE_1___default().magenta(' WARN'), msg, ...args);
-    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.warning)(strip_ansi__WEBPACK_IMPORTED_MODULE_2___default()([msg, ...args].join(' ')));
+    write(source_default().magenta(' WARN'), msg, ...args);
+    (0,core.warning)(stripAnsi([msg, ...args].join(' ')));
 }
 function error(msg, ...args) {
-    write(chalk__WEBPACK_IMPORTED_MODULE_1___default().red('ERROR'), msg, ...args);
-    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.error)(strip_ansi__WEBPACK_IMPORTED_MODULE_2___default()([msg, ...args].join(' ')));
+    write(source_default().red('ERROR'), msg, ...args);
+    (0,core.error)(stripAnsi([msg, ...args].join(' ')));
 }
 const log = (m, ...args) => debug(m, ...args);
 log.dir = (m) => dir(m);
 log.info = (m, ...args) => info(m, ...args);
 log.warn = (m, ...args) => warn(m, ...args);
 log.error = (m, ...args) => error(m, ...args);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (log);
+/* harmony default export */ const logger = (log);
 
 
 /***/ }),
@@ -2818,8 +2811,8 @@ var Commands;
     Commands["DockerBuilder"] = "docker-builder";
 })(Commands || (Commands = {}));
 
-// EXTERNAL MODULE: ./utils/logger.ts
-var logger = __nccwpck_require__(42722);
+// EXTERNAL MODULE: ./utils/logger.ts + 2 modules
+var logger = __nccwpck_require__(33433);
 ;// CONCATENATED MODULE: ./runner.ts
 
 
