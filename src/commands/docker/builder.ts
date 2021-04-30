@@ -206,7 +206,7 @@ async function buildAndPush(
 
         for (const tag of tags) {
           log(`Publish ${source} as ${tag}`);
-          await dockerTag({ image, src: source, tgt: tag });
+          await dockerTag({ image, imagePrefix, src: source, tgt: tag });
           await publish({ image, imagePrefix, tag, dryRun });
         }
       }
