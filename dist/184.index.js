@@ -43281,7 +43281,8 @@ function isSsh(input) {
     }
 
     // TODO This probably could be improved :)
-    return input.indexOf("@") < input.indexOf(":");
+    var urlPortPattern = new RegExp('\.([a-zA-Z\\d]+):(\\d+)\/');
+    return !input.match(urlPortPattern) && input.indexOf("@") < input.indexOf(":");
 }
 
 module.exports = isSsh;
