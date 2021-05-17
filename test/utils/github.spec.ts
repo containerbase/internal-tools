@@ -12,16 +12,10 @@ describe(getName(__filename), () => {
     utils.getDistro.mockReturnValue('focal');
     utils.getArch.mockReturnValueOnce('x86_64');
     expect(
-      getBinaryName(
-        partial<BinaryBuilderConfig>({ image: 'php' }),
-        '1.2.3'
-      )
+      getBinaryName(partial<BinaryBuilderConfig>({ image: 'php' }), '1.2.3')
     ).toBe('php-1.2.3-focal-x86_64.tar.xz');
     expect(
-      getBinaryName(
-        partial<BinaryBuilderConfig>({ image: 'php' }),
-        '1.2.3'
-      )
+      getBinaryName(partial<BinaryBuilderConfig>({ image: 'php' }), '1.2.3')
     ).toBe('php-1.2.3-focal.tar.xz');
   });
 });
