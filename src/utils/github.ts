@@ -8,8 +8,10 @@ import { BinaryBuilderConfig } from './types';
 
 export { getOctokit };
 
-type ReposGetReleaseResponseData = RestEndpointMethodTypes['repos']['getReleaseByTag']['response']['data'];
-type ReposCreateReleaseResponseData = RestEndpointMethodTypes['repos']['createRelease']['response']['data'];
+type ReposGetReleaseResponseData =
+  RestEndpointMethodTypes['repos']['getReleaseByTag']['response']['data'];
+type ReposCreateReleaseResponseData =
+  RestEndpointMethodTypes['repos']['createRelease']['response']['data'];
 
 type GitHubOctokit = InstanceType<typeof GitHub>;
 
