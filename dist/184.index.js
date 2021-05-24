@@ -48803,13 +48803,13 @@ const monthsNarrow = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"
 function months(length) {
   switch (length) {
     case "narrow":
-      return monthsNarrow;
+      return [...monthsNarrow];
 
     case "short":
-      return monthsShort;
+      return [...monthsShort];
 
     case "long":
-      return monthsLong;
+      return [...monthsLong];
 
     case "numeric":
       return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
@@ -48827,13 +48827,13 @@ const weekdaysNarrow = ["M", "T", "W", "T", "F", "S", "S"];
 function weekdays(length) {
   switch (length) {
     case "narrow":
-      return weekdaysNarrow;
+      return [...weekdaysNarrow];
 
     case "short":
-      return weekdaysShort;
+      return [...weekdaysShort];
 
     case "long":
-      return weekdaysLong;
+      return [...weekdaysLong];
 
     case "numeric":
       return ["1", "2", "3", "4", "5", "6", "7"];
@@ -48849,13 +48849,13 @@ const erasNarrow = ["B", "A"];
 function eras(length) {
   switch (length) {
     case "narrow":
-      return erasNarrow;
+      return [...erasNarrow];
 
     case "short":
-      return erasShort;
+      return [...erasShort];
 
     case "long":
-      return erasLong;
+      return [...erasLong];
 
     default:
       return null;
@@ -49799,7 +49799,7 @@ class IANAZone extends Zone {
 
   static parseGMTOffset(specifier) {
     if (specifier) {
-      const match = specifier.match(/^Etc\/GMT([+-]\d{1,2})$/i);
+      const match = specifier.match(/^Etc\/GMT(0|[+-]\d{1,2})$/i);
 
       if (match) {
         return -60 * parseInt(match[1]);
@@ -49855,8 +49855,9 @@ class IANAZone extends Zone {
 
 
   offset(ts) {
-    const date = new Date(ts),
-          dtf = makeDTF(this.name),
+    const date = new Date(ts);
+    if (isNaN(date)) return NaN;
+    const dtf = makeDTF(this.name),
           [year, month, day, hour, minute, second] = dtf.formatToParts ? partsOffset(dtf, date) : hackyOffset(dtf, date),
           // work around https://bugs.chromium.org/p/chromium/issues/detail?id=1025564&can=2&q=%2224%3A00%22%20datetimeformat
     adjustedHour = hour === 24 ? 0 : hour;
@@ -50433,12 +50434,16 @@ class PolyDateFormatter {
     if (dt.zone.universal && this.hasIntl) {
       // UTC-8 or Etc/UTC-8 are not part of tzdata, only Etc/GMT+8 and the like.
       // That is why fixed-offset TZ is set to that unless it is:
-      // 1. Outside of the supported range Etc/GMT-14 to Etc/GMT+12.
-      // 2. Not a whole hour, e.g. UTC+4:30.
+      // 1. Representing offset 0 when UTC is used to maintain previous behavior and does not become GMT.
+      // 2. Unsupported by the browser:
+      //    - some do not support Etc/
+      //    - < Etc/GMT-14, > Etc/GMT+12, and 30-minute or 45-minute offsets are not part of tzdata
       const gmtOffset = -1 * (dt.offset / 60);
+      const offsetZ = gmtOffset >= 0 ? `Etc/GMT+${gmtOffset}` : `Etc/GMT${gmtOffset}`;
+      const isOffsetZoneSupported = IANAZone.isValidZone(offsetZ);
 
-      if (gmtOffset >= -14 && gmtOffset <= 12 && gmtOffset % 1 === 0) {
-        z = gmtOffset >= 0 ? `Etc/GMT+${gmtOffset}` : `Etc/GMT${gmtOffset}`;
+      if (dt.offset !== 0 && isOffsetZoneSupported) {
+        z = offsetZ;
         this.dt = dt;
       } else {
         // Not all fixed-offset zones like Etc/+4:30 are present in tzdata.
@@ -50847,8 +50852,9 @@ const isoDuration = /^-?P(?:(?:(-?\d{1,9})Y)?(?:(-?\d{1,9})M)?(?:(-?\d{1,9})W)?(
 function extractISODuration(match) {
   const [s, yearStr, monthStr, weekStr, dayStr, hourStr, minuteStr, secondStr, millisecondsStr] = match;
   const hasNegativePrefix = s[0] === "-";
+  const negativeSeconds = secondStr && secondStr[0] === "-";
 
-  const maybeNegate = num => num && hasNegativePrefix ? -num : num;
+  const maybeNegate = (num, force = false) => num !== undefined && (force || num && hasNegativePrefix) ? -num : num;
 
   return [{
     years: maybeNegate(parseInteger(yearStr)),
@@ -50857,8 +50863,8 @@ function extractISODuration(match) {
     days: maybeNegate(parseInteger(dayStr)),
     hours: maybeNegate(parseInteger(hourStr)),
     minutes: maybeNegate(parseInteger(minuteStr)),
-    seconds: maybeNegate(parseInteger(secondStr)),
-    milliseconds: maybeNegate(parseMillis(millisecondsStr))
+    seconds: maybeNegate(parseInteger(secondStr), secondStr === "-0"),
+    milliseconds: maybeNegate(parseMillis(millisecondsStr), negativeSeconds)
   }];
 } // These are a little braindead. EDT *should* tell us that we're in, say, America/New_York
 // and not just that we're in -240 *right now*. But since I don't think these are used that often
@@ -51556,9 +51562,9 @@ class Duration {
   /**
    * Get the value of unit.
    * @param {string} unit - a unit such as 'minute' or 'day'
-   * @example Duration.fromObject({years: 2, days: 3}).years //=> 2
-   * @example Duration.fromObject({years: 2, days: 3}).months //=> 0
-   * @example Duration.fromObject({years: 2, days: 3}).days //=> 3
+   * @example Duration.fromObject({years: 2, days: 3}).get('years') //=> 2
+   * @example Duration.fromObject({years: 2, days: 3}).get('months') //=> 0
+   * @example Duration.fromObject({years: 2, days: 3}).get('days') //=> 3
    * @return {number}
    */
 
@@ -52245,15 +52251,16 @@ class Interval {
     let {
       s
     } = this,
-        added,
+        idx = 1,
         next;
     const results = [];
 
     while (s < this.e) {
-      added = s.plus(dur);
+      const added = this.start.plus(dur.mapUnits(x => x * idx));
       next = +added > +this.e ? this.e : added;
       results.push(Interval.fromDateTimes(s, next));
       s = next;
+      idx += 1;
     }
 
     return results;
@@ -52340,7 +52347,7 @@ class Interval {
     const s = this.s > other.s ? this.s : other.s,
           e = this.e < other.e ? this.e : other.e;
 
-    if (s > e) {
+    if (s >= e) {
       return null;
     } else {
       return Interval.fromDateTimes(s, e);
@@ -52584,6 +52591,7 @@ class Info {
    * @param {Object} opts - options
    * @param {string} [opts.locale] - the locale code
    * @param {string} [opts.numberingSystem=null] - the numbering system
+   * @param {string} [opts.locObj=null] - an existing locale object to use
    * @param {string} [opts.outputCalendar='gregory'] - the calendar
    * @example Info.months()[0] //=> 'January'
    * @example Info.months('short')[0] //=> 'Jan'
@@ -52598,9 +52606,10 @@ class Info {
   static months(length = "long", {
     locale = null,
     numberingSystem = null,
+    locObj = null,
     outputCalendar = "gregory"
   } = {}) {
-    return Locale.create(locale, numberingSystem, outputCalendar).months(length);
+    return (locObj || Locale.create(locale, numberingSystem, outputCalendar)).months(length);
   }
   /**
    * Return an array of format month names.
@@ -52611,6 +52620,7 @@ class Info {
    * @param {Object} opts - options
    * @param {string} [opts.locale] - the locale code
    * @param {string} [opts.numberingSystem=null] - the numbering system
+   * @param {string} [opts.locObj=null] - an existing locale object to use
    * @param {string} [opts.outputCalendar='gregory'] - the calendar
    * @return {[string]}
    */
@@ -52619,9 +52629,10 @@ class Info {
   static monthsFormat(length = "long", {
     locale = null,
     numberingSystem = null,
+    locObj = null,
     outputCalendar = "gregory"
   } = {}) {
-    return Locale.create(locale, numberingSystem, outputCalendar).months(length, true);
+    return (locObj || Locale.create(locale, numberingSystem, outputCalendar)).months(length, true);
   }
   /**
    * Return an array of standalone week names.
@@ -52630,6 +52641,7 @@ class Info {
    * @param {Object} opts - options
    * @param {string} [opts.locale] - the locale code
    * @param {string} [opts.numberingSystem=null] - the numbering system
+   * @param {string} [opts.locObj=null] - an existing locale object to use
    * @example Info.weekdays()[0] //=> 'Monday'
    * @example Info.weekdays('short')[0] //=> 'Mon'
    * @example Info.weekdays('short', { locale: 'fr-CA' })[0] //=> 'lun.'
@@ -52640,9 +52652,10 @@ class Info {
 
   static weekdays(length = "long", {
     locale = null,
-    numberingSystem = null
+    numberingSystem = null,
+    locObj = null
   } = {}) {
-    return Locale.create(locale, numberingSystem, null).weekdays(length);
+    return (locObj || Locale.create(locale, numberingSystem, null)).weekdays(length);
   }
   /**
    * Return an array of format week names.
@@ -52653,15 +52666,17 @@ class Info {
    * @param {Object} opts - options
    * @param {string} [opts.locale=null] - the locale code
    * @param {string} [opts.numberingSystem=null] - the numbering system
+   * @param {string} [opts.locObj=null] - an existing locale object to use
    * @return {[string]}
    */
 
 
   static weekdaysFormat(length = "long", {
     locale = null,
-    numberingSystem = null
+    numberingSystem = null,
+    locObj = null
   } = {}) {
-    return Locale.create(locale, numberingSystem, null).weekdays(length, true);
+    return (locObj || Locale.create(locale, numberingSystem, null)).weekdays(length, true);
   }
   /**
    * Return an array of meridiems.
@@ -53864,7 +53879,7 @@ function diffRelative(start, end, opts) {
     }
   }
 
-  return format(0, opts.units[opts.units.length - 1]);
+  return format(start > end ? -0 : 0, opts.units[opts.units.length - 1]);
 }
 /**
  * A DateTime is an immutable data structure representing a specific date and time and accompanying methods. It contains class and instance methods for creating, parsing, interrogating, transforming, and formatting them.
@@ -53989,7 +54004,7 @@ class DateTime {
 
   static local(year, month, day, hour, minute, second, millisecond) {
     if (isUndefined(year)) {
-      return new DateTime({});
+      return DateTime.now();
     } else {
       return quickDT({
         year,
@@ -54241,8 +54256,8 @@ class DateTime {
    * @param {string|Zone} [opts.zone='local'] - use this zone if no offset is specified in the input string itself. Will also convert the time to this zone
    * @param {boolean} [opts.setZone=false] - override the zone with a fixed-offset zone specified in the string itself, if it specifies one
    * @param {string} [opts.locale='system's locale'] - a locale to set on the resulting DateTime instance
-   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
-   * @param {string} opts.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @param {string} [opts.outputCalendar] - the output calendar to set on the resulting DateTime instance
+   * @param {string} [opts.numberingSystem] - the numbering system to set on the resulting DateTime instance
    * @example DateTime.fromISO('2016-05-25T09:08:34.123')
    * @example DateTime.fromISO('2016-05-25T09:08:34.123+06:00')
    * @example DateTime.fromISO('2016-05-25T09:08:34.123+06:00', {setZone: true})
@@ -54575,7 +54590,7 @@ class DateTime {
   /**
    * Get the week year
    * @see https://en.wikipedia.org/wiki/ISO_week_date
-   * @example DateTime.local(2014, 11, 31).weekYear //=> 2015
+   * @example DateTime.local(2014, 12, 31).weekYear //=> 2015
    * @type {number}
    */
 
@@ -54626,7 +54641,7 @@ class DateTime {
 
   get monthShort() {
     return this.isValid ? Info.months("short", {
-      locale: this.locale
+      locObj: this.loc
     })[this.month - 1] : null;
   }
   /**
@@ -54639,7 +54654,7 @@ class DateTime {
 
   get monthLong() {
     return this.isValid ? Info.months("long", {
-      locale: this.locale
+      locObj: this.loc
     })[this.month - 1] : null;
   }
   /**
@@ -54652,7 +54667,7 @@ class DateTime {
 
   get weekdayShort() {
     return this.isValid ? Info.weekdays("short", {
-      locale: this.locale
+      locObj: this.loc
     })[this.weekday - 1] : null;
   }
   /**
@@ -54665,7 +54680,7 @@ class DateTime {
 
   get weekdayLong() {
     return this.isValid ? Info.weekdays("long", {
-      locale: this.locale
+      locObj: this.loc
     })[this.weekday - 1] : null;
   }
   /**
@@ -54915,7 +54930,21 @@ class DateTime {
   set(values) {
     if (!this.isValid) return this;
     const normalized = normalizeObject(values, normalizeUnit, []),
-          settingWeekStuff = !isUndefined(normalized.weekYear) || !isUndefined(normalized.weekNumber) || !isUndefined(normalized.weekday);
+          settingWeekStuff = !isUndefined(normalized.weekYear) || !isUndefined(normalized.weekNumber) || !isUndefined(normalized.weekday),
+          containsOrdinal = !isUndefined(normalized.ordinal),
+          containsGregorYear = !isUndefined(normalized.year),
+          containsGregorMD = !isUndefined(normalized.month) || !isUndefined(normalized.day),
+          containsGregor = containsGregorYear || containsGregorMD,
+          definiteWeekDef = normalized.weekYear || normalized.weekNumber;
+
+    if ((containsGregor || containsOrdinal) && definiteWeekDef) {
+      throw new ConflictingSpecificationError("Can't mix weekYear/weekNumber units with year/month/day or ordinals");
+    }
+
+    if (containsGregorMD && containsOrdinal) {
+      throw new ConflictingSpecificationError("Can't mix ordinal dates with month/day");
+    }
+
     let mixed;
 
     if (settingWeekStuff) {
@@ -55443,7 +55472,7 @@ class DateTime {
    * @param {Object} options - options that affect the output
    * @param {DateTime} [options.base=DateTime.now()] - the DateTime to use as the basis to which this time is compared. Defaults to now.
    * @param {string} [options.style="long"] - the style of units, must be "long", "short", or "narrow"
-   * @param {string} options.unit - use a specific unit; if omitted, the method will pick the unit. Use one of "years", "quarters", "months", "weeks", "days", "hours", "minutes", or "seconds"
+   * @param {string|string[]} options.unit - use a specific unit or array of units; if omitted, or an array, the method will pick the best unit. Use an array or one of "years", "quarters", "months", "weeks", "days", "hours", "minutes", or "seconds"
    * @param {boolean} [options.round=true] - whether to round the numbers in the output.
    * @param {number} [options.padding=0] - padding in milliseconds. This allows you to round up the result if it fits inside the threshold. Don't use in combination with {round: false} because the decimal output will include the padding.
    * @param {string} options.locale - override the locale of this DateTime
@@ -55463,9 +55492,18 @@ class DateTime {
       zone: this.zone
     }),
           padding = options.padding ? this < base ? -options.padding : options.padding : 0;
+    let units = ["years", "months", "days", "hours", "minutes", "seconds"];
+    let unit = options.unit;
+
+    if (Array.isArray(options.unit)) {
+      units = options.unit;
+      unit = undefined;
+    }
+
     return diffRelative(base, this.plus(padding), Object.assign(options, {
       numeric: "always",
-      units: ["years", "months", "days", "hours", "minutes", "seconds"]
+      units,
+      unit
     }));
   }
   /**
@@ -55768,7 +55806,7 @@ function friendlyDateTime(dateTimeish) {
   }
 }
 
-const VERSION = "1.26.0";
+const VERSION = "1.27.0";
 
 exports.DateTime = DateTime;
 exports.Duration = Duration;
@@ -60879,6 +60917,17 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __spreadArray = (this && this.__spreadArray) || function (to, from) {
     for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
         to[j] = from[i];
@@ -61422,6 +61471,58 @@ var HTMLElement = /** @class */ (function (_super) {
         // 	}
         // }
         // return null;
+    };
+    /**
+     * traverses the Element and its parents (heading toward the document root) until it finds a node that matches the provided selector string. Will return itself or the matching ancestor. If no such element exists, it returns null.
+     * @param selector a DOMString containing a selector list
+     */
+    HTMLElement.prototype.closest = function (selector) {
+        var mapChild = new Map();
+        var el = this;
+        var old = null;
+        function findOne(test, elems) {
+            var elem = null;
+            for (var i = 0, l = elems.length; i < l && !elem; i++) {
+                var el_1 = elems[i];
+                if (test(el_1)) {
+                    elem = el_1;
+                }
+                else {
+                    var child = mapChild.get(el_1);
+                    if (child) {
+                        elem = findOne(test, [child]);
+                    }
+                }
+            }
+            return elem;
+        }
+        while (el) {
+            mapChild.set(el, old);
+            old = el;
+            el = el.parentNode;
+        }
+        el = this;
+        while (el) {
+            var e = css_select_1.selectOne(selector, el, {
+                xmlMode: true,
+                adapter: __assign(__assign({}, matcher_1.default), { getChildren: function (node) {
+                        var child = mapChild.get(node);
+                        return child && [child];
+                    },
+                    getSiblings: function (node) {
+                        return [node];
+                    },
+                    findOne: findOne,
+                    findAll: function () {
+                        return [];
+                    } })
+            });
+            if (e) {
+                return e;
+            }
+            el = el.parentNode;
+        }
+        return null;
     };
     /**
      * Append a child node to childNodes
@@ -68305,10 +68406,10 @@ module.exports = function (scope, npmrc) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getAdminConfig = exports.setAdminConfig = exports.repoAdminOptions = void 0;
+exports.getAdminConfig = exports.setAdminConfig = void 0;
 let adminConfig = {};
 // TODO: once admin config work is complete, add a test to make sure this list includes all options with admin=true (#9603)
-exports.repoAdminOptions = [
+const repoAdminOptions = [
     'allowCustomCrateRegistries',
     'allowPostUpgradeCommandTemplating',
     'allowScripts',
@@ -68319,14 +68420,19 @@ exports.repoAdminOptions = [
     'dockerUser',
     'dryRun',
     'exposeAllEnv',
+    'migratePresets',
     'privateKey',
+    'localDir',
+    'cacheDir',
 ];
 function setAdminConfig(config = {}) {
     adminConfig = {};
-    for (const option of exports.repoAdminOptions) {
+    const result = { ...config };
+    for (const option of repoAdminOptions) {
         adminConfig[option] = config[option];
-        delete config[option]; // eslint-disable-line no-param-reassign
+        delete result[option]; // eslint-disable-line no-param-reassign
     }
+    return result;
 }
 exports.setAdminConfig = setAdminConfig;
 function getAdminConfig() {
@@ -68452,8 +68558,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const bitbucketTags = __importStar(__webpack_require__(22269));
-const cdnjs = __importStar(__webpack_require__(62048));
-const clojure = __importStar(__webpack_require__(29423));
+const cdnjs_1 = __webpack_require__(62048);
+const clojure_1 = __webpack_require__(29423);
 const crate = __importStar(__webpack_require__(87903));
 const dart = __importStar(__webpack_require__(19941));
 const docker = __importStar(__webpack_require__(26216));
@@ -68486,8 +68592,8 @@ const terraformProvider = __importStar(__webpack_require__(54920));
 const api = new Map();
 exports.default = api;
 api.set('bitbucket-tags', bitbucketTags);
-api.set('cdnjs', cdnjs);
-api.set('clojure', clojure);
+api.set('cdnjs', new cdnjs_1.CdnJsDatasource());
+api.set('clojure', new clojure_1.ClojureDatasource());
 api.set('crate', crate);
 api.set('dart', dart);
 api.set('docker', docker);
@@ -68641,44 +68747,50 @@ exports.getDigest = getDigest;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getReleases = exports.caching = exports.defaultRegistryUrls = exports.customRegistrySupport = exports.id = void 0;
+exports.CdnJsDatasource = void 0;
 const external_host_error_1 = __webpack_require__(13262);
-const http_1 = __webpack_require__(97239);
-exports.id = 'cdnjs';
-exports.customRegistrySupport = false;
-exports.defaultRegistryUrls = ['https://api.cdnjs.com/'];
-exports.caching = true;
-const http = new http_1.Http(exports.id);
-async function getReleases({ lookupName, registryUrl, }) {
-    // Each library contains multiple assets, so we cache at the library level instead of per-asset
-    const library = lookupName.split('/')[0];
-    const url = `${registryUrl}libraries/${library}?fields=homepage,repository,assets`;
-    try {
-        const { assets, homepage, repository } = (await http.getJson(url)).body;
-        if (!assets) {
-            return null;
-        }
-        const assetName = lookupName.replace(`${library}/`, '');
-        const releases = assets
-            .filter(({ files }) => files.includes(assetName))
-            .map(({ version, sri }) => ({ version, newDigest: sri[assetName] }));
-        const result = { releases };
-        if (homepage) {
-            result.homepage = homepage;
-        }
-        if (repository === null || repository === void 0 ? void 0 : repository.url) {
-            result.sourceUrl = repository.url;
-        }
-        return result;
+const datasource_1 = __webpack_require__(74092);
+class CdnJsDatasource extends datasource_1.Datasource {
+    constructor() {
+        super(CdnJsDatasource.id);
+        this.customRegistrySupport = false;
+        this.defaultRegistryUrls = ['https://api.cdnjs.com/'];
+        this.caching = true;
     }
-    catch (err) {
-        if (err.statusCode !== 404) {
-            throw new external_host_error_1.ExternalHostError(err);
+    // this.handleErrors will always throw
+    // eslint-disable-next-line consistent-return
+    async getReleases({ lookupName, registryUrl, }) {
+        // Each library contains multiple assets, so we cache at the library level instead of per-asset
+        const library = lookupName.split('/')[0];
+        const url = `${registryUrl}libraries/${library}?fields=homepage,repository,assets`;
+        try {
+            const { assets, homepage, repository } = (await this.http.getJson(url)).body;
+            if (!assets) {
+                return null;
+            }
+            const assetName = lookupName.replace(`${library}/`, '');
+            const releases = assets
+                .filter(({ files }) => files.includes(assetName))
+                .map(({ version, sri }) => ({ version, newDigest: sri[assetName] }));
+            const result = { releases };
+            if (homepage) {
+                result.homepage = homepage;
+            }
+            if (repository === null || repository === void 0 ? void 0 : repository.url) {
+                result.sourceUrl = repository.url;
+            }
+            return result;
         }
-        throw err;
+        catch (err) {
+            if (err.statusCode !== 404) {
+                throw new external_host_error_1.ExternalHostError(err);
+            }
+            this.handleGenericErrors(err);
+        }
     }
 }
-exports.getReleases = getReleases;
+exports.CdnJsDatasource = CdnJsDatasource;
+CdnJsDatasource.id = 'cdnjs';
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -68689,14 +68801,24 @@ exports.getReleases = getReleases;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getReleases = exports.registryStrategy = exports.defaultRegistryUrls = exports.customRegistrySupport = exports.id = void 0;
+exports.ClojureDatasource = void 0;
+const datasource_1 = __webpack_require__(74092);
+const maven_1 = __webpack_require__(21296);
 const common_1 = __webpack_require__(10208);
-exports.id = 'clojure';
-exports.customRegistrySupport = true;
-exports.defaultRegistryUrls = ['https://clojars.org/repo', common_1.MAVEN_REPO];
-exports.registryStrategy = 'merge';
-var maven_1 = __webpack_require__(21296);
-Object.defineProperty(exports, "getReleases", ({ enumerable: true, get: function () { return maven_1.getReleases; } }));
+class ClojureDatasource extends datasource_1.Datasource {
+    constructor() {
+        super(ClojureDatasource.id);
+        this.registryStrategy = 'merge';
+        this.customRegistrySupport = true;
+        this.defaultRegistryUrls = ['https://clojars.org/repo', common_1.MAVEN_REPO];
+    }
+    // eslint-disable-next-line class-methods-use-this
+    getReleases({ lookupName, registryUrl, }) {
+        return maven_1.getReleases({ lookupName, registryUrl });
+    }
+}
+exports.ClojureDatasource = ClojureDatasource;
+ClojureDatasource.id = 'clojure';
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -69043,7 +69165,42 @@ exports.getReleases = getReleases;
 
 /***/ }),
 
-/***/ 26216:
+/***/ 74092:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Datasource = void 0;
+const external_host_error_1 = __webpack_require__(13262);
+const http_1 = __webpack_require__(97239);
+class Datasource {
+    constructor(id) {
+        this.id = id;
+        this.customRegistrySupport = true;
+        this.registryStrategy = 'first';
+        this.http = new http_1.Http(id);
+    }
+    // eslint-disable-next-line class-methods-use-this
+    handleSpecificErrors(err) { }
+    handleGenericErrors(err) {
+        var _a, _b, _c, _d;
+        this.handleSpecificErrors(err);
+        if (((_a = err.response) === null || _a === void 0 ? void 0 : _a.statusCode) !== undefined) {
+            if (((_b = err.response) === null || _b === void 0 ? void 0 : _b.statusCode) === 429 ||
+                (((_c = err.response) === null || _c === void 0 ? void 0 : _c.statusCode) >= 500 && ((_d = err.response) === null || _d === void 0 ? void 0 : _d.statusCode) < 600)) {
+                throw new external_host_error_1.ExternalHostError(err);
+            }
+        }
+        throw err;
+    }
+}
+exports.Datasource = Datasource;
+//# sourceMappingURL=datasource.js.map
+
+/***/ }),
+
+/***/ 16544:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -69071,11 +69228,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getReleases = exports.getDigest = exports.getRegistryRepository = exports.defaultConfig = exports.registryStrategy = exports.defaultVersioning = exports.defaultRegistryUrls = exports.customRegistrySupport = exports.id = void 0;
-const url_1 = __importDefault(__webpack_require__(78835));
+exports.getLabels = exports.getManifestResponse = exports.extractDigestFromResponse = exports.getRegistryRepository = exports.getAuthHeaders = exports.defaultRegistryUrls = exports.ecrRegex = exports.http = exports.id = void 0;
 const client_ecr_1 = __webpack_require__(44004);
 const hasha_1 = __importDefault(__webpack_require__(33512));
-const parse_link_header_1 = __importDefault(__webpack_require__(32899));
 const www_authenticate_1 = __importDefault(__webpack_require__(51318));
 const error_messages_1 = __webpack_require__(73910);
 const logger_1 = __webpack_require__(12702);
@@ -69083,85 +69238,12 @@ const external_host_error_1 = __webpack_require__(13262);
 const packageCache = __importStar(__webpack_require__(91037));
 const hostRules = __importStar(__webpack_require__(66445));
 const http_1 = __webpack_require__(97239);
-const url_2 = __webpack_require__(32658);
-const dockerVersioning = __importStar(__webpack_require__(587));
+const url_1 = __webpack_require__(32658);
 const types_1 = __webpack_require__(42984);
-// TODO: add got typings when available (#9646)
-// TODO: replace www-authenticate with https://www.npmjs.com/package/auth-header (#9645)
 exports.id = 'docker';
-exports.customRegistrySupport = true;
+exports.http = new http_1.Http(exports.id);
+exports.ecrRegex = /\d+\.dkr\.ecr\.([-a-z0-9]+)\.amazonaws\.com/;
 exports.defaultRegistryUrls = ['https://index.docker.io'];
-exports.defaultVersioning = dockerVersioning.id;
-exports.registryStrategy = 'first';
-exports.defaultConfig = {
-    commitMessageTopic: '{{{depName}}} Docker tag',
-    commitMessageExtra: 'to v{{#if isMajor}}{{{newMajor}}}{{else}}{{{newVersion}}}{{/if}}',
-    digest: {
-        branchTopic: '{{{depNameSanitized}}}-{{{currentValue}}}',
-        commitMessageExtra: 'to {{newDigestShort}}',
-        commitMessageTopic: '{{{depName}}}{{#if currentValue}}:{{{currentValue}}}{{/if}} Docker digest',
-        group: {
-            commitMessageTopic: '{{{groupName}}}',
-            commitMessageExtra: '',
-        },
-    },
-    pin: {
-        commitMessageExtra: '',
-        groupName: 'Docker digests',
-        group: {
-            commitMessageTopic: '{{{groupName}}}',
-            branchTopic: 'digests-pin',
-        },
-    },
-    group: {
-        commitMessageTopic: '{{{groupName}}} Docker tags',
-    },
-};
-const http = new http_1.Http(exports.id);
-const ecrRegex = /\d+\.dkr\.ecr\.([-a-z0-9]+)\.amazonaws\.com/;
-function getRegistryRepository(lookupName, registryUrl) {
-    if (registryUrl !== exports.defaultRegistryUrls[0]) {
-        const registryEndingWithSlash = url_2.ensureTrailingSlash(registryUrl.replace(/^https?:\/\//, ''));
-        if (lookupName.startsWith(registryEndingWithSlash)) {
-            let registry = url_2.trimTrailingSlash(registryUrl);
-            if (!/^https?:\/\//.test(registry)) {
-                registry = `https://${registry}`;
-            }
-            return {
-                registry,
-                repository: lookupName.replace(registryEndingWithSlash, ''),
-            };
-        }
-    }
-    let registry;
-    const split = lookupName.split('/');
-    if (split.length > 1 && (split[0].includes('.') || split[0].includes(':'))) {
-        [registry] = split;
-        split.shift();
-    }
-    let repository = split.join('/');
-    if (!registry) {
-        registry = registryUrl;
-    }
-    if (registry === 'docker.io') {
-        registry = 'index.docker.io';
-    }
-    if (!/^https?:\/\//.exec(registry)) {
-        registry = `https://${registry}`;
-    }
-    const opts = hostRules.find({ hostType: exports.id, url: registry });
-    if (opts === null || opts === void 0 ? void 0 : opts.insecureRegistry) {
-        registry = registry.replace('https', 'http');
-    }
-    if (registry.endsWith('.docker.io') && !repository.includes('/')) {
-        repository = 'library/' + repository;
-    }
-    return {
-        registry,
-        repository,
-    };
-}
-exports.getRegistryRepository = getRegistryRepository;
 async function getECRAuthToken(region, opts) {
     var _a, _b;
     const config = { region };
@@ -69189,7 +69271,7 @@ async function getECRAuthToken(region, opts) {
 async function getAuthHeaders(registry, dockerRepository) {
     try {
         const apiCheckUrl = `${registry}/v2/`;
-        const apiCheckResponse = await http.get(apiCheckUrl, {
+        const apiCheckResponse = await exports.http.get(apiCheckUrl, {
             throwHttpErrors: false,
         });
         if (apiCheckResponse.headers['www-authenticate'] === undefined) {
@@ -69197,8 +69279,8 @@ async function getAuthHeaders(registry, dockerRepository) {
         }
         const authenticateHeader = new www_authenticate_1.default.parsers.WWW_Authenticate(apiCheckResponse.headers['www-authenticate']);
         const opts = hostRules.find({ hostType: exports.id, url: apiCheckUrl });
-        if (ecrRegex.test(registry)) {
-            const [, region] = ecrRegex.exec(registry);
+        if (exports.ecrRegex.test(registry)) {
+            const [, region] = exports.ecrRegex.exec(registry);
             const auth = await getECRAuthToken(region, opts);
             if (auth) {
                 opts.headers = { authorization: `Basic ${auth}` };
@@ -69212,13 +69294,13 @@ async function getAuthHeaders(registry, dockerRepository) {
         delete opts.password;
         if (authenticateHeader.scheme.toUpperCase() === 'BASIC') {
             logger_1.logger.debug(`Using Basic auth for docker registry ${dockerRepository}`);
-            await http.get(apiCheckUrl, opts);
+            await exports.http.get(apiCheckUrl, opts);
             return opts.headers;
         }
         // prettier-ignore
         const authUrl = `${String(authenticateHeader.parms.realm)}?service=${String(authenticateHeader.parms.service)}&scope=repository:${dockerRepository}:pull`;
         logger_1.logger.trace(`Obtaining docker registry token for ${dockerRepository} using url ${authUrl}`);
-        const authResponse = (await http.getJson(authUrl, opts)).body;
+        const authResponse = (await exports.http.getJson(authUrl, opts)).body;
         const token = authResponse.token || authResponse.access_token;
         // istanbul ignore if
         if (!token) {
@@ -69263,6 +69345,50 @@ async function getAuthHeaders(registry, dockerRepository) {
         return null;
     }
 }
+exports.getAuthHeaders = getAuthHeaders;
+function getRegistryRepository(lookupName, registryUrl) {
+    if (registryUrl !== exports.defaultRegistryUrls[0]) {
+        const registryEndingWithSlash = url_1.ensureTrailingSlash(registryUrl.replace(/^https?:\/\//, ''));
+        if (lookupName.startsWith(registryEndingWithSlash)) {
+            let registry = url_1.trimTrailingSlash(registryUrl);
+            if (!/^https?:\/\//.test(registry)) {
+                registry = `https://${registry}`;
+            }
+            return {
+                registry,
+                repository: lookupName.replace(registryEndingWithSlash, ''),
+            };
+        }
+    }
+    let registry;
+    const split = lookupName.split('/');
+    if (split.length > 1 && (split[0].includes('.') || split[0].includes(':'))) {
+        [registry] = split;
+        split.shift();
+    }
+    let repository = split.join('/');
+    if (!registry) {
+        registry = registryUrl;
+    }
+    if (registry === 'docker.io') {
+        registry = 'index.docker.io';
+    }
+    if (!/^https?:\/\//.exec(registry)) {
+        registry = `https://${registry}`;
+    }
+    const opts = hostRules.find({ hostType: exports.id, url: registry });
+    if (opts === null || opts === void 0 ? void 0 : opts.insecureRegistry) {
+        registry = registry.replace('https', 'http');
+    }
+    if (registry.endsWith('.docker.io') && !repository.includes('/')) {
+        repository = 'library/' + repository;
+    }
+    return {
+        registry,
+        repository,
+    };
+}
+exports.getRegistryRepository = getRegistryRepository;
 function digestFromManifestStr(str) {
     return 'sha256:' + hasha_1.default(str, { algorithm: 'sha256' });
 }
@@ -69272,6 +69398,7 @@ function extractDigestFromResponse(manifestResponse) {
     }
     return manifestResponse.headers['docker-content-digest'];
 }
+exports.extractDigestFromResponse = extractDigestFromResponse;
 // TODO: debug why quay throws errors (#9612)
 async function getManifestResponse(registry, dockerRepository, tag) {
     logger_1.logger.debug(`getManifestResponse(${registry}, ${dockerRepository}, ${tag})`);
@@ -69284,7 +69411,7 @@ async function getManifestResponse(registry, dockerRepository, tag) {
         headers.accept =
             'application/vnd.docker.distribution.manifest.list.v2+json, application/vnd.docker.distribution.manifest.v2+json';
         const url = `${registry}/v2/${dockerRepository}/manifests/${tag}`;
-        const manifestResponse = await http.get(url, {
+        const manifestResponse = await exports.http.get(url, {
             headers,
         });
         return manifestResponse;
@@ -69328,6 +69455,7 @@ async function getManifestResponse(registry, dockerRepository, tag) {
         return null;
     }
 }
+exports.getManifestResponse = getManifestResponse;
 async function getConfigDigest(registry, dockerRepository, tag) {
     var _a;
     const manifestResponse = await getManifestResponse(registry, dockerRepository, tag);
@@ -69353,105 +69481,6 @@ async function getConfigDigest(registry, dockerRepository, tag) {
     }
     logger_1.logger.debug({ manifest }, 'Invalid manifest - returning');
     return null;
-}
-/**
- * docker.getDigest
- *
- * The `newValue` supplied here should be a valid tag for the docker image.
- *
- * This function will:
- *  - Look up a sha256 digest for a tag on its registry
- *  - Return the digest as a string
- */
-async function getDigest({ registryUrl, lookupName }, newValue) {
-    const { registry, repository } = getRegistryRepository(lookupName, registryUrl);
-    logger_1.logger.debug(`getDigest(${registry}, ${repository}, ${newValue})`);
-    const newTag = newValue || 'latest';
-    const cacheNamespace = 'datasource-docker-digest';
-    const cacheKey = `${registry}:${repository}:${newTag}`;
-    let digest = null;
-    try {
-        const cachedResult = await packageCache.get(cacheNamespace, cacheKey);
-        // istanbul ignore if
-        if (cachedResult !== undefined) {
-            return cachedResult;
-        }
-        const manifestResponse = await getManifestResponse(registry, repository, newTag);
-        if (manifestResponse) {
-            digest = extractDigestFromResponse(manifestResponse) || null;
-            logger_1.logger.debug({ digest }, 'Got docker digest');
-        }
-    }
-    catch (err) /* istanbul ignore next */ {
-        if (err instanceof external_host_error_1.ExternalHostError) {
-            throw err;
-        }
-        logger_1.logger.debug({
-            err,
-            lookupName,
-            newTag,
-        }, 'Unknown Error looking up docker image digest');
-    }
-    const cacheMinutes = 30;
-    await packageCache.set(cacheNamespace, cacheKey, digest, cacheMinutes);
-    return digest;
-}
-exports.getDigest = getDigest;
-async function getTags(registry, repository) {
-    let tags = [];
-    try {
-        const cacheNamespace = 'datasource-docker-tags';
-        const cacheKey = `${registry}:${repository}`;
-        const cachedResult = await packageCache.get(cacheNamespace, cacheKey);
-        // istanbul ignore if
-        if (cachedResult !== undefined) {
-            return cachedResult;
-        }
-        // AWS ECR limits the maximum number of results to 1000
-        // See https://docs.aws.amazon.com/AmazonECR/latest/APIReference/API_DescribeRepositories.html#ECR-DescribeRepositories-request-maxResults
-        const limit = ecrRegex.test(registry) ? 1000 : 10000;
-        let url = `${registry}/v2/${repository}/tags/list?n=${limit}`;
-        const headers = await getAuthHeaders(registry, repository);
-        if (!headers) {
-            logger_1.logger.debug('Failed to get authHeaders for getTags lookup');
-            return null;
-        }
-        let page = 1;
-        do {
-            const res = await http.getJson(url, { headers });
-            tags = tags.concat(res.body.tags);
-            const linkHeader = parse_link_header_1.default(res.headers.link);
-            url = (linkHeader === null || linkHeader === void 0 ? void 0 : linkHeader.next) ? url_1.default.resolve(url, linkHeader.next.url) : null;
-            page += 1;
-        } while (url && page < 20);
-        const cacheMinutes = 30;
-        await packageCache.set(cacheNamespace, cacheKey, tags, cacheMinutes);
-        return tags;
-    }
-    catch (err) /* istanbul ignore next */ {
-        if (err instanceof external_host_error_1.ExternalHostError) {
-            throw err;
-        }
-        if (err.statusCode === 404 && !repository.includes('/')) {
-            logger_1.logger.debug(`Retrying Tags for ${registry}/${repository} using library/ prefix`);
-            return getTags(registry, 'library/' + repository);
-        }
-        // prettier-ignore
-        if (err.statusCode === 429 && registry.endsWith('docker.io')) { // lgtm [js/incomplete-url-substring-sanitization]
-            logger_1.logger.warn({ registry, dockerRepository: repository, err }, 'docker registry failure: too many requests');
-            throw new external_host_error_1.ExternalHostError(err);
-        }
-        // prettier-ignore
-        if (err.statusCode === 401 && registry.endsWith('docker.io')) { // lgtm [js/incomplete-url-substring-sanitization]
-            logger_1.logger.warn({ registry, dockerRepository: repository, err }, 'docker registry failure: unauthorized');
-            throw new external_host_error_1.ExternalHostError(err);
-        }
-        if (err.statusCode >= 500 && err.statusCode < 600) {
-            logger_1.logger.warn({ registry, dockerRepository: repository, err }, 'docker registry failure: internal error');
-            throw new external_host_error_1.ExternalHostError(err);
-        }
-        throw err;
-    }
 }
 /*
  * docker.getLabels
@@ -69481,7 +69510,7 @@ async function getLabels(registry, dockerRepository, tag) {
             return {};
         }
         const url = `${registry}/v2/${dockerRepository}/blobs/${configDigest}`;
-        const configResponse = await http.get(url, {
+        const configResponse = await exports.http.get(url, {
             headers,
         });
         labels = JSON.parse(configResponse.body).config.Labels;
@@ -69536,6 +69565,175 @@ async function getLabels(registry, dockerRepository, tag) {
         return {};
     }
 }
+exports.getLabels = getLabels;
+//# sourceMappingURL=common.js.map
+
+/***/ }),
+
+/***/ 26216:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getReleases = exports.getDigest = exports.defaultConfig = exports.registryStrategy = exports.defaultVersioning = exports.defaultRegistryUrls = exports.customRegistrySupport = exports.id = void 0;
+const url_1 = __importDefault(__webpack_require__(78835));
+const parse_link_header_1 = __importDefault(__webpack_require__(32899));
+const logger_1 = __webpack_require__(12702);
+const external_host_error_1 = __webpack_require__(13262);
+const packageCache = __importStar(__webpack_require__(91037));
+const dockerVersioning = __importStar(__webpack_require__(587));
+const common_1 = __webpack_require__(16544);
+Object.defineProperty(exports, "defaultRegistryUrls", ({ enumerable: true, get: function () { return common_1.defaultRegistryUrls; } }));
+Object.defineProperty(exports, "id", ({ enumerable: true, get: function () { return common_1.id; } }));
+exports.customRegistrySupport = true;
+exports.defaultVersioning = dockerVersioning.id;
+exports.registryStrategy = 'first';
+exports.defaultConfig = {
+    commitMessageTopic: '{{{depName}}} Docker tag',
+    commitMessageExtra: 'to v{{#if isMajor}}{{{newMajor}}}{{else}}{{{newVersion}}}{{/if}}',
+    digest: {
+        branchTopic: '{{{depNameSanitized}}}-{{{currentValue}}}',
+        commitMessageExtra: 'to {{newDigestShort}}',
+        commitMessageTopic: '{{{depName}}}{{#if currentValue}}:{{{currentValue}}}{{/if}} Docker digest',
+        group: {
+            commitMessageTopic: '{{{groupName}}}',
+            commitMessageExtra: '',
+        },
+    },
+    pin: {
+        commitMessageExtra: '',
+        groupName: 'Docker digests',
+        group: {
+            commitMessageTopic: '{{{groupName}}}',
+            branchTopic: 'digests-pin',
+        },
+    },
+    group: {
+        commitMessageTopic: '{{{groupName}}} Docker tags',
+    },
+};
+async function getTags(registry, repository) {
+    let tags = [];
+    try {
+        const cacheNamespace = 'datasource-docker-tags';
+        const cacheKey = `${registry}:${repository}`;
+        const cachedResult = await packageCache.get(cacheNamespace, cacheKey);
+        // istanbul ignore if
+        if (cachedResult !== undefined) {
+            return cachedResult;
+        }
+        // AWS ECR limits the maximum number of results to 1000
+        // See https://docs.aws.amazon.com/AmazonECR/latest/APIReference/API_DescribeRepositories.html#ECR-DescribeRepositories-request-maxResults
+        const limit = common_1.ecrRegex.test(registry) ? 1000 : 10000;
+        let url = `${registry}/v2/${repository}/tags/list?n=${limit}`;
+        const headers = await common_1.getAuthHeaders(registry, repository);
+        if (!headers) {
+            logger_1.logger.debug('Failed to get authHeaders for getTags lookup');
+            return null;
+        }
+        let page = 1;
+        do {
+            const res = await common_1.http.getJson(url, { headers });
+            tags = tags.concat(res.body.tags);
+            const linkHeader = parse_link_header_1.default(res.headers.link);
+            url = (linkHeader === null || linkHeader === void 0 ? void 0 : linkHeader.next) ? url_1.default.resolve(url, linkHeader.next.url) : null;
+            page += 1;
+        } while (url && page < 20);
+        const cacheMinutes = 30;
+        await packageCache.set(cacheNamespace, cacheKey, tags, cacheMinutes);
+        return tags;
+    }
+    catch (err) /* istanbul ignore next */ {
+        if (err instanceof external_host_error_1.ExternalHostError) {
+            throw err;
+        }
+        if (err.statusCode === 404 && !repository.includes('/')) {
+            logger_1.logger.debug(`Retrying Tags for ${registry}/${repository} using library/ prefix`);
+            return getTags(registry, 'library/' + repository);
+        }
+        // prettier-ignore
+        if (err.statusCode === 429 && registry.endsWith('docker.io')) { // lgtm [js/incomplete-url-substring-sanitization]
+            logger_1.logger.warn({ registry, dockerRepository: repository, err }, 'docker registry failure: too many requests');
+            throw new external_host_error_1.ExternalHostError(err);
+        }
+        // prettier-ignore
+        if (err.statusCode === 401 && registry.endsWith('docker.io')) { // lgtm [js/incomplete-url-substring-sanitization]
+            logger_1.logger.warn({ registry, dockerRepository: repository, err }, 'docker registry failure: unauthorized');
+            throw new external_host_error_1.ExternalHostError(err);
+        }
+        if (err.statusCode >= 500 && err.statusCode < 600) {
+            logger_1.logger.warn({ registry, dockerRepository: repository, err }, 'docker registry failure: internal error');
+            throw new external_host_error_1.ExternalHostError(err);
+        }
+        throw err;
+    }
+}
+/**
+ * docker.getDigest
+ *
+ * The `newValue` supplied here should be a valid tag for the docker image.
+ *
+ * This function will:
+ *  - Look up a sha256 digest for a tag on its registry
+ *  - Return the digest as a string
+ */
+async function getDigest({ registryUrl, lookupName }, newValue) {
+    const { registry, repository } = common_1.getRegistryRepository(lookupName, registryUrl);
+    logger_1.logger.debug(`getDigest(${registry}, ${repository}, ${newValue})`);
+    const newTag = newValue || 'latest';
+    const cacheNamespace = 'datasource-docker-digest';
+    const cacheKey = `${registry}:${repository}:${newTag}`;
+    let digest = null;
+    try {
+        const cachedResult = await packageCache.get(cacheNamespace, cacheKey);
+        // istanbul ignore if
+        if (cachedResult !== undefined) {
+            return cachedResult;
+        }
+        const manifestResponse = await common_1.getManifestResponse(registry, repository, newTag);
+        if (manifestResponse) {
+            digest = common_1.extractDigestFromResponse(manifestResponse) || null;
+            logger_1.logger.debug({ digest }, 'Got docker digest');
+        }
+    }
+    catch (err) /* istanbul ignore next */ {
+        if (err instanceof external_host_error_1.ExternalHostError) {
+            throw err;
+        }
+        logger_1.logger.debug({
+            err,
+            lookupName,
+            newTag,
+        }, 'Unknown Error looking up docker image digest');
+    }
+    const cacheMinutes = 30;
+    await packageCache.set(cacheNamespace, cacheKey, digest, cacheMinutes);
+    return digest;
+}
+exports.getDigest = getDigest;
 /**
  * docker.getReleases
  *
@@ -69548,7 +69746,7 @@ async function getLabels(registry, dockerRepository, tag) {
  * This function will filter only tags that contain a semver version
  */
 async function getReleases({ lookupName, registryUrl, }) {
-    const { registry, repository } = getRegistryRepository(lookupName, registryUrl);
+    const { registry, repository } = common_1.getRegistryRepository(lookupName, registryUrl);
     const tags = await getTags(registry, repository);
     if (!tags) {
         return null;
@@ -69558,7 +69756,7 @@ async function getReleases({ lookupName, registryUrl, }) {
         releases,
     };
     const latestTag = tags.includes('latest') ? 'latest' : tags[tags.length - 1];
-    const labels = await getLabels(registry, repository, latestTag);
+    const labels = await common_1.getLabels(registry, repository, latestTag);
     if (labels && 'org.opencontainers.image.source' in labels) {
         ret.sourceUrl = labels['org.opencontainers.image.source'];
     }
@@ -70906,7 +71104,7 @@ exports.getDatasources = getDatasources;
 const getDatasourceList = () => Array.from(api_1.default.keys());
 exports.getDatasourceList = getDatasourceList;
 const cacheNamespace = 'datasource-releases';
-function load(datasource) {
+function getDatasourceFor(datasource) {
     return api_1.default.get(datasource);
 }
 function logError(datasource, lookupName, err) {
@@ -71052,18 +71250,18 @@ function resolveRegistryUrls(datasource, extractedUrls) {
     return registryUrls.filter(Boolean);
 }
 function getDefaultVersioning(datasourceName) {
-    const datasource = load(datasourceName);
+    const datasource = getDatasourceFor(datasourceName);
     return datasource.defaultVersioning || 'semver';
 }
 exports.getDefaultVersioning = getDefaultVersioning;
 async function fetchReleases(config) {
     var _a;
     const { datasource: datasourceName } = config;
-    if (!datasourceName || !api_1.default.has(datasourceName)) {
+    if (!datasourceName || getDatasourceFor(datasourceName) === undefined) {
         logger_1.logger.warn('Unknown datasource: ' + datasourceName);
         return null;
     }
-    const datasource = load(datasourceName);
+    const datasource = getDatasourceFor(datasourceName);
     const registryUrls = resolveRegistryUrls(datasource, config.registryUrls);
     let dep = null;
     const registryStrategy = datasource.registryStrategy || 'hunt';
@@ -71191,18 +71389,18 @@ async function getPkgReleases(config) {
 }
 exports.getPkgReleases = getPkgReleases;
 function supportsDigests(config) {
-    return 'getDigest' in load(config.datasource);
+    return 'getDigest' in getDatasourceFor(config.datasource);
 }
 exports.supportsDigests = supportsDigests;
 function getDigest(config, value) {
-    const datasource = load(config.datasource);
+    const datasource = getDatasourceFor(config.datasource);
     const lookupName = config.lookupName || config.depName;
     const registryUrls = resolveRegistryUrls(datasource, config.registryUrls);
     return datasource.getDigest({ lookupName, registryUrl: registryUrls[0] }, value);
 }
 exports.getDigest = getDigest;
 function getDefaultConfig(datasource) {
-    const loadedDatasource = load(datasource);
+    const loadedDatasource = getDatasourceFor(datasource);
     return Promise.resolve((loadedDatasource === null || loadedDatasource === void 0 ? void 0 : loadedDatasource.defaultConfig) || Object.create({}));
 }
 exports.getDefaultConfig = getDefaultConfig;
@@ -75106,6 +75304,9 @@ function bootstrap() {
             typeof process.env[envVar.toLowerCase()] !== 'undefined') {
             process.env[envVar] = process.env[envVar.toLowerCase()];
         }
+        if (process.env[envVar]) {
+            process.env[envVar.toLowerCase()] = process.env[envVar];
+        }
     });
     if (is_1.default.nonEmptyString(process.env.HTTP_PROXY) ||
         is_1.default.nonEmptyString(process.env.HTTPS_PROXY)) {
@@ -75492,18 +75693,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.findLocalSiblingOrParent = exports.localPathExists = exports.privateCacheDir = exports.ensureCacheDir = exports.ensureLocalDir = exports.ensureDir = exports.renameLocalFile = exports.deleteLocalFile = exports.writeLocalFile = exports.readLocalFile = exports.getSiblingFileName = exports.getSubDirectory = exports.setFsConfig = void 0;
+exports.findLocalSiblingOrParent = exports.localPathExists = exports.privateCacheDir = exports.ensureCacheDir = exports.ensureLocalDir = exports.ensureDir = exports.renameLocalFile = exports.deleteLocalFile = exports.writeLocalFile = exports.readLocalFile = exports.getSiblingFileName = exports.getSubDirectory = void 0;
 const fs = __importStar(__webpack_require__(51402));
 const upath_1 = __webpack_require__(86511);
+const admin_1 = __webpack_require__(21308);
 const logger_1 = __webpack_require__(12702);
 __exportStar(__webpack_require__(4563), exports);
-let localDir = '';
-let cacheDir = '';
-function setFsConfig(config) {
-    localDir = config.localDir;
-    cacheDir = config.cacheDir;
-}
-exports.setFsConfig = setFsConfig;
 function getSubDirectory(fileName) {
     return upath_1.parse(fileName).dir;
 }
@@ -75514,6 +75709,7 @@ function getSiblingFileName(existingFileNameWithPath, otherFileName) {
 }
 exports.getSiblingFileName = getSiblingFileName;
 async function readLocalFile(fileName, encoding) {
+    const { localDir } = admin_1.getAdminConfig();
     const localFileName = upath_1.join(localDir, fileName);
     try {
         const fileContent = await fs.readFile(localFileName, encoding);
@@ -75526,11 +75722,13 @@ async function readLocalFile(fileName, encoding) {
 }
 exports.readLocalFile = readLocalFile;
 async function writeLocalFile(fileName, fileContent) {
+    const { localDir } = admin_1.getAdminConfig();
     const localFileName = upath_1.join(localDir, fileName);
     await fs.outputFile(localFileName, fileContent);
 }
 exports.writeLocalFile = writeLocalFile;
 async function deleteLocalFile(fileName) {
+    const { localDir } = admin_1.getAdminConfig();
     if (localDir) {
         const localFileName = upath_1.join(localDir, fileName);
         await fs.remove(localFileName);
@@ -75539,6 +75737,7 @@ async function deleteLocalFile(fileName) {
 exports.deleteLocalFile = deleteLocalFile;
 // istanbul ignore next
 async function renameLocalFile(fromFile, toFile) {
+    const { localDir } = admin_1.getAdminConfig();
     await fs.move(upath_1.join(localDir, fromFile), upath_1.join(localDir, toFile));
 }
 exports.renameLocalFile = renameLocalFile;
@@ -75549,11 +75748,13 @@ async function ensureDir(dirName) {
 exports.ensureDir = ensureDir;
 // istanbul ignore next
 async function ensureLocalDir(dirName) {
+    const { localDir } = admin_1.getAdminConfig();
     const localDirName = upath_1.join(localDir, dirName);
     await fs.ensureDir(localDirName);
 }
 exports.ensureLocalDir = ensureLocalDir;
 async function ensureCacheDir(dirName, envPathVar) {
+    const { cacheDir } = admin_1.getAdminConfig();
     const envCacheDirName = envPathVar ? process.env[envPathVar] : null;
     const cacheDirName = envCacheDirName || upath_1.join(cacheDir, dirName);
     await fs.ensureDir(cacheDirName);
@@ -75566,10 +75767,12 @@ exports.ensureCacheDir = ensureCacheDir;
  * without risk of that information leaking to other repositories/users.
  */
 function privateCacheDir() {
+    const { cacheDir } = admin_1.getAdminConfig();
     return upath_1.join(cacheDir, '__renovate-private-cache');
 }
 exports.privateCacheDir = privateCacheDir;
 function localPathExists(pathName) {
+    const { localDir } = admin_1.getAdminConfig();
     // Works for both files as well as directories
     return fs
         .stat(upath_1.join(localDir, pathName))
@@ -76797,7 +77000,7 @@ function regEx(pattern, flags) {
     }
     catch (err) {
         const error = new Error(error_messages_1.CONFIG_VALIDATION);
-        error.location = pattern;
+        error.validationSource = pattern;
         error.validationError = `Invalid regular expression: ${pattern}`;
         throw error;
     }
@@ -80231,7 +80434,7 @@ class RegExpVersioningApi extends generic_1.GenericVersioningApi {
             !new_config.includes('<minor>') &&
             !new_config.includes('<patch>')) {
             const error = new Error(error_messages_1.CONFIG_VALIDATION);
-            error.location = new_config;
+            error.validationSource = new_config;
             error.validationError =
                 'regex versioning needs at least one major, minor or patch group defined';
             throw error;
@@ -90273,16 +90476,14 @@ const {SimpleGitApi} = __webpack_require__(79920);
 
 const {Scheduler} = __webpack_require__(34349);
 const {GitLogger} = __webpack_require__(71649);
-const {adhocExecTask, configurationErrorTask} = __webpack_require__(70002);
+const {configurationErrorTask} = __webpack_require__(70002);
 const {
-   NOOP,
    asArray,
    filterArray,
    filterPrimitives,
    filterString,
    filterStringOrStringArray,
    filterType,
-   folderExists,
    getTrailingOptions,
    trailingFunctionArgument,
    trailingOptionsArgument
@@ -90357,23 +90558,6 @@ Git.prototype.env = function (name, value) {
    }
 
    return this;
-};
-
-/**
- * Sets the working directory of the subsequent commands.
- */
-Git.prototype.cwd = function (workingDirectory) {
-   const task = (typeof workingDirectory !== 'string')
-      ? configurationErrorTask('Git.cwd: workingDirectory must be supplied as a string')
-      : adhocExecTask(() => {
-         if (!folderExists(workingDirectory)) {
-            throw new Error(`Git.cwd: cannot change to non-directory "${ workingDirectory }"`);
-         }
-
-         return (this._executor.cwd = workingDirectory);
-      });
-
-   return this._runTask(task, trailingFunctionArgument(arguments) || NOOP);
 };
 
 /**
@@ -92950,7 +93134,10 @@ class GitExecutorChain {
         return this._executor.binary;
     }
     get cwd() {
-        return this._executor.cwd;
+        return this._cwd || this._executor.cwd;
+    }
+    set cwd(cwd) {
+        this._cwd = cwd;
     }
     get env() {
         return this._executor.env;
@@ -93005,7 +93192,7 @@ class GitExecutorChain {
     attemptEmptyTask(task, logger) {
         return __awaiter(this, void 0, void 0, function* () {
             logger(`empty task bypassing child process to call to task's parser`);
-            return task.parser();
+            return task.parser(this);
         });
     }
     handleTaskData(task, args, result, logger) {
@@ -93410,6 +93597,7 @@ TasksPendingQueue.counter = 0;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SimpleGitApi = void 0;
 const task_callback_1 = __webpack_require__(76194);
+const change_working_directory_1 = __webpack_require__(80360);
 const push_1 = __webpack_require__(40537);
 const task_1 = __webpack_require__(70002);
 const utils_1 = __webpack_require__(73315);
@@ -93431,6 +93619,16 @@ class SimpleGitApi {
     }
     add(files) {
         return this._runTask(task_1.straightThroughStringTask(['add', ...utils_1.asArray(files)]), utils_1.trailingFunctionArgument(arguments));
+    }
+    cwd(directory) {
+        const next = utils_1.trailingFunctionArgument(arguments);
+        if (typeof directory === 'string') {
+            return this._runTask(change_working_directory_1.changeWorkingDirectoryTask(directory, this._executor), next);
+        }
+        if (typeof (directory === null || directory === void 0 ? void 0 : directory.path) === 'string') {
+            return this._runTask(change_working_directory_1.changeWorkingDirectoryTask(directory.path, directory.root && this._executor || undefined), next);
+        }
+        return this._runTask(task_1.configurationErrorTask('Git.cwd: workingDirectory must be supplied as a string'), next);
     }
     push() {
         const task = push_1.pushTask({
@@ -93590,6 +93788,28 @@ function deleteBranchTask(branch, forceDelete = false) {
 }
 exports.deleteBranchTask = deleteBranchTask;
 //# sourceMappingURL=branch.js.map
+
+/***/ }),
+
+/***/ 80360:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.changeWorkingDirectoryTask = void 0;
+const utils_1 = __webpack_require__(73315);
+const task_1 = __webpack_require__(70002);
+function changeWorkingDirectoryTask(directory, root) {
+    return task_1.adhocExecTask((instance) => {
+        if (!utils_1.folderExists(directory)) {
+            throw new Error(`Git.cwd: cannot change to non-directory "${directory}"`);
+        }
+        return ((root || instance).cwd = directory);
+    });
+}
+exports.changeWorkingDirectoryTask = changeWorkingDirectoryTask;
+//# sourceMappingURL=change-working-directory.js.map
 
 /***/ }),
 
@@ -94405,7 +94625,7 @@ exports.EMPTY_COMMANDS = [];
 function adhocExecTask(parser) {
     return {
         commands: exports.EMPTY_COMMANDS,
-        format: 'utf-8',
+        format: 'empty',
         parser,
     };
 }
@@ -94413,7 +94633,7 @@ exports.adhocExecTask = adhocExecTask;
 function configurationErrorTask(error) {
     return {
         commands: exports.EMPTY_COMMANDS,
-        format: 'utf-8',
+        format: 'empty',
         parser() {
             throw typeof error === 'string' ? new task_configuration_error_1.TaskConfigurationError(error) : error;
         }
@@ -94445,7 +94665,7 @@ function isBufferTask(task) {
 }
 exports.isBufferTask = isBufferTask;
 function isEmptyTask(task) {
-    return !task.commands.length;
+    return task.format === 'empty' || !task.commands.length;
 }
 exports.isEmptyTask = isEmptyTask;
 //# sourceMappingURL=task.js.map
