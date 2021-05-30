@@ -2,10 +2,6 @@ name: build
 
 on:
   push:
-    branches:
-      - main
-      - 'renovate/**'
-
   pull_request:
 
 env:
@@ -19,6 +15,7 @@ env:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' || github.repository_owner != github.event.pull_request.head.repo.owner.login }}
     timeout-minutes: 10
 
     steps:
@@ -51,6 +48,7 @@ jobs:
   test:
     needs: prepare
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' || github.repository_owner != github.event.pull_request.head.repo.owner.login }}
 
     # tests shouldn't need more than 15 min
     timeout-minutes: 15
@@ -114,6 +112,7 @@ jobs:
   e2e:
     needs: prepare
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' || github.repository_owner != github.event.pull_request.head.repo.owner.login }}
     timeout-minutes: 10
 
     steps:
@@ -215,6 +214,7 @@ jobs:
 
   release:
     needs: [test, e2e]
+    if: ${{ github.event_name != 'pull_request' || github.repository_owner != github.event.pull_request.head.repo.owner.login }}
     runs-on: ubuntu-latest
 
     # tests shouldn't need more than 15 min
