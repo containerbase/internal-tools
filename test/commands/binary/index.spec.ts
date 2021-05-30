@@ -31,6 +31,7 @@ describe(getName(__filename), () => {
     core.getInput.mockImplementation((k) => input[k]);
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/ruby.json'));
     utils.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
+    utils.getWorkspace.mockReturnValue('.');
   });
 
   it('works ruby', async () => {

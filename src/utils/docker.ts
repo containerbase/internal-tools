@@ -1,8 +1,8 @@
 import is from '@sindresorhus/is';
-import chalk from 'chalk';
-import delay from 'delay';
+import * as chalk from 'chalk';
+import * as delay from 'delay';
 import got, { HTTPError, Headers } from 'got';
-import wwwAuthenticate from 'www-authenticate';
+import * as wwwAuthenticate from 'www-authenticate';
 import { docker } from './docker/common';
 import log from './logger';
 import { ExecError } from './types';

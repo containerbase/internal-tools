@@ -74,7 +74,7 @@ describe(getName(__filename), () => {
   describe('runBuilder', () => {
     it('works with build args', async () => {
       utils.getArch.mockReturnValueOnce('aarch64');
-      await runBuilder('', '1.2.3');
+      await runBuilder('.', '1.2.3');
 
       expect(docker.dockerRun).toHaveBeenCalledTimes(1);
       expect(docker.dockerRun.mock.calls).toMatchSnapshot();
