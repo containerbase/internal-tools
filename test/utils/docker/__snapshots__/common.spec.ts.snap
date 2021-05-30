@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`dockerDf 1`] = `
+exports[` dockerDf 1`] = `
 Array [
   Array [
     "docker",
@@ -12,7 +12,7 @@ Array [
 ]
 `;
 
-exports[`dockerPrune 1`] = `
+exports[` dockerPrune 1`] = `
 Array [
   Array [
     "docker",
@@ -26,7 +26,7 @@ Array [
 ]
 `;
 
-exports[`dockerRun 1`] = `
+exports[` dockerRun 1`] = `
 Array [
   Array [
     "docker",
