@@ -18259,2005 +18259,6 @@ module.exports.safeCycles = safeCycles;
 
 /***/ }),
 
-/***/ 65957:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const util = __webpack_require__(31669)
-const fs = __webpack_require__(35747)
-const index = __webpack_require__(50675)
-const memo = __webpack_require__(64908)
-const read = __webpack_require__(47836)
-
-const Minipass = __webpack_require__(51254)
-const Collect = __webpack_require__(46405)
-const Pipeline = __webpack_require__(60722)
-
-const writeFile = util.promisify(fs.writeFile)
-
-module.exports = function get (cache, key, opts) {
-  return getData(false, cache, key, opts)
-}
-module.exports.byDigest = function getByDigest (cache, digest, opts) {
-  return getData(true, cache, digest, opts)
-}
-
-function getData (byDigest, cache, key, opts = {}) {
-  const { integrity, memoize, size } = opts
-  const memoized = byDigest
-    ? memo.get.byDigest(cache, key, opts)
-    : memo.get(cache, key, opts)
-  if (memoized && memoize !== false) {
-    return Promise.resolve(
-      byDigest
-        ? memoized
-        : {
-          metadata: memoized.entry.metadata,
-          data: memoized.data,
-          integrity: memoized.entry.integrity,
-          size: memoized.entry.size
-        }
-    )
-  }
-  return (byDigest ? Promise.resolve(null) : index.find(cache, key, opts)).then(
-    (entry) => {
-      if (!entry && !byDigest) {
-        throw new index.NotFoundError(cache, key)
-      }
-      return read(cache, byDigest ? key : entry.integrity, {
-        integrity,
-        size
-      })
-        .then((data) =>
-          byDigest
-            ? data
-            : {
-              data,
-              metadata: entry.metadata,
-              size: entry.size,
-              integrity: entry.integrity
-            }
-        )
-        .then((res) => {
-          if (memoize && byDigest) {
-            memo.put.byDigest(cache, key, res, opts)
-          } else if (memoize) {
-            memo.put(cache, entry, res.data, opts)
-          }
-          return res
-        })
-    }
-  )
-}
-
-module.exports.sync = function get (cache, key, opts) {
-  return getDataSync(false, cache, key, opts)
-}
-module.exports.sync.byDigest = function getByDigest (cache, digest, opts) {
-  return getDataSync(true, cache, digest, opts)
-}
-
-function getDataSync (byDigest, cache, key, opts = {}) {
-  const { integrity, memoize, size } = opts
-  const memoized = byDigest
-    ? memo.get.byDigest(cache, key, opts)
-    : memo.get(cache, key, opts)
-  if (memoized && memoize !== false) {
-    return byDigest
-      ? memoized
-      : {
-        metadata: memoized.entry.metadata,
-        data: memoized.data,
-        integrity: memoized.entry.integrity,
-        size: memoized.entry.size
-      }
-  }
-  const entry = !byDigest && index.find.sync(cache, key, opts)
-  if (!entry && !byDigest) {
-    throw new index.NotFoundError(cache, key)
-  }
-  const data = read.sync(cache, byDigest ? key : entry.integrity, {
-    integrity: integrity,
-    size: size
-  })
-  const res = byDigest
-    ? data
-    : {
-      metadata: entry.metadata,
-      data: data,
-      size: entry.size,
-      integrity: entry.integrity
-    }
-  if (memoize && byDigest) {
-    memo.put.byDigest(cache, key, res, opts)
-  } else if (memoize) {
-    memo.put(cache, entry, res.data, opts)
-  }
-  return res
-}
-
-module.exports.stream = getStream
-
-const getMemoizedStream = (memoized) => {
-  const stream = new Minipass()
-  stream.on('newListener', function (ev, cb) {
-    ev === 'metadata' && cb(memoized.entry.metadata)
-    ev === 'integrity' && cb(memoized.entry.integrity)
-    ev === 'size' && cb(memoized.entry.size)
-  })
-  stream.end(memoized.data)
-  return stream
-}
-
-function getStream (cache, key, opts = {}) {
-  const { memoize, size } = opts
-  const memoized = memo.get(cache, key, opts)
-  if (memoized && memoize !== false) {
-    return getMemoizedStream(memoized)
-  }
-
-  const stream = new Pipeline()
-  index
-    .find(cache, key)
-    .then((entry) => {
-      if (!entry) {
-        throw new index.NotFoundError(cache, key)
-      }
-      stream.emit('metadata', entry.metadata)
-      stream.emit('integrity', entry.integrity)
-      stream.emit('size', entry.size)
-      stream.on('newListener', function (ev, cb) {
-        ev === 'metadata' && cb(entry.metadata)
-        ev === 'integrity' && cb(entry.integrity)
-        ev === 'size' && cb(entry.size)
-      })
-
-      const src = read.readStream(
-        cache,
-        entry.integrity,
-        { ...opts, size: typeof size !== 'number' ? entry.size : size }
-      )
-
-      if (memoize) {
-        const memoStream = new Collect.PassThrough()
-        memoStream.on('collect', data => memo.put(cache, entry, data, opts))
-        stream.unshift(memoStream)
-      }
-      stream.unshift(src)
-    })
-    .catch((err) => stream.emit('error', err))
-
-  return stream
-}
-
-module.exports.stream.byDigest = getStreamDigest
-
-function getStreamDigest (cache, integrity, opts = {}) {
-  const { memoize } = opts
-  const memoized = memo.get.byDigest(cache, integrity, opts)
-  if (memoized && memoize !== false) {
-    const stream = new Minipass()
-    stream.end(memoized)
-    return stream
-  } else {
-    const stream = read.readStream(cache, integrity, opts)
-    if (!memoize) {
-      return stream
-    }
-    const memoStream = new Collect.PassThrough()
-    memoStream.on('collect', data => memo.put.byDigest(
-      cache,
-      integrity,
-      data,
-      opts
-    ))
-    return new Pipeline(stream, memoStream)
-  }
-}
-
-module.exports.info = info
-
-function info (cache, key, opts = {}) {
-  const { memoize } = opts
-  const memoized = memo.get(cache, key, opts)
-  if (memoized && memoize !== false) {
-    return Promise.resolve(memoized.entry)
-  } else {
-    return index.find(cache, key)
-  }
-}
-
-module.exports.hasContent = read.hasContent
-
-function cp (cache, key, dest, opts) {
-  return copy(false, cache, key, dest, opts)
-}
-
-module.exports.copy = cp
-
-function cpDigest (cache, digest, dest, opts) {
-  return copy(true, cache, digest, dest, opts)
-}
-
-module.exports.copy.byDigest = cpDigest
-
-function copy (byDigest, cache, key, dest, opts = {}) {
-  if (read.copy) {
-    return (byDigest
-      ? Promise.resolve(null)
-      : index.find(cache, key, opts)
-    ).then((entry) => {
-      if (!entry && !byDigest) {
-        throw new index.NotFoundError(cache, key)
-      }
-      return read
-        .copy(cache, byDigest ? key : entry.integrity, dest, opts)
-        .then(() => {
-          return byDigest
-            ? key
-            : {
-              metadata: entry.metadata,
-              size: entry.size,
-              integrity: entry.integrity
-            }
-        })
-    })
-  }
-
-  return getData(byDigest, cache, key, opts).then((res) => {
-    return writeFile(dest, byDigest ? res : res.data).then(() => {
-      return byDigest
-        ? key
-        : {
-          metadata: res.metadata,
-          size: res.size,
-          integrity: res.integrity
-        }
-    })
-  })
-}
-
-
-/***/ }),
-
-/***/ 59137:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const ls = __webpack_require__(41070)
-const get = __webpack_require__(65957)
-const put = __webpack_require__(63651)
-const rm = __webpack_require__(68944)
-const verify = __webpack_require__(36136)
-const { clearMemoized } = __webpack_require__(64908)
-const tmp = __webpack_require__(50237)
-
-module.exports.ls = ls
-module.exports.ls.stream = ls.stream
-
-module.exports.get = get
-module.exports.get.byDigest = get.byDigest
-module.exports.get.sync = get.sync
-module.exports.get.sync.byDigest = get.sync.byDigest
-module.exports.get.stream = get.stream
-module.exports.get.stream.byDigest = get.stream.byDigest
-module.exports.get.copy = get.copy
-module.exports.get.copy.byDigest = get.copy.byDigest
-module.exports.get.info = get.info
-module.exports.get.hasContent = get.hasContent
-module.exports.get.hasContent.sync = get.hasContent.sync
-
-module.exports.put = put
-module.exports.put.stream = put.stream
-
-module.exports.rm = rm.entry
-module.exports.rm.all = rm.all
-module.exports.rm.entry = module.exports.rm
-module.exports.rm.content = rm.content
-
-module.exports.clearMemoized = clearMemoized
-
-module.exports.tmp = {}
-module.exports.tmp.mkdir = tmp.mkdir
-module.exports.tmp.withTmp = tmp.withTmp
-
-module.exports.verify = verify
-module.exports.verify.lastRun = verify.lastRun
-
-
-/***/ }),
-
-/***/ 35636:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const contentVer = __webpack_require__(84340)/* ["cache-version"].content */ .Jw.k
-const hashToSegments = __webpack_require__(92484)
-const path = __webpack_require__(85622)
-const ssri = __webpack_require__(16096)
-
-// Current format of content file path:
-//
-// sha512-BaSE64Hex= ->
-// ~/.my-cache/content-v2/sha512/ba/da/55deadbeefc0ffee
-//
-module.exports = contentPath
-
-function contentPath (cache, integrity) {
-  const sri = ssri.parse(integrity, { single: true })
-  // contentPath is the *strongest* algo given
-  return path.join(
-    contentDir(cache),
-    sri.algorithm,
-    ...hashToSegments(sri.hexDigest())
-  )
-}
-
-module.exports.contentDir = contentDir
-
-function contentDir (cache) {
-  return path.join(cache, `content-v${contentVer}`)
-}
-
-
-/***/ }),
-
-/***/ 47836:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const util = __webpack_require__(31669)
-
-const fs = __webpack_require__(35747)
-const fsm = __webpack_require__(12699)
-const ssri = __webpack_require__(16096)
-const contentPath = __webpack_require__(35636)
-const Pipeline = __webpack_require__(60722)
-
-const lstat = util.promisify(fs.lstat)
-const readFile = util.promisify(fs.readFile)
-
-module.exports = read
-
-const MAX_SINGLE_READ_SIZE = 64 * 1024 * 1024
-function read (cache, integrity, opts = {}) {
-  const { size } = opts
-  return withContentSri(cache, integrity, (cpath, sri) => {
-    // get size
-    return lstat(cpath).then(stat => ({ stat, cpath, sri }))
-  }).then(({ stat, cpath, sri }) => {
-    if (typeof size === 'number' && stat.size !== size) {
-      throw sizeError(size, stat.size)
-    }
-    if (stat.size > MAX_SINGLE_READ_SIZE) {
-      return readPipeline(cpath, stat.size, sri, new Pipeline()).concat()
-    }
-
-    return readFile(cpath, null).then((data) => {
-      if (!ssri.checkData(data, sri)) {
-        throw integrityError(sri, cpath)
-      }
-      return data
-    })
-  })
-}
-
-const readPipeline = (cpath, size, sri, stream) => {
-  stream.push(
-    new fsm.ReadStream(cpath, {
-      size,
-      readSize: MAX_SINGLE_READ_SIZE
-    }),
-    ssri.integrityStream({
-      integrity: sri,
-      size
-    })
-  )
-  return stream
-}
-
-module.exports.sync = readSync
-
-function readSync (cache, integrity, opts = {}) {
-  const { size } = opts
-  return withContentSriSync(cache, integrity, (cpath, sri) => {
-    const data = fs.readFileSync(cpath)
-    if (typeof size === 'number' && size !== data.length) {
-      throw sizeError(size, data.length)
-    }
-
-    if (ssri.checkData(data, sri)) {
-      return data
-    }
-
-    throw integrityError(sri, cpath)
-  })
-}
-
-module.exports.stream = readStream
-module.exports.readStream = readStream
-
-function readStream (cache, integrity, opts = {}) {
-  const { size } = opts
-  const stream = new Pipeline()
-  withContentSri(cache, integrity, (cpath, sri) => {
-    // just lstat to ensure it exists
-    return lstat(cpath).then((stat) => ({ stat, cpath, sri }))
-  }).then(({ stat, cpath, sri }) => {
-    if (typeof size === 'number' && size !== stat.size) {
-      return stream.emit('error', sizeError(size, stat.size))
-    }
-    readPipeline(cpath, stat.size, sri, stream)
-  }, er => stream.emit('error', er))
-
-  return stream
-}
-
-let copyFile
-if (fs.copyFile) {
-  module.exports.copy = copy
-  module.exports.copy.sync = copySync
-  copyFile = util.promisify(fs.copyFile)
-}
-
-function copy (cache, integrity, dest) {
-  return withContentSri(cache, integrity, (cpath, sri) => {
-    return copyFile(cpath, dest)
-  })
-}
-
-function copySync (cache, integrity, dest) {
-  return withContentSriSync(cache, integrity, (cpath, sri) => {
-    return fs.copyFileSync(cpath, dest)
-  })
-}
-
-module.exports.hasContent = hasContent
-
-function hasContent (cache, integrity) {
-  if (!integrity) {
-    return Promise.resolve(false)
-  }
-  return withContentSri(cache, integrity, (cpath, sri) => {
-    return lstat(cpath).then((stat) => ({ size: stat.size, sri, stat }))
-  }).catch((err) => {
-    if (err.code === 'ENOENT') {
-      return false
-    }
-    if (err.code === 'EPERM') {
-      /* istanbul ignore else */
-      if (process.platform !== 'win32') {
-        throw err
-      } else {
-        return false
-      }
-    }
-  })
-}
-
-module.exports.hasContent.sync = hasContentSync
-
-function hasContentSync (cache, integrity) {
-  if (!integrity) {
-    return false
-  }
-  return withContentSriSync(cache, integrity, (cpath, sri) => {
-    try {
-      const stat = fs.lstatSync(cpath)
-      return { size: stat.size, sri, stat }
-    } catch (err) {
-      if (err.code === 'ENOENT') {
-        return false
-      }
-      if (err.code === 'EPERM') {
-        /* istanbul ignore else */
-        if (process.platform !== 'win32') {
-          throw err
-        } else {
-          return false
-        }
-      }
-    }
-  })
-}
-
-function withContentSri (cache, integrity, fn) {
-  const tryFn = () => {
-    const sri = ssri.parse(integrity)
-    // If `integrity` has multiple entries, pick the first digest
-    // with available local data.
-    const algo = sri.pickAlgorithm()
-    const digests = sri[algo]
-
-    if (digests.length <= 1) {
-      const cpath = contentPath(cache, digests[0])
-      return fn(cpath, digests[0])
-    } else {
-      // Can't use race here because a generic error can happen before a ENOENT error, and can happen before a valid result
-      return Promise
-        .all(digests.map((meta) => {
-          return withContentSri(cache, meta, fn)
-            .catch((err) => {
-              if (err.code === 'ENOENT') {
-                return Object.assign(
-                  new Error('No matching content found for ' + sri.toString()),
-                  { code: 'ENOENT' }
-                )
-              }
-              return err
-            })
-        }))
-        .then((results) => {
-          // Return the first non error if it is found
-          const result = results.find((r) => !(r instanceof Error))
-          if (result) {
-            return result
-          }
-
-          // Throw the No matching content found error
-          const enoentError = results.find((r) => r.code === 'ENOENT')
-          if (enoentError) {
-            throw enoentError
-          }
-
-          // Throw generic error
-          throw results.find((r) => r instanceof Error)
-        })
-    }
-  }
-
-  return new Promise((resolve, reject) => {
-    try {
-      tryFn()
-        .then(resolve)
-        .catch(reject)
-    } catch (err) {
-      reject(err)
-    }
-  })
-}
-
-function withContentSriSync (cache, integrity, fn) {
-  const sri = ssri.parse(integrity)
-  // If `integrity` has multiple entries, pick the first digest
-  // with available local data.
-  const algo = sri.pickAlgorithm()
-  const digests = sri[algo]
-  if (digests.length <= 1) {
-    const cpath = contentPath(cache, digests[0])
-    return fn(cpath, digests[0])
-  } else {
-    let lastErr = null
-    for (const meta of digests) {
-      try {
-        return withContentSriSync(cache, meta, fn)
-      } catch (err) {
-        lastErr = err
-      }
-    }
-    throw lastErr
-  }
-}
-
-function sizeError (expected, found) {
-  const err = new Error(`Bad data size: expected inserted data to be ${expected} bytes, but got ${found} instead`)
-  err.expected = expected
-  err.found = found
-  err.code = 'EBADSIZE'
-  return err
-}
-
-function integrityError (sri, path) {
-  const err = new Error(`Integrity verification failed for ${sri} (${path})`)
-  err.code = 'EINTEGRITY'
-  err.sri = sri
-  err.path = path
-  return err
-}
-
-
-/***/ }),
-
-/***/ 70294:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const util = __webpack_require__(31669)
-
-const contentPath = __webpack_require__(35636)
-const { hasContent } = __webpack_require__(47836)
-const rimraf = util.promisify(__webpack_require__(18530))
-
-module.exports = rm
-
-function rm (cache, integrity) {
-  return hasContent(cache, integrity).then((content) => {
-    // ~pretty~ sure we can't end up with a content lacking sri, but be safe
-    if (content && content.sri) {
-      return rimraf(contentPath(cache, content.sri)).then(() => true)
-    } else {
-      return false
-    }
-  })
-}
-
-
-/***/ }),
-
-/***/ 64254:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const util = __webpack_require__(31669)
-
-const contentPath = __webpack_require__(35636)
-const fixOwner = __webpack_require__(59891)
-const fs = __webpack_require__(35747)
-const moveFile = __webpack_require__(27027)
-const Minipass = __webpack_require__(51254)
-const Pipeline = __webpack_require__(60722)
-const Flush = __webpack_require__(50540)
-const path = __webpack_require__(85622)
-const rimraf = util.promisify(__webpack_require__(18530))
-const ssri = __webpack_require__(16096)
-const uniqueFilename = __webpack_require__(37391)
-const { disposer } = __webpack_require__(96482)
-const fsm = __webpack_require__(12699)
-
-const writeFile = util.promisify(fs.writeFile)
-
-module.exports = write
-
-function write (cache, data, opts = {}) {
-  const { algorithms, size, integrity } = opts
-  if (algorithms && algorithms.length > 1) {
-    throw new Error('opts.algorithms only supports a single algorithm for now')
-  }
-  if (typeof size === 'number' && data.length !== size) {
-    return Promise.reject(sizeError(size, data.length))
-  }
-  const sri = ssri.fromData(data, algorithms ? { algorithms } : {})
-  if (integrity && !ssri.checkData(data, integrity, opts)) {
-    return Promise.reject(checksumError(integrity, sri))
-  }
-
-  return disposer(makeTmp(cache, opts), makeTmpDisposer,
-    (tmp) => {
-      return writeFile(tmp.target, data, { flag: 'wx' })
-        .then(() => moveToDestination(tmp, cache, sri, opts))
-    })
-    .then(() => ({ integrity: sri, size: data.length }))
-}
-
-module.exports.stream = writeStream
-
-// writes proxied to the 'inputStream' that is passed to the Promise
-// 'end' is deferred until content is handled.
-class CacacheWriteStream extends Flush {
-  constructor (cache, opts) {
-    super()
-    this.opts = opts
-    this.cache = cache
-    this.inputStream = new Minipass()
-    this.inputStream.on('error', er => this.emit('error', er))
-    this.inputStream.on('drain', () => this.emit('drain'))
-    this.handleContentP = null
-  }
-
-  write (chunk, encoding, cb) {
-    if (!this.handleContentP) {
-      this.handleContentP = handleContent(
-        this.inputStream,
-        this.cache,
-        this.opts
-      )
-    }
-    return this.inputStream.write(chunk, encoding, cb)
-  }
-
-  flush (cb) {
-    this.inputStream.end(() => {
-      if (!this.handleContentP) {
-        const e = new Error('Cache input stream was empty')
-        e.code = 'ENODATA'
-        // empty streams are probably emitting end right away.
-        // defer this one tick by rejecting a promise on it.
-        return Promise.reject(e).catch(cb)
-      }
-      this.handleContentP.then(
-        (res) => {
-          res.integrity && this.emit('integrity', res.integrity)
-          res.size !== null && this.emit('size', res.size)
-          cb()
-        },
-        (er) => cb(er)
-      )
-    })
-  }
-}
-
-function writeStream (cache, opts = {}) {
-  return new CacacheWriteStream(cache, opts)
-}
-
-function handleContent (inputStream, cache, opts) {
-  return disposer(makeTmp(cache, opts), makeTmpDisposer, (tmp) => {
-    return pipeToTmp(inputStream, cache, tmp.target, opts)
-      .then((res) => {
-        return moveToDestination(
-          tmp,
-          cache,
-          res.integrity,
-          opts
-        ).then(() => res)
-      })
-  })
-}
-
-function pipeToTmp (inputStream, cache, tmpTarget, opts) {
-  let integrity
-  let size
-  const hashStream = ssri.integrityStream({
-    integrity: opts.integrity,
-    algorithms: opts.algorithms,
-    size: opts.size
-  })
-  hashStream.on('integrity', i => { integrity = i })
-  hashStream.on('size', s => { size = s })
-
-  const outStream = new fsm.WriteStream(tmpTarget, {
-    flags: 'wx'
-  })
-
-  // NB: this can throw if the hashStream has a problem with
-  // it, and the data is fully written.  but pipeToTmp is only
-  // called in promisory contexts where that is handled.
-  const pipeline = new Pipeline(
-    inputStream,
-    hashStream,
-    outStream
-  )
-
-  return pipeline.promise()
-    .then(() => ({ integrity, size }))
-    .catch(er => rimraf(tmpTarget).then(() => { throw er }))
-}
-
-function makeTmp (cache, opts) {
-  const tmpTarget = uniqueFilename(path.join(cache, 'tmp'), opts.tmpPrefix)
-  return fixOwner.mkdirfix(cache, path.dirname(tmpTarget)).then(() => ({
-    target: tmpTarget,
-    moved: false
-  }))
-}
-
-function makeTmpDisposer (tmp) {
-  if (tmp.moved) {
-    return Promise.resolve()
-  }
-  return rimraf(tmp.target)
-}
-
-function moveToDestination (tmp, cache, sri, opts) {
-  const destination = contentPath(cache, sri)
-  const destDir = path.dirname(destination)
-
-  return fixOwner
-    .mkdirfix(cache, destDir)
-    .then(() => {
-      return moveFile(tmp.target, destination)
-    })
-    .then(() => {
-      tmp.moved = true
-      return fixOwner.chownr(cache, destination)
-    })
-}
-
-function sizeError (expected, found) {
-  const err = new Error(`Bad data size: expected inserted data to be ${expected} bytes, but got ${found} instead`)
-  err.expected = expected
-  err.found = found
-  err.code = 'EBADSIZE'
-  return err
-}
-
-function checksumError (expected, found) {
-  const err = new Error(`Integrity check failed:
-  Wanted: ${expected}
-   Found: ${found}`)
-  err.code = 'EINTEGRITY'
-  err.expected = expected
-  err.found = found
-  return err
-}
-
-
-/***/ }),
-
-/***/ 50675:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const util = __webpack_require__(31669)
-
-const crypto = __webpack_require__(76417)
-const fs = __webpack_require__(35747)
-const Minipass = __webpack_require__(51254)
-const path = __webpack_require__(85622)
-const ssri = __webpack_require__(16096)
-const contentPath = __webpack_require__(35636)
-const fixOwner = __webpack_require__(59891)
-const hashToSegments = __webpack_require__(92484)
-const indexV = __webpack_require__(84340)/* ["cache-version"].index */ .Jw.K
-
-const appendFile = util.promisify(fs.appendFile)
-const readFile = util.promisify(fs.readFile)
-const readdir = util.promisify(fs.readdir)
-
-module.exports.NotFoundError = class NotFoundError extends Error {
-  constructor (cache, key) {
-    super(`No cache entry for ${key} found in ${cache}`)
-    this.code = 'ENOENT'
-    this.cache = cache
-    this.key = key
-  }
-}
-
-module.exports.insert = insert
-
-function insert (cache, key, integrity, opts = {}) {
-  const { metadata, size } = opts
-  const bucket = bucketPath(cache, key)
-  const entry = {
-    key,
-    integrity: integrity && ssri.stringify(integrity),
-    time: Date.now(),
-    size,
-    metadata
-  }
-  return fixOwner
-    .mkdirfix(cache, path.dirname(bucket))
-    .then(() => {
-      const stringified = JSON.stringify(entry)
-      // NOTE - Cleverness ahoy!
-      //
-      // This works because it's tremendously unlikely for an entry to corrupt
-      // another while still preserving the string length of the JSON in
-      // question. So, we just slap the length in there and verify it on read.
-      //
-      // Thanks to @isaacs for the whiteboarding session that ended up with this.
-      return appendFile(bucket, `\n${hashEntry(stringified)}\t${stringified}`)
-    })
-    .then(() => fixOwner.chownr(cache, bucket))
-    .catch((err) => {
-      if (err.code === 'ENOENT') {
-        return undefined
-      }
-      throw err
-      // There's a class of race conditions that happen when things get deleted
-      // during fixOwner, or between the two mkdirfix/chownr calls.
-      //
-      // It's perfectly fine to just not bother in those cases and lie
-      // that the index entry was written. Because it's a cache.
-    })
-    .then(() => {
-      return formatEntry(cache, entry)
-    })
-}
-
-module.exports.insert.sync = insertSync
-
-function insertSync (cache, key, integrity, opts = {}) {
-  const { metadata, size } = opts
-  const bucket = bucketPath(cache, key)
-  const entry = {
-    key,
-    integrity: integrity && ssri.stringify(integrity),
-    time: Date.now(),
-    size,
-    metadata
-  }
-  fixOwner.mkdirfix.sync(cache, path.dirname(bucket))
-  const stringified = JSON.stringify(entry)
-  fs.appendFileSync(bucket, `\n${hashEntry(stringified)}\t${stringified}`)
-  try {
-    fixOwner.chownr.sync(cache, bucket)
-  } catch (err) {
-    if (err.code !== 'ENOENT') {
-      throw err
-    }
-  }
-  return formatEntry(cache, entry)
-}
-
-module.exports.find = find
-
-function find (cache, key) {
-  const bucket = bucketPath(cache, key)
-  return bucketEntries(bucket)
-    .then((entries) => {
-      return entries.reduce((latest, next) => {
-        if (next && next.key === key) {
-          return formatEntry(cache, next)
-        } else {
-          return latest
-        }
-      }, null)
-    })
-    .catch((err) => {
-      if (err.code === 'ENOENT') {
-        return null
-      } else {
-        throw err
-      }
-    })
-}
-
-module.exports.find.sync = findSync
-
-function findSync (cache, key) {
-  const bucket = bucketPath(cache, key)
-  try {
-    return bucketEntriesSync(bucket).reduce((latest, next) => {
-      if (next && next.key === key) {
-        return formatEntry(cache, next)
-      } else {
-        return latest
-      }
-    }, null)
-  } catch (err) {
-    if (err.code === 'ENOENT') {
-      return null
-    } else {
-      throw err
-    }
-  }
-}
-
-module.exports.delete = del
-
-function del (cache, key, opts) {
-  return insert(cache, key, null, opts)
-}
-
-module.exports.delete.sync = delSync
-
-function delSync (cache, key, opts) {
-  return insertSync(cache, key, null, opts)
-}
-
-module.exports.lsStream = lsStream
-
-function lsStream (cache) {
-  const indexDir = bucketDir(cache)
-  const stream = new Minipass({ objectMode: true })
-
-  readdirOrEmpty(indexDir).then(buckets => Promise.all(
-    buckets.map(bucket => {
-      const bucketPath = path.join(indexDir, bucket)
-      return readdirOrEmpty(bucketPath).then(subbuckets => Promise.all(
-        subbuckets.map(subbucket => {
-          const subbucketPath = path.join(bucketPath, subbucket)
-
-          // "/cachename/<bucket 0xFF>/<bucket 0xFF>./*"
-          return readdirOrEmpty(subbucketPath).then(entries => Promise.all(
-            entries.map(entry => {
-              const entryPath = path.join(subbucketPath, entry)
-              return bucketEntries(entryPath).then(entries =>
-                // using a Map here prevents duplicate keys from
-                // showing up twice, I guess?
-                entries.reduce((acc, entry) => {
-                  acc.set(entry.key, entry)
-                  return acc
-                }, new Map())
-              ).then(reduced => {
-                // reduced is a map of key => entry
-                for (const entry of reduced.values()) {
-                  const formatted = formatEntry(cache, entry)
-                  if (formatted) {
-                    stream.write(formatted)
-                  }
-                }
-              }).catch(err => {
-                if (err.code === 'ENOENT') { return undefined }
-                throw err
-              })
-            })
-          ))
-        })
-      ))
-    })
-  ))
-    .then(
-      () => stream.end(),
-      err => stream.emit('error', err)
-    )
-
-  return stream
-}
-
-module.exports.ls = ls
-
-function ls (cache) {
-  return lsStream(cache).collect().then(entries =>
-    entries.reduce((acc, xs) => {
-      acc[xs.key] = xs
-      return acc
-    }, {})
-  )
-}
-
-function bucketEntries (bucket, filter) {
-  return readFile(bucket, 'utf8').then((data) => _bucketEntries(data, filter))
-}
-
-function bucketEntriesSync (bucket, filter) {
-  const data = fs.readFileSync(bucket, 'utf8')
-  return _bucketEntries(data, filter)
-}
-
-function _bucketEntries (data, filter) {
-  const entries = []
-  data.split('\n').forEach((entry) => {
-    if (!entry) {
-      return
-    }
-    const pieces = entry.split('\t')
-    if (!pieces[1] || hashEntry(pieces[1]) !== pieces[0]) {
-      // Hash is no good! Corruption or malice? Doesn't matter!
-      // EJECT EJECT
-      return
-    }
-    let obj
-    try {
-      obj = JSON.parse(pieces[1])
-    } catch (e) {
-      // Entry is corrupted!
-      return
-    }
-    if (obj) {
-      entries.push(obj)
-    }
-  })
-  return entries
-}
-
-module.exports.bucketDir = bucketDir
-
-function bucketDir (cache) {
-  return path.join(cache, `index-v${indexV}`)
-}
-
-module.exports.bucketPath = bucketPath
-
-function bucketPath (cache, key) {
-  const hashed = hashKey(key)
-  return path.join.apply(
-    path,
-    [bucketDir(cache)].concat(hashToSegments(hashed))
-  )
-}
-
-module.exports.hashKey = hashKey
-
-function hashKey (key) {
-  return hash(key, 'sha256')
-}
-
-module.exports.hashEntry = hashEntry
-
-function hashEntry (str) {
-  return hash(str, 'sha1')
-}
-
-function hash (str, digest) {
-  return crypto
-    .createHash(digest)
-    .update(str)
-    .digest('hex')
-}
-
-function formatEntry (cache, entry) {
-  // Treat null digests as deletions. They'll shadow any previous entries.
-  if (!entry.integrity) {
-    return null
-  }
-  return {
-    key: entry.key,
-    integrity: entry.integrity,
-    path: contentPath(cache, entry.integrity),
-    size: entry.size,
-    time: entry.time,
-    metadata: entry.metadata
-  }
-}
-
-function readdirOrEmpty (dir) {
-  return readdir(dir).catch((err) => {
-    if (err.code === 'ENOENT' || err.code === 'ENOTDIR') {
-      return []
-    }
-
-    throw err
-  })
-}
-
-
-/***/ }),
-
-/***/ 64908:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const LRU = __webpack_require__(85338)
-
-const MAX_SIZE = 50 * 1024 * 1024 // 50MB
-const MAX_AGE = 3 * 60 * 1000
-
-const MEMOIZED = new LRU({
-  max: MAX_SIZE,
-  maxAge: MAX_AGE,
-  length: (entry, key) => key.startsWith('key:') ? entry.data.length : entry.length
-})
-
-module.exports.clearMemoized = clearMemoized
-
-function clearMemoized () {
-  const old = {}
-  MEMOIZED.forEach((v, k) => {
-    old[k] = v
-  })
-  MEMOIZED.reset()
-  return old
-}
-
-module.exports.put = put
-
-function put (cache, entry, data, opts) {
-  pickMem(opts).set(`key:${cache}:${entry.key}`, { entry, data })
-  putDigest(cache, entry.integrity, data, opts)
-}
-
-module.exports.put.byDigest = putDigest
-
-function putDigest (cache, integrity, data, opts) {
-  pickMem(opts).set(`digest:${cache}:${integrity}`, data)
-}
-
-module.exports.get = get
-
-function get (cache, key, opts) {
-  return pickMem(opts).get(`key:${cache}:${key}`)
-}
-
-module.exports.get.byDigest = getDigest
-
-function getDigest (cache, integrity, opts) {
-  return pickMem(opts).get(`digest:${cache}:${integrity}`)
-}
-
-class ObjProxy {
-  constructor (obj) {
-    this.obj = obj
-  }
-
-  get (key) {
-    return this.obj[key]
-  }
-
-  set (key, val) {
-    this.obj[key] = val
-  }
-}
-
-function pickMem (opts) {
-  if (!opts || !opts.memoize) {
-    return MEMOIZED
-  } else if (opts.memoize.get && opts.memoize.set) {
-    return opts.memoize
-  } else if (typeof opts.memoize === 'object') {
-    return new ObjProxy(opts.memoize)
-  } else {
-    return MEMOIZED
-  }
-}
-
-
-/***/ }),
-
-/***/ 96482:
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports.disposer = disposer
-
-function disposer (creatorFn, disposerFn, fn) {
-  const runDisposer = (resource, result, shouldThrow = false) => {
-    return disposerFn(resource)
-      .then(
-        // disposer resolved, do something with original fn's promise
-        () => {
-          if (shouldThrow) {
-            throw result
-          }
-          return result
-        },
-        // Disposer fn failed, crash process
-        (err) => {
-          throw err
-          // Or process.exit?
-        })
-  }
-
-  return creatorFn
-    .then((resource) => {
-      // fn(resource) can throw, so wrap in a promise here
-      return Promise.resolve().then(() => fn(resource))
-        .then((result) => runDisposer(resource, result))
-        .catch((err) => runDisposer(resource, err, true))
-    })
-}
-
-
-/***/ }),
-
-/***/ 59891:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const util = __webpack_require__(31669)
-
-const chownr = util.promisify(__webpack_require__(97512))
-const mkdirp = __webpack_require__(18356)
-const inflight = __webpack_require__(10820)
-const inferOwner = __webpack_require__(36219)
-
-// Memoize getuid()/getgid() calls.
-// patch process.setuid/setgid to invalidate cached value on change
-const self = { uid: null, gid: null }
-const getSelf = () => {
-  if (typeof self.uid !== 'number') {
-    self.uid = process.getuid()
-    const setuid = process.setuid
-    process.setuid = (uid) => {
-      self.uid = null
-      process.setuid = setuid
-      return process.setuid(uid)
-    }
-  }
-  if (typeof self.gid !== 'number') {
-    self.gid = process.getgid()
-    const setgid = process.setgid
-    process.setgid = (gid) => {
-      self.gid = null
-      process.setgid = setgid
-      return process.setgid(gid)
-    }
-  }
-}
-
-module.exports.chownr = fixOwner
-
-function fixOwner (cache, filepath) {
-  if (!process.getuid) {
-    // This platform doesn't need ownership fixing
-    return Promise.resolve()
-  }
-
-  getSelf()
-  if (self.uid !== 0) {
-    // almost certainly can't chown anyway
-    return Promise.resolve()
-  }
-
-  return Promise.resolve(inferOwner(cache)).then((owner) => {
-    const { uid, gid } = owner
-
-    // No need to override if it's already what we used.
-    if (self.uid === uid && self.gid === gid) {
-      return
-    }
-
-    return inflight('fixOwner: fixing ownership on ' + filepath, () =>
-      chownr(
-        filepath,
-        typeof uid === 'number' ? uid : self.uid,
-        typeof gid === 'number' ? gid : self.gid
-      ).catch((err) => {
-        if (err.code === 'ENOENT') {
-          return null
-        }
-        throw err
-      })
-    )
-  })
-}
-
-module.exports.chownr.sync = fixOwnerSync
-
-function fixOwnerSync (cache, filepath) {
-  if (!process.getuid) {
-    // This platform doesn't need ownership fixing
-    return
-  }
-  const { uid, gid } = inferOwner.sync(cache)
-  getSelf()
-  if (self.uid !== 0) {
-    // almost certainly can't chown anyway
-    return
-  }
-
-  if (self.uid === uid && self.gid === gid) {
-    // No need to override if it's already what we used.
-    return
-  }
-  try {
-    chownr.sync(
-      filepath,
-      typeof uid === 'number' ? uid : self.uid,
-      typeof gid === 'number' ? gid : self.gid
-    )
-  } catch (err) {
-    // only catch ENOENT, any other error is a problem.
-    if (err.code === 'ENOENT') {
-      return null
-    }
-    throw err
-  }
-}
-
-module.exports.mkdirfix = mkdirfix
-
-function mkdirfix (cache, p, cb) {
-  // we have to infer the owner _before_ making the directory, even though
-  // we aren't going to use the results, since the cache itself might not
-  // exist yet.  If we mkdirp it, then our current uid/gid will be assumed
-  // to be correct if it creates the cache folder in the process.
-  return Promise.resolve(inferOwner(cache)).then(() => {
-    return mkdirp(p)
-      .then((made) => {
-        if (made) {
-          return fixOwner(cache, made).then(() => made)
-        }
-      })
-      .catch((err) => {
-        if (err.code === 'EEXIST') {
-          return fixOwner(cache, p).then(() => null)
-        }
-        throw err
-      })
-  })
-}
-
-module.exports.mkdirfix.sync = mkdirfixSync
-
-function mkdirfixSync (cache, p) {
-  try {
-    inferOwner.sync(cache)
-    const made = mkdirp.sync(p)
-    if (made) {
-      fixOwnerSync(cache, made)
-      return made
-    }
-  } catch (err) {
-    if (err.code === 'EEXIST') {
-      fixOwnerSync(cache, p)
-      return null
-    } else {
-      throw err
-    }
-  }
-}
-
-
-/***/ }),
-
-/***/ 92484:
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = hashToSegments
-
-function hashToSegments (hash) {
-  return [hash.slice(0, 2), hash.slice(2, 4), hash.slice(4)]
-}
-
-
-/***/ }),
-
-/***/ 27027:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const fs = __webpack_require__(35747)
-const util = __webpack_require__(31669)
-const chmod = util.promisify(fs.chmod)
-const unlink = util.promisify(fs.unlink)
-const stat = util.promisify(fs.stat)
-const move = __webpack_require__(49057)
-const pinflight = __webpack_require__(10820)
-
-module.exports = moveFile
-
-function moveFile (src, dest) {
-  const isWindows = global.__CACACHE_TEST_FAKE_WINDOWS__ ||
-    process.platform === 'win32'
-
-  // This isn't quite an fs.rename -- the assumption is that
-  // if `dest` already exists, and we get certain errors while
-  // trying to move it, we should just not bother.
-  //
-  // In the case of cache corruption, users will receive an
-  // EINTEGRITY error elsewhere, and can remove the offending
-  // content their own way.
-  //
-  // Note that, as the name suggests, this strictly only supports file moves.
-  return new Promise((resolve, reject) => {
-    fs.link(src, dest, (err) => {
-      if (err) {
-        if (isWindows && err.code === 'EPERM') {
-          // XXX This is a really weird way to handle this situation, as it
-          // results in the src file being deleted even though the dest
-          // might not exist.  Since we pretty much always write files to
-          // deterministic locations based on content hash, this is likely
-          // ok (or at worst, just ends in a future cache miss).  But it would
-          // be worth investigating at some time in the future if this is
-          // really what we want to do here.
-          return resolve()
-        } else if (err.code === 'EEXIST' || err.code === 'EBUSY') {
-          // file already exists, so whatever
-          return resolve()
-        } else {
-          return reject(err)
-        }
-      } else {
-        return resolve()
-      }
-    })
-  })
-    .then(() => {
-      // content should never change for any reason, so make it read-only
-      return Promise.all([
-        unlink(src),
-        !isWindows && chmod(dest, '0444')
-      ])
-    })
-    .catch(() => {
-      return pinflight('cacache-move-file:' + dest, () => {
-        return stat(dest).catch((err) => {
-          if (err.code !== 'ENOENT') {
-            // Something else is wrong here. Bail bail bail
-            throw err
-          }
-          // file doesn't already exist! let's try a rename -> copy fallback
-          // only delete if it successfully copies
-          return move(src, dest)
-        })
-      })
-    })
-}
-
-
-/***/ }),
-
-/***/ 50237:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const util = __webpack_require__(31669)
-
-const fixOwner = __webpack_require__(59891)
-const path = __webpack_require__(85622)
-const rimraf = util.promisify(__webpack_require__(18530))
-const uniqueFilename = __webpack_require__(37391)
-const { disposer } = __webpack_require__(96482)
-
-module.exports.mkdir = mktmpdir
-
-function mktmpdir (cache, opts = {}) {
-  const { tmpPrefix } = opts
-  const tmpTarget = uniqueFilename(path.join(cache, 'tmp'), tmpPrefix)
-  return fixOwner.mkdirfix(cache, tmpTarget).then(() => {
-    return tmpTarget
-  })
-}
-
-module.exports.withTmp = withTmp
-
-function withTmp (cache, opts, cb) {
-  if (!cb) {
-    cb = opts
-    opts = {}
-  }
-  return disposer(mktmpdir(cache, opts), rimraf, cb)
-}
-
-module.exports.fix = fixtmpdir
-
-function fixtmpdir (cache) {
-  return fixOwner(cache, path.join(cache, 'tmp'))
-}
-
-
-/***/ }),
-
-/***/ 28884:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const util = __webpack_require__(31669)
-
-const pMap = __webpack_require__(62370)
-const contentPath = __webpack_require__(35636)
-const fixOwner = __webpack_require__(59891)
-const fs = __webpack_require__(35747)
-const fsm = __webpack_require__(12699)
-const glob = util.promisify(__webpack_require__(48420))
-const index = __webpack_require__(50675)
-const path = __webpack_require__(85622)
-const rimraf = util.promisify(__webpack_require__(18530))
-const ssri = __webpack_require__(16096)
-
-const hasOwnProperty = (obj, key) =>
-  Object.prototype.hasOwnProperty.call(obj, key)
-
-const stat = util.promisify(fs.stat)
-const truncate = util.promisify(fs.truncate)
-const writeFile = util.promisify(fs.writeFile)
-const readFile = util.promisify(fs.readFile)
-
-const verifyOpts = (opts) => ({
-  concurrency: 20,
-  log: { silly () {} },
-  ...opts
-})
-
-module.exports = verify
-
-function verify (cache, opts) {
-  opts = verifyOpts(opts)
-  opts.log.silly('verify', 'verifying cache at', cache)
-
-  const steps = [
-    markStartTime,
-    fixPerms,
-    garbageCollect,
-    rebuildIndex,
-    cleanTmp,
-    writeVerifile,
-    markEndTime
-  ]
-
-  return steps
-    .reduce((promise, step, i) => {
-      const label = step.name
-      const start = new Date()
-      return promise.then((stats) => {
-        return step(cache, opts).then((s) => {
-          s &&
-            Object.keys(s).forEach((k) => {
-              stats[k] = s[k]
-            })
-          const end = new Date()
-          if (!stats.runTime) {
-            stats.runTime = {}
-          }
-          stats.runTime[label] = end - start
-          return Promise.resolve(stats)
-        })
-      })
-    }, Promise.resolve({}))
-    .then((stats) => {
-      stats.runTime.total = stats.endTime - stats.startTime
-      opts.log.silly(
-        'verify',
-        'verification finished for',
-        cache,
-        'in',
-        `${stats.runTime.total}ms`
-      )
-      return stats
-    })
-}
-
-function markStartTime (cache, opts) {
-  return Promise.resolve({ startTime: new Date() })
-}
-
-function markEndTime (cache, opts) {
-  return Promise.resolve({ endTime: new Date() })
-}
-
-function fixPerms (cache, opts) {
-  opts.log.silly('verify', 'fixing cache permissions')
-  return fixOwner
-    .mkdirfix(cache, cache)
-    .then(() => {
-      // TODO - fix file permissions too
-      return fixOwner.chownr(cache, cache)
-    })
-    .then(() => null)
-}
-
-// Implements a naive mark-and-sweep tracing garbage collector.
-//
-// The algorithm is basically as follows:
-// 1. Read (and filter) all index entries ("pointers")
-// 2. Mark each integrity value as "live"
-// 3. Read entire filesystem tree in `content-vX/` dir
-// 4. If content is live, verify its checksum and delete it if it fails
-// 5. If content is not marked as live, rimraf it.
-//
-function garbageCollect (cache, opts) {
-  opts.log.silly('verify', 'garbage collecting content')
-  const indexStream = index.lsStream(cache)
-  const liveContent = new Set()
-  indexStream.on('data', (entry) => {
-    if (opts.filter && !opts.filter(entry)) {
-      return
-    }
-    liveContent.add(entry.integrity.toString())
-  })
-  return new Promise((resolve, reject) => {
-    indexStream.on('end', resolve).on('error', reject)
-  }).then(() => {
-    const contentDir = contentPath.contentDir(cache)
-    return glob(path.join(contentDir, '**'), {
-      follow: false,
-      nodir: true,
-      nosort: true
-    }).then((files) => {
-      return Promise.resolve({
-        verifiedContent: 0,
-        reclaimedCount: 0,
-        reclaimedSize: 0,
-        badContentCount: 0,
-        keptSize: 0
-      }).then((stats) =>
-        pMap(
-          files,
-          (f) => {
-            const split = f.split(/[/\\]/)
-            const digest = split.slice(split.length - 3).join('')
-            const algo = split[split.length - 4]
-            const integrity = ssri.fromHex(digest, algo)
-            if (liveContent.has(integrity.toString())) {
-              return verifyContent(f, integrity).then((info) => {
-                if (!info.valid) {
-                  stats.reclaimedCount++
-                  stats.badContentCount++
-                  stats.reclaimedSize += info.size
-                } else {
-                  stats.verifiedContent++
-                  stats.keptSize += info.size
-                }
-                return stats
-              })
-            } else {
-              // No entries refer to this content. We can delete.
-              stats.reclaimedCount++
-              return stat(f).then((s) => {
-                return rimraf(f).then(() => {
-                  stats.reclaimedSize += s.size
-                  return stats
-                })
-              })
-            }
-          },
-          { concurrency: opts.concurrency }
-        ).then(() => stats)
-      )
-    })
-  })
-}
-
-function verifyContent (filepath, sri) {
-  return stat(filepath)
-    .then((s) => {
-      const contentInfo = {
-        size: s.size,
-        valid: true
-      }
-      return ssri
-        .checkStream(new fsm.ReadStream(filepath), sri)
-        .catch((err) => {
-          if (err.code !== 'EINTEGRITY') {
-            throw err
-          }
-          return rimraf(filepath).then(() => {
-            contentInfo.valid = false
-          })
-        })
-        .then(() => contentInfo)
-    })
-    .catch((err) => {
-      if (err.code === 'ENOENT') {
-        return { size: 0, valid: false }
-      }
-      throw err
-    })
-}
-
-function rebuildIndex (cache, opts) {
-  opts.log.silly('verify', 'rebuilding index')
-  return index.ls(cache).then((entries) => {
-    const stats = {
-      missingContent: 0,
-      rejectedEntries: 0,
-      totalEntries: 0
-    }
-    const buckets = {}
-    for (const k in entries) {
-      /* istanbul ignore else */
-      if (hasOwnProperty(entries, k)) {
-        const hashed = index.hashKey(k)
-        const entry = entries[k]
-        const excluded = opts.filter && !opts.filter(entry)
-        excluded && stats.rejectedEntries++
-        if (buckets[hashed] && !excluded) {
-          buckets[hashed].push(entry)
-        } else if (buckets[hashed] && excluded) {
-          // skip
-        } else if (excluded) {
-          buckets[hashed] = []
-          buckets[hashed]._path = index.bucketPath(cache, k)
-        } else {
-          buckets[hashed] = [entry]
-          buckets[hashed]._path = index.bucketPath(cache, k)
-        }
-      }
-    }
-    return pMap(
-      Object.keys(buckets),
-      (key) => {
-        return rebuildBucket(cache, buckets[key], stats, opts)
-      },
-      { concurrency: opts.concurrency }
-    ).then(() => stats)
-  })
-}
-
-function rebuildBucket (cache, bucket, stats, opts) {
-  return truncate(bucket._path).then(() => {
-    // This needs to be serialized because cacache explicitly
-    // lets very racy bucket conflicts clobber each other.
-    return bucket.reduce((promise, entry) => {
-      return promise.then(() => {
-        const content = contentPath(cache, entry.integrity)
-        return stat(content)
-          .then(() => {
-            return index
-              .insert(cache, entry.key, entry.integrity, {
-                metadata: entry.metadata,
-                size: entry.size
-              })
-              .then(() => {
-                stats.totalEntries++
-              })
-          })
-          .catch((err) => {
-            if (err.code === 'ENOENT') {
-              stats.rejectedEntries++
-              stats.missingContent++
-              return
-            }
-            throw err
-          })
-      })
-    }, Promise.resolve())
-  })
-}
-
-function cleanTmp (cache, opts) {
-  opts.log.silly('verify', 'cleaning tmp directory')
-  return rimraf(path.join(cache, 'tmp'))
-}
-
-function writeVerifile (cache, opts) {
-  const verifile = path.join(cache, '_lastverified')
-  opts.log.silly('verify', 'writing verifile to ' + verifile)
-  try {
-    return writeFile(verifile, '' + +new Date())
-  } finally {
-    fixOwner.chownr.sync(cache, verifile)
-  }
-}
-
-module.exports.lastRun = lastRun
-
-function lastRun (cache) {
-  return readFile(path.join(cache, '_lastverified'), 'utf8').then(
-    (data) => new Date(+data)
-  )
-}
-
-
-/***/ }),
-
-/***/ 41070:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const index = __webpack_require__(50675)
-
-module.exports = index.ls
-module.exports.stream = index.lsStream
-
-
-/***/ }),
-
-/***/ 63651:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const index = __webpack_require__(50675)
-const memo = __webpack_require__(64908)
-const write = __webpack_require__(64254)
-const Flush = __webpack_require__(50540)
-const { PassThrough } = __webpack_require__(46405)
-const Pipeline = __webpack_require__(60722)
-
-const putOpts = (opts) => ({
-  algorithms: ['sha512'],
-  ...opts
-})
-
-module.exports = putData
-
-function putData (cache, key, data, opts = {}) {
-  const { memoize } = opts
-  opts = putOpts(opts)
-  return write(cache, data, opts).then((res) => {
-    return index
-      .insert(cache, key, res.integrity, { ...opts, size: res.size })
-      .then((entry) => {
-        if (memoize) {
-          memo.put(cache, entry, data, opts)
-        }
-        return res.integrity
-      })
-  })
-}
-
-module.exports.stream = putStream
-
-function putStream (cache, key, opts = {}) {
-  const { memoize } = opts
-  opts = putOpts(opts)
-  let integrity
-  let size
-
-  let memoData
-  const pipeline = new Pipeline()
-  // first item in the pipeline is the memoizer, because we need
-  // that to end first and get the collected data.
-  if (memoize) {
-    const memoizer = new PassThrough().on('collect', data => {
-      memoData = data
-    })
-    pipeline.push(memoizer)
-  }
-
-  // contentStream is a write-only, not a passthrough
-  // no data comes out of it.
-  const contentStream = write.stream(cache, opts)
-    .on('integrity', (int) => {
-      integrity = int
-    })
-    .on('size', (s) => {
-      size = s
-    })
-
-  pipeline.push(contentStream)
-
-  // last but not least, we write the index and emit hash and size,
-  // and memoize if we're doing that
-  pipeline.push(new Flush({
-    flush () {
-      return index
-        .insert(cache, key, integrity, { ...opts, size })
-        .then((entry) => {
-          if (memoize && memoData) {
-            memo.put(cache, entry, memoData, opts)
-          }
-          if (integrity) {
-            pipeline.emit('integrity', integrity)
-          }
-          if (size) {
-            pipeline.emit('size', size)
-          }
-        })
-    }
-  }))
-
-  return pipeline
-}
-
-
-/***/ }),
-
-/***/ 68944:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-const util = __webpack_require__(31669)
-
-const index = __webpack_require__(50675)
-const memo = __webpack_require__(64908)
-const path = __webpack_require__(85622)
-const rimraf = util.promisify(__webpack_require__(18530))
-const rmContent = __webpack_require__(70294)
-
-module.exports = entry
-module.exports.entry = entry
-
-function entry (cache, key) {
-  memo.clearMemoized()
-  return index.delete(cache, key)
-}
-
-module.exports.content = content
-
-function content (cache, integrity) {
-  memo.clearMemoized()
-  return rmContent(cache, integrity)
-}
-
-module.exports.all = all
-
-function all (cache) {
-  memo.clearMemoized()
-  return rimraf(path.join(cache, '*(content-*|index-*)'))
-}
-
-
-/***/ }),
-
-/***/ 36136:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = __webpack_require__(28884)
-
-
-/***/ }),
-
 /***/ 25932:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -20719,7 +18720,7 @@ const testParameter = (name, filters) => {
 };
 
 const normalizeDataURL = (urlString, {stripHash}) => {
-	const parts = urlString.match(/^data:(.*?),(.*?)(?:#(.*))?$/);
+	const parts = urlString.match(/^data:([^,]*?),([^#]*?)(?:#(.*))?$/);
 
 	if (!parts) {
 		throw new Error(`Invalid URL: ${urlString}`);
@@ -22283,7 +20284,6 @@ var iteratorClose = __webpack_require__(37370);
 module.exports = function (iterator, fn, value, ENTRIES) {
   try {
     return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
-  // 7.4.6 IteratorClose(iterator, completion)
   } catch (error) {
     iteratorClose(iterator);
     throw error;
@@ -22560,7 +20560,7 @@ module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, I
     }
   }
 
-  // fix Array#{values, @@iterator}.name in V8 / FF
+  // fix Array.prototype.{ values, @@iterator }.name in V8 / FF
   if (DEFAULT == VALUES && nativeIterator && nativeIterator.name !== VALUES) {
     INCORRECT_VALUES_NAME = true;
     defaultIterator = function values() { return nativeIterator.call(this); };
@@ -22991,7 +20991,7 @@ var toObject = __webpack_require__(29457);
 
 var hasOwnProperty = {}.hasOwnProperty;
 
-module.exports = function hasOwn(it, key) {
+module.exports = Object.hasOwn || function hasOwn(it, key) {
   return hasOwnProperty.call(toObject(it), key);
 };
 
@@ -23061,7 +21061,7 @@ var store = __webpack_require__(78838);
 
 var functionToString = Function.toString;
 
-// this helper broken in `3.4.1-3.4.4`, so we can't use `shared` helper
+// this helper broken in `core-js@3.4.1-3.4.4`, so we can't use `shared` helper
 if (typeof store.inspectSource != 'function') {
   store.inspectSource = function (it) {
     return functionToString.call(it);
@@ -23299,7 +21299,8 @@ var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function ()
 
 if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {};
 
-// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+// `%IteratorPrototype%[@@iterator]()` method
+// https://tc39.es/ecma262/#sec-%iteratorprototype%-@@iterator
 if ((!IS_PURE || NEW_ITERATOR_PROTOTYPE) && !has(IteratorPrototype, ITERATOR)) {
   createNonEnumerableProperty(IteratorPrototype, ITERATOR, returnThis);
 }
@@ -23329,8 +21330,10 @@ var fails = __webpack_require__(724);
 
 // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
 module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
-  return !String(Symbol()) ||
-    // Chrome 38 Symbol has incorrect toString conversion
+  var symbol = Symbol();
+  // Chrome 38 Symbol has incorrect toString conversion
+  // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
+  return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
     // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
     !Symbol.sham && V8_VERSION && V8_VERSION < 41;
 });
@@ -23885,7 +21888,7 @@ var store = __webpack_require__(78838);
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.12.1',
+  version: '3.13.1',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 });
@@ -29525,8 +27528,7 @@ var singleTag = new Set([
  */
 function render(node, options) {
     if (options === void 0) { options = {}; }
-    // TODO: This is a bit hacky.
-    var nodes = Array.isArray(node) || node.cheerio ? node : [node];
+    var nodes = "length" in node ? node : [node];
     var output = "";
     for (var i = 0; i < nodes.length; i++) {
         output += renderNode(nodes[i], options);
@@ -73462,7 +71464,7 @@ exports.getReleases = exports.caching = exports.registryStrategy = exports.defau
 const url_1 = __importDefault(__webpack_require__(78835));
 const changelog_filename_regex_1 = __importDefault(__webpack_require__(51502));
 const logger_1 = __webpack_require__(12702);
-const html_1 = __webpack_require__(57929);
+const html_1 = __webpack_require__(72882);
 const http_1 = __webpack_require__(97239);
 const url_2 = __webpack_require__(32658);
 const pep440 = __importStar(__webpack_require__(17595));
@@ -73876,7 +71878,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getReleases = exports.defaultVersioning = exports.customRegistrySupport = exports.defaultRegistryUrls = exports.id = void 0;
 const external_host_error_1 = __webpack_require__(13262);
 const packageCache = __importStar(__webpack_require__(91037));
-const html_1 = __webpack_require__(57929);
+const html_1 = __webpack_require__(72882);
 const http_1 = __webpack_require__(97239);
 const ruby_1 = __webpack_require__(77340);
 exports.id = 'ruby-version';
@@ -75411,7 +73413,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.init = exports.set = exports.get = void 0;
-const cacache = __importStar(__webpack_require__(59137));
+const cacache = __importStar(__webpack_require__(36740));
 const luxon_1 = __webpack_require__(67493);
 const upath_1 = __importDefault(__webpack_require__(86511));
 const logger_1 = __webpack_require__(12702);
@@ -76094,7 +74096,7 @@ exports.clear = clear;
 
 /***/ }),
 
-/***/ 57929:
+/***/ 72882:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -81289,6 +79291,2005 @@ exports.api = {
 };
 exports.default = exports.api;
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ 5412:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(31669)
+const fs = __webpack_require__(35747)
+const index = __webpack_require__(79089)
+const memo = __webpack_require__(88857)
+const read = __webpack_require__(67262)
+
+const Minipass = __webpack_require__(51254)
+const Collect = __webpack_require__(46405)
+const Pipeline = __webpack_require__(60722)
+
+const writeFile = util.promisify(fs.writeFile)
+
+module.exports = function get (cache, key, opts) {
+  return getData(false, cache, key, opts)
+}
+module.exports.byDigest = function getByDigest (cache, digest, opts) {
+  return getData(true, cache, digest, opts)
+}
+
+function getData (byDigest, cache, key, opts = {}) {
+  const { integrity, memoize, size } = opts
+  const memoized = byDigest
+    ? memo.get.byDigest(cache, key, opts)
+    : memo.get(cache, key, opts)
+  if (memoized && memoize !== false) {
+    return Promise.resolve(
+      byDigest
+        ? memoized
+        : {
+          metadata: memoized.entry.metadata,
+          data: memoized.data,
+          integrity: memoized.entry.integrity,
+          size: memoized.entry.size
+        }
+    )
+  }
+  return (byDigest ? Promise.resolve(null) : index.find(cache, key, opts)).then(
+    (entry) => {
+      if (!entry && !byDigest) {
+        throw new index.NotFoundError(cache, key)
+      }
+      return read(cache, byDigest ? key : entry.integrity, {
+        integrity,
+        size
+      })
+        .then((data) =>
+          byDigest
+            ? data
+            : {
+              data,
+              metadata: entry.metadata,
+              size: entry.size,
+              integrity: entry.integrity
+            }
+        )
+        .then((res) => {
+          if (memoize && byDigest) {
+            memo.put.byDigest(cache, key, res, opts)
+          } else if (memoize) {
+            memo.put(cache, entry, res.data, opts)
+          }
+          return res
+        })
+    }
+  )
+}
+
+module.exports.sync = function get (cache, key, opts) {
+  return getDataSync(false, cache, key, opts)
+}
+module.exports.sync.byDigest = function getByDigest (cache, digest, opts) {
+  return getDataSync(true, cache, digest, opts)
+}
+
+function getDataSync (byDigest, cache, key, opts = {}) {
+  const { integrity, memoize, size } = opts
+  const memoized = byDigest
+    ? memo.get.byDigest(cache, key, opts)
+    : memo.get(cache, key, opts)
+  if (memoized && memoize !== false) {
+    return byDigest
+      ? memoized
+      : {
+        metadata: memoized.entry.metadata,
+        data: memoized.data,
+        integrity: memoized.entry.integrity,
+        size: memoized.entry.size
+      }
+  }
+  const entry = !byDigest && index.find.sync(cache, key, opts)
+  if (!entry && !byDigest) {
+    throw new index.NotFoundError(cache, key)
+  }
+  const data = read.sync(cache, byDigest ? key : entry.integrity, {
+    integrity: integrity,
+    size: size
+  })
+  const res = byDigest
+    ? data
+    : {
+      metadata: entry.metadata,
+      data: data,
+      size: entry.size,
+      integrity: entry.integrity
+    }
+  if (memoize && byDigest) {
+    memo.put.byDigest(cache, key, res, opts)
+  } else if (memoize) {
+    memo.put(cache, entry, res.data, opts)
+  }
+  return res
+}
+
+module.exports.stream = getStream
+
+const getMemoizedStream = (memoized) => {
+  const stream = new Minipass()
+  stream.on('newListener', function (ev, cb) {
+    ev === 'metadata' && cb(memoized.entry.metadata)
+    ev === 'integrity' && cb(memoized.entry.integrity)
+    ev === 'size' && cb(memoized.entry.size)
+  })
+  stream.end(memoized.data)
+  return stream
+}
+
+function getStream (cache, key, opts = {}) {
+  const { memoize, size } = opts
+  const memoized = memo.get(cache, key, opts)
+  if (memoized && memoize !== false) {
+    return getMemoizedStream(memoized)
+  }
+
+  const stream = new Pipeline()
+  index
+    .find(cache, key)
+    .then((entry) => {
+      if (!entry) {
+        throw new index.NotFoundError(cache, key)
+      }
+      stream.emit('metadata', entry.metadata)
+      stream.emit('integrity', entry.integrity)
+      stream.emit('size', entry.size)
+      stream.on('newListener', function (ev, cb) {
+        ev === 'metadata' && cb(entry.metadata)
+        ev === 'integrity' && cb(entry.integrity)
+        ev === 'size' && cb(entry.size)
+      })
+
+      const src = read.readStream(
+        cache,
+        entry.integrity,
+        { ...opts, size: typeof size !== 'number' ? entry.size : size }
+      )
+
+      if (memoize) {
+        const memoStream = new Collect.PassThrough()
+        memoStream.on('collect', data => memo.put(cache, entry, data, opts))
+        stream.unshift(memoStream)
+      }
+      stream.unshift(src)
+    })
+    .catch((err) => stream.emit('error', err))
+
+  return stream
+}
+
+module.exports.stream.byDigest = getStreamDigest
+
+function getStreamDigest (cache, integrity, opts = {}) {
+  const { memoize } = opts
+  const memoized = memo.get.byDigest(cache, integrity, opts)
+  if (memoized && memoize !== false) {
+    const stream = new Minipass()
+    stream.end(memoized)
+    return stream
+  } else {
+    const stream = read.readStream(cache, integrity, opts)
+    if (!memoize) {
+      return stream
+    }
+    const memoStream = new Collect.PassThrough()
+    memoStream.on('collect', data => memo.put.byDigest(
+      cache,
+      integrity,
+      data,
+      opts
+    ))
+    return new Pipeline(stream, memoStream)
+  }
+}
+
+module.exports.info = info
+
+function info (cache, key, opts = {}) {
+  const { memoize } = opts
+  const memoized = memo.get(cache, key, opts)
+  if (memoized && memoize !== false) {
+    return Promise.resolve(memoized.entry)
+  } else {
+    return index.find(cache, key)
+  }
+}
+
+module.exports.hasContent = read.hasContent
+
+function cp (cache, key, dest, opts) {
+  return copy(false, cache, key, dest, opts)
+}
+
+module.exports.copy = cp
+
+function cpDigest (cache, digest, dest, opts) {
+  return copy(true, cache, digest, dest, opts)
+}
+
+module.exports.copy.byDigest = cpDigest
+
+function copy (byDigest, cache, key, dest, opts = {}) {
+  if (read.copy) {
+    return (byDigest
+      ? Promise.resolve(null)
+      : index.find(cache, key, opts)
+    ).then((entry) => {
+      if (!entry && !byDigest) {
+        throw new index.NotFoundError(cache, key)
+      }
+      return read
+        .copy(cache, byDigest ? key : entry.integrity, dest, opts)
+        .then(() => {
+          return byDigest
+            ? key
+            : {
+              metadata: entry.metadata,
+              size: entry.size,
+              integrity: entry.integrity
+            }
+        })
+    })
+  }
+
+  return getData(byDigest, cache, key, opts).then((res) => {
+    return writeFile(dest, byDigest ? res : res.data).then(() => {
+      return byDigest
+        ? key
+        : {
+          metadata: res.metadata,
+          size: res.size,
+          integrity: res.integrity
+        }
+    })
+  })
+}
+
+
+/***/ }),
+
+/***/ 36740:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const ls = __webpack_require__(82183)
+const get = __webpack_require__(5412)
+const put = __webpack_require__(74381)
+const rm = __webpack_require__(39754)
+const verify = __webpack_require__(18976)
+const { clearMemoized } = __webpack_require__(88857)
+const tmp = __webpack_require__(86502)
+
+module.exports.ls = ls
+module.exports.ls.stream = ls.stream
+
+module.exports.get = get
+module.exports.get.byDigest = get.byDigest
+module.exports.get.sync = get.sync
+module.exports.get.sync.byDigest = get.sync.byDigest
+module.exports.get.stream = get.stream
+module.exports.get.stream.byDigest = get.stream.byDigest
+module.exports.get.copy = get.copy
+module.exports.get.copy.byDigest = get.copy.byDigest
+module.exports.get.info = get.info
+module.exports.get.hasContent = get.hasContent
+module.exports.get.hasContent.sync = get.hasContent.sync
+
+module.exports.put = put
+module.exports.put.stream = put.stream
+
+module.exports.rm = rm.entry
+module.exports.rm.all = rm.all
+module.exports.rm.entry = module.exports.rm
+module.exports.rm.content = rm.content
+
+module.exports.clearMemoized = clearMemoized
+
+module.exports.tmp = {}
+module.exports.tmp.mkdir = tmp.mkdir
+module.exports.tmp.withTmp = tmp.withTmp
+
+module.exports.verify = verify
+module.exports.verify.lastRun = verify.lastRun
+
+
+/***/ }),
+
+/***/ 94062:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const contentVer = __webpack_require__(62079)/* ["cache-version"].content */ .Jw.k
+const hashToSegments = __webpack_require__(45580)
+const path = __webpack_require__(85622)
+const ssri = __webpack_require__(16096)
+
+// Current format of content file path:
+//
+// sha512-BaSE64Hex= ->
+// ~/.my-cache/content-v2/sha512/ba/da/55deadbeefc0ffee
+//
+module.exports = contentPath
+
+function contentPath (cache, integrity) {
+  const sri = ssri.parse(integrity, { single: true })
+  // contentPath is the *strongest* algo given
+  return path.join(
+    contentDir(cache),
+    sri.algorithm,
+    ...hashToSegments(sri.hexDigest())
+  )
+}
+
+module.exports.contentDir = contentDir
+
+function contentDir (cache) {
+  return path.join(cache, `content-v${contentVer}`)
+}
+
+
+/***/ }),
+
+/***/ 67262:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(31669)
+
+const fs = __webpack_require__(35747)
+const fsm = __webpack_require__(12699)
+const ssri = __webpack_require__(16096)
+const contentPath = __webpack_require__(94062)
+const Pipeline = __webpack_require__(60722)
+
+const lstat = util.promisify(fs.lstat)
+const readFile = util.promisify(fs.readFile)
+
+module.exports = read
+
+const MAX_SINGLE_READ_SIZE = 64 * 1024 * 1024
+function read (cache, integrity, opts = {}) {
+  const { size } = opts
+  return withContentSri(cache, integrity, (cpath, sri) => {
+    // get size
+    return lstat(cpath).then(stat => ({ stat, cpath, sri }))
+  }).then(({ stat, cpath, sri }) => {
+    if (typeof size === 'number' && stat.size !== size) {
+      throw sizeError(size, stat.size)
+    }
+    if (stat.size > MAX_SINGLE_READ_SIZE) {
+      return readPipeline(cpath, stat.size, sri, new Pipeline()).concat()
+    }
+
+    return readFile(cpath, null).then((data) => {
+      if (!ssri.checkData(data, sri)) {
+        throw integrityError(sri, cpath)
+      }
+      return data
+    })
+  })
+}
+
+const readPipeline = (cpath, size, sri, stream) => {
+  stream.push(
+    new fsm.ReadStream(cpath, {
+      size,
+      readSize: MAX_SINGLE_READ_SIZE
+    }),
+    ssri.integrityStream({
+      integrity: sri,
+      size
+    })
+  )
+  return stream
+}
+
+module.exports.sync = readSync
+
+function readSync (cache, integrity, opts = {}) {
+  const { size } = opts
+  return withContentSriSync(cache, integrity, (cpath, sri) => {
+    const data = fs.readFileSync(cpath)
+    if (typeof size === 'number' && size !== data.length) {
+      throw sizeError(size, data.length)
+    }
+
+    if (ssri.checkData(data, sri)) {
+      return data
+    }
+
+    throw integrityError(sri, cpath)
+  })
+}
+
+module.exports.stream = readStream
+module.exports.readStream = readStream
+
+function readStream (cache, integrity, opts = {}) {
+  const { size } = opts
+  const stream = new Pipeline()
+  withContentSri(cache, integrity, (cpath, sri) => {
+    // just lstat to ensure it exists
+    return lstat(cpath).then((stat) => ({ stat, cpath, sri }))
+  }).then(({ stat, cpath, sri }) => {
+    if (typeof size === 'number' && size !== stat.size) {
+      return stream.emit('error', sizeError(size, stat.size))
+    }
+    readPipeline(cpath, stat.size, sri, stream)
+  }, er => stream.emit('error', er))
+
+  return stream
+}
+
+let copyFile
+if (fs.copyFile) {
+  module.exports.copy = copy
+  module.exports.copy.sync = copySync
+  copyFile = util.promisify(fs.copyFile)
+}
+
+function copy (cache, integrity, dest) {
+  return withContentSri(cache, integrity, (cpath, sri) => {
+    return copyFile(cpath, dest)
+  })
+}
+
+function copySync (cache, integrity, dest) {
+  return withContentSriSync(cache, integrity, (cpath, sri) => {
+    return fs.copyFileSync(cpath, dest)
+  })
+}
+
+module.exports.hasContent = hasContent
+
+function hasContent (cache, integrity) {
+  if (!integrity) {
+    return Promise.resolve(false)
+  }
+  return withContentSri(cache, integrity, (cpath, sri) => {
+    return lstat(cpath).then((stat) => ({ size: stat.size, sri, stat }))
+  }).catch((err) => {
+    if (err.code === 'ENOENT') {
+      return false
+    }
+    if (err.code === 'EPERM') {
+      /* istanbul ignore else */
+      if (process.platform !== 'win32') {
+        throw err
+      } else {
+        return false
+      }
+    }
+  })
+}
+
+module.exports.hasContent.sync = hasContentSync
+
+function hasContentSync (cache, integrity) {
+  if (!integrity) {
+    return false
+  }
+  return withContentSriSync(cache, integrity, (cpath, sri) => {
+    try {
+      const stat = fs.lstatSync(cpath)
+      return { size: stat.size, sri, stat }
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        return false
+      }
+      if (err.code === 'EPERM') {
+        /* istanbul ignore else */
+        if (process.platform !== 'win32') {
+          throw err
+        } else {
+          return false
+        }
+      }
+    }
+  })
+}
+
+function withContentSri (cache, integrity, fn) {
+  const tryFn = () => {
+    const sri = ssri.parse(integrity)
+    // If `integrity` has multiple entries, pick the first digest
+    // with available local data.
+    const algo = sri.pickAlgorithm()
+    const digests = sri[algo]
+
+    if (digests.length <= 1) {
+      const cpath = contentPath(cache, digests[0])
+      return fn(cpath, digests[0])
+    } else {
+      // Can't use race here because a generic error can happen before a ENOENT error, and can happen before a valid result
+      return Promise
+        .all(digests.map((meta) => {
+          return withContentSri(cache, meta, fn)
+            .catch((err) => {
+              if (err.code === 'ENOENT') {
+                return Object.assign(
+                  new Error('No matching content found for ' + sri.toString()),
+                  { code: 'ENOENT' }
+                )
+              }
+              return err
+            })
+        }))
+        .then((results) => {
+          // Return the first non error if it is found
+          const result = results.find((r) => !(r instanceof Error))
+          if (result) {
+            return result
+          }
+
+          // Throw the No matching content found error
+          const enoentError = results.find((r) => r.code === 'ENOENT')
+          if (enoentError) {
+            throw enoentError
+          }
+
+          // Throw generic error
+          throw results.find((r) => r instanceof Error)
+        })
+    }
+  }
+
+  return new Promise((resolve, reject) => {
+    try {
+      tryFn()
+        .then(resolve)
+        .catch(reject)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+function withContentSriSync (cache, integrity, fn) {
+  const sri = ssri.parse(integrity)
+  // If `integrity` has multiple entries, pick the first digest
+  // with available local data.
+  const algo = sri.pickAlgorithm()
+  const digests = sri[algo]
+  if (digests.length <= 1) {
+    const cpath = contentPath(cache, digests[0])
+    return fn(cpath, digests[0])
+  } else {
+    let lastErr = null
+    for (const meta of digests) {
+      try {
+        return withContentSriSync(cache, meta, fn)
+      } catch (err) {
+        lastErr = err
+      }
+    }
+    throw lastErr
+  }
+}
+
+function sizeError (expected, found) {
+  const err = new Error(`Bad data size: expected inserted data to be ${expected} bytes, but got ${found} instead`)
+  err.expected = expected
+  err.found = found
+  err.code = 'EBADSIZE'
+  return err
+}
+
+function integrityError (sri, path) {
+  const err = new Error(`Integrity verification failed for ${sri} (${path})`)
+  err.code = 'EINTEGRITY'
+  err.sri = sri
+  err.path = path
+  return err
+}
+
+
+/***/ }),
+
+/***/ 57929:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(31669)
+
+const contentPath = __webpack_require__(94062)
+const { hasContent } = __webpack_require__(67262)
+const rimraf = util.promisify(__webpack_require__(18530))
+
+module.exports = rm
+
+function rm (cache, integrity) {
+  return hasContent(cache, integrity).then((content) => {
+    // ~pretty~ sure we can't end up with a content lacking sri, but be safe
+    if (content && content.sri) {
+      return rimraf(contentPath(cache, content.sri)).then(() => true)
+    } else {
+      return false
+    }
+  })
+}
+
+
+/***/ }),
+
+/***/ 81593:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(31669)
+
+const contentPath = __webpack_require__(94062)
+const fixOwner = __webpack_require__(53320)
+const fs = __webpack_require__(35747)
+const moveFile = __webpack_require__(96873)
+const Minipass = __webpack_require__(51254)
+const Pipeline = __webpack_require__(60722)
+const Flush = __webpack_require__(50540)
+const path = __webpack_require__(85622)
+const rimraf = util.promisify(__webpack_require__(18530))
+const ssri = __webpack_require__(16096)
+const uniqueFilename = __webpack_require__(37391)
+const { disposer } = __webpack_require__(24379)
+const fsm = __webpack_require__(12699)
+
+const writeFile = util.promisify(fs.writeFile)
+
+module.exports = write
+
+function write (cache, data, opts = {}) {
+  const { algorithms, size, integrity } = opts
+  if (algorithms && algorithms.length > 1) {
+    throw new Error('opts.algorithms only supports a single algorithm for now')
+  }
+  if (typeof size === 'number' && data.length !== size) {
+    return Promise.reject(sizeError(size, data.length))
+  }
+  const sri = ssri.fromData(data, algorithms ? { algorithms } : {})
+  if (integrity && !ssri.checkData(data, integrity, opts)) {
+    return Promise.reject(checksumError(integrity, sri))
+  }
+
+  return disposer(makeTmp(cache, opts), makeTmpDisposer,
+    (tmp) => {
+      return writeFile(tmp.target, data, { flag: 'wx' })
+        .then(() => moveToDestination(tmp, cache, sri, opts))
+    })
+    .then(() => ({ integrity: sri, size: data.length }))
+}
+
+module.exports.stream = writeStream
+
+// writes proxied to the 'inputStream' that is passed to the Promise
+// 'end' is deferred until content is handled.
+class CacacheWriteStream extends Flush {
+  constructor (cache, opts) {
+    super()
+    this.opts = opts
+    this.cache = cache
+    this.inputStream = new Minipass()
+    this.inputStream.on('error', er => this.emit('error', er))
+    this.inputStream.on('drain', () => this.emit('drain'))
+    this.handleContentP = null
+  }
+
+  write (chunk, encoding, cb) {
+    if (!this.handleContentP) {
+      this.handleContentP = handleContent(
+        this.inputStream,
+        this.cache,
+        this.opts
+      )
+    }
+    return this.inputStream.write(chunk, encoding, cb)
+  }
+
+  flush (cb) {
+    this.inputStream.end(() => {
+      if (!this.handleContentP) {
+        const e = new Error('Cache input stream was empty')
+        e.code = 'ENODATA'
+        // empty streams are probably emitting end right away.
+        // defer this one tick by rejecting a promise on it.
+        return Promise.reject(e).catch(cb)
+      }
+      this.handleContentP.then(
+        (res) => {
+          res.integrity && this.emit('integrity', res.integrity)
+          res.size !== null && this.emit('size', res.size)
+          cb()
+        },
+        (er) => cb(er)
+      )
+    })
+  }
+}
+
+function writeStream (cache, opts = {}) {
+  return new CacacheWriteStream(cache, opts)
+}
+
+function handleContent (inputStream, cache, opts) {
+  return disposer(makeTmp(cache, opts), makeTmpDisposer, (tmp) => {
+    return pipeToTmp(inputStream, cache, tmp.target, opts)
+      .then((res) => {
+        return moveToDestination(
+          tmp,
+          cache,
+          res.integrity,
+          opts
+        ).then(() => res)
+      })
+  })
+}
+
+function pipeToTmp (inputStream, cache, tmpTarget, opts) {
+  let integrity
+  let size
+  const hashStream = ssri.integrityStream({
+    integrity: opts.integrity,
+    algorithms: opts.algorithms,
+    size: opts.size
+  })
+  hashStream.on('integrity', i => { integrity = i })
+  hashStream.on('size', s => { size = s })
+
+  const outStream = new fsm.WriteStream(tmpTarget, {
+    flags: 'wx'
+  })
+
+  // NB: this can throw if the hashStream has a problem with
+  // it, and the data is fully written.  but pipeToTmp is only
+  // called in promisory contexts where that is handled.
+  const pipeline = new Pipeline(
+    inputStream,
+    hashStream,
+    outStream
+  )
+
+  return pipeline.promise()
+    .then(() => ({ integrity, size }))
+    .catch(er => rimraf(tmpTarget).then(() => { throw er }))
+}
+
+function makeTmp (cache, opts) {
+  const tmpTarget = uniqueFilename(path.join(cache, 'tmp'), opts.tmpPrefix)
+  return fixOwner.mkdirfix(cache, path.dirname(tmpTarget)).then(() => ({
+    target: tmpTarget,
+    moved: false
+  }))
+}
+
+function makeTmpDisposer (tmp) {
+  if (tmp.moved) {
+    return Promise.resolve()
+  }
+  return rimraf(tmp.target)
+}
+
+function moveToDestination (tmp, cache, sri, opts) {
+  const destination = contentPath(cache, sri)
+  const destDir = path.dirname(destination)
+
+  return fixOwner
+    .mkdirfix(cache, destDir)
+    .then(() => {
+      return moveFile(tmp.target, destination)
+    })
+    .then(() => {
+      tmp.moved = true
+      return fixOwner.chownr(cache, destination)
+    })
+}
+
+function sizeError (expected, found) {
+  const err = new Error(`Bad data size: expected inserted data to be ${expected} bytes, but got ${found} instead`)
+  err.expected = expected
+  err.found = found
+  err.code = 'EBADSIZE'
+  return err
+}
+
+function checksumError (expected, found) {
+  const err = new Error(`Integrity check failed:
+  Wanted: ${expected}
+   Found: ${found}`)
+  err.code = 'EINTEGRITY'
+  err.expected = expected
+  err.found = found
+  return err
+}
+
+
+/***/ }),
+
+/***/ 79089:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(31669)
+
+const crypto = __webpack_require__(76417)
+const fs = __webpack_require__(35747)
+const Minipass = __webpack_require__(51254)
+const path = __webpack_require__(85622)
+const ssri = __webpack_require__(16096)
+const contentPath = __webpack_require__(94062)
+const fixOwner = __webpack_require__(53320)
+const hashToSegments = __webpack_require__(45580)
+const indexV = __webpack_require__(62079)/* ["cache-version"].index */ .Jw.K
+
+const appendFile = util.promisify(fs.appendFile)
+const readFile = util.promisify(fs.readFile)
+const readdir = util.promisify(fs.readdir)
+
+module.exports.NotFoundError = class NotFoundError extends Error {
+  constructor (cache, key) {
+    super(`No cache entry for ${key} found in ${cache}`)
+    this.code = 'ENOENT'
+    this.cache = cache
+    this.key = key
+  }
+}
+
+module.exports.insert = insert
+
+function insert (cache, key, integrity, opts = {}) {
+  const { metadata, size } = opts
+  const bucket = bucketPath(cache, key)
+  const entry = {
+    key,
+    integrity: integrity && ssri.stringify(integrity),
+    time: Date.now(),
+    size,
+    metadata
+  }
+  return fixOwner
+    .mkdirfix(cache, path.dirname(bucket))
+    .then(() => {
+      const stringified = JSON.stringify(entry)
+      // NOTE - Cleverness ahoy!
+      //
+      // This works because it's tremendously unlikely for an entry to corrupt
+      // another while still preserving the string length of the JSON in
+      // question. So, we just slap the length in there and verify it on read.
+      //
+      // Thanks to @isaacs for the whiteboarding session that ended up with this.
+      return appendFile(bucket, `\n${hashEntry(stringified)}\t${stringified}`)
+    })
+    .then(() => fixOwner.chownr(cache, bucket))
+    .catch((err) => {
+      if (err.code === 'ENOENT') {
+        return undefined
+      }
+      throw err
+      // There's a class of race conditions that happen when things get deleted
+      // during fixOwner, or between the two mkdirfix/chownr calls.
+      //
+      // It's perfectly fine to just not bother in those cases and lie
+      // that the index entry was written. Because it's a cache.
+    })
+    .then(() => {
+      return formatEntry(cache, entry)
+    })
+}
+
+module.exports.insert.sync = insertSync
+
+function insertSync (cache, key, integrity, opts = {}) {
+  const { metadata, size } = opts
+  const bucket = bucketPath(cache, key)
+  const entry = {
+    key,
+    integrity: integrity && ssri.stringify(integrity),
+    time: Date.now(),
+    size,
+    metadata
+  }
+  fixOwner.mkdirfix.sync(cache, path.dirname(bucket))
+  const stringified = JSON.stringify(entry)
+  fs.appendFileSync(bucket, `\n${hashEntry(stringified)}\t${stringified}`)
+  try {
+    fixOwner.chownr.sync(cache, bucket)
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      throw err
+    }
+  }
+  return formatEntry(cache, entry)
+}
+
+module.exports.find = find
+
+function find (cache, key) {
+  const bucket = bucketPath(cache, key)
+  return bucketEntries(bucket)
+    .then((entries) => {
+      return entries.reduce((latest, next) => {
+        if (next && next.key === key) {
+          return formatEntry(cache, next)
+        } else {
+          return latest
+        }
+      }, null)
+    })
+    .catch((err) => {
+      if (err.code === 'ENOENT') {
+        return null
+      } else {
+        throw err
+      }
+    })
+}
+
+module.exports.find.sync = findSync
+
+function findSync (cache, key) {
+  const bucket = bucketPath(cache, key)
+  try {
+    return bucketEntriesSync(bucket).reduce((latest, next) => {
+      if (next && next.key === key) {
+        return formatEntry(cache, next)
+      } else {
+        return latest
+      }
+    }, null)
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      return null
+    } else {
+      throw err
+    }
+  }
+}
+
+module.exports.delete = del
+
+function del (cache, key, opts) {
+  return insert(cache, key, null, opts)
+}
+
+module.exports.delete.sync = delSync
+
+function delSync (cache, key, opts) {
+  return insertSync(cache, key, null, opts)
+}
+
+module.exports.lsStream = lsStream
+
+function lsStream (cache) {
+  const indexDir = bucketDir(cache)
+  const stream = new Minipass({ objectMode: true })
+
+  readdirOrEmpty(indexDir).then(buckets => Promise.all(
+    buckets.map(bucket => {
+      const bucketPath = path.join(indexDir, bucket)
+      return readdirOrEmpty(bucketPath).then(subbuckets => Promise.all(
+        subbuckets.map(subbucket => {
+          const subbucketPath = path.join(bucketPath, subbucket)
+
+          // "/cachename/<bucket 0xFF>/<bucket 0xFF>./*"
+          return readdirOrEmpty(subbucketPath).then(entries => Promise.all(
+            entries.map(entry => {
+              const entryPath = path.join(subbucketPath, entry)
+              return bucketEntries(entryPath).then(entries =>
+                // using a Map here prevents duplicate keys from
+                // showing up twice, I guess?
+                entries.reduce((acc, entry) => {
+                  acc.set(entry.key, entry)
+                  return acc
+                }, new Map())
+              ).then(reduced => {
+                // reduced is a map of key => entry
+                for (const entry of reduced.values()) {
+                  const formatted = formatEntry(cache, entry)
+                  if (formatted) {
+                    stream.write(formatted)
+                  }
+                }
+              }).catch(err => {
+                if (err.code === 'ENOENT') { return undefined }
+                throw err
+              })
+            })
+          ))
+        })
+      ))
+    })
+  ))
+    .then(
+      () => stream.end(),
+      err => stream.emit('error', err)
+    )
+
+  return stream
+}
+
+module.exports.ls = ls
+
+function ls (cache) {
+  return lsStream(cache).collect().then(entries =>
+    entries.reduce((acc, xs) => {
+      acc[xs.key] = xs
+      return acc
+    }, {})
+  )
+}
+
+function bucketEntries (bucket, filter) {
+  return readFile(bucket, 'utf8').then((data) => _bucketEntries(data, filter))
+}
+
+function bucketEntriesSync (bucket, filter) {
+  const data = fs.readFileSync(bucket, 'utf8')
+  return _bucketEntries(data, filter)
+}
+
+function _bucketEntries (data, filter) {
+  const entries = []
+  data.split('\n').forEach((entry) => {
+    if (!entry) {
+      return
+    }
+    const pieces = entry.split('\t')
+    if (!pieces[1] || hashEntry(pieces[1]) !== pieces[0]) {
+      // Hash is no good! Corruption or malice? Doesn't matter!
+      // EJECT EJECT
+      return
+    }
+    let obj
+    try {
+      obj = JSON.parse(pieces[1])
+    } catch (e) {
+      // Entry is corrupted!
+      return
+    }
+    if (obj) {
+      entries.push(obj)
+    }
+  })
+  return entries
+}
+
+module.exports.bucketDir = bucketDir
+
+function bucketDir (cache) {
+  return path.join(cache, `index-v${indexV}`)
+}
+
+module.exports.bucketPath = bucketPath
+
+function bucketPath (cache, key) {
+  const hashed = hashKey(key)
+  return path.join.apply(
+    path,
+    [bucketDir(cache)].concat(hashToSegments(hashed))
+  )
+}
+
+module.exports.hashKey = hashKey
+
+function hashKey (key) {
+  return hash(key, 'sha256')
+}
+
+module.exports.hashEntry = hashEntry
+
+function hashEntry (str) {
+  return hash(str, 'sha1')
+}
+
+function hash (str, digest) {
+  return crypto
+    .createHash(digest)
+    .update(str)
+    .digest('hex')
+}
+
+function formatEntry (cache, entry) {
+  // Treat null digests as deletions. They'll shadow any previous entries.
+  if (!entry.integrity) {
+    return null
+  }
+  return {
+    key: entry.key,
+    integrity: entry.integrity,
+    path: contentPath(cache, entry.integrity),
+    size: entry.size,
+    time: entry.time,
+    metadata: entry.metadata
+  }
+}
+
+function readdirOrEmpty (dir) {
+  return readdir(dir).catch((err) => {
+    if (err.code === 'ENOENT' || err.code === 'ENOTDIR') {
+      return []
+    }
+
+    throw err
+  })
+}
+
+
+/***/ }),
+
+/***/ 88857:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const LRU = __webpack_require__(85338)
+
+const MAX_SIZE = 50 * 1024 * 1024 // 50MB
+const MAX_AGE = 3 * 60 * 1000
+
+const MEMOIZED = new LRU({
+  max: MAX_SIZE,
+  maxAge: MAX_AGE,
+  length: (entry, key) => key.startsWith('key:') ? entry.data.length : entry.length
+})
+
+module.exports.clearMemoized = clearMemoized
+
+function clearMemoized () {
+  const old = {}
+  MEMOIZED.forEach((v, k) => {
+    old[k] = v
+  })
+  MEMOIZED.reset()
+  return old
+}
+
+module.exports.put = put
+
+function put (cache, entry, data, opts) {
+  pickMem(opts).set(`key:${cache}:${entry.key}`, { entry, data })
+  putDigest(cache, entry.integrity, data, opts)
+}
+
+module.exports.put.byDigest = putDigest
+
+function putDigest (cache, integrity, data, opts) {
+  pickMem(opts).set(`digest:${cache}:${integrity}`, data)
+}
+
+module.exports.get = get
+
+function get (cache, key, opts) {
+  return pickMem(opts).get(`key:${cache}:${key}`)
+}
+
+module.exports.get.byDigest = getDigest
+
+function getDigest (cache, integrity, opts) {
+  return pickMem(opts).get(`digest:${cache}:${integrity}`)
+}
+
+class ObjProxy {
+  constructor (obj) {
+    this.obj = obj
+  }
+
+  get (key) {
+    return this.obj[key]
+  }
+
+  set (key, val) {
+    this.obj[key] = val
+  }
+}
+
+function pickMem (opts) {
+  if (!opts || !opts.memoize) {
+    return MEMOIZED
+  } else if (opts.memoize.get && opts.memoize.set) {
+    return opts.memoize
+  } else if (typeof opts.memoize === 'object') {
+    return new ObjProxy(opts.memoize)
+  } else {
+    return MEMOIZED
+  }
+}
+
+
+/***/ }),
+
+/***/ 24379:
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports.disposer = disposer
+
+function disposer (creatorFn, disposerFn, fn) {
+  const runDisposer = (resource, result, shouldThrow = false) => {
+    return disposerFn(resource)
+      .then(
+        // disposer resolved, do something with original fn's promise
+        () => {
+          if (shouldThrow) {
+            throw result
+          }
+          return result
+        },
+        // Disposer fn failed, crash process
+        (err) => {
+          throw err
+          // Or process.exit?
+        })
+  }
+
+  return creatorFn
+    .then((resource) => {
+      // fn(resource) can throw, so wrap in a promise here
+      return Promise.resolve().then(() => fn(resource))
+        .then((result) => runDisposer(resource, result))
+        .catch((err) => runDisposer(resource, err, true))
+    })
+}
+
+
+/***/ }),
+
+/***/ 53320:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(31669)
+
+const chownr = util.promisify(__webpack_require__(97512))
+const mkdirp = __webpack_require__(18356)
+const inflight = __webpack_require__(10820)
+const inferOwner = __webpack_require__(36219)
+
+// Memoize getuid()/getgid() calls.
+// patch process.setuid/setgid to invalidate cached value on change
+const self = { uid: null, gid: null }
+const getSelf = () => {
+  if (typeof self.uid !== 'number') {
+    self.uid = process.getuid()
+    const setuid = process.setuid
+    process.setuid = (uid) => {
+      self.uid = null
+      process.setuid = setuid
+      return process.setuid(uid)
+    }
+  }
+  if (typeof self.gid !== 'number') {
+    self.gid = process.getgid()
+    const setgid = process.setgid
+    process.setgid = (gid) => {
+      self.gid = null
+      process.setgid = setgid
+      return process.setgid(gid)
+    }
+  }
+}
+
+module.exports.chownr = fixOwner
+
+function fixOwner (cache, filepath) {
+  if (!process.getuid) {
+    // This platform doesn't need ownership fixing
+    return Promise.resolve()
+  }
+
+  getSelf()
+  if (self.uid !== 0) {
+    // almost certainly can't chown anyway
+    return Promise.resolve()
+  }
+
+  return Promise.resolve(inferOwner(cache)).then((owner) => {
+    const { uid, gid } = owner
+
+    // No need to override if it's already what we used.
+    if (self.uid === uid && self.gid === gid) {
+      return
+    }
+
+    return inflight('fixOwner: fixing ownership on ' + filepath, () =>
+      chownr(
+        filepath,
+        typeof uid === 'number' ? uid : self.uid,
+        typeof gid === 'number' ? gid : self.gid
+      ).catch((err) => {
+        if (err.code === 'ENOENT') {
+          return null
+        }
+        throw err
+      })
+    )
+  })
+}
+
+module.exports.chownr.sync = fixOwnerSync
+
+function fixOwnerSync (cache, filepath) {
+  if (!process.getuid) {
+    // This platform doesn't need ownership fixing
+    return
+  }
+  const { uid, gid } = inferOwner.sync(cache)
+  getSelf()
+  if (self.uid !== 0) {
+    // almost certainly can't chown anyway
+    return
+  }
+
+  if (self.uid === uid && self.gid === gid) {
+    // No need to override if it's already what we used.
+    return
+  }
+  try {
+    chownr.sync(
+      filepath,
+      typeof uid === 'number' ? uid : self.uid,
+      typeof gid === 'number' ? gid : self.gid
+    )
+  } catch (err) {
+    // only catch ENOENT, any other error is a problem.
+    if (err.code === 'ENOENT') {
+      return null
+    }
+    throw err
+  }
+}
+
+module.exports.mkdirfix = mkdirfix
+
+function mkdirfix (cache, p, cb) {
+  // we have to infer the owner _before_ making the directory, even though
+  // we aren't going to use the results, since the cache itself might not
+  // exist yet.  If we mkdirp it, then our current uid/gid will be assumed
+  // to be correct if it creates the cache folder in the process.
+  return Promise.resolve(inferOwner(cache)).then(() => {
+    return mkdirp(p)
+      .then((made) => {
+        if (made) {
+          return fixOwner(cache, made).then(() => made)
+        }
+      })
+      .catch((err) => {
+        if (err.code === 'EEXIST') {
+          return fixOwner(cache, p).then(() => null)
+        }
+        throw err
+      })
+  })
+}
+
+module.exports.mkdirfix.sync = mkdirfixSync
+
+function mkdirfixSync (cache, p) {
+  try {
+    inferOwner.sync(cache)
+    const made = mkdirp.sync(p)
+    if (made) {
+      fixOwnerSync(cache, made)
+      return made
+    }
+  } catch (err) {
+    if (err.code === 'EEXIST') {
+      fixOwnerSync(cache, p)
+      return null
+    } else {
+      throw err
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ 45580:
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = hashToSegments
+
+function hashToSegments (hash) {
+  return [hash.slice(0, 2), hash.slice(2, 4), hash.slice(4)]
+}
+
+
+/***/ }),
+
+/***/ 96873:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const fs = __webpack_require__(35747)
+const util = __webpack_require__(31669)
+const chmod = util.promisify(fs.chmod)
+const unlink = util.promisify(fs.unlink)
+const stat = util.promisify(fs.stat)
+const move = __webpack_require__(49057)
+const pinflight = __webpack_require__(10820)
+
+module.exports = moveFile
+
+function moveFile (src, dest) {
+  const isWindows = global.__CACACHE_TEST_FAKE_WINDOWS__ ||
+    process.platform === 'win32'
+
+  // This isn't quite an fs.rename -- the assumption is that
+  // if `dest` already exists, and we get certain errors while
+  // trying to move it, we should just not bother.
+  //
+  // In the case of cache corruption, users will receive an
+  // EINTEGRITY error elsewhere, and can remove the offending
+  // content their own way.
+  //
+  // Note that, as the name suggests, this strictly only supports file moves.
+  return new Promise((resolve, reject) => {
+    fs.link(src, dest, (err) => {
+      if (err) {
+        if (isWindows && err.code === 'EPERM') {
+          // XXX This is a really weird way to handle this situation, as it
+          // results in the src file being deleted even though the dest
+          // might not exist.  Since we pretty much always write files to
+          // deterministic locations based on content hash, this is likely
+          // ok (or at worst, just ends in a future cache miss).  But it would
+          // be worth investigating at some time in the future if this is
+          // really what we want to do here.
+          return resolve()
+        } else if (err.code === 'EEXIST' || err.code === 'EBUSY') {
+          // file already exists, so whatever
+          return resolve()
+        } else {
+          return reject(err)
+        }
+      } else {
+        return resolve()
+      }
+    })
+  })
+    .then(() => {
+      // content should never change for any reason, so make it read-only
+      return Promise.all([
+        unlink(src),
+        !isWindows && chmod(dest, '0444')
+      ])
+    })
+    .catch(() => {
+      return pinflight('cacache-move-file:' + dest, () => {
+        return stat(dest).catch((err) => {
+          if (err.code !== 'ENOENT') {
+            // Something else is wrong here. Bail bail bail
+            throw err
+          }
+          // file doesn't already exist! let's try a rename -> copy fallback
+          // only delete if it successfully copies
+          return move(src, dest)
+        })
+      })
+    })
+}
+
+
+/***/ }),
+
+/***/ 86502:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(31669)
+
+const fixOwner = __webpack_require__(53320)
+const path = __webpack_require__(85622)
+const rimraf = util.promisify(__webpack_require__(18530))
+const uniqueFilename = __webpack_require__(37391)
+const { disposer } = __webpack_require__(24379)
+
+module.exports.mkdir = mktmpdir
+
+function mktmpdir (cache, opts = {}) {
+  const { tmpPrefix } = opts
+  const tmpTarget = uniqueFilename(path.join(cache, 'tmp'), tmpPrefix)
+  return fixOwner.mkdirfix(cache, tmpTarget).then(() => {
+    return tmpTarget
+  })
+}
+
+module.exports.withTmp = withTmp
+
+function withTmp (cache, opts, cb) {
+  if (!cb) {
+    cb = opts
+    opts = {}
+  }
+  return disposer(mktmpdir(cache, opts), rimraf, cb)
+}
+
+module.exports.fix = fixtmpdir
+
+function fixtmpdir (cache) {
+  return fixOwner(cache, path.join(cache, 'tmp'))
+}
+
+
+/***/ }),
+
+/***/ 76713:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(31669)
+
+const pMap = __webpack_require__(62370)
+const contentPath = __webpack_require__(94062)
+const fixOwner = __webpack_require__(53320)
+const fs = __webpack_require__(35747)
+const fsm = __webpack_require__(12699)
+const glob = util.promisify(__webpack_require__(48420))
+const index = __webpack_require__(79089)
+const path = __webpack_require__(85622)
+const rimraf = util.promisify(__webpack_require__(18530))
+const ssri = __webpack_require__(16096)
+
+const hasOwnProperty = (obj, key) =>
+  Object.prototype.hasOwnProperty.call(obj, key)
+
+const stat = util.promisify(fs.stat)
+const truncate = util.promisify(fs.truncate)
+const writeFile = util.promisify(fs.writeFile)
+const readFile = util.promisify(fs.readFile)
+
+const verifyOpts = (opts) => ({
+  concurrency: 20,
+  log: { silly () {} },
+  ...opts
+})
+
+module.exports = verify
+
+function verify (cache, opts) {
+  opts = verifyOpts(opts)
+  opts.log.silly('verify', 'verifying cache at', cache)
+
+  const steps = [
+    markStartTime,
+    fixPerms,
+    garbageCollect,
+    rebuildIndex,
+    cleanTmp,
+    writeVerifile,
+    markEndTime
+  ]
+
+  return steps
+    .reduce((promise, step, i) => {
+      const label = step.name
+      const start = new Date()
+      return promise.then((stats) => {
+        return step(cache, opts).then((s) => {
+          s &&
+            Object.keys(s).forEach((k) => {
+              stats[k] = s[k]
+            })
+          const end = new Date()
+          if (!stats.runTime) {
+            stats.runTime = {}
+          }
+          stats.runTime[label] = end - start
+          return Promise.resolve(stats)
+        })
+      })
+    }, Promise.resolve({}))
+    .then((stats) => {
+      stats.runTime.total = stats.endTime - stats.startTime
+      opts.log.silly(
+        'verify',
+        'verification finished for',
+        cache,
+        'in',
+        `${stats.runTime.total}ms`
+      )
+      return stats
+    })
+}
+
+function markStartTime (cache, opts) {
+  return Promise.resolve({ startTime: new Date() })
+}
+
+function markEndTime (cache, opts) {
+  return Promise.resolve({ endTime: new Date() })
+}
+
+function fixPerms (cache, opts) {
+  opts.log.silly('verify', 'fixing cache permissions')
+  return fixOwner
+    .mkdirfix(cache, cache)
+    .then(() => {
+      // TODO - fix file permissions too
+      return fixOwner.chownr(cache, cache)
+    })
+    .then(() => null)
+}
+
+// Implements a naive mark-and-sweep tracing garbage collector.
+//
+// The algorithm is basically as follows:
+// 1. Read (and filter) all index entries ("pointers")
+// 2. Mark each integrity value as "live"
+// 3. Read entire filesystem tree in `content-vX/` dir
+// 4. If content is live, verify its checksum and delete it if it fails
+// 5. If content is not marked as live, rimraf it.
+//
+function garbageCollect (cache, opts) {
+  opts.log.silly('verify', 'garbage collecting content')
+  const indexStream = index.lsStream(cache)
+  const liveContent = new Set()
+  indexStream.on('data', (entry) => {
+    if (opts.filter && !opts.filter(entry)) {
+      return
+    }
+    liveContent.add(entry.integrity.toString())
+  })
+  return new Promise((resolve, reject) => {
+    indexStream.on('end', resolve).on('error', reject)
+  }).then(() => {
+    const contentDir = contentPath.contentDir(cache)
+    return glob(path.join(contentDir, '**'), {
+      follow: false,
+      nodir: true,
+      nosort: true
+    }).then((files) => {
+      return Promise.resolve({
+        verifiedContent: 0,
+        reclaimedCount: 0,
+        reclaimedSize: 0,
+        badContentCount: 0,
+        keptSize: 0
+      }).then((stats) =>
+        pMap(
+          files,
+          (f) => {
+            const split = f.split(/[/\\]/)
+            const digest = split.slice(split.length - 3).join('')
+            const algo = split[split.length - 4]
+            const integrity = ssri.fromHex(digest, algo)
+            if (liveContent.has(integrity.toString())) {
+              return verifyContent(f, integrity).then((info) => {
+                if (!info.valid) {
+                  stats.reclaimedCount++
+                  stats.badContentCount++
+                  stats.reclaimedSize += info.size
+                } else {
+                  stats.verifiedContent++
+                  stats.keptSize += info.size
+                }
+                return stats
+              })
+            } else {
+              // No entries refer to this content. We can delete.
+              stats.reclaimedCount++
+              return stat(f).then((s) => {
+                return rimraf(f).then(() => {
+                  stats.reclaimedSize += s.size
+                  return stats
+                })
+              })
+            }
+          },
+          { concurrency: opts.concurrency }
+        ).then(() => stats)
+      )
+    })
+  })
+}
+
+function verifyContent (filepath, sri) {
+  return stat(filepath)
+    .then((s) => {
+      const contentInfo = {
+        size: s.size,
+        valid: true
+      }
+      return ssri
+        .checkStream(new fsm.ReadStream(filepath), sri)
+        .catch((err) => {
+          if (err.code !== 'EINTEGRITY') {
+            throw err
+          }
+          return rimraf(filepath).then(() => {
+            contentInfo.valid = false
+          })
+        })
+        .then(() => contentInfo)
+    })
+    .catch((err) => {
+      if (err.code === 'ENOENT') {
+        return { size: 0, valid: false }
+      }
+      throw err
+    })
+}
+
+function rebuildIndex (cache, opts) {
+  opts.log.silly('verify', 'rebuilding index')
+  return index.ls(cache).then((entries) => {
+    const stats = {
+      missingContent: 0,
+      rejectedEntries: 0,
+      totalEntries: 0
+    }
+    const buckets = {}
+    for (const k in entries) {
+      /* istanbul ignore else */
+      if (hasOwnProperty(entries, k)) {
+        const hashed = index.hashKey(k)
+        const entry = entries[k]
+        const excluded = opts.filter && !opts.filter(entry)
+        excluded && stats.rejectedEntries++
+        if (buckets[hashed] && !excluded) {
+          buckets[hashed].push(entry)
+        } else if (buckets[hashed] && excluded) {
+          // skip
+        } else if (excluded) {
+          buckets[hashed] = []
+          buckets[hashed]._path = index.bucketPath(cache, k)
+        } else {
+          buckets[hashed] = [entry]
+          buckets[hashed]._path = index.bucketPath(cache, k)
+        }
+      }
+    }
+    return pMap(
+      Object.keys(buckets),
+      (key) => {
+        return rebuildBucket(cache, buckets[key], stats, opts)
+      },
+      { concurrency: opts.concurrency }
+    ).then(() => stats)
+  })
+}
+
+function rebuildBucket (cache, bucket, stats, opts) {
+  return truncate(bucket._path).then(() => {
+    // This needs to be serialized because cacache explicitly
+    // lets very racy bucket conflicts clobber each other.
+    return bucket.reduce((promise, entry) => {
+      return promise.then(() => {
+        const content = contentPath(cache, entry.integrity)
+        return stat(content)
+          .then(() => {
+            return index
+              .insert(cache, entry.key, entry.integrity, {
+                metadata: entry.metadata,
+                size: entry.size
+              })
+              .then(() => {
+                stats.totalEntries++
+              })
+          })
+          .catch((err) => {
+            if (err.code === 'ENOENT') {
+              stats.rejectedEntries++
+              stats.missingContent++
+              return
+            }
+            throw err
+          })
+      })
+    }, Promise.resolve())
+  })
+}
+
+function cleanTmp (cache, opts) {
+  opts.log.silly('verify', 'cleaning tmp directory')
+  return rimraf(path.join(cache, 'tmp'))
+}
+
+function writeVerifile (cache, opts) {
+  const verifile = path.join(cache, '_lastverified')
+  opts.log.silly('verify', 'writing verifile to ' + verifile)
+  try {
+    return writeFile(verifile, '' + +new Date())
+  } finally {
+    fixOwner.chownr.sync(cache, verifile)
+  }
+}
+
+module.exports.lastRun = lastRun
+
+function lastRun (cache) {
+  return readFile(path.join(cache, '_lastverified'), 'utf8').then(
+    (data) => new Date(+data)
+  )
+}
+
+
+/***/ }),
+
+/***/ 82183:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const index = __webpack_require__(79089)
+
+module.exports = index.ls
+module.exports.stream = index.lsStream
+
+
+/***/ }),
+
+/***/ 74381:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const index = __webpack_require__(79089)
+const memo = __webpack_require__(88857)
+const write = __webpack_require__(81593)
+const Flush = __webpack_require__(50540)
+const { PassThrough } = __webpack_require__(46405)
+const Pipeline = __webpack_require__(60722)
+
+const putOpts = (opts) => ({
+  algorithms: ['sha512'],
+  ...opts
+})
+
+module.exports = putData
+
+function putData (cache, key, data, opts = {}) {
+  const { memoize } = opts
+  opts = putOpts(opts)
+  return write(cache, data, opts).then((res) => {
+    return index
+      .insert(cache, key, res.integrity, { ...opts, size: res.size })
+      .then((entry) => {
+        if (memoize) {
+          memo.put(cache, entry, data, opts)
+        }
+        return res.integrity
+      })
+  })
+}
+
+module.exports.stream = putStream
+
+function putStream (cache, key, opts = {}) {
+  const { memoize } = opts
+  opts = putOpts(opts)
+  let integrity
+  let size
+
+  let memoData
+  const pipeline = new Pipeline()
+  // first item in the pipeline is the memoizer, because we need
+  // that to end first and get the collected data.
+  if (memoize) {
+    const memoizer = new PassThrough().on('collect', data => {
+      memoData = data
+    })
+    pipeline.push(memoizer)
+  }
+
+  // contentStream is a write-only, not a passthrough
+  // no data comes out of it.
+  const contentStream = write.stream(cache, opts)
+    .on('integrity', (int) => {
+      integrity = int
+    })
+    .on('size', (s) => {
+      size = s
+    })
+
+  pipeline.push(contentStream)
+
+  // last but not least, we write the index and emit hash and size,
+  // and memoize if we're doing that
+  pipeline.push(new Flush({
+    flush () {
+      return index
+        .insert(cache, key, integrity, { ...opts, size })
+        .then((entry) => {
+          if (memoize && memoData) {
+            memo.put(cache, entry, memoData, opts)
+          }
+          if (integrity) {
+            pipeline.emit('integrity', integrity)
+          }
+          if (size) {
+            pipeline.emit('size', size)
+          }
+        })
+    }
+  }))
+
+  return pipeline
+}
+
+
+/***/ }),
+
+/***/ 39754:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(31669)
+
+const index = __webpack_require__(79089)
+const memo = __webpack_require__(88857)
+const path = __webpack_require__(85622)
+const rimraf = util.promisify(__webpack_require__(18530))
+const rmContent = __webpack_require__(57929)
+
+module.exports = entry
+module.exports.entry = entry
+
+function entry (cache, key) {
+  memo.clearMemoized()
+  return index.delete(cache, key)
+}
+
+module.exports.content = content
+
+function content (cache, integrity) {
+  memo.clearMemoized()
+  return rmContent(cache, integrity)
+}
+
+module.exports.all = all
+
+function all (cache) {
+  memo.clearMemoized()
+  return rimraf(path.join(cache, '*(content-*|index-*)'))
+}
+
+
+/***/ }),
+
+/***/ 18976:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = __webpack_require__(76713)
+
 
 /***/ }),
 
@@ -90502,7 +90503,7 @@ const {hashObjectTask} = __webpack_require__(85246);
 const {initTask} = __webpack_require__(49078);
 const {logTask, parseLogOptions} = __webpack_require__(63833);
 const {mergeTask} = __webpack_require__(12386);
-const {moveTask} = __webpack_require__(48433);
+const {moveTask} = __webpack_require__(63651);
 const {pullTask} = __webpack_require__(80279);
 const {pushTagsTask} = __webpack_require__(40537);
 const {addRemoteTask, getRemotesTask, listRemotesTask, remoteTask, removeRemoteTask} = __webpack_require__(10083);
@@ -94307,7 +94308,7 @@ exports.mergeTask = mergeTask;
 
 /***/ }),
 
-/***/ 48433:
+/***/ 63651:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -107336,14 +107337,6 @@ module.exports = eval("require")("bluebird");
 
 /***/ }),
 
-/***/ 84340:
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse('{"Jw":{"k":"2","K":"5"}}');
-
-/***/ }),
-
 /***/ 97219:
 /***/ ((module) => {
 
@@ -107381,6 +107374,14 @@ module.exports = JSON.parse('{"amp":"&","apos":"\'","gt":">","lt":"<","quot":"\\
 
 "use strict";
 module.exports = JSON.parse('{"acl":{"arity":-2,"flags":["admin","noscript","loading","stale","skip_slowlog"],"keyStart":0,"keyStop":0,"step":0},"append":{"arity":3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"asking":{"arity":1,"flags":["fast"],"keyStart":0,"keyStop":0,"step":0},"auth":{"arity":-2,"flags":["noscript","loading","stale","skip_monitor","skip_slowlog","fast","no_auth"],"keyStart":0,"keyStop":0,"step":0},"bgrewriteaof":{"arity":1,"flags":["admin","noscript"],"keyStart":0,"keyStop":0,"step":0},"bgsave":{"arity":-1,"flags":["admin","noscript"],"keyStart":0,"keyStop":0,"step":0},"bitcount":{"arity":-2,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"bitfield":{"arity":-2,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"bitfield_ro":{"arity":-2,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"bitop":{"arity":-4,"flags":["write","denyoom"],"keyStart":2,"keyStop":-1,"step":1},"bitpos":{"arity":-3,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"blmove":{"arity":6,"flags":["write","denyoom","noscript"],"keyStart":1,"keyStop":2,"step":1},"blpop":{"arity":-3,"flags":["write","noscript"],"keyStart":1,"keyStop":-2,"step":1},"brpop":{"arity":-3,"flags":["write","noscript"],"keyStart":1,"keyStop":-2,"step":1},"brpoplpush":{"arity":4,"flags":["write","denyoom","noscript"],"keyStart":1,"keyStop":2,"step":1},"bzpopmax":{"arity":-3,"flags":["write","noscript","fast"],"keyStart":1,"keyStop":-2,"step":1},"bzpopmin":{"arity":-3,"flags":["write","noscript","fast"],"keyStart":1,"keyStop":-2,"step":1},"client":{"arity":-2,"flags":["admin","noscript","random","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"cluster":{"arity":-2,"flags":["admin","random","stale"],"keyStart":0,"keyStop":0,"step":0},"command":{"arity":-1,"flags":["random","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"config":{"arity":-2,"flags":["admin","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"copy":{"arity":-3,"flags":["write","denyoom"],"keyStart":1,"keyStop":2,"step":1},"dbsize":{"arity":1,"flags":["readonly","fast"],"keyStart":0,"keyStop":0,"step":0},"debug":{"arity":-2,"flags":["admin","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"decr":{"arity":2,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"decrby":{"arity":3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"del":{"arity":-2,"flags":["write"],"keyStart":1,"keyStop":-1,"step":1},"discard":{"arity":1,"flags":["noscript","loading","stale","fast"],"keyStart":0,"keyStop":0,"step":0},"dump":{"arity":2,"flags":["readonly","random"],"keyStart":1,"keyStop":1,"step":1},"echo":{"arity":2,"flags":["fast"],"keyStart":0,"keyStop":0,"step":0},"eval":{"arity":-3,"flags":["noscript","may_replicate","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"evalsha":{"arity":-3,"flags":["noscript","may_replicate","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"exec":{"arity":1,"flags":["noscript","loading","stale","skip_monitor","skip_slowlog"],"keyStart":0,"keyStop":0,"step":0},"exists":{"arity":-2,"flags":["readonly","fast"],"keyStart":1,"keyStop":-1,"step":1},"expire":{"arity":3,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"expireat":{"arity":3,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"failover":{"arity":-1,"flags":["admin","noscript","stale"],"keyStart":0,"keyStop":0,"step":0},"flushall":{"arity":-1,"flags":["write"],"keyStart":0,"keyStop":0,"step":0},"flushdb":{"arity":-1,"flags":["write"],"keyStart":0,"keyStop":0,"step":0},"geoadd":{"arity":-5,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"geodist":{"arity":-4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"geohash":{"arity":-2,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"geopos":{"arity":-2,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"georadius":{"arity":-6,"flags":["write","denyoom","movablekeys"],"keyStart":1,"keyStop":1,"step":1},"georadius_ro":{"arity":-6,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"georadiusbymember":{"arity":-5,"flags":["write","denyoom","movablekeys"],"keyStart":1,"keyStop":1,"step":1},"georadiusbymember_ro":{"arity":-5,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"geosearch":{"arity":-7,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"geosearchstore":{"arity":-8,"flags":["write","denyoom"],"keyStart":1,"keyStop":2,"step":1},"get":{"arity":2,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"getbit":{"arity":3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"getdel":{"arity":2,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"getex":{"arity":-2,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"getrange":{"arity":4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"getset":{"arity":3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"hdel":{"arity":-3,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"hello":{"arity":-1,"flags":["noscript","loading","stale","skip_monitor","skip_slowlog","fast","no_auth"],"keyStart":0,"keyStop":0,"step":0},"hexists":{"arity":3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"hget":{"arity":3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"hgetall":{"arity":2,"flags":["readonly","random"],"keyStart":1,"keyStop":1,"step":1},"hincrby":{"arity":4,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"hincrbyfloat":{"arity":4,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"hkeys":{"arity":2,"flags":["readonly","sort_for_script"],"keyStart":1,"keyStop":1,"step":1},"hlen":{"arity":2,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"hmget":{"arity":-3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"hmset":{"arity":-4,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"host:":{"arity":-1,"flags":["readonly","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"hrandfield":{"arity":-2,"flags":["readonly","random"],"keyStart":1,"keyStop":1,"step":1},"hscan":{"arity":-3,"flags":["readonly","random"],"keyStart":1,"keyStop":1,"step":1},"hset":{"arity":-4,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"hsetnx":{"arity":4,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"hstrlen":{"arity":3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"hvals":{"arity":2,"flags":["readonly","sort_for_script"],"keyStart":1,"keyStop":1,"step":1},"incr":{"arity":2,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"incrby":{"arity":3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"incrbyfloat":{"arity":3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"info":{"arity":-1,"flags":["random","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"keys":{"arity":2,"flags":["readonly","sort_for_script"],"keyStart":0,"keyStop":0,"step":0},"lastsave":{"arity":1,"flags":["random","loading","stale","fast"],"keyStart":0,"keyStop":0,"step":0},"latency":{"arity":-2,"flags":["admin","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"lindex":{"arity":3,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"linsert":{"arity":5,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"llen":{"arity":2,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"lmove":{"arity":5,"flags":["write","denyoom"],"keyStart":1,"keyStop":2,"step":1},"lolwut":{"arity":-1,"flags":["readonly","fast"],"keyStart":0,"keyStop":0,"step":0},"lpop":{"arity":-2,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"lpos":{"arity":-3,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"lpush":{"arity":-3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"lpushx":{"arity":-3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"lrange":{"arity":4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"lrem":{"arity":4,"flags":["write"],"keyStart":1,"keyStop":1,"step":1},"lset":{"arity":4,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"ltrim":{"arity":4,"flags":["write"],"keyStart":1,"keyStop":1,"step":1},"memory":{"arity":-2,"flags":["readonly","random","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"mget":{"arity":-2,"flags":["readonly","fast"],"keyStart":1,"keyStop":-1,"step":1},"migrate":{"arity":-6,"flags":["write","random","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"module":{"arity":-2,"flags":["admin","noscript"],"keyStart":0,"keyStop":0,"step":0},"monitor":{"arity":1,"flags":["admin","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"move":{"arity":3,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"mset":{"arity":-3,"flags":["write","denyoom"],"keyStart":1,"keyStop":-1,"step":2},"msetnx":{"arity":-3,"flags":["write","denyoom"],"keyStart":1,"keyStop":-1,"step":2},"multi":{"arity":1,"flags":["noscript","loading","stale","fast"],"keyStart":0,"keyStop":0,"step":0},"object":{"arity":-2,"flags":["readonly","random"],"keyStart":2,"keyStop":2,"step":1},"persist":{"arity":2,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"pexpire":{"arity":3,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"pexpireat":{"arity":3,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"pfadd":{"arity":-2,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"pfcount":{"arity":-2,"flags":["readonly","may_replicate"],"keyStart":1,"keyStop":-1,"step":1},"pfdebug":{"arity":-3,"flags":["write","denyoom","admin"],"keyStart":2,"keyStop":2,"step":1},"pfmerge":{"arity":-2,"flags":["write","denyoom"],"keyStart":1,"keyStop":-1,"step":1},"pfselftest":{"arity":1,"flags":["admin"],"keyStart":0,"keyStop":0,"step":0},"ping":{"arity":-1,"flags":["stale","fast"],"keyStart":0,"keyStop":0,"step":0},"post":{"arity":-1,"flags":["readonly","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"psetex":{"arity":4,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"psubscribe":{"arity":-2,"flags":["pubsub","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"psync":{"arity":-3,"flags":["admin","noscript"],"keyStart":0,"keyStop":0,"step":0},"pttl":{"arity":2,"flags":["readonly","random","fast"],"keyStart":1,"keyStop":1,"step":1},"publish":{"arity":3,"flags":["pubsub","loading","stale","fast","may_replicate"],"keyStart":0,"keyStop":0,"step":0},"pubsub":{"arity":-2,"flags":["pubsub","random","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"punsubscribe":{"arity":-1,"flags":["pubsub","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"quit":{"arity":1,"flags":["loading","stale","readonly"],"keyStart":0,"keyStop":0,"step":0},"randomkey":{"arity":1,"flags":["readonly","random"],"keyStart":0,"keyStop":0,"step":0},"readonly":{"arity":1,"flags":["fast"],"keyStart":0,"keyStop":0,"step":0},"readwrite":{"arity":1,"flags":["fast"],"keyStart":0,"keyStop":0,"step":0},"rename":{"arity":3,"flags":["write"],"keyStart":1,"keyStop":2,"step":1},"renamenx":{"arity":3,"flags":["write","fast"],"keyStart":1,"keyStop":2,"step":1},"replconf":{"arity":-1,"flags":["admin","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"replicaof":{"arity":3,"flags":["admin","noscript","stale"],"keyStart":0,"keyStop":0,"step":0},"reset":{"arity":1,"flags":["noscript","loading","stale","fast"],"keyStart":0,"keyStop":0,"step":0},"restore":{"arity":-4,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"restore-asking":{"arity":-4,"flags":["write","denyoom","asking"],"keyStart":1,"keyStop":1,"step":1},"role":{"arity":1,"flags":["noscript","loading","stale","fast"],"keyStart":0,"keyStop":0,"step":0},"rpop":{"arity":-2,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"rpoplpush":{"arity":3,"flags":["write","denyoom"],"keyStart":1,"keyStop":2,"step":1},"rpush":{"arity":-3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"rpushx":{"arity":-3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"sadd":{"arity":-3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"save":{"arity":1,"flags":["admin","noscript"],"keyStart":0,"keyStop":0,"step":0},"scan":{"arity":-2,"flags":["readonly","random"],"keyStart":0,"keyStop":0,"step":0},"scard":{"arity":2,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"script":{"arity":-2,"flags":["noscript","may_replicate"],"keyStart":0,"keyStop":0,"step":0},"sdiff":{"arity":-2,"flags":["readonly","sort_for_script"],"keyStart":1,"keyStop":-1,"step":1},"sdiffstore":{"arity":-3,"flags":["write","denyoom"],"keyStart":1,"keyStop":-1,"step":1},"select":{"arity":2,"flags":["loading","stale","fast"],"keyStart":0,"keyStop":0,"step":0},"set":{"arity":-3,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"setbit":{"arity":4,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"setex":{"arity":4,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"setnx":{"arity":3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"setrange":{"arity":4,"flags":["write","denyoom"],"keyStart":1,"keyStop":1,"step":1},"shutdown":{"arity":-1,"flags":["admin","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"sinter":{"arity":-2,"flags":["readonly","sort_for_script"],"keyStart":1,"keyStop":-1,"step":1},"sinterstore":{"arity":-3,"flags":["write","denyoom"],"keyStart":1,"keyStop":-1,"step":1},"sismember":{"arity":3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"slaveof":{"arity":3,"flags":["admin","noscript","stale"],"keyStart":0,"keyStop":0,"step":0},"slowlog":{"arity":-2,"flags":["admin","random","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"smembers":{"arity":2,"flags":["readonly","sort_for_script"],"keyStart":1,"keyStop":1,"step":1},"smismember":{"arity":-3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"smove":{"arity":4,"flags":["write","fast"],"keyStart":1,"keyStop":2,"step":1},"sort":{"arity":-2,"flags":["write","denyoom","movablekeys"],"keyStart":1,"keyStop":1,"step":1},"spop":{"arity":-2,"flags":["write","random","fast"],"keyStart":1,"keyStop":1,"step":1},"srandmember":{"arity":-2,"flags":["readonly","random"],"keyStart":1,"keyStop":1,"step":1},"srem":{"arity":-3,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"sscan":{"arity":-3,"flags":["readonly","random"],"keyStart":1,"keyStop":1,"step":1},"stralgo":{"arity":-2,"flags":["readonly","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"strlen":{"arity":2,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"subscribe":{"arity":-2,"flags":["pubsub","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"substr":{"arity":4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"sunion":{"arity":-2,"flags":["readonly","sort_for_script"],"keyStart":1,"keyStop":-1,"step":1},"sunionstore":{"arity":-3,"flags":["write","denyoom"],"keyStart":1,"keyStop":-1,"step":1},"swapdb":{"arity":3,"flags":["write","fast"],"keyStart":0,"keyStop":0,"step":0},"sync":{"arity":1,"flags":["admin","noscript"],"keyStart":0,"keyStop":0,"step":0},"time":{"arity":1,"flags":["random","loading","stale","fast"],"keyStart":0,"keyStop":0,"step":0},"touch":{"arity":-2,"flags":["readonly","fast"],"keyStart":1,"keyStop":-1,"step":1},"ttl":{"arity":2,"flags":["readonly","random","fast"],"keyStart":1,"keyStop":1,"step":1},"type":{"arity":2,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"unlink":{"arity":-2,"flags":["write","fast"],"keyStart":1,"keyStop":-1,"step":1},"unsubscribe":{"arity":-1,"flags":["pubsub","noscript","loading","stale"],"keyStart":0,"keyStop":0,"step":0},"unwatch":{"arity":1,"flags":["noscript","loading","stale","fast"],"keyStart":0,"keyStop":0,"step":0},"wait":{"arity":3,"flags":["noscript"],"keyStart":0,"keyStop":0,"step":0},"watch":{"arity":-2,"flags":["noscript","loading","stale","fast"],"keyStart":1,"keyStop":-1,"step":1},"xack":{"arity":-4,"flags":["write","random","fast"],"keyStart":1,"keyStop":1,"step":1},"xadd":{"arity":-5,"flags":["write","denyoom","random","fast"],"keyStart":1,"keyStop":1,"step":1},"xautoclaim":{"arity":-6,"flags":["write","random","fast"],"keyStart":1,"keyStop":1,"step":1},"xclaim":{"arity":-6,"flags":["write","random","fast"],"keyStart":1,"keyStop":1,"step":1},"xdel":{"arity":-3,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"xgroup":{"arity":-2,"flags":["write","denyoom"],"keyStart":2,"keyStop":2,"step":1},"xinfo":{"arity":-2,"flags":["readonly","random"],"keyStart":2,"keyStop":2,"step":1},"xlen":{"arity":2,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"xpending":{"arity":-3,"flags":["readonly","random"],"keyStart":1,"keyStop":1,"step":1},"xrange":{"arity":-4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"xread":{"arity":-4,"flags":["readonly","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"xreadgroup":{"arity":-7,"flags":["write","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"xrevrange":{"arity":-4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"xsetid":{"arity":3,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"xtrim":{"arity":-2,"flags":["write","random"],"keyStart":1,"keyStop":1,"step":1},"zadd":{"arity":-4,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"zcard":{"arity":2,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"zcount":{"arity":4,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"zdiff":{"arity":-3,"flags":["readonly","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"zdiffstore":{"arity":-4,"flags":["write","denyoom","movablekeys"],"keyStart":1,"keyStop":1,"step":1},"zincrby":{"arity":4,"flags":["write","denyoom","fast"],"keyStart":1,"keyStop":1,"step":1},"zinter":{"arity":-3,"flags":["readonly","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"zinterstore":{"arity":-4,"flags":["write","denyoom","movablekeys"],"keyStart":1,"keyStop":1,"step":1},"zlexcount":{"arity":4,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"zmscore":{"arity":-3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"zpopmax":{"arity":-2,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"zpopmin":{"arity":-2,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"zrandmember":{"arity":-2,"flags":["readonly","random"],"keyStart":1,"keyStop":1,"step":1},"zrange":{"arity":-4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"zrangebylex":{"arity":-4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"zrangebyscore":{"arity":-4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"zrangestore":{"arity":-5,"flags":["write","denyoom"],"keyStart":1,"keyStop":2,"step":1},"zrank":{"arity":3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"zrem":{"arity":-3,"flags":["write","fast"],"keyStart":1,"keyStop":1,"step":1},"zremrangebylex":{"arity":4,"flags":["write"],"keyStart":1,"keyStop":1,"step":1},"zremrangebyrank":{"arity":4,"flags":["write"],"keyStart":1,"keyStop":1,"step":1},"zremrangebyscore":{"arity":4,"flags":["write"],"keyStart":1,"keyStop":1,"step":1},"zrevrange":{"arity":-4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"zrevrangebylex":{"arity":-4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"zrevrangebyscore":{"arity":-4,"flags":["readonly"],"keyStart":1,"keyStop":1,"step":1},"zrevrank":{"arity":3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"zscan":{"arity":-3,"flags":["readonly","random"],"keyStart":1,"keyStop":1,"step":1},"zscore":{"arity":3,"flags":["readonly","fast"],"keyStart":1,"keyStop":1,"step":1},"zunion":{"arity":-3,"flags":["readonly","movablekeys"],"keyStart":0,"keyStop":0,"step":0},"zunionstore":{"arity":-4,"flags":["write","denyoom","movablekeys"],"keyStart":1,"keyStop":1,"step":1}}');
+
+/***/ }),
+
+/***/ 62079:
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"Jw":{"k":"2","K":"5"}}');
 
 /***/ }),
 
