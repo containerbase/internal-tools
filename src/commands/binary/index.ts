@@ -1,9 +1,9 @@
 import 'source-map-support/register';
 import { setFailed } from '@actions/core';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
-import shell from 'shelljs';
+import * as shell from 'shelljs';
 import { getArg, getWorkspace } from '../../util';
 import { init } from '../../utils/docker/buildx';
 import {

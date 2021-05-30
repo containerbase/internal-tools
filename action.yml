@@ -43,7 +43,7 @@ inputs:
   major-minor:
     description: 'docker-builder: push major and major.minor tags'
     required: false
-    default: 'false'
+    default: 'true'
   prune:
     description: 'docker-builder: prune docker system after build'
     required: false

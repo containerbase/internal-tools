@@ -73,7 +73,7 @@ Array [
     "--name",
     "builder",
     "--volume",
-    "/.cache:/cache",
+    "./.cache:/cache",
     "--platform",
     "linux/arm64",
     "builder",
