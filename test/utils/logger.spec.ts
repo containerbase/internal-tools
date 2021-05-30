@@ -1,5 +1,5 @@
 import * as _core from '@actions/core';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import log from '../../src/utils/logger';
 import { getName, mocked } from '../utils';
 

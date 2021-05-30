@@ -3,7 +3,7 @@ import { join } from 'path';
 import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
-import findUp from 'find-up';
+import * as findUp from 'find-up';
 import { DockerArch } from './utils/docker/common';
 import { ExecError, ExecResult } from './utils/types';
 

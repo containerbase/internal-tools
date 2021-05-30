@@ -1,4 +1,4 @@
-import nock from 'nock';
+import * as nock from 'nock';
 import * as _utils from '../../src/util';
 import {
   DockerContentType,
