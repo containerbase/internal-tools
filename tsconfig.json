@@ -7,9 +7,8 @@
     "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "resolveJsonModule": false,
+    "importHelpers": true,
     "lib": ["es2019"],
     "types": ["node", "jest"]
   },
