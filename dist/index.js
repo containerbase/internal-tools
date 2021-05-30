@@ -2431,7 +2431,6 @@ __nccwpck_require__.d(__webpack_exports__, {
 var core = __nccwpck_require__(75316);
 // EXTERNAL MODULE: ../node_modules/chalk/source/index.js
 var source = __nccwpck_require__(10816);
-var source_default = /*#__PURE__*/__nccwpck_require__.n(source);
 ;// CONCATENATED MODULE: ../node_modules/strip-ansi/node_modules/ansi-regex/index.js
 function ansiRegex({onlyFirst = false} = {}) {
 	const pattern = [
@@ -2464,17 +2463,17 @@ function dir(obj) {
     console.dir(obj);
 }
 function debug(msg, ...args) {
-    write(source_default().blue('DEBUG'), msg, ...args);
+    write(source.blue('DEBUG'), msg, ...args);
 }
 function info(msg, ...args) {
-    write(source_default().green(' INFO'), msg, ...args);
+    write(source.green(' INFO'), msg, ...args);
 }
 function warn(msg, ...args) {
-    write(source_default().magenta(' WARN'), msg, ...args);
+    write(source.magenta(' WARN'), msg, ...args);
     (0,core.warning)(stripAnsi([msg, ...args].join(' ')));
 }
 function error(msg, ...args) {
-    write(source_default().red('ERROR'), msg, ...args);
+    write(source.red('ERROR'), msg, ...args);
     (0,core.error)(stripAnsi([msg, ...args].join(' ')));
 }
 const log = (m, ...args) => debug(m, ...args);
@@ -2861,7 +2860,6 @@ __nccwpck_require__.r(__webpack_exports__);
 var core = __nccwpck_require__(75316);
 // EXTERNAL MODULE: ../node_modules/chalk/source/index.js
 var source = __nccwpck_require__(10816);
-var source_default = /*#__PURE__*/__nccwpck_require__.n(source);
 ;// CONCATENATED MODULE: ./types.ts
 var Commands;
 (function (Commands) {
@@ -2879,21 +2877,21 @@ var logger = __nccwpck_require__(33433);
 
 async function run() {
     try {
-        logger/* default.info */.Z.info(source_default().blue('Renovate Docker Builder'));
+        logger/* default.info */.Z.info(source.blue('Renovate Docker Builder'));
         const cmd = (0,core.getInput)('command');
-        logger/* default.info */.Z.info(source_default().yellow('Executing:'), ` ${cmd}`);
+        logger/* default.info */.Z.info(source.yellow('Executing:'), ` ${cmd}`);
         switch (cmd) {
             case Commands.BinaryBuilder:
                 await (await Promise.all(/* import() */[__nccwpck_require__.e(213), __nccwpck_require__.e(184), __nccwpck_require__.e(600), __nccwpck_require__.e(236)]).then(__nccwpck_require__.bind(__nccwpck_require__, 90236))).run();
                 break;
             case Commands.DockerBuilder:
-                await (await Promise.all(/* import() */[__nccwpck_require__.e(213), __nccwpck_require__.e(184), __nccwpck_require__.e(317)]).then(__nccwpck_require__.bind(__nccwpck_require__, 57317))).run();
+                await (await Promise.all(/* import() */[__nccwpck_require__.e(213), __nccwpck_require__.e(184), __nccwpck_require__.e(393)]).then(__nccwpck_require__.bind(__nccwpck_require__, 95393))).run();
                 break;
             case Commands.DockerConfig:
                 await (await Promise.all(/* import() */[__nccwpck_require__.e(213), __nccwpck_require__.e(174)]).then(__nccwpck_require__.bind(__nccwpck_require__, 28174))).run();
                 break;
             default:
-                logger/* default.error */.Z.error(source_default().red('Unknown command:'), cmd);
+                logger/* default.error */.Z.error(source.red('Unknown command:'), cmd);
                 break;
         }
     }

@@ -137,7 +137,7 @@ let _pkg;
 async function resolveFile(file) {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     if (!_pkg) {
-        _pkg = find_up__WEBPACK_IMPORTED_MODULE_4___default()('package.json', { cwd: __dirname, type: 'file' });
+        _pkg = find_up__WEBPACK_IMPORTED_MODULE_4__('package.json', { cwd: __dirname, type: 'file' });
     }
     const pkg = await _pkg;
     // istanbul ignore if

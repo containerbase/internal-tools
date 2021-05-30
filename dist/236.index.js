@@ -20,7 +20,6 @@ var register = __webpack_require__(83674);
 var core = __webpack_require__(75316);
 // EXTERNAL MODULE: ../node_modules/chalk/source/index.js
 var source = __webpack_require__(10816);
-var source_default = /*#__PURE__*/__webpack_require__.n(source);
 // EXTERNAL MODULE: ../node_modules/renovate/dist/datasource/index.js
 var dist_datasource = __webpack_require__(184);
 // EXTERNAL MODULE: ../node_modules/renovate/dist/versioning/index.js
@@ -275,7 +274,7 @@ async function run() {
         const ws = (0,util/* getWorkspace */.oq)();
         const cfg = await getConfig();
         if (cfg.dryRun) {
-            logger/* default.warn */.Z.warn(source_default().yellow('[DRY_RUN] detected'));
+            logger/* default.warn */.Z.warn(source.yellow('[DRY_RUN] detected'));
             cfg.lastOnly = true;
         }
         const token = (0,util/* getArg */.a8)('token', { required: true });
@@ -294,7 +293,7 @@ async function run() {
             await updateRelease(api, cfg, version);
             if (await hasAsset(api, cfg, version)) {
                 if (cfg.dryRun) {
-                    logger/* default.warn */.Z.warn(source_default().yellow('[DRY_RUN] Would skipp existing version:'), version);
+                    logger/* default.warn */.Z.warn(source.yellow('[DRY_RUN] Would skipp existing version:'), version);
                 }
                 else {
                     (0,logger/* default */.Z)('Skipping existing version:', version);
@@ -311,7 +310,7 @@ async function run() {
                 (0,logger/* default */.Z)('Runing builder:', version);
                 await runBuilder(ws, version);
                 if (cfg.dryRun) {
-                    logger/* default.warn */.Z.warn(source_default().yellow('[DRY_RUN] Would upload release asset:'), version);
+                    logger/* default.warn */.Z.warn(source.yellow('[DRY_RUN] Would upload release asset:'), version);
                 }
                 else {
                     (0,logger/* default */.Z)('Uploading release:', version);
@@ -457,7 +456,7 @@ let _pkg;
 async function resolveFile(file) {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     if (!_pkg) {
-        _pkg = find_up__WEBPACK_IMPORTED_MODULE_4___default()('package.json', { cwd: __dirname, type: 'file' });
+        _pkg = find_up__WEBPACK_IMPORTED_MODULE_4__('package.json', { cwd: __dirname, type: 'file' });
     }
     const pkg = await _pkg;
     // istanbul ignore if
