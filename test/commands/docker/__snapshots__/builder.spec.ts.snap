@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`build-only yarn: build 1`] = `
+exports[` build-only yarn: build 1`] = `
 Array [
   Array [
     Object {
@@ -22,9 +22,9 @@ Array [
 ]
 `;
 
-exports[`build-only yarn: publish 1`] = `Array []`;
+exports[` build-only yarn: publish 1`] = `Array []`;
 
-exports[`last-only dummy: build 1`] = `
+exports[` last-only dummy: build 1`] = `
 Array [
   Array [
     Object {
@@ -45,7 +45,7 @@ Array [
 ]
 `;
 
-exports[`last-only dummy: publish 1`] = `
+exports[` last-only dummy: publish 1`] = `
 Array [
   Array [
     Object {
@@ -66,7 +66,7 @@ Array [
 ]
 `;
 
-exports[`updates image yarn (dry-run): build 1`] = `
+exports[` updates image yarn (dry-run): build 1`] = `
 Array [
   Array [
     Object {
@@ -88,7 +88,7 @@ Array [
 ]
 `;
 
-exports[`updates image yarn (dry-run): publish 1`] = `
+exports[` updates image yarn (dry-run): publish 1`] = `
 Array [
   Array [
     Object {
@@ -125,7 +125,7 @@ Array [
 ]
 `;
 
-exports[`works dummy: build 1`] = `
+exports[` works dummy: build 1`] = `
 Array [
   Array [
     Object {
@@ -160,7 +160,7 @@ Array [
 ]
 `;
 
-exports[`works dummy: publish 1`] = `
+exports[` works dummy: publish 1`] = `
 Array [
   Array [
     Object {
@@ -181,7 +181,7 @@ Array [
 ]
 `;
 
-exports[`works gradle: build 1`] = `
+exports[` works gradle: build 1`] = `
 Array [
   Array [
     Object {
@@ -235,7 +235,7 @@ Array [
 ]
 `;
 
-exports[`works gradle: publish 1`] = `
+exports[` works gradle: publish 1`] = `
 Array [
   Array [
     Object {
@@ -304,7 +304,7 @@ Array [
 ]
 `;
 
-exports[`works pnpm: build 1`] = `
+exports[` works pnpm: build 1`] = `
 Array [
   Array [
     Object {
@@ -327,7 +327,7 @@ Array [
 ]
 `;
 
-exports[`works pnpm: publish 1`] = `
+exports[` works pnpm: publish 1`] = `
 Array [
   Array [
     Object {
@@ -364,7 +364,7 @@ Array [
 ]
 `;
 
-exports[`works ubuntu: build 1`] = `
+exports[` works ubuntu: build 1`] = `
 Array [
   Array [
     Object {
@@ -403,7 +403,7 @@ Array [
 ]
 `;
 
-exports[`works ubuntu: publish 1`] = `
+exports[` works ubuntu: publish 1`] = `
 Array [
   Array [
     Object {
@@ -464,7 +464,7 @@ Array [
 ]
 `;
 
-exports[`works yarn: build 1`] = `
+exports[` works yarn: build 1`] = `
 Array [
   Array [
     Object {
@@ -486,7 +486,7 @@ Array [
 ]
 `;
 
-exports[`works yarn: publish 1`] = `
+exports[` works yarn: publish 1`] = `
 Array [
   Array [
     Object {
