@@ -2646,6 +2646,14 @@ module.exports = require("string_decoder");;
 
 /***/ }),
 
+/***/ 78213:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("timers");;
+
+/***/ }),
+
 /***/ 4016:
 /***/ ((module) => {
 
