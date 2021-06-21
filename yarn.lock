@@ -1690,6 +1690,13 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@types/yauzl@^2.9.1":
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/@types/yauzl/-/yauzl-2.9.1.tgz#d10f69f9f522eef3cf98e30afb684a1e1ec923af"
+  integrity sha512-A1b8SU4D10uoPjwb0lnHmmu8wZhR9d+9o2PKBQT2jU5YPTKsxac6M2qGAdY7VcL+dHHhARVUDmeg0rOrcd9EjA==
+  dependencies:
+    "@types/node" "*"
+
 "@typescript-eslint/eslint-plugin@4.26.1":
   version "4.26.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.26.1.tgz#b9c7313321cb837e2bf8bebe7acc2220659e67d3"
@@ -2386,6 +2393,11 @@ bser@2.1.1:
   dependencies:
     node-int64 "^0.4.0"
 
+buffer-crc32@~0.2.3:
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/buffer-crc32/-/buffer-crc32-0.2.13.tgz#0d333e3f00eac50aa1454abd30ef8c2a5d9a7242"
+  integrity sha1-DTM+PwDqxQqhRUq9MO+MKl2ackI=
+
 buffer-from@1.x, buffer-from@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
@@ -2881,21 +2893,21 @@ crypto-random-string@^2.0.0:
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-2.0.0.tgz#ef2a7a966ec11083388369baa02ebead229b30d5"
   integrity sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==
 
-css-select@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/css-select/-/css-select-3.1.2.tgz#d52cbdc6fee379fba97fb0d3925abbd18af2d9d8"
-  integrity sha512-qmss1EihSuBNWNNhHjxzxSfJoFBM/lERB/Q4EnsJQQC62R2evJDW481091oAdOr9uh46/0n4nrg0It5cAnj1RA==
+css-select@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/css-select/-/css-select-4.1.3.tgz#a70440f70317f2669118ad74ff105e65849c7067"
+  integrity sha512-gT3wBNd9Nj49rAbmtFHj1cljIAOLYSX1nZ8CB7TBO3INYckygm5B7LISU/szY//YmdiSLbJvDLOx9VnMVpMBxA==
   dependencies:
     boolbase "^1.0.0"
-    css-what "^4.0.0"
-    domhandler "^4.0.0"
-    domutils "^2.4.3"
+    css-what "^5.0.0"
+    domhandler "^4.2.0"
+    domutils "^2.6.0"
     nth-check "^2.0.0"
 
-css-what@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/css-what/-/css-what-4.0.0.tgz#35e73761cab2eeb3d3661126b23d7aa0e8432233"
-  integrity sha512-teijzG7kwYfNVsUh2H/YN62xW3KK9YhXEgSlbxMlcyjPNvdKJqFx5lrwlJgoFP1ZHlB89iGDlo/JyshKeRhv5A==
+css-what@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/css-what/-/css-what-5.0.1.tgz#3efa820131f4669a8ac2408f9c32e7c7de9f4cad"
+  integrity sha512-FYDTSHb/7KXsWICVsxdmiExPjCfRC4qRFBdVwv7Ax9hMnvMmEjP9RfxTEZ3qPZGmADDn2vAKSo9UcN1jKVYscg==
 
 cssom@^0.4.4:
   version "0.4.4"
@@ -3169,17 +3181,17 @@ domexception@^2.0.1:
   dependencies:
     webidl-conversions "^5.0.0"
 
-domhandler@^4.0.0, domhandler@^4.2.0:
+domhandler@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-4.2.0.tgz#f9768a5f034be60a89a27c2e4d0f74eba0d8b059"
   integrity sha512-zk7sgt970kzPks2Bf+dwT/PLzghLnsivb9CcxkvR8Mzr66Olr0Ofd8neSbglHJHaHa2MadfoSdNlKYAaafmWfA==
   dependencies:
     domelementtype "^2.2.0"
 
-domutils@^2.4.3:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/domutils/-/domutils-2.6.0.tgz#2e15c04185d43fb16ae7057cb76433c6edb938b7"
-  integrity sha512-y0BezHuy4MDYxh6OvolXYsH+1EMGmFbwv5FKW7ovwMG6zTPWqNPq3WF9ayZssFq+UlKdffGLbOEaghNdaOm1WA==
+domutils@^2.6.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/domutils/-/domutils-2.7.0.tgz#8ebaf0c41ebafcf55b0b72ec31c56323712c5442"
+  integrity sha512-8eaHa17IwJUPAiB+SoTYBo5mCdeMgdcAoXJ59m6DT1vw+5iLS3gNoqYaRowaBKtGVrOF1Jz4yDTgYKLK2kvfJg==
   dependencies:
     dom-serializer "^1.0.1"
     domelementtype "^2.2.0"
@@ -3611,6 +3623,17 @@ extend@^3.0.0, extend@~3.0.2:
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
 
+extract-zip@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/extract-zip/-/extract-zip-2.0.1.tgz#663dca56fe46df890d5f131ef4a06d22bb8ba13a"
+  integrity sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==
+  dependencies:
+    debug "^4.1.1"
+    get-stream "^5.1.0"
+    yauzl "^2.10.0"
+  optionalDependencies:
+    "@types/yauzl" "^2.9.1"
+
 extsprintf@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.3.0.tgz#96918440e3041a7a414f8c52e3c574eb3c3e1e05"
@@ -3671,6 +3694,13 @@ fb-watchman@^2.0.0:
   integrity sha512-DkPJKQeY6kKwmuMretBhr7G6Vodr7bFwDYTXIkfG1gjvNpaxBTQV3PbXg6bR1c1UP4jPOX0jHUbbHANL9vRjVg==
   dependencies:
     bser "2.1.1"
+
+fd-slicer@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/fd-slicer/-/fd-slicer-1.1.0.tgz#25c7c89cb1f9077f8891bbe61d8f390eae256f1e"
+  integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
+  dependencies:
+    pend "~1.2.0"
 
 figures@^2.0.0:
   version "2.0.0"
@@ -5989,12 +6019,12 @@ node-gyp@^8.0.0:
     tar "^6.1.0"
     which "^2.0.2"
 
-node-html-parser@3.3.4:
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-3.3.4.tgz#01dbe3b64e4d721221a20cf21c70af9bba8781ed"
-  integrity sha512-u15i1OkGi/g9DVEvTWDChXp+a2ZdTdmEp2ECpMbmJ4NYNLWYQFDP84UOaLUYv+ozd3/cv46lcHf+tGLe618riw==
+node-html-parser@3.3.5:
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-3.3.5.tgz#b312174fda86145b9572218955e400a731c60326"
+  integrity sha512-d4ex19KYXfhi8dYhGaY4/9oCHRSyaxjd4FKvL3Fx/9f6c+qMVgrG1uXgPO3Mucu+I4Wi7P4o4RIq51NHNiWpSQ==
   dependencies:
-    css-select "^3.1.2"
+    css-select "^4.1.3"
     he "1.2.0"
 
 node-int64@^0.4.0:
@@ -6634,6 +6664,11 @@ path-type@^4.0.0:
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
+pend@~1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
+  integrity sha1-elfrVQpng/kRUzH89GY9XI4AelA=
+
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -7139,10 +7174,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@25.41.0:
-  version "25.41.0"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-25.41.0.tgz#91656c0dd71a11f76ac3a4d1e9f817892d57755a"
-  integrity sha512-udwd2UWvCNeCWTeWBOaLcuHlaeGAuXsGyVMBGc78kX0Fo7kEOfiypDRtGfwSz4Q6dlOBwrx+HJK61+VTLOamgw==
+renovate@25.47.6:
+  version "25.47.6"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-25.47.6.tgz#1b6547dc21eaeb46b3abcff3827ca237530b87d3"
+  integrity sha512-WeL//UqErxHrSEt5a2FzU4u4wDXntTQ7XJdFGURhxvh7miQIr8k8J4MK0Uo/J38SFQAcAQO0LTffCMGrqtLYZg==
   dependencies:
     "@aws-sdk/client-ecr" "3.5.0"
     "@breejs/later" "4.0.2"
@@ -7169,6 +7204,7 @@ renovate@25.41.0:
     emoji-regex "9.2.2"
     emojibase "5.2.0"
     emojibase-regex "5.1.3"
+    extract-zip "2.0.1"
     fast-safe-stringify "2.0.7"
     find-up "5.0.0"
     fs-extra "10.0.0"
@@ -7190,7 +7226,7 @@ renovate@25.41.0:
     markdown-table "2.0.0"
     minimatch "3.0.4"
     moo "0.5.1"
-    node-html-parser "3.3.4"
+    node-html-parser "3.3.5"
     p-all "3.0.0"
     p-map "4.0.0"
     p-queue "6.6.2"
@@ -7205,7 +7241,7 @@ renovate@25.41.0:
     semver-utils "1.1.4"
     shlex "2.1.0"
     shortid "2.2.16"
-    simple-git "2.39.0"
+    simple-git "2.39.1"
     slugify "1.5.3"
     traverse "0.6.6"
     upath "2.0.1"
@@ -7534,10 +7570,10 @@ signale@^1.2.1:
     figures "^2.0.0"
     pkg-conf "^2.1.0"
 
-simple-git@2.39.0:
-  version "2.39.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.39.0.tgz#6320e01675c6ee5272aec00727549a5d2617e35e"
-  integrity sha512-VOsrmc3fpp1lGVIpo+1SKNqJzrdVJeSGZCeenPKnJPNo5UouAlSkWFc037pfm9wRYtfxBdwp2deVJGCG8J6C8A==
+simple-git@2.39.1:
+  version "2.39.1"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.39.1.tgz#1d297eb154d30cbfc6edf1133742651838cc5680"
+  integrity sha512-+kEAkyQHsWejYxQNCzTrjvCxJOcijpB49RSs7HV+TK9B9prUq7YBNpFstQvjfGBn4Hecywp4tm+breGGGHlHwA==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
@@ -8647,6 +8683,14 @@ yargs@^16.0.3, yargs@^16.2.0:
     string-width "^4.2.0"
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
+
+yauzl@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/yauzl/-/yauzl-2.10.0.tgz#c7eb17c93e112cb1086fa6d8e51fb0667b79a5f9"
+  integrity sha1-x+sXyT4RLLEIb6bY5R+wZnt5pfk=
+  dependencies:
+    buffer-crc32 "~0.2.3"
+    fd-slicer "~1.1.0"
 
 yocto-queue@^0.1.0:
   version "0.1.0"
