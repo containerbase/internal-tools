@@ -41,6 +41,7 @@ var dist_default = /*#__PURE__*/__webpack_require__.n(dist);
 
 
 
+let releaseCache = null;
 function getBinaryName(cfg, version) {
     const arch = (0,util/* getArch */.bj)();
     if (dist_default().nonEmptyString(arch)) {
@@ -56,11 +57,18 @@ function getBody(cfg, version) {
 async function findRelease(api, version) {
     var _a;
     try {
-        const res = await api.repos.getReleaseByTag({
-            ...github.context.repo,
-            tag: version,
-        });
-        return (_a = res.data) !== null && _a !== void 0 ? _a : null;
+        if (!releaseCache) {
+            const cache = new Map();
+            const rels = await api.paginate(api.repos.listReleases, {
+                ...github.context.repo,
+                per_page: 100,
+            });
+            for (const rel of rels) {
+                cache.set(rel.tag_name, rel);
+            }
+            releaseCache = cache;
+        }
+        return (_a = releaseCache.get(version)) !== null && _a !== void 0 ? _a : null;
     }
     catch (e) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -77,6 +85,7 @@ async function createRelease(api, cfg, version) {
         name: version,
         body: getBody(cfg, version),
     });
+    releaseCache === null || releaseCache === void 0 ? void 0 : releaseCache.set(data.tag_name, data);
     return data;
 }
 async function updateRelease(api, cfg, version) {
@@ -85,26 +94,28 @@ async function updateRelease(api, cfg, version) {
     if (rel == null || (rel.name === version && rel.body === body)) {
         return;
     }
-    await api.repos.updateRelease({
+    const { data } = await api.repos.updateRelease({
         ...github.context.repo,
         release_id: rel.id,
         name: version,
         body,
     });
+    releaseCache === null || releaseCache === void 0 ? void 0 : releaseCache.set(data.tag_name, data);
 }
 async function uploadAsset(api, cfg, version) {
     var _a;
     try {
-        const rel = await findRelease(api, version);
+        let rel = await findRelease(api, version);
         let release_id = (_a = rel === null || rel === void 0 ? void 0 : rel.id) !== null && _a !== void 0 ? _a : 0;
         if (rel == null) {
-            const { id } = await createRelease(api, cfg, version);
-            release_id = id;
+            rel = await createRelease(api, cfg, version);
+            release_id = rel.id;
         }
         const name = getBinaryName(cfg, version);
         // fake because api issues
+        // https://github.com/octokit/octokit.js/discussions/2087
         const data = (await (0,util/* readBuffer */.sX)(`.cache/${name}`));
-        await api.repos.uploadReleaseAsset({
+        const { data: asset } = await api.repos.uploadReleaseAsset({
             ...github.context.repo,
             release_id,
             data,
@@ -114,6 +125,8 @@ async function uploadAsset(api, cfg, version) {
                 'content-length': data.length,
             },
         });
+        // cache assed
+        rel.assets.push(asset);
     }
     catch (e) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
