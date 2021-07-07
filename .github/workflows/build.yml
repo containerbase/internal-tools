@@ -21,27 +21,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - name: Cache Yarn packages
-        id: yarn_cache_packages
-        uses: actions/cache@v2.1.6
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2.2.0
         with:
-          path: ${{ env.YARN_CACHE_FOLDER }}
-          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
 
       - name: Cache node_modules
         uses: actions/cache@v2.1.6
         with:
           path: node_modules
-          key: ${{ runner.os }}-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-yarn-
-
-      # Clear caches on cache miss, otherwise they will grow indefinitely
-      - name: Clear yarn cache
-        if: steps.yarn_cache_packages.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main'
-        run: yarn cache clean
+            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
 
       - run: yarn install --frozen-lockfile
 
@@ -54,11 +46,6 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v2.2.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Init platform
         id: init
         shell: bash
@@ -74,22 +61,19 @@ jobs:
         with:
           fetch-depth: 10 # required by codecov
 
-      - name: Cache Yarn packages
-        id: yarn_cache_packages
-        uses: actions/cache@v2.1.6
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2.2.0
         with:
-          path: ${{ env.YARN_CACHE_FOLDER }}
-          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
 
       - name: Cache node_modules
         uses: actions/cache@v2.1.6
         with:
           path: node_modules
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
+            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
 
       - run: yarn install --frozen-lockfile
 
@@ -116,29 +100,21 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      - uses: actions/checkout@v2.3.4
+
       - name: Set up Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v2.2.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - uses: actions/checkout@v2.3.4
-
-      - name: Cache Yarn packages
-        id: yarn_cache_packages
-        uses: actions/cache@v2.1.6
-        with:
-          path: ${{ env.YARN_CACHE_FOLDER }}
-          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
+          cache: yarn
 
       - name: Cache node_modules
         uses: actions/cache@v2.1.6
         with:
           path: node_modules
-          key: ${{ runner.os }}-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-yarn-
+            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
 
       - run: yarn install --frozen-lockfile
 
@@ -222,11 +198,6 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v2.2.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Init platform
         id: init
         shell: bash
@@ -254,22 +225,19 @@ jobs:
           commit=$(git rev-parse HEAD)
           echo "::set-output name=commit::${commit}"
 
-      - name: Cache Yarn packages
-        id: yarn_cache_packages
-        uses: actions/cache@v2.1.6
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2.2.0
         with:
-          path: ${{ env.YARN_CACHE_FOLDER }}
-          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-yarn_cache-
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
 
       - name: Cache node_modules
         uses: actions/cache@v2.1.6
         with:
           path: node_modules
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
+            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
 
       - run: yarn install --frozen-lockfile
 
