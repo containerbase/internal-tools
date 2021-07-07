@@ -18,6 +18,8 @@ interface GhRelease {
   body?: string | null;
 
   assets: GhAsset[];
+
+  upload_url: string;
 }
 
 let releaseCache: Map<string, GhRelease> | null = null;
@@ -47,7 +49,7 @@ async function findRelease(
     if (!releaseCache) {
       const cache = new Map();
 
-      const rels = await api.paginate(api.repos.listReleases, {
+      const rels = await api.paginate(api.rest.repos.listReleases, {
         ...context.repo,
         per_page: 100,
       });
@@ -74,7 +76,7 @@ async function createRelease(
   cfg: BinaryBuilderConfig,
   version: string
 ): Promise<GhRelease> {
-  const { data } = await api.repos.createRelease({
+  const { data } = await api.rest.repos.createRelease({
     ...context.repo,
     tag_name: version,
     name: version,
@@ -95,7 +97,7 @@ export async function updateRelease(
   if (rel == null || (rel.name === version && rel.body === body)) {
     return;
   }
-  const { data } = await api.repos.updateRelease({
+  const { data } = await api.rest.repos.updateRelease({
     ...context.repo,
     release_id: rel.id,
     name: version,
@@ -120,24 +122,23 @@ export async function uploadAsset(
     }
 
     const name = getBinaryName(cfg, version);
+    const buffer = await readBuffer(`.cache/${name}`);
 
-    // fake because api issues
-    // https://github.com/octokit/octokit.js/discussions/2087
-    const data: string = (await readBuffer(`.cache/${name}`)) as never;
-
-    const { data: asset } = await api.repos.uploadReleaseAsset({
+    const { data } = await api.rest.repos.uploadReleaseAsset({
       ...context.repo,
       release_id,
-      data,
+      url: rel.upload_url,
+      // fake because api issues https://github.com/octokit/octokit.js/discussions/2087
+      data: buffer as never,
       name,
       headers: {
         'content-type': 'application/octet-stream',
-        'content-length': data.length,
+        'content-length': buffer.length,
       },
     });
 
-    // cache assed
-    rel.assets.push(asset);
+    // cache asset
+    rel.assets.push(data);
   } catch (e) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (e.status !== 404) {
