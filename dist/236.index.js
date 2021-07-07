@@ -59,7 +59,7 @@ async function findRelease(api, version) {
     try {
         if (!releaseCache) {
             const cache = new Map();
-            const rels = await api.paginate(api.repos.listReleases, {
+            const rels = await api.paginate(api.rest.repos.listReleases, {
                 ...github.context.repo,
                 per_page: 100,
             });
@@ -79,7 +79,7 @@ async function findRelease(api, version) {
     return null;
 }
 async function createRelease(api, cfg, version) {
-    const { data } = await api.repos.createRelease({
+    const { data } = await api.rest.repos.createRelease({
         ...github.context.repo,
         tag_name: version,
         name: version,
@@ -94,7 +94,7 @@ async function updateRelease(api, cfg, version) {
     if (rel == null || (rel.name === version && rel.body === body)) {
         return;
     }
-    const { data } = await api.repos.updateRelease({
+    const { data } = await api.rest.repos.updateRelease({
         ...github.context.repo,
         release_id: rel.id,
         name: version,
@@ -112,21 +112,21 @@ async function uploadAsset(api, cfg, version) {
             release_id = rel.id;
         }
         const name = getBinaryName(cfg, version);
-        // fake because api issues
-        // https://github.com/octokit/octokit.js/discussions/2087
-        const data = (await (0,util/* readBuffer */.sX)(`.cache/${name}`));
-        const { data: asset } = await api.repos.uploadReleaseAsset({
+        const buffer = await (0,util/* readBuffer */.sX)(`.cache/${name}`);
+        const { data } = await api.rest.repos.uploadReleaseAsset({
             ...github.context.repo,
             release_id,
-            data,
+            url: rel.upload_url,
+            // fake because api issues https://github.com/octokit/octokit.js/discussions/2087
+            data: buffer,
             name,
             headers: {
                 'content-type': 'application/octet-stream',
-                'content-length': data.length,
+                'content-length': buffer.length,
             },
         });
-        // cache assed
-        rel.assets.push(asset);
+        // cache asset
+        rel.assets.push(data);
     }
     catch (e) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
