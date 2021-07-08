@@ -32,11 +32,17 @@ var util = __webpack_require__(41838);
 var buildx = __webpack_require__(14413);
 // EXTERNAL MODULE: ../node_modules/@actions/github/lib/github.js
 var github = __webpack_require__(32189);
+// EXTERNAL MODULE: ../node_modules/@octokit/request-error/dist-node/index.js
+var dist_node = __webpack_require__(17069);
 // EXTERNAL MODULE: ../node_modules/@sindresorhus/is/dist/index.js
 var dist = __webpack_require__(4040);
 var dist_default = /*#__PURE__*/__webpack_require__.n(dist);
+// EXTERNAL MODULE: ./utils/logger.ts + 2 modules
+var logger = __webpack_require__(33433);
 ;// CONCATENATED MODULE: ./utils/github.ts
 // istanbul ignore file
+
+
 
 
 
@@ -71,22 +77,38 @@ async function findRelease(api, version) {
         return (_a = releaseCache.get(version)) !== null && _a !== void 0 ? _a : null;
     }
     catch (e) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if (e.status !== 404) {
+        if (e instanceof dist_node.RequestError && e.status !== 404) {
             throw e;
         }
     }
     return null;
 }
 async function createRelease(api, cfg, version) {
-    const { data } = await api.rest.repos.createRelease({
-        ...github.context.repo,
-        tag_name: version,
-        name: version,
-        body: getBody(cfg, version),
-    });
-    releaseCache === null || releaseCache === void 0 ? void 0 : releaseCache.set(data.tag_name, data);
-    return data;
+    var _a;
+    try {
+        const { data } = await api.rest.repos.createRelease({
+            ...github.context.repo,
+            tag_name: version,
+            name: version,
+            body: getBody(cfg, version),
+        });
+        releaseCache === null || releaseCache === void 0 ? void 0 : releaseCache.set(data.tag_name, data);
+        return data;
+    }
+    catch (err) {
+        if (err instanceof dist_node.RequestError &&
+            err.status == 422 &&
+            ((_a = err.response) === null || _a === void 0 ? void 0 : _a.data)) {
+            (0,logger/* default */.Z)('Release already created by other process, trying to fetch existing:', version, err.message);
+            const { data } = await api.rest.repos.getReleaseByTag({
+                ...github.context.repo,
+                tag: version,
+            });
+            releaseCache === null || releaseCache === void 0 ? void 0 : releaseCache.set(data.tag_name, data);
+            return data;
+        }
+        throw err;
+    }
 }
 async function updateRelease(api, cfg, version) {
     const body = getBody(cfg, version);
@@ -129,8 +151,7 @@ async function uploadAsset(api, cfg, version) {
         rel.assets.push(data);
     }
     catch (e) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if (e.status !== 404) {
+        if (e instanceof dist_node.RequestError && e.status !== 404) {
             throw e;
         }
     }
@@ -142,8 +163,6 @@ async function hasAsset(api, cfg, version) {
     return (_a = rel === null || rel === void 0 ? void 0 : rel.assets.some((a) => a.name === name)) !== null && _a !== void 0 ? _a : false;
 }
 
-// EXTERNAL MODULE: ./utils/logger.ts + 2 modules
-var logger = __webpack_require__(33433);
 // EXTERNAL MODULE: ./utils/config.ts
 var config = __webpack_require__(21490);
 // EXTERNAL MODULE: ./utils/docker/common.ts
