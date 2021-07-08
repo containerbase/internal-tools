@@ -1,8 +1,10 @@
 // istanbul ignore file
 import { context, getOctokit } from '@actions/github';
 import { GitHub } from '@actions/github/lib/utils';
+import { RequestError } from '@octokit/request-error';
 import is from '@sindresorhus/is';
 import { getArch, getDistro, readBuffer } from '../util';
+import log from './logger';
 import { BinaryBuilderConfig } from './types';
 
 export { getOctokit };
@@ -63,8 +65,7 @@ async function findRelease(
 
     return releaseCache.get(version) ?? null;
   } catch (e) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (e.status !== 404) {
+    if (e instanceof RequestError && e.status !== 404) {
       throw e;
     }
   }
@@ -76,15 +77,37 @@ async function createRelease(
   cfg: BinaryBuilderConfig,
   version: string
 ): Promise<GhRelease> {
-  const { data } = await api.rest.repos.createRelease({
-    ...context.repo,
-    tag_name: version,
-    name: version,
-    body: getBody(cfg, version),
-  });
+  try {
+    const { data } = await api.rest.repos.createRelease({
+      ...context.repo,
+      tag_name: version,
+      name: version,
+      body: getBody(cfg, version),
+    });
 
-  releaseCache?.set(data.tag_name, data);
-  return data;
+    releaseCache?.set(data.tag_name, data);
+    return data;
+  } catch (err) {
+    if (
+      err instanceof RequestError &&
+      err.status == 422 &&
+      err.response?.data
+    ) {
+      log(
+        'Release already created by other process, trying to fetch existing:',
+        version,
+        err.message
+      );
+      const { data } = await api.rest.repos.getReleaseByTag({
+        ...context.repo,
+        tag: version,
+      });
+
+      releaseCache?.set(data.tag_name, data);
+      return data;
+    }
+    throw err;
+  }
 }
 
 export async function updateRelease(
@@ -140,8 +163,7 @@ export async function uploadAsset(
     // cache asset
     rel.assets.push(data);
   } catch (e) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (e.status !== 404) {
+    if (e instanceof RequestError && e.status !== 404) {
       throw e;
     }
   }
