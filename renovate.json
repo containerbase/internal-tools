@@ -3,15 +3,15 @@
   "extends": ["github>renovatebot/.github"],
   "packageRules": [
     {
-      "paths": ["+(Dockerfile)"],
+      "matchPaths": ["+(Dockerfile)"],
       "enabled": false
     },
     {
-      "updateTypes": ["lockFileMaintenance"],
+      "mathUpdateTypes": ["lockFileMaintenance"],
       "semanticCommitType": "build"
     },
     {
-      "packageNames": ["renovate"],
+      "mathcPackageNames": ["renovate"],
       "extends": ["schedule:weekly"],
       "automerge": true,
       "separateMinorPatch": false
