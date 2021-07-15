@@ -7,11 +7,11 @@
       "enabled": false
     },
     {
-      "mathUpdateTypes": ["lockFileMaintenance"],
+      "matchUpdateTypes": ["lockFileMaintenance"],
       "semanticCommitType": "build"
     },
     {
-      "mathcPackageNames": ["renovate"],
+      "matchPackageNames": ["renovate"],
       "extends": ["schedule:weekly"],
       "automerge": true,
       "separateMinorPatch": false
