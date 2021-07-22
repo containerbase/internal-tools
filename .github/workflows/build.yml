@@ -80,6 +80,8 @@ jobs:
       - run: yarn compile
 
       - run: yarn jest --maxWorkers=2 --ci --coverage
+        env:
+          FORCE_COLOR: true
 
       - name: Upload coverage
         uses: actions/upload-artifact@27121b0bdffd731efa15d66772be8dc71245d074 # renovate: tag=v2.2.4
