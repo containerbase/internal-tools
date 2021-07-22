@@ -9,8 +9,6 @@ env:
   NODE_VERSION: 12
   YARN_CACHE_KEY: v0
   YARN_CACHE_FOLDER: .cache/yarn
-  # https://github.com/chalk/supports-color/issues/106
-  FORCE_COLOR: true
 
 jobs:
   prepare:
