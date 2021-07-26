@@ -2073,16 +2073,8 @@ const Endpoints = {
     uploadSarif: ["POST /repos/{owner}/{repo}/code-scanning/sarifs"]
   },
   codesOfConduct: {
-    getAllCodesOfConduct: ["GET /codes_of_conduct", {
-      mediaType: {
-        previews: ["scarlet-witch"]
-      }
-    }],
-    getConductCode: ["GET /codes_of_conduct/{key}", {
-      mediaType: {
-        previews: ["scarlet-witch"]
-      }
-    }],
+    getAllCodesOfConduct: ["GET /codes_of_conduct"],
+    getConductCode: ["GET /codes_of_conduct/{key}"],
     getForRepo: ["GET /repos/{owner}/{repo}/community/code_of_conduct", {
       mediaType: {
         previews: ["scarlet-witch"]
@@ -2984,7 +2976,7 @@ const Endpoints = {
   }
 };
 
-const VERSION = "5.4.1";
+const VERSION = "5.5.1";
 
 function endpointsToMethods(octokit, endpointsMap) {
   const newMethods = {};
