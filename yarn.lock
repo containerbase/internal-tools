@@ -5627,10 +5627,10 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-luxon@1.28.0:
-  version "1.28.0"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.28.0.tgz#e7f96daad3938c06a62de0fb027115d251251fbf"
-  integrity sha512-TfTiyvZhwBYM/7QdAVDh+7dBTBA29v4ik0Ce9zda3Mnf8on1S5KJI8P2jKFZ8+5C0jhmr0KwJEO/Wdpm0VeWJQ==
+luxon@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.0.1.tgz#b41ca2f1f5ad8099c18603ae6c36a7794039daf0"
+  integrity sha512-8Eawf81c9ZlQj62W3eq4mp+C7SAIAnmaS7ZuEAiX503YMcn+0C1JnMQRtfaQj6B5qTZLgHv0F4H5WabBCvi1fw==
 
 make-dir@^3.0.0:
   version "3.1.0"
@@ -7281,10 +7281,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@25.56.5:
-  version "25.56.5"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-25.56.5.tgz#7c69684c196657425cfaf329ac1e06cbddc0b75a"
-  integrity sha512-47bg6mt4AFbyJGVZ9sUVmu/mowde6H9n+IgTIAzVaf682Hec7nImuGqO3gATzizQ1Ay1QQRFc/KaRMfM2e7wbA==
+renovate@25.58.0:
+  version "25.58.0"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-25.58.0.tgz#f467a03b33a353a709a0e0660db0efeb5b31385c"
+  integrity sha512-JbYHOTWh2Obkk6SKC/fXt1oI8OvdNeL2ONhi3VOTvwgQDZQ9qYHZsN2AUPAMubOp2VoPV226XoAMnZZpCMIP6w==
   dependencies:
     "@aws-sdk/client-ecr" "3.18.0"
     "@breejs/later" "4.0.2"
@@ -7328,7 +7328,7 @@ renovate@25.56.5:
     json-dup-key-validator "1.0.3"
     json-stringify-pretty-compact "3.0.0"
     json5 "2.2.0"
-    luxon "1.28.0"
+    luxon "2.0.1"
     markdown-it "12.1.0"
     markdown-table "2.0.0"
     minimatch "3.0.4"
@@ -7349,7 +7349,7 @@ renovate@25.56.5:
     shlex "2.1.0"
     shortid "2.2.16"
     simple-git "2.41.1"
-    slugify "1.5.3"
+    slugify "1.6.0"
     traverse "0.6.6"
     upath "2.0.1"
     url-join "4.0.1"
@@ -7710,10 +7710,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-slugify@1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.5.3.tgz#36e009864f5476bfd5db681222643d92339c890d"
-  integrity sha512-/HkjRdwPY3yHJReXu38NiusZw2+LLE2SrhkWJtmlPDB1fqFSvioYj62NkPcrKiNCgRLeGcGK7QBvr1iQwybeXw==
+slugify@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.0.tgz#6bdf8ed01dabfdc46425b67e3320b698832ff893"
+  integrity sha512-FkMq+MQc5hzYgM86nLuHI98Acwi3p4wX+a5BO9Hhw4JdK4L7WueIiZ4tXEobImPqBz2sVcV0+Mu3GRB30IGang==
 
 smart-buffer@^4.1.0:
   version "4.1.0"
