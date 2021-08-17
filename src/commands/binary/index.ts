@@ -64,6 +64,12 @@ async function getBuildList({
     )
     .filter((v) => !ignoredVersions.includes(v));
 
+  // filter duplicate versions (16.0.2+7 == 16.0.2+8)
+  allVersions = allVersions
+    .reverse()
+    .filter((v, i) => allVersions.findIndex((f) => ver.equals(f, v)) === i)
+    .reverse();
+
   if (!forceUnstable) {
     log('Filter unstable versions');
     allVersions = allVersions.filter((v) => ver.isStable(v));

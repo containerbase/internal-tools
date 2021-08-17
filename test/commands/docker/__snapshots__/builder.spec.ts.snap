@@ -320,7 +320,7 @@ Array [
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
-      "tag": "8.0.302+8",
+      "tag": "8.0.302",
     },
   ],
   Array [
@@ -337,13 +337,13 @@ Array [
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
-      "tag": "11.0.12+7",
+      "tag": "11.0.12",
     },
   ],
   Array [
     Object {
       "buildArgs": Array [
-        "JAVA_VERSION=16.0.2+7",
+        "JAVA_VERSION=16.0.2+9",
       ],
       "cache": undefined,
       "cacheTags": Array [
@@ -354,7 +354,7 @@ Array [
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
-      "tag": "16.0.2+7",
+      "tag": "16.0.2",
     },
   ],
 ]
@@ -367,7 +367,7 @@ Array [
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
-      "tag": "8.0.302+8",
+      "tag": "8.0.302",
     },
   ],
   Array [
@@ -391,7 +391,7 @@ Array [
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
-      "tag": "11.0.12+7",
+      "tag": "11.0.12",
     },
   ],
   Array [
@@ -415,7 +415,7 @@ Array [
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
-      "tag": "16.0.2+7",
+      "tag": "16.0.2",
     },
   ],
   Array [

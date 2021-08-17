@@ -99,6 +99,7 @@ describe(getName(__filename), () => {
         { version: '8.0.302+8' },
         { version: '11.0.12+7' },
         { version: '16.0.2+7' },
+        { version: '16.0.2+9' },
       ],
     });
 
@@ -106,9 +107,9 @@ describe(getName(__filename), () => {
 
     expect(docker.build.mock.calls).toHaveLength(3);
     expect(docker.build.mock.calls.map(([args]) => args.tag)).toEqual([
-      '8.0.302+8',
-      '11.0.12+7',
-      '16.0.2+7',
+      '8.0.302',
+      '11.0.12',
+      '16.0.2',
     ]);
     expect(docker.build.mock.calls).toMatchSnapshot('build');
     expect(docker.publish.mock.calls).toMatchSnapshot('publish');

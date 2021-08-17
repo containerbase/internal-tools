@@ -59,6 +59,13 @@ async function getBuildList({
   let allVersions = pkgResult.releases
     .map((v) => v.version)
     .filter((v) => ver.isVersion(v) && ver.isCompatible(v, startVersion));
+
+  // filter duplicate versions (16.0.2+7 == 16.0.2+8)
+  allVersions = allVersions
+    .reverse()
+    .filter((v, i) => allVersions.findIndex((f) => ver.equals(f, v)) === i)
+    .reverse();
+
   log(`Found ${allVersions.length} total versions`);
   if (!allVersions.length) {
     return [];
@@ -160,7 +167,7 @@ async function buildAndPush(
   await exec('df', ['-h']);
 
   for (const version of versions) {
-    const tag = createTag(tagSuffix, version);
+    const tag = createTag(tagSuffix, version.replace(/\+.+/, ''));
     const imageVersion = `${imagePrefix}/${image}:${tag}`;
     log(`Building ${imageVersion}`);
     try {
