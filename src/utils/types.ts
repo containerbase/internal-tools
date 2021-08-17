@@ -46,6 +46,7 @@ export type Config = {
   lastOnly: boolean;
   dryRun: boolean;
   prune: boolean;
+  versioning: string;
 } & ConfigFile;
 
 export type BinaryBuilderConfig = {
@@ -54,4 +55,5 @@ export type BinaryBuilderConfig = {
   ignoredVersions: string[];
   lastOnly: boolean;
   dryRun: boolean;
+  versioning: string;
 } & ConfigFile;

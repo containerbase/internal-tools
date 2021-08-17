@@ -44,7 +44,7 @@ describe(getName(__filename), () => {
 
     it('dummy (no-image)', async () => {
       input.image = 'dummy';
-      utils.readJson.mockResolvedValueOnce({});
+      utils.readJson.mockResolvedValueOnce({ datasource: 'github-releases' });
       expect(await getConfig()).toMatchSnapshot();
     });
 

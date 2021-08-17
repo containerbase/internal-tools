@@ -304,6 +304,147 @@ Array [
 ]
 `;
 
+exports[` works java: build 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArgs": Array [
+        "JAVA_VERSION=8.0.302+8",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+        "8",
+        "8.0",
+      ],
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "8.0.302",
+    },
+  ],
+  Array [
+    Object {
+      "buildArgs": Array [
+        "JAVA_VERSION=11.0.12+7",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+        "11",
+        "11.0",
+      ],
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "11.0.12",
+    },
+  ],
+  Array [
+    Object {
+      "buildArgs": Array [
+        "JAVA_VERSION=16.0.2+9",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+        "16",
+        "16.0",
+      ],
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "16.0.2",
+    },
+  ],
+]
+`;
+
+exports[` works java: publish 1`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "8.0.302",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "8",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "8.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "11.0.12",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "11",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "11.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "16.0.2",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "16",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "16.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "java",
+      "imagePrefix": "renovate",
+      "tag": "latest",
+    },
+  ],
+]
+`;
+
 exports[` works pnpm: build 1`] = `
 Array [
   Array [
