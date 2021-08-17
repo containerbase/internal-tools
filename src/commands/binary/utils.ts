@@ -1,5 +1,6 @@
 import { getInput } from '@actions/core';
 import is from '@sindresorhus/is';
+import { getDefaultVersioning } from 'renovate/dist/datasource';
 import { getArch, getArg, getDistro, isDryRun, readJson } from '../../util';
 import { readDockerConfig } from '../../utils/config';
 import {
@@ -35,6 +36,7 @@ export async function getConfig(): Promise<BinaryBuilderConfig> {
     dryRun: isDryRun(),
     lastOnly: getArg('last-only') == 'true',
     buildArgs: getArg('build-args', { multi: true }),
+    versioning: cfg.versioning ?? getDefaultVersioning(cfg.datasource),
   } as BinaryBuilderConfig;
 }
 

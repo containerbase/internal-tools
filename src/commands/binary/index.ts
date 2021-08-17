@@ -40,7 +40,7 @@ async function getBuildList({
   latestVersion,
 }: BinaryBuilderConfig): Promise<string[]> {
   log('Looking up versions');
-  const ver = getVersioning(versioning as never);
+  const ver = getVersioning(versioning);
   const pkgResult = versions
     ? getVersions(versions)
     : await getPkgReleases({

@@ -1,7 +1,11 @@
 import { getInput, setFailed } from '@actions/core';
 import is from '@sindresorhus/is';
 import * as chalk from 'chalk';
-import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
+import {
+  ReleaseResult,
+  getDefaultVersioning,
+  getPkgReleases,
+} from 'renovate/dist/datasource';
 import { get as getVersioning } from 'renovate/dist/versioning';
 import { exec, getArg, isDryRun, readJson } from '../../util';
 import { readDockerConfig } from '../../utils/config';
@@ -40,7 +44,7 @@ async function getBuildList({
   extractVersion,
 }: Config): Promise<string[]> {
   log('Looking up versions');
-  const ver = getVersioning(versioning as never);
+  const ver = getVersioning(versioning);
   const pkgResult = versions
     ? getVersions(versions)
     : await getPkgReleases({
@@ -130,7 +134,7 @@ async function buildAndPush(
 ): Promise<void> {
   const builds: string[] = [];
   const failed: string[] = [];
-  const ver = getVersioning(versioning || 'semver');
+  const ver = getVersioning(versioning);
   const versionsMap = new Map<string, string>();
   if (majorMinor) {
     for (const version of versions) {
@@ -283,6 +287,7 @@ export async function run(): Promise<void> {
     buildOnly: getInput('build-only') == 'true',
     majorMinor: getArg('major-minor') !== 'false',
     prune: getArg('prune') === 'true',
+    versioning: cfg.versioning ?? getDefaultVersioning(cfg.datasource),
   };
 
   if (dryRun) {
