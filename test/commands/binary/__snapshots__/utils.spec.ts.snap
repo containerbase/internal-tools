@@ -21,10 +21,12 @@ exports[` getConfig dummy (no-image) 1`] = `
 Object {
   "buildArg": "DUMMY_VERSION",
   "buildArgs": Array [],
+  "datasource": "github-releases",
   "dryRun": undefined,
   "ignoredVersions": Array [],
   "image": "dummy",
   "lastOnly": false,
+  "versioning": "semver",
 }
 `;
 
@@ -55,6 +57,7 @@ exports[` getConfig ruby 1`] = `
 Object {
   "buildArg": "RUBY_VERSION",
   "buildArgs": Array [],
+  "datasource": "github-releases",
   "dryRun": undefined,
   "ignoredVersions": Array [
     "2.5.0-preview1",
@@ -64,6 +67,7 @@ Object {
   "image": "ruby",
   "lastOnly": false,
   "startVersion": "2.5.0",
+  "versioning": "semver",
 }
 `;
 

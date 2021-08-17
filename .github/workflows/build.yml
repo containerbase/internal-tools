@@ -13,6 +13,7 @@ env:
   NODE_VERSION: 12
   YARN_CACHE_KEY: v0
   YARN_CACHE_FOLDER: .cache/yarn
+  LOG_LEVEL: debug
 
 jobs:
   prepare:
@@ -174,6 +175,13 @@ jobs:
         with:
           command: docker-builder
           config: e2e/helm.json
+          dry-run: true
+
+      - name: docker-builder (java)
+        uses: ./
+        with:
+          command: docker-builder
+          config: e2e/java.json
           dry-run: true
 
       - name: binary-builder (python)
