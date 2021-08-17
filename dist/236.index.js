@@ -174,8 +174,9 @@ var common = __webpack_require__(43673);
 
 
 
+
 async function getConfig() {
-    var _a;
+    var _a, _b;
     const configFile = (0,core.getInput)('config') || 'builder.json';
     const cfg = await (0,util/* readJson */.zr)(configFile);
     if (!dist_default().object(cfg)) {
@@ -194,6 +195,7 @@ async function getConfig() {
         dryRun: (0,util/* isDryRun */.Dz)(),
         lastOnly: (0,util/* getArg */.a8)('last-only') == 'true',
         buildArgs: (0,util/* getArg */.a8)('build-args', { multi: true }),
+        versioning: (_b = cfg.versioning) !== null && _b !== void 0 ? _b : (0,dist_datasource.getDefaultVersioning)(cfg.datasource),
     };
 }
 async function createBuilderImage(ws, { buildArgs }) {
@@ -269,6 +271,11 @@ async function getBuildList({ datasource, depName, versioning, startVersion, ign
     allVersions = allVersions
         .filter((v) => /* istanbul ignore next */ { var _a; /* istanbul ignore next */ return !((_a = ver.isLessThanRange) === null || _a === void 0 ? void 0 : _a.call(ver, v, startVersion)); })
         .filter((v) => !ignoredVersions.includes(v));
+    // filter duplicate versions (16.0.2+7 == 16.0.2+8)
+    allVersions = allVersions
+        .reverse()
+        .filter((v, i) => allVersions.findIndex((f) => ver.equals(f, v)) === i)
+        .reverse();
     if (!forceUnstable) {
         (0,logger/* default */.Z)('Filter unstable versions');
         allVersions = allVersions.filter((v) => ver.isStable(v));

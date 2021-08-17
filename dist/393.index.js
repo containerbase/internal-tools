@@ -398,6 +398,11 @@ async function getBuildList({ datasource, depName, versioning, startVersion, ign
     let allVersions = pkgResult.releases
         .map((v) => v.version)
         .filter((v) => ver.isVersion(v) && ver.isCompatible(v, startVersion));
+    // filter duplicate versions (16.0.2+7 == 16.0.2+8)
+    allVersions = allVersions
+        .reverse()
+        .filter((v, i) => allVersions.findIndex((f) => ver.equals(f, v)) === i)
+        .reverse();
     (0,logger/* default */.Z)(`Found ${allVersions.length} total versions`);
     if (!allVersions.length) {
         return [];
@@ -447,7 +452,7 @@ function createTag(tagSuffix, version) {
 async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly, cache, dryRun, tagSuffix, versioning, majorMinor, prune, }, versions) {
     const builds = [];
     const failed = [];
-    const ver = (0,dist_versioning.get)(versioning || 'semver');
+    const ver = (0,dist_versioning.get)(versioning);
     const versionsMap = new Map();
     if (majorMinor) {
         for (const version of versions) {
@@ -467,7 +472,7 @@ async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly
     }
     await (0,util/* exec */.GL)('df', ['-h']);
     for (const version of versions) {
-        const tag = createTag(tagSuffix, version);
+        const tag = createTag(tagSuffix, version.replace(/\+.+/, ''));
         const imageVersion = `${imagePrefix}/${image}:${tag}`;
         (0,logger/* default */.Z)(`Building ${imageVersion}`);
         try {
@@ -542,7 +547,7 @@ async function generateImages(config) {
     await buildAndPush(config, buildList);
 }
 async function run() {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     const dryRun = (0,util/* isDryRun */.Dz)();
     const configFile = (0,core.getInput)('config') || 'builder.json';
     const cfg = await (0,util/* readJson */.zr)(configFile);
@@ -571,6 +576,7 @@ async function run() {
         buildOnly: (0,core.getInput)('build-only') == 'true',
         majorMinor: (0,util/* getArg */.a8)('major-minor') !== 'false',
         prune: (0,util/* getArg */.a8)('prune') === 'true',
+        versioning: (_d = cfg.versioning) !== null && _d !== void 0 ? _d : (0,dist_datasource.getDefaultVersioning)(cfg.datasource),
     };
     if (dryRun) {
         (0,logger/* default */.Z)('GitHub Actions branch detected - Force building latest, no push');
