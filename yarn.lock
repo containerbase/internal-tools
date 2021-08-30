@@ -2299,10 +2299,10 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-azure-devops-node-api@10.2.2:
-  version "10.2.2"
-  resolved "https://registry.yarnpkg.com/azure-devops-node-api/-/azure-devops-node-api-10.2.2.tgz#9f557e622dd07bbaa9bd5e7e84e17c761e2151b2"
-  integrity sha512-4TVv2X7oNStT0vLaEfExmy3J4/CzfuXolEcQl/BRUmvGySqKStTG2O55/hUQ0kM7UJlZBLgniM0SBq4d/WkKow==
+azure-devops-node-api@11.0.1:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/azure-devops-node-api/-/azure-devops-node-api-11.0.1.tgz#b7ec4783230e1de8fc972b23effe7ed2ebac17ff"
+  integrity sha512-YMdjAw9l5p/6leiyIloxj3k7VIvYThKjvqgiQn88r3nhT93ENwsoDS3A83CyJ4uTWzCZ5f5jCi6c27rTU5Pz+A==
   dependencies:
     tunnel "0.0.6"
     typed-rest-client "^1.8.4"
@@ -3066,6 +3066,13 @@ debug@4, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1:
   integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
   dependencies:
     ms "2.1.2"
+
+debug@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
+  dependencies:
+    ms "^2.1.1"
 
 debug@^2.6.9:
   version "2.6.9"
@@ -5766,6 +5773,13 @@ marked@^3.0.0:
   resolved "https://registry.yarnpkg.com/marked/-/marked-3.0.0.tgz#ac8369b7ddeef15fbbce870d14f321bdb20ca4e2"
   integrity sha512-IF2MYfFafPsLIhzLTu63secRBwOmIY+vwS+ei6qg8F+bTS+MxH6ONYRmuseGdZqF44qvoi3nP/rlpClBdgLbiQ==
 
+marshal@0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/marshal/-/marshal-0.5.2.tgz#4a6e6a20c5f59053a5b86d7fac7ad28081214b36"
+  integrity sha512-f6zOFkXq8k8AJbACRR06s4RFCP19ugCFLn9fX4v01yinL634v8gzSf8mVVHrXFhn6GpMKXR0n8LU2wIUL+c32Q==
+  dependencies:
+    debug "4.1.1"
+
 matcher@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/matcher/-/matcher-3.0.0.tgz#bd9060f4c5b70aa8041ccc6f80368760994f30ca"
@@ -7308,10 +7322,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@26.1.1:
-  version "26.1.1"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-26.1.1.tgz#bd4c9e020f534ed1cf9314369be1507ddc5e625f"
-  integrity sha512-WlzmXWHBBCXUiGqA517fC3Ke2Fgs/ixWoWkXXLlJbULi7haI5rAHpVVBH3NFvUqNR5l5zdIHZtYA73SlacKZyg==
+renovate@26.12.0:
+  version "26.12.0"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-26.12.0.tgz#8003470023ed04c1b33236faa51b5e30352c6aba"
+  integrity sha512-+Rya3VZ//vDw+cQRgVOu3+83nSfZYD8Nw3qikHDXMJqRp1aia11zkqhN6qUe0C07ckxBzZ7l7QR4FagqSrdtkA==
   dependencies:
     "@aws-sdk/client-ecr" "3.25.0"
     "@breejs/later" "4.0.2"
@@ -7321,7 +7335,7 @@ renovate@26.1.1:
     "@sindresorhus/is" "4.0.1"
     "@yarnpkg/core" "2.4.0"
     "@yarnpkg/parsers" "2.4.0"
-    azure-devops-node-api "10.2.2"
+    azure-devops-node-api "11.0.1"
     bunyan "1.8.15"
     cacache "15.2.0"
     chalk "4.1.2"
@@ -7358,6 +7372,7 @@ renovate@26.1.1:
     luxon "2.0.2"
     markdown-it "12.2.0"
     markdown-table "2.0.0"
+    marshal "0.5.2"
     minimatch "3.0.4"
     moo "0.5.1"
     node-html-parser "3.3.6"
@@ -7375,7 +7390,7 @@ renovate@26.1.1:
     semver-utils "1.1.4"
     shlex "2.1.0"
     shortid "2.2.16"
-    simple-git "2.42.0"
+    simple-git "2.44.0"
     slugify "1.6.0"
     traverse "0.6.6"
     upath "2.0.1"
@@ -7709,10 +7724,10 @@ signale@^1.2.1:
     figures "^2.0.0"
     pkg-conf "^2.1.0"
 
-simple-git@2.42.0:
-  version "2.42.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.42.0.tgz#1c1ab2f06d28792d9d2d47f8ab75bd1ca5b6a4c3"
-  integrity sha512-illpUX0bcrdB3AyvBGLz0ToRVP7lXNJOGVybGVuVk7PpivPNK5YKJx2aagKdKbveaMtt0DCLK4/jfjDb6b2M2g==
+simple-git@2.44.0:
+  version "2.44.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.44.0.tgz#94eca4162b7e21707b5a1a40b22e6f29b007d3a8"
+  integrity sha512-wIjcAmymhzgdaM0Y/a+XxmNGlivvHQTPZDYXVmyHMShVDwdeVqu3+OOyDbYu0DnfVzqLs2EOxRTgMNbC3YquwQ==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
