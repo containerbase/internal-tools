@@ -9,6 +9,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": false,
     "importHelpers": true,
+    "useUnknownInCatchVariables": false /* we aren't prepared for enabling this by default since ts 4.4*/,
     "lib": ["es2019"],
     "types": ["node", "jest"]
   },
