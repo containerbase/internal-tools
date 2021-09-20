@@ -835,8 +835,14 @@ exports.checkBypass = checkBypass;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 
+const REGEX_IS_INSTALLATION_LEGACY = /^v1\./;
+const REGEX_IS_INSTALLATION = /^ghs_/;
+const REGEX_IS_USER_TO_SERVER = /^ghu_/;
 async function auth(token) {
-  const tokenType = token.split(/\./).length === 3 ? "app" : /^v\d+\./.test(token) ? "installation" : "oauth";
+  const isApp = token.split(/\./).length === 3;
+  const isInstallation = REGEX_IS_INSTALLATION_LEGACY.test(token) || REGEX_IS_INSTALLATION.test(token);
+  const isUserToServer = REGEX_IS_USER_TO_SERVER.test(token);
+  const tokenType = isApp ? "app" : isInstallation ? "installation" : isUserToServer ? "user-to-server" : "oauth";
   return {
     type: "token",
     token: token,
@@ -1600,7 +1606,7 @@ exports.withCustomRequest = withCustomRequest;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 
-const VERSION = "2.16.0";
+const VERSION = "2.16.3";
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -2991,7 +2997,7 @@ const Endpoints = {
   }
 };
 
-const VERSION = "5.10.1";
+const VERSION = "5.10.4";
 
 function endpointsToMethods(octokit, endpointsMap) {
   const newMethods = {};
@@ -3574,7 +3580,7 @@ exports.Deprecation = Deprecation;
 "use strict";
 
 
-var iconvLite = __webpack_require__(40265);
+var iconvLite = __webpack_require__(55483);
 
 // Expose to the world
 module.exports.O = convert;
@@ -3659,7 +3665,7 @@ function checkEncoding(name) {
 
 /***/ }),
 
-/***/ 70725:
+/***/ 37645:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4264,7 +4270,7 @@ function findIdx(table, val) {
 
 /***/ }),
 
-/***/ 58352:
+/***/ 18324:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -4310,7 +4316,7 @@ module.exports = {
 
     'shiftjis': {
         type: '_dbcs',
-        table: function() { return __webpack_require__(72859) },
+        table: function() { return __webpack_require__(61490) },
         encodeAdd: {'\u00a5': 0x5C, '\u203E': 0x7E},
         encodeSkipVals: [{from: 0xED40, to: 0xF940}],
     },
@@ -4327,7 +4333,7 @@ module.exports = {
 
     'eucjp': {
         type: '_dbcs',
-        table: function() { return __webpack_require__(53176) },
+        table: function() { return __webpack_require__(4930) },
         encodeAdd: {'\u00a5': 0x5C, '\u203E': 0x7E},
     },
 
@@ -4354,13 +4360,13 @@ module.exports = {
     '936': 'cp936',
     'cp936': {
         type: '_dbcs',
-        table: function() { return __webpack_require__(8013) },
+        table: function() { return __webpack_require__(24019) },
     },
 
     // GBK (~22000 chars) is an extension of CP936 that added user-mapped chars and some other.
     'gbk': {
         type: '_dbcs',
-        table: function() { return __webpack_require__(8013).concat(__webpack_require__(17973)) },
+        table: function() { return __webpack_require__(24019).concat(__webpack_require__(98069)) },
     },
     'xgbk': 'gbk',
     'isoir58': 'gbk',
@@ -4372,8 +4378,8 @@ module.exports = {
     // http://www.khngai.com/chinese/charmap/tblgbk.php?page=0
     'gb18030': {
         type: '_dbcs',
-        table: function() { return __webpack_require__(8013).concat(__webpack_require__(17973)) },
-        gb18030: function() { return __webpack_require__(2126) },
+        table: function() { return __webpack_require__(24019).concat(__webpack_require__(98069)) },
+        gb18030: function() { return __webpack_require__(25370) },
         encodeSkipVals: [0x80],
         encodeAdd: {'€': 0xA2E3},
     },
@@ -4388,7 +4394,7 @@ module.exports = {
     '949': 'cp949',
     'cp949': {
         type: '_dbcs',
-        table: function() { return __webpack_require__(33486) },
+        table: function() { return __webpack_require__(65240) },
     },
 
     'cseuckr': 'cp949',
@@ -4429,14 +4435,14 @@ module.exports = {
     '950': 'cp950',
     'cp950': {
         type: '_dbcs',
-        table: function() { return __webpack_require__(84823) },
+        table: function() { return __webpack_require__(10759) },
     },
 
     // Big5 has many variations and is an extension of cp950. We use Encoding Standard's as a consensus.
     'big5': 'big5hkscs',
     'big5hkscs': {
         type: '_dbcs',
-        table: function() { return __webpack_require__(84823).concat(__webpack_require__(10173)) },
+        table: function() { return __webpack_require__(10759).concat(__webpack_require__(29464)) },
         encodeSkipVals: [
             // Although Encoding Standard says we should avoid encoding to HKSCS area (See Step 1 of
             // https://encoding.spec.whatwg.org/#index-big5-pointer), we still do it to increase compatibility with ICU.
@@ -4460,7 +4466,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 95204:
+/***/ 88576:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4469,15 +4475,15 @@ module.exports = {
 // Update this array if you add/rename/remove files in this directory.
 // We support Browserify by skipping automatic module discovery and requiring modules directly.
 var modules = [
-    __webpack_require__(25781),
-    __webpack_require__(83735),
-    __webpack_require__(77428),
-    __webpack_require__(30690),
-    __webpack_require__(26890),
-    __webpack_require__(82385),
-    __webpack_require__(53544),
-    __webpack_require__(70725),
-    __webpack_require__(58352),
+    __webpack_require__(40838),
+    __webpack_require__(9549),
+    __webpack_require__(70555),
+    __webpack_require__(86624),
+    __webpack_require__(18814),
+    __webpack_require__(67845),
+    __webpack_require__(37671),
+    __webpack_require__(37645),
+    __webpack_require__(18324),
 ];
 
 // Put all encoding/alias/codec definitions to single object and export it.
@@ -4491,7 +4497,7 @@ for (var i = 0; i < modules.length; i++) {
 
 /***/ }),
 
-/***/ 25781:
+/***/ 40838:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -4697,7 +4703,7 @@ InternalDecoderCesu8.prototype.end = function() {
 
 /***/ }),
 
-/***/ 26890:
+/***/ 18814:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4777,7 +4783,7 @@ SBCSDecoder.prototype.end = function() {
 
 /***/ }),
 
-/***/ 53544:
+/***/ 37671:
 /***/ ((module) => {
 
 "use strict";
@@ -5235,7 +5241,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 82385:
+/***/ 67845:
 /***/ ((module) => {
 
 "use strict";
@@ -5422,7 +5428,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 77428:
+/***/ 70555:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -5627,7 +5633,7 @@ function detectEncoding(bufs, defaultEncoding) {
 
 /***/ }),
 
-/***/ 83735:
+/***/ 9549:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -5954,7 +5960,7 @@ function detectEncoding(bufs, defaultEncoding) {
 
 /***/ }),
 
-/***/ 30690:
+/***/ 86624:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -6252,7 +6258,7 @@ Utf7IMAPDecoder.prototype.end = function() {
 
 /***/ }),
 
-/***/ 31577:
+/***/ 78883:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -6312,7 +6318,7 @@ StripBOMWrapper.prototype.end = function() {
 
 /***/ }),
 
-/***/ 40265:
+/***/ 55483:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -6320,7 +6326,7 @@ StripBOMWrapper.prototype.end = function() {
 
 var Buffer = __webpack_require__(4526).Buffer;
 
-var bomHandling = __webpack_require__(31577),
+var bomHandling = __webpack_require__(78883),
     iconv = module.exports;
 
 // All codecs and aliases are kept here, keyed by encoding name/alias.
@@ -6378,7 +6384,7 @@ iconv.fromEncoding = iconv.decode;
 iconv._codecDataCache = {};
 iconv.getCodec = function getCodec(encoding) {
     if (!iconv.encodings)
-        iconv.encodings = __webpack_require__(95204); // Lazy load all encoding definitions.
+        iconv.encodings = __webpack_require__(88576); // Lazy load all encoding definitions.
     
     // Canonicalize encoding name: strip all non-alphanumeric chars and appended year.
     var enc = iconv._canonicalizeEncoding(encoding);
@@ -6459,7 +6465,7 @@ iconv.enableStreamingAPI = function enableStreamingAPI(stream_module) {
         return;
 
     // Dependency-inject stream module to create IconvLite stream classes.
-    var streams = __webpack_require__(77145)(stream_module);
+    var streams = __webpack_require__(78583)(stream_module);
 
     // Not public API yet, but expose the stream classes.
     iconv.IconvLiteEncoderStream = streams.IconvLiteEncoderStream;
@@ -6498,7 +6504,7 @@ if (false) {}
 
 /***/ }),
 
-/***/ 77145:
+/***/ 78583:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -12582,7 +12588,7 @@ exports.getUserAgent = getUserAgent;
 
 /***/ }),
 
-/***/ 10173:
+/***/ 29464:
 /***/ ((module) => {
 
 "use strict";
@@ -12590,7 +12596,7 @@ module.exports = JSON.parse('[["8740","䏰䰲䘃䖦䕸𧉧䵷䖳𧲱䳢𧳅㮕�
 
 /***/ }),
 
-/***/ 8013:
+/***/ 24019:
 /***/ ((module) => {
 
 "use strict";
@@ -12598,7 +12604,7 @@ module.exports = JSON.parse('[["0","\\u0000",127,"€"],["8140","丂丄丅丆丏
 
 /***/ }),
 
-/***/ 33486:
+/***/ 65240:
 /***/ ((module) => {
 
 "use strict";
@@ -12606,7 +12612,7 @@ module.exports = JSON.parse('[["0","\\u0000",127],["8141","갂갃갅갆갋",4,"�
 
 /***/ }),
 
-/***/ 84823:
+/***/ 10759:
 /***/ ((module) => {
 
 "use strict";
@@ -12614,7 +12620,7 @@ module.exports = JSON.parse('[["0","\\u0000",127],["a140","　，、。．‧；
 
 /***/ }),
 
-/***/ 53176:
+/***/ 4930:
 /***/ ((module) => {
 
 "use strict";
@@ -12622,7 +12628,7 @@ module.exports = JSON.parse('[["0","\\u0000",127],["8ea1","｡",62],["a1a1","　
 
 /***/ }),
 
-/***/ 2126:
+/***/ 25370:
 /***/ ((module) => {
 
 "use strict";
@@ -12630,7 +12636,7 @@ module.exports = JSON.parse('{"uChars":[128,165,169,178,184,216,226,235,238,244,
 
 /***/ }),
 
-/***/ 17973:
+/***/ 98069:
 /***/ ((module) => {
 
 "use strict";
@@ -12638,7 +12644,7 @@ module.exports = JSON.parse('[["a140","",62],["a180","",32],["a240","",
 
 /***/ }),
 
-/***/ 72859:
+/***/ 61490:
 /***/ ((module) => {
 
 "use strict";
