@@ -31,6 +31,7 @@ function getVersions(versions: string[]): ReleaseResult {
 async function getBuildList({
   datasource,
   depName,
+  lookupName,
   versioning,
   startVersion,
   ignoredVersions,
@@ -46,6 +47,7 @@ async function getBuildList({
     : await getPkgReleases({
         datasource,
         depName,
+        lookupName,
         versioning,
       });
   if (!pkgResult) {

@@ -5,6 +5,7 @@ import { ConfigFile } from './types';
 const keys: (keyof ConfigFile)[] = [
   'datasource',
   'depName',
+  'lookupName',
   'buildArg',
   'versioning',
   'latestVersion',
@@ -23,7 +24,7 @@ function checkArgs(
 
 export async function readDockerConfig(cfg: ConfigFile): Promise<void> {
   const dockerFileRe = new RegExp(
-    '# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s' +
+    '# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>.+?)(?: lookupName=(?<lookupName>.+?))?(?: versioning=(?<versioning>[a-z-]+?))?\\s' +
       `(?:ENV|ARG) ${cfg.buildArg as string}=(?<latestVersion>.*)\\s`,
     'g'
   );
