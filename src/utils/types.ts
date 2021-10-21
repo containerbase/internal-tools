@@ -21,6 +21,7 @@ export type ConfigFile = {
   datasource: string;
   image: string;
   depName?: string;
+  lookupName?: string;
   versioning?: string;
   startVersion: string;
   cache?: string;

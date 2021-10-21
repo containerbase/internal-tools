@@ -304,6 +304,134 @@ Array [
 ]
 `;
 
+exports[` works helm 1`] = `
+Array [
+  Array [
+    Object {
+      "datasource": "github-releases",
+      "depName": "helm",
+      "extractVersion": "^v(?<version>.*)$",
+      "lookupName": "helm/helm",
+      "versioning": undefined,
+    },
+  ],
+]
+`;
+
+exports[` works helm: build 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArgs": Array [
+        "HELM_VERSION=3.4.0",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+        "3.4",
+      ],
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "3.4.0",
+    },
+  ],
+  Array [
+    Object {
+      "buildArgs": Array [
+        "HELM_VERSION=3.7.0",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+      ],
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "3.7.0",
+    },
+  ],
+  Array [
+    Object {
+      "buildArgs": Array [
+        "HELM_VERSION=3.7.1",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+        "3",
+        "3.7",
+      ],
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "3.7.1",
+    },
+  ],
+]
+`;
+
+exports[` works helm: publish 1`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "3.4.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "3.4",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "latest",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "3.7.0",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "3.7.1",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "3",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "helm",
+      "imagePrefix": "renovate",
+      "tag": "3.7",
+    },
+  ],
+]
+`;
+
 exports[` works java: build 1`] = `
 Array [
   Array [
