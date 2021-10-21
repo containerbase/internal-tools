@@ -5,6 +5,7 @@ import { ConfigFile } from './types';
 const keys: (keyof ConfigFile)[] = [
   'datasource',
   'depName',
+  'lookupName',
   'buildArg',
   'versioning',
   'latestVersion',

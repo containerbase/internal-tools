@@ -115,6 +115,44 @@ describe(getName(__filename), () => {
     expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
+  it('works helm', async () => {
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=github-releases depName=helm lookupName=helm/helm\nARG HELM_VERSION=3.4.0\n`
+    );
+    utils.readJson.mockReset();
+    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/helm.json'));
+    datasources.getPkgReleases.mockResolvedValueOnce({
+      releases: [
+        { version: '2.0.0' },
+        { version: '3.4.0' },
+        { version: '3.7.0-rc.3' },
+        { version: '3.7.0' },
+        { version: '3.7.1' },
+      ],
+    });
+
+    await run();
+
+    expect(datasources.getPkgReleases.mock.calls).toMatchSnapshot([
+      [
+        {
+          depName: 'helm',
+          lookupName: 'helm/helm',
+          datasource: 'github-releases',
+        },
+      ],
+    ]);
+
+    expect(docker.build.mock.calls).toHaveLength(3);
+    expect(docker.build.mock.calls.map(([args]) => args.tag)).toEqual([
+      '3.4.0',
+      '3.7.0',
+      '3.7.1',
+    ]);
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
+  });
+
   it('works dummy', async () => {
     jest.resetAllMocks();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
