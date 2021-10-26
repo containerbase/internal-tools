@@ -1039,7 +1039,7 @@
     jest-util "^27.3.1"
     slash "^3.0.0"
 
-"@jest/core@^27.3.0", "@jest/core@^27.3.1":
+"@jest/core@^27.3.1":
   version "27.3.1"
   resolved "https://registry.yarnpkg.com/@jest/core/-/core-27.3.1.tgz#04992ef1b58b17c459afb87ab56d81e63d386925"
   integrity sha512-DMNE90RR5QKx0EA+wqe3/TNEwiRpOkhshKNxtLxd4rt3IZpCt+RSL+FoJsGeblRZmqdK4upHA/mKKGPPRAifhg==
@@ -1073,7 +1073,7 @@
     slash "^3.0.0"
     strip-ansi "^6.0.0"
 
-"@jest/environment@^27.3.0", "@jest/environment@^27.3.1":
+"@jest/environment@^27.3.1":
   version "27.3.1"
   resolved "https://registry.yarnpkg.com/@jest/environment/-/environment-27.3.1.tgz#2182defbce8d385fd51c5e7c7050f510bd4c86b1"
   integrity sha512-BCKCj4mOVLme6Tanoyc9k0ultp3pnmuyHw73UHRPeeZxirsU/7E3HC4le/VDb/SMzE1JcPnto+XBKFOcoiJzVw==
@@ -1095,16 +1095,7 @@
     jest-mock "^27.3.0"
     jest-util "^27.3.1"
 
-"@jest/globals@27.3.0":
-  version "27.3.0"
-  resolved "https://registry.yarnpkg.com/@jest/globals/-/globals-27.3.0.tgz#8822f9a72aea428e3f11a688ff13c7992bfe1ea4"
-  integrity sha512-EEqmQHMLXgEZfchMVAavUfJuZmORRrP+zhomfREqVE85d1nccd7nw8uN4FQDJ53m5Glm1XtVCyOIJ9kQLrqjeA==
-  dependencies:
-    "@jest/environment" "^27.3.0"
-    "@jest/types" "^27.2.5"
-    expect "^27.3.0"
-
-"@jest/globals@^27.3.1":
+"@jest/globals@27.3.1", "@jest/globals@^27.3.1":
   version "27.3.1"
   resolved "https://registry.yarnpkg.com/@jest/globals/-/globals-27.3.1.tgz#ce1dfb03d379237a9da6c1b99ecfaca1922a5f9e"
   integrity sha512-Q651FWiWQAIFiN+zS51xqhdZ8g9b88nGCobC87argAxA7nMfNQq0Q0i9zTfQYgLa6qFXk2cGANEqfK051CZ8Pg==
@@ -3853,7 +3844,7 @@ exit@^0.1.2:
   resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
   integrity sha1-BjJjj42HfMghB9MKD/8aF8uhzQw=
 
-expect@^27.3.0, expect@^27.3.1:
+expect@^27.3.1:
   version "27.3.1"
   resolved "https://registry.yarnpkg.com/expect/-/expect-27.3.1.tgz#d0f170b1f5c8a2009bab0beffd4bb94f043e38e7"
   integrity sha512-MrNXV2sL9iDRebWPGOGFdPQRl2eDQNu/uhxIMShjjx74T6kC6jFIkmQ6OqXDtevjGUkyB2IT56RzDBqXf/QPCg==
@@ -5018,7 +5009,7 @@ jest-circus@^27.3.1:
     stack-utils "^2.0.3"
     throat "^6.0.1"
 
-jest-cli@^27.3.0:
+jest-cli@^27.3.1:
   version "27.3.1"
   resolved "https://registry.yarnpkg.com/jest-cli/-/jest-cli-27.3.1.tgz#b576f9d146ba6643ce0a162d782b40152b6b1d16"
   integrity sha512-WHnCqpfK+6EvT62me6WVs8NhtbjAS4/6vZJnk7/2+oOr50cwAzG4Wxt6RXX0hu6m1169ZGMlhYYUNeKBXCph/Q==
@@ -5412,14 +5403,14 @@ jest-worker@^27.3.1:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jest@27.3.0:
-  version "27.3.0"
-  resolved "https://registry.yarnpkg.com/jest/-/jest-27.3.0.tgz#25f0e02aaa51d53bc6e1941eb4838a3452f3320e"
-  integrity sha512-ZSwT6ROUbUs3bXirxzxBvohE/1y7t+IHIu3fL8WgIeJppE2XsFoa2dB03CI9kXA81znW0Kt0t2R+QVOWeY8cYw==
+jest@27.3.1:
+  version "27.3.1"
+  resolved "https://registry.yarnpkg.com/jest/-/jest-27.3.1.tgz#b5bab64e8f56b6f7e275ba1836898b0d9f1e5c8a"
+  integrity sha512-U2AX0AgQGd5EzMsiZpYt8HyZ+nSVIh5ujQ9CPp9EQZJMjXIiSZpJNweZl0swatKRoqHWgGKM3zaSwm4Zaz87ng==
   dependencies:
-    "@jest/core" "^27.3.0"
+    "@jest/core" "^27.3.1"
     import-local "^3.0.2"
-    jest-cli "^27.3.0"
+    jest-cli "^27.3.1"
 
 js-tokens@^4.0.0:
   version "4.0.0"
