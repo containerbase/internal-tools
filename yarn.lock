@@ -2945,10 +2945,10 @@ combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@8.2.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-8.2.0.tgz#37fe2bde301d87d47a53adeff8b5915db1381ca8"
-  integrity sha512-LLKxDvHeL91/8MIyTAD5BFMNtoIwztGPMiM/7Bl8rIPmHCZXRxmSWr91h57dpOpnQ6jIUqEWdXE/uBYMfiVZDA==
+commander@8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-8.3.0.tgz#4837ea1b2da67b9c616a67afbb0fafee567bca66"
+  integrity sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==
 
 common-ancestor-path@^1.0.1:
   version "1.0.1"
@@ -3165,7 +3165,7 @@ dateformat@^3.0.0:
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
-debug@4, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1:
+debug@4, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
   integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
@@ -7534,10 +7534,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@27.31.10:
-  version "27.31.10"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-27.31.10.tgz#88d0278c71c17adc0c09c1608ceacb2055fc9a1a"
-  integrity sha512-bHZGAZfPCnb06G4blFosM7Fi8m9UtWjynsogwa6f6PXNZLFfPZF9SrME/Cf3BTf99uibZ1rIwExu9oV6p8HOvA==
+renovate@28.20.0:
+  version "28.20.0"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-28.20.0.tgz#60e4023ff065f9cd1e50ca37f70cc57474677dab"
+  integrity sha512-tvnzjN2ataGuSCmTT75JMQOC5t/f6VyJWFmqyqcARHXqQcLaJpY/NUOYcJTA1+CRlJkSjYlOPZd3hEBlCyCxAA==
   dependencies:
     "@aws-sdk/client-ecr" "3.25.0"
     "@breejs/later" "4.0.2"
@@ -7554,7 +7554,7 @@ renovate@27.31.10:
     chalk "4.1.2"
     changelog-filename-regex "2.0.1"
     clean-git-ref "2.0.1"
-    commander "8.2.0"
+    commander "8.3.0"
     conventional-commits-detector "1.0.3"
     crypto-random-string "3.3.1"
     deepmerge "4.2.2"
@@ -7604,8 +7604,8 @@ renovate@27.31.10:
     semver-utils "1.1.4"
     shlex "2.1.0"
     shortid "2.2.16"
-    simple-git "2.46.0"
-    slugify "1.6.0"
+    simple-git "2.47.0"
+    slugify "1.6.1"
     traverse "0.6.6"
     upath "2.0.1"
     url-join "4.0.1"
@@ -7942,14 +7942,14 @@ signale@^1.2.1:
     figures "^2.0.0"
     pkg-conf "^2.1.0"
 
-simple-git@2.46.0:
-  version "2.46.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.46.0.tgz#d564856705cee9d2ef1d1f98c7143e2bc00e7c3e"
-  integrity sha512-6eumII1vfP4NpRqxZcVWCcIT5xHH6dRyvBZSjkH4dJRDRpv+0f75hrN5ysp++y23Mfr3AbRC/dO2NDbfj1lJpQ==
+simple-git@2.47.0:
+  version "2.47.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.47.0.tgz#9693b471de7911901f703b4c403fc3e8774cd9be"
+  integrity sha512-+HfCpqPBEZTPWiW9fPdbiPJDslM22MLqrktfzNKyI2pWaJa6DhfNVx4Mds04KZzVv5vjC9/ksw3y5gVf8ECWDg==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
-    debug "^4.3.1"
+    debug "^4.3.2"
 
 sisteransi@^1.0.5:
   version "1.0.5"
@@ -7970,10 +7970,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-slugify@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.0.tgz#6bdf8ed01dabfdc46425b67e3320b698832ff893"
-  integrity sha512-FkMq+MQc5hzYgM86nLuHI98Acwi3p4wX+a5BO9Hhw4JdK4L7WueIiZ4tXEobImPqBz2sVcV0+Mu3GRB30IGang==
+slugify@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.1.tgz#a5fcaef29f4e57c6e932ce7044b6ffd9cf81b641"
+  integrity sha512-5ofqMTbetNhxlzjYYLBaZFQd6oiTuSkQlyfPEFIMwgUABlZQ0hbk5xIV9Ydd5jghWeRoO7GkiJliUvTpLOjNRA==
 
 smart-buffer@^4.1.0:
   version "4.2.0"
