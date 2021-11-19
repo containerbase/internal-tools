@@ -7,7 +7,17 @@ import { docker } from './docker/common';
 import log from './logger';
 import { ExecError } from './types';
 
-export const registry = 'https://index.docker.io';
+export function splitImage(image: string): {
+  registry: string;
+  repository: string;
+} {
+  const parts = image.split('/');
+  if (parts.length > 2) {
+    return { registry: parts[0], repository: parts.slice(1).join('/') };
+  } else {
+    return { registry: 'index.docker.io', repository: image };
+  }
+}
 
 export type DockerManifestV2 = {
   schemaVersion: number;
@@ -21,7 +31,7 @@ export async function getAuthHeaders(
   repository: string
 ): Promise<Headers> {
   try {
-    const apiCheckUrl = `${registry}/v2/`;
+    const apiCheckUrl = `https://${registry}/v2/`;
     const apiCheckResponse = await got(apiCheckUrl, { throwHttpErrors: false });
     if (apiCheckResponse.headers['www-authenticate'] === undefined) {
       return {};
@@ -59,12 +69,13 @@ export enum DockerContentType {
 const shaRe = /(sha256:[a-f0-9]{64})/;
 
 export async function getRemoteImageId(
+  registry: string,
   repository: string,
   tag = 'latest'
 ): Promise<string> {
   const headers = await getAuthHeaders(registry, repository);
   headers.accept = DockerContentType.ManifestV2;
-  const url = `${registry}/v2/${repository}/manifests/${tag}`;
+  const url = `https://${registry}/v2/${repository}/manifests/${tag}`;
 
   try {
     const resp = await got<DockerManifestV2>(url, {
@@ -207,7 +218,8 @@ export async function publish({
   const newId = await getLocalImageId(imageName, tag);
 
   log('Fetch old id');
-  const oldId = await getRemoteImageId(imageName, tag);
+  const { registry, repository } = splitImage(imageName);
+  const oldId = await getRemoteImageId(registry, repository, tag);
 
   if (oldId === newId) {
     log('Image uptodate, no push nessessary:', chalk.yellow(oldId));
