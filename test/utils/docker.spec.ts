@@ -7,7 +7,7 @@ import {
   getLocalImageId,
   getRemoteImageId,
   publish,
-  registry,
+  splitImage,
 } from '../../src/utils/docker';
 import { ExecError } from '../../src/utils/types';
 import { getName, mocked } from '../utils';
@@ -23,6 +23,7 @@ const digest =
   'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a1';
 const tag = 'latest';
 const realm = 'https://auth.docker.io';
+const registry = 'https://index.docker.io';
 
 describe(getName(__filename), () => {
   beforeEach(() => {
@@ -33,6 +34,20 @@ describe(getName(__filename), () => {
   afterEach(() => {
     nock.abortPendingRequests();
   });
+
+  describe('splitImage', () => {
+    it('works', () => {
+      expect(splitImage('renovatebot/base')).toEqual({
+        registry: 'index.docker.io',
+        repository: 'renovatebot/base',
+      });
+      expect(splitImage('ghcr.io/containerbase/base')).toEqual({
+        registry: 'ghcr.io',
+        repository: 'containerbase/base',
+      });
+    });
+  });
+
   describe('getAuthHeaders', () => {
     const image = 'renovate/base';
     const headers = {
@@ -43,7 +58,7 @@ describe(getName(__filename), () => {
       nock(realm)
         .get(`/token?service=registry.docker.io&scope=repository:${image}:pull`)
         .reply(200, { access_token: 'XXX' });
-      expect(await getAuthHeaders(registry, image)).toEqual({
+      expect(await getAuthHeaders(registry.slice(8), image)).toEqual({
         authorization: 'Bearer XXX',
       });
 
@@ -54,7 +69,7 @@ describe(getName(__filename), () => {
       nock(realm)
         .get(`/token?service=registry.docker.io&scope=repository:${image}:pull`)
         .reply(200, {});
-      await expect(getAuthHeaders(registry, image)).rejects.toThrow(
+      await expect(getAuthHeaders(registry.slice(8), image)).rejects.toThrow(
         'Failed to obtain docker registry token'
       );
 
@@ -66,7 +81,7 @@ describe(getName(__filename), () => {
       nock(realm)
         .get(`/token?service=registry.docker.io&scope=repository:${image}:pull`)
         .reply(418);
-      await expect(getAuthHeaders(registry, image)).rejects.toThrow(
+      await expect(getAuthHeaders(registry.slice(8), image)).rejects.toThrow(
         'Failed to obtain docker registry token'
       );
 
@@ -90,7 +105,7 @@ describe(getName(__filename), () => {
           },
           { 'content-type': DockerContentType.ManifestV2 }
         );
-      expect(await getRemoteImageId(image)).toEqual(digest);
+      expect(await getRemoteImageId(registry.slice(8), image)).toEqual(digest);
       expect(nock.isDone()).toBe(true);
     });
 
@@ -101,7 +116,9 @@ describe(getName(__filename), () => {
         .get(`/v2/${image}/manifests/${tag}`)
         .reply(404);
 
-      expect(await getRemoteImageId(image)).toEqual('<none>');
+      expect(await getRemoteImageId(registry.slice(8), image)).toEqual(
+        '<none>'
+      );
       expect(nock.isDone()).toBe(true);
     });
 
@@ -112,7 +129,9 @@ describe(getName(__filename), () => {
         .get(`/v2/${image}/manifests/${tag}`)
         .reply(200, {}, { 'content-type': DockerContentType.ManifestV1 });
 
-      expect(await getRemoteImageId(image)).toEqual('<error>');
+      expect(await getRemoteImageId(registry.slice(8), image)).toEqual(
+        '<error>'
+      );
       expect(nock.isDone()).toBe(true);
     });
 
@@ -122,7 +141,7 @@ describe(getName(__filename), () => {
         .reply(200)
         .get(`/v2/${image}/manifests/${tag}`)
         .reply(418);
-      await expect(getRemoteImageId(image)).rejects.toThrow(
+      await expect(getRemoteImageId(registry.slice(8), image)).rejects.toThrow(
         'Could not find remote image id'
       );
       expect(nock.isDone()).toBe(true);
@@ -135,7 +154,7 @@ describe(getName(__filename), () => {
         .get(`/v2/${image}/manifests/${tag}`)
         .reply(200, {}, { 'content-type': 'unsupported' });
 
-      await expect(getRemoteImageId(image)).rejects.toThrow(
+      await expect(getRemoteImageId(registry.slice(8), image)).rejects.toThrow(
         'Could not find remote image id'
       );
       expect(nock.isDone()).toBe(true);
