@@ -31,7 +31,7 @@ jobs:
           cache: yarn
 
       - name: Cache node_modules
-        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2.1.6
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
         with:
           path: node_modules
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -71,7 +71,7 @@ jobs:
           cache: yarn
 
       - name: Cache node_modules
-        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2.1.6
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
         with:
           path: node_modules
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -114,7 +114,7 @@ jobs:
           cache: yarn
 
       - name: Cache node_modules
-        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2.1.6
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
         with:
           path: node_modules
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -244,7 +244,7 @@ jobs:
           cache: yarn
 
       - name: Cache node_modules
-        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2.1.6
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
         with:
           path: node_modules
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
