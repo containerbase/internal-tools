@@ -8124,10 +8124,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@29.27.0:
-  version "29.27.0"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-29.27.0.tgz#52470e830809dc0a61187c31886dfe9f49909a8b"
-  integrity sha512-cxVQiYNRkojqHNiwZ5Pik0RhUSuK/Q1cFIla26FBrS9UzdgQkMoxNqiT/0cG4c5N5bcnS2OuQAUBw4nnqrekYA==
+renovate@29.36.2:
+  version "29.36.2"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-29.36.2.tgz#f43d0cdc695d55c4d66e2bfb9fefb6fd99c1ad8c"
+  integrity sha512-qyla2y4JLQOgDU7t2TdRPV0JFhM4Xh7FcI6YO0R08hUupuE7ac1azS/o8EX0+bk31cinVnccZMwAbN/Oyl8shA==
   dependencies:
     "@aws-sdk/client-ec2" "3.35.0"
     "@aws-sdk/client-ecr" "3.38.0"
@@ -8197,8 +8197,8 @@ renovate@29.27.0:
     semver-stable "3.0.0"
     semver-utils "1.1.4"
     shlex "2.1.0"
-    simple-git "2.47.0"
-    slugify "1.6.2"
+    simple-git "2.48.0"
+    slugify "1.6.3"
     traverse "0.6.6"
     tslib "2.3.1"
     upath "2.0.1"
@@ -8534,10 +8534,10 @@ signale@^1.2.1:
     figures "^2.0.0"
     pkg-conf "^2.1.0"
 
-simple-git@2.47.0:
-  version "2.47.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.47.0.tgz#9693b471de7911901f703b4c403fc3e8774cd9be"
-  integrity sha512-+HfCpqPBEZTPWiW9fPdbiPJDslM22MLqrktfzNKyI2pWaJa6DhfNVx4Mds04KZzVv5vjC9/ksw3y5gVf8ECWDg==
+simple-git@2.48.0:
+  version "2.48.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.48.0.tgz#87c262dba8f84d7b96bb3a713e9e34701c1f6e3b"
+  integrity sha512-z4qtrRuaAFJS4PUd0g+xy7aN4y+RvEt/QTJpR184lhJguBA1S/LsVlvE/CM95RsYMOFJG3NGGDjqFCzKU19S/A==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
@@ -8562,10 +8562,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-slugify@1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.2.tgz#4cb97220a2278e1b86fb017c6da668e6a865354c"
-  integrity sha512-XMtI8qD84LwCpthLMBHlIhcrj10cgA+U/Ot8G6FD6uFuWZtMfKK75JO7l81nzpFJsPlsW6LT+VKqWQJW3+6New==
+slugify@1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.3.tgz#325aec50871acfb17976f2d3cb09ee1e7ab563be"
+  integrity sha512-1MPyqnIhgiq+/0iDJyqSJHENdnH5MMIlgJIBxmkRMzTNKlS/QsN5dXsB+MdDq4E6w0g9jFA4XOTRkVDjDae/2w==
 
 smart-buffer@^4.1.0:
   version "4.2.0"
