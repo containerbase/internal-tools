@@ -1,5 +1,5 @@
 import { exec } from '../../util';
-import { ExecResult } from '../types';
+import type { ExecResult } from '../types';
 
 export async function cosign(...args: string[]): Promise<ExecResult> {
   process.env['COSIGN_EXPERIMENTAL'] = 'true';
