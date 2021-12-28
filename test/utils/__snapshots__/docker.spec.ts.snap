@@ -100,6 +100,26 @@ Array [
 ]
 `;
 
+exports[` publish skips signing 1`] = `
+Array [
+  Array [
+    "docker",
+    Array [
+      "inspect",
+      "--format='{{.Id}}'",
+      "renovate/base:latest",
+    ],
+  ],
+  Array [
+    "docker",
+    Array [
+      "push",
+      "renovate/base:latest",
+    ],
+  ],
+]
+`;
+
 exports[` publish uptodate 1`] = `
 Array [
   Array [
@@ -140,6 +160,13 @@ Array [
     "docker",
     Array [
       "push",
+      "renovate/base:latest",
+    ],
+  ],
+  Array [
+    "cosign",
+    Array [
+      "sign",
       "renovate/base:latest",
     ],
   ],
