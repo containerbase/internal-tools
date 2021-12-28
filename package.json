@@ -12,7 +12,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "compile": "cd src && ncc build ./index.ts -o ../dist -s --target es2020",
+    "compile": "cd src && ncc build ./index.ts -o ../dist -s --target es2021",
     "eslint": "eslint .",
     "eslint:fix": "yarn eslint --fix",
     "lint": "run-s eslint prettier",
