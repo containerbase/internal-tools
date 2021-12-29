@@ -269,6 +269,7 @@ describe(getName(__filename), () => {
         stdout:
           'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2',
       });
+      utils.exists.mockResolvedValueOnce(true);
 
       await publish({ imagePrefix, image, tag });
       expect(utils.exec.mock.calls).toMatchSnapshot();
@@ -294,6 +295,20 @@ describe(getName(__filename), () => {
         ...res,
         stdout: digest,
       });
+
+      await publish({ imagePrefix, image, tag });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+
+      expect(nock.isDone()).toBe(true);
+    });
+
+    it('skips signing', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+        stdout:
+          'sha256:d694b03ba0df63ac9b27445e76657d4ed62898d721b997372aab150ee84e07a2',
+      });
+      utils.exists.mockResolvedValue(false);
 
       await publish({ imagePrefix, image, tag });
       expect(utils.exec.mock.calls).toMatchSnapshot();
