@@ -3,6 +3,8 @@ import * as chalk from 'chalk';
 import * as delay from 'delay';
 import got, { HTTPError, Headers } from 'got';
 import * as wwwAuthenticate from 'www-authenticate';
+import { exists } from '../util';
+import { cosign } from './cosign/common';
 import { docker } from './docker/common';
 import log from './logger';
 import { ExecError } from './types';
@@ -231,6 +233,17 @@ export async function publish({
     log.warn(chalk.yellow('[DRY_RUN]'), chalk.blue('Would push:'), fullName);
   } else {
     await docker('push', fullName);
+    await sign(fullName);
   }
   log.info(chalk.blue('Processing image finished:', newId));
+}
+
+async function sign(fullName: string): Promise<void> {
+  if (!(await exists('cosign'))) {
+    log.warn('Cosign is not installed. Skipping container signing');
+    return;
+  }
+
+  log('Signing image', fullName);
+  await cosign('sign', fullName);
 }

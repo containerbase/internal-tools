@@ -3,6 +3,7 @@ import { join } from 'path';
 import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
+import { which } from '@actions/io';
 import * as findUp from 'find-up';
 import { DockerArch } from './utils/docker/common';
 import { ExecError, ExecResult } from './utils/types';
@@ -18,6 +19,16 @@ type Module<T> = T | { default: T };
 
 function _import<T>(path: string): Promise<Module<T>> {
   return Promise.resolve(_require(path)) as Promise<Module<T>>;
+}
+
+export async function exists(command: string): Promise<boolean> {
+  try {
+    await which(command, true);
+  } catch {
+    return false;
+  }
+
+  return true;
 }
 
 export async function exec(

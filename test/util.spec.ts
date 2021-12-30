@@ -1,19 +1,33 @@
 import { existsSync } from 'fs';
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
+import * as _io from '@actions/io';
 import * as util from '../src/util';
 import { getName, mocked } from './utils';
 
 jest.mock('@actions/core');
 jest.mock('@actions/exec');
+jest.mock('@actions/io');
 jest.mock('../src/utils/logger');
 
 const core = mocked(_core);
 const exec = mocked(_exec);
+const io = mocked(_io);
 
 describe(getName(__filename), () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe('exists', () => {
+    it('returns true', async () => {
+      io.which.mockResolvedValueOnce('');
+      expect(await util.exists('test')).toEqual(true);
+    });
+    it('returns false', async () => {
+      io.which.mockRejectedValueOnce(new Error());
+      expect(await util.exists('test')).toEqual(false);
+    });
   });
 
   describe('exec', () => {
