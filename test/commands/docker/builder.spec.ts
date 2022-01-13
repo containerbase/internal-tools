@@ -262,7 +262,7 @@ describe(getName(__filename), () => {
     try {
       await run();
     } catch (e) {
-      expect((e as Error).message).toEqual('failed');
+      expect((e as Error).message).toBe('failed');
     }
   });
 
@@ -277,7 +277,7 @@ describe(getName(__filename), () => {
     try {
       await run();
     } catch (e) {
-      expect((e as Error).message).toEqual('missing-image');
+      expect((e as Error).message).toBe('missing-image');
     }
   });
   it('throws missing-config', async () => {
@@ -288,7 +288,7 @@ describe(getName(__filename), () => {
     try {
       await run();
     } catch (e) {
-      expect((e as Error).message).toEqual('missing-config');
+      expect((e as Error).message).toBe('missing-config');
     }
   });
 });
