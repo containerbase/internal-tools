@@ -22,11 +22,11 @@ describe(getName(__filename), () => {
   describe('exists', () => {
     it('returns true', async () => {
       io.which.mockResolvedValueOnce('');
-      expect(await util.exists('test')).toEqual(true);
+      expect(await util.exists('test')).toBe(true);
     });
     it('returns false', async () => {
       io.which.mockRejectedValueOnce(new Error());
-      expect(await util.exists('test')).toEqual(false);
+      expect(await util.exists('test')).toBe(false);
     });
   });
 

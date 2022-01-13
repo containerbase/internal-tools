@@ -116,9 +116,7 @@ describe(getName(__filename), () => {
         .get(`/v2/${image}/manifests/${tag}`)
         .reply(404);
 
-      expect(await getRemoteImageId(registry.slice(8), image)).toEqual(
-        '<none>'
-      );
+      expect(await getRemoteImageId(registry.slice(8), image)).toBe('<none>');
       expect(nock.isDone()).toBe(true);
     });
 
@@ -129,9 +127,7 @@ describe(getName(__filename), () => {
         .get(`/v2/${image}/manifests/${tag}`)
         .reply(200, {}, { 'content-type': DockerContentType.ManifestV1 });
 
-      expect(await getRemoteImageId(registry.slice(8), image)).toEqual(
-        '<error>'
-      );
+      expect(await getRemoteImageId(registry.slice(8), image)).toBe('<error>');
       expect(nock.isDone()).toBe(true);
     });
 
