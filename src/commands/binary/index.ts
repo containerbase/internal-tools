@@ -189,9 +189,7 @@ export async function run(): Promise<void> {
       setFailed(`Versions failed: ${failed.join(', ')}`);
     }
   } catch (error) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    log(error.stack);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    setFailed(error.message);
+    log((error as Error).stack);
+    setFailed(error as Error);
   }
 }
