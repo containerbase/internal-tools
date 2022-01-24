@@ -153,6 +153,45 @@ describe(getName(__filename), () => {
     expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
+  it('works swift', async () => {
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=docker depName=swift versioning=loose\nARG SWIFT_VERSION=5.5.2\n`
+    );
+    utils.readJson.mockReset();
+    utils.readJson.mockResolvedValueOnce(require('./__fixtures__/swift.json'));
+    datasources.getPkgReleases.mockResolvedValueOnce({
+      releases: [
+        { version: '4.0' },
+        { version: '4.0.1' },
+        { version: '5.3' },
+        { version: '5.3.1' },
+        { version: '5.4' },
+        { version: '5.4.2' },
+      ],
+    });
+
+    await run();
+
+    expect(datasources.getPkgReleases.mock.calls).toMatchSnapshot([
+      [
+        {
+          depName: 'swift',
+          datasource: 'docker',
+        },
+      ],
+    ]);
+
+    expect(docker.build.mock.calls).toHaveLength(4);
+    expect(docker.build.mock.calls.map(([args]) => args.tag)).toEqual([
+      '5.3',
+      '5.3.1',
+      '5.4',
+      '5.4.2',
+    ]);
+    expect(docker.build.mock.calls).toMatchSnapshot('build');
+    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
+  });
+
   it('works dummy', async () => {
     jest.resetAllMocks();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
