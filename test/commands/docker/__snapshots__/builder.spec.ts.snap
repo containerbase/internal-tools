@@ -633,6 +633,149 @@ Array [
 ]
 `;
 
+exports[` works swift 1`] = `
+Array [
+  Array [
+    Object {
+      "datasource": "docker",
+      "depName": "swift",
+      "extractVersion": "^(?<version>\\\\d+\\\\.\\\\d+(?:\\\\.\\\\d+)?)$",
+      "lookupName": undefined,
+      "versioning": "loose",
+    },
+  ],
+]
+`;
+
+exports[` works swift: build 1`] = `
+Array [
+  Array [
+    Object {
+      "buildArgs": Array [
+        "SWIFT_VERSION=5.3",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+      ],
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.3",
+    },
+  ],
+  Array [
+    Object {
+      "buildArgs": Array [
+        "SWIFT_VERSION=5.3.1",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+        "5.3",
+      ],
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.3.1",
+    },
+  ],
+  Array [
+    Object {
+      "buildArgs": Array [
+        "SWIFT_VERSION=5.4",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+      ],
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.4",
+    },
+  ],
+  Array [
+    Object {
+      "buildArgs": Array [
+        "SWIFT_VERSION=5.4.2",
+      ],
+      "cache": undefined,
+      "cacheTags": Array [
+        "latest",
+        "5",
+        "5.4",
+      ],
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.4.2",
+    },
+  ],
+]
+`;
+
+exports[` works swift: publish 1`] = `
+Array [
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.3",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.3.1",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.3",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.4",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.4.2",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5",
+    },
+  ],
+  Array [
+    Object {
+      "dryRun": undefined,
+      "image": "swift",
+      "imagePrefix": "renovate",
+      "tag": "5.4",
+    },
+  ],
+]
+`;
+
 exports[` works ubuntu: build 1`] = `
 Array [
   Array [
