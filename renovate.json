@@ -15,6 +15,10 @@
       "extends": ["schedule:weekly"],
       "automerge": true,
       "separateMinorPatch": false
+    },
+    {
+      "matchPackageNames": ["swift"],
+      "extractVersion": "^(?<version>\\d+\\.\\d+(?:\\.\\d+)?)$"
     }
   ]
 }
