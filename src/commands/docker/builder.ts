@@ -58,9 +58,17 @@ async function getBuildList({
   if (!pkgResult) {
     return [];
   }
+
+  log(`Found ${pkgResult.releases.length} raw versions`);
+
   let allVersions = pkgResult.releases
     .map((v) => v.version)
     .filter((v) => ver.isVersion(v) && ver.isCompatible(v, startVersion));
+
+  log(
+    `Found ${allVersions.length} compatible versions:`,
+    allVersions.join(', ')
+  );
 
   // filter duplicate versions (16.0.2+7 == 16.0.2+8)
   allVersions = allVersions
