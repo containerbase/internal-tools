@@ -1,0 +1,5 @@
+{
+  "image": "swift",
+  "startVersion": "5.3",
+  "extractVersion": "^(?<version>\\d+\\.\\d+(?:\\.\\d+)?)$"
+}

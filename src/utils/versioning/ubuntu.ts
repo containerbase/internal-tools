@@ -2,7 +2,7 @@ import { VersioningApi } from 'renovate/dist/versioning';
 import {
   GenericVersion,
   GenericVersioningApi,
-} from 'renovate/dist/versioning/loose/generic';
+} from 'renovate/dist/versioning/generic';
 import { api as ubuntu } from 'renovate/dist/versioning/ubuntu';
 
 const versions = new Map<string, GenericVersion>([
