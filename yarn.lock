@@ -3261,7 +3261,7 @@ dateformat@^3.0.0:
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
-debug@4, debug@^4.0.0, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2:
+debug@4, debug@^4.0.0, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.3:
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.3.tgz#04266e0b70a98d4462e6e288e38259213332b664"
   integrity sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==
@@ -7167,10 +7167,10 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-re2@1.17.2:
-  version "1.17.2"
-  resolved "https://registry.yarnpkg.com/re2/-/re2-1.17.2.tgz#d85c41ff9d64877862bbcb6936305d73ecc6f288"
-  integrity sha512-z+OkvKWvm6+pDW4gwMHFuHDL8ZE/lg4cYH0/p8DBh3EEfQgBDbG56n7TJkFFKKWmFOaKPjZE4pLNQoBfqEMZ+g==
+re2@1.17.3:
+  version "1.17.3"
+  resolved "https://registry.yarnpkg.com/re2/-/re2-1.17.3.tgz#8cceb48f52c45b860b1f67cee8a44726f7d05e9a"
+  integrity sha512-Dp5iWVR8W3C7Nm9DziMY4BleMPRb/pe6kvfbzLv80dVYaXRc9jRnwwNqU0oE/taRm0qYR1+Qrtzk9rPjS9ecaQ==
   dependencies:
     install-artifact-from-github "^1.3.0"
     nan "^2.15.0"
@@ -7373,10 +7373,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@31.50.2:
-  version "31.50.2"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-31.50.2.tgz#5b16abee95ef193ca821f0a09c245103c17e2e87"
-  integrity sha512-zUZL3K1iuMYZi+ppFdHi7WN8ixZTxcC2wQ5j1WYiMVn+s/pjYGn6UFtfHLgD2SRphKO88n0eulN7SY4JGKOUkA==
+renovate@31.63.2:
+  version "31.63.2"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-31.63.2.tgz#af92480c548cadda6a4fa1c363f9d176f2e173e1"
+  integrity sha512-pl6+rb3+Xq8FcAGJOEtEIj/ey7csFY7WAjSu5nVH+sCR07desuGic8daeM3fJbr/dsTZBX5bGKcFS52YnxR68Q==
   dependencies:
     "@aws-sdk/client-ec2" "3.47.0"
     "@aws-sdk/client-ecr" "3.47.0"
@@ -7446,7 +7446,7 @@ renovate@31.50.2:
     semver-stable "3.0.0"
     semver-utils "1.1.4"
     shlex "2.1.0"
-    simple-git "2.48.0"
+    simple-git "3.1.0"
     slugify "1.6.5"
     traverse "0.6.6"
     tslib "2.3.1"
@@ -7455,7 +7455,7 @@ renovate@31.50.2:
     validate-npm-package-name "3.0.0"
     xmldoc "1.1.2"
   optionalDependencies:
-    re2 "1.17.2"
+    re2 "1.17.3"
 
 repeat-string@^1.0.0:
   version "1.6.1"
@@ -7753,14 +7753,14 @@ signale@^1.2.1:
     figures "^2.0.0"
     pkg-conf "^2.1.0"
 
-simple-git@2.48.0:
-  version "2.48.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-2.48.0.tgz#87c262dba8f84d7b96bb3a713e9e34701c1f6e3b"
-  integrity sha512-z4qtrRuaAFJS4PUd0g+xy7aN4y+RvEt/QTJpR184lhJguBA1S/LsVlvE/CM95RsYMOFJG3NGGDjqFCzKU19S/A==
+simple-git@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.1.0.tgz#93a899cda9d4ffb9e11c2a735dddf08368704ac9"
+  integrity sha512-XpiIA5CBB8S40cJwkLhVe3ysyuLjvOrPo/xjorJl+hspFBgJFueqKXQbKhUl5Ujh2TWMt2jhxl5UTGciFnkXmA==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
-    debug "^4.3.2"
+    debug "^4.3.3"
 
 sisteransi@^1.0.5:
   version "1.0.5"
