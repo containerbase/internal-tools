@@ -33,7 +33,7 @@
     "delay": "5.0.0",
     "find-up": "5.0.0",
     "got": "11.8.3",
-    "renovate": "31.63.2",
+    "renovate": "31.81.3",
     "semver": "7.3.5",
     "shelljs": "0.8.5",
     "strip-ansi": "7.0.1",
