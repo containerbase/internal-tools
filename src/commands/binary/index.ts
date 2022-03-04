@@ -39,6 +39,7 @@ async function getBuildList({
   forceUnstable,
   versions,
   latestVersion,
+  extractVersion,
 }: BinaryBuilderConfig): Promise<string[]> {
   log('Looking up versions');
   const ver = getVersioning(versioning);
@@ -49,6 +50,7 @@ async function getBuildList({
         depName,
         lookupName,
         versioning,
+        extractVersion,
       });
   if (!pkgResult) {
     return [];
