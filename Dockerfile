@@ -17,6 +17,9 @@ ARG HELM_VERSION=3.4.0
 # renovate: datasource=adoptium-java depName=java
 ARG JAVA_VERSION=8.0.302+8
 
+# renovate: datasource=docker depName=swift versioning=loose
+ARG SWIFT_VERSION=5.5.2
+
 ARG DISTRO=latest
 RUN echo DISTRO=$DISTRO
 ENTRYPOINT ["echo" ]

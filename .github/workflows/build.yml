@@ -184,6 +184,13 @@ jobs:
           config: e2e/java.json
           dry-run: true
 
+      - name: docker-builder (swift)
+        uses: ./
+        with:
+          command: docker-builder
+          config: e2e/swift.json
+          dry-run: true
+
       - name: binary-builder (python)
         uses: ./
         with:
