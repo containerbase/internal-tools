@@ -1,9 +1,9 @@
-import { VersioningApi } from 'renovate/dist/versioning';
+import { VersioningApi } from 'renovate/dist/modules/versioning';
 import {
   GenericVersion,
   GenericVersioningApi,
-} from 'renovate/dist/versioning/generic';
-import { api as ubuntu } from 'renovate/dist/versioning/ubuntu';
+} from 'renovate/dist/modules/versioning/generic';
+import { api as ubuntu } from 'renovate/dist/modules/versioning/ubuntu';
 
 const versions = new Map<string, GenericVersion>([
   ['bionic', { release: [18, 4] }],

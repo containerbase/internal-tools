@@ -5,8 +5,8 @@ import {
   ReleaseResult,
   getDefaultVersioning,
   getPkgReleases,
-} from 'renovate/dist/datasource';
-import { get as getVersioning } from 'renovate/dist/versioning';
+} from 'renovate/dist/modules/datasource';
+import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { exec, getArg, isDryRun, readJson } from '../../util';
 import { readDockerConfig } from '../../utils/config';
 import { build, publish } from '../../utils/docker';
@@ -51,7 +51,7 @@ async function getBuildList({
     : await getPkgReleases({
         datasource,
         depName,
-        lookupName,
+        packageName: lookupName,
         versioning,
         extractVersion,
       });

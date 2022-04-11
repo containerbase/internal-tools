@@ -1,8 +1,11 @@
 import 'source-map-support/register';
 import { setFailed } from '@actions/core';
 import * as chalk from 'chalk';
-import { ReleaseResult, getPkgReleases } from 'renovate/dist/datasource';
-import { get as getVersioning } from 'renovate/dist/versioning';
+import {
+  ReleaseResult,
+  getPkgReleases,
+} from 'renovate/dist/modules/datasource';
+import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import * as shell from 'shelljs';
 import { getArg, getWorkspace } from '../../util';
 import { init } from '../../utils/docker/buildx';
@@ -48,7 +51,7 @@ async function getBuildList({
     : await getPkgReleases({
         datasource,
         depName,
-        lookupName,
+        packageName: lookupName,
         versioning,
         extractVersion,
       });

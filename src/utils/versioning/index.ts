@@ -1,4 +1,4 @@
-import { getVersionings } from 'renovate/dist/versioning';
+import { getVersionings } from 'renovate/dist/modules/versioning';
 import log from '../logger';
 import * as ubuntu from './ubuntu';
 

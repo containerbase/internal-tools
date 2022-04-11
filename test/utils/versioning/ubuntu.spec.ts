@@ -5,7 +5,8 @@ describe(getName(__filename), () => {
   it('isVersion', () => {
     expect(api.isVersion('bionic')).toBe(true);
     expect(api.isVersion('focal')).toBe(true);
-    expect(api.isVersion('groovy')).toBe(false);
+    expect(api.isVersion('groovy')).toBe(true);
+    expect(api.isVersion('wheel')).toBe(false);
   });
 
   it('isStable', () => {

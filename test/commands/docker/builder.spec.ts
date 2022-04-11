@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as _core from '@actions/core';
-import * as _datasources from 'renovate/dist/datasource';
+import * as _datasources from 'renovate/dist/modules/datasource';
 import { run } from '../../../src/commands/docker/builder';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker';
 import { getName, mocked } from '../../utils';
 
-jest.mock('renovate/dist/datasource');
+jest.mock('renovate/dist/modules/datasource');
 jest.mock('../../../src/util');
 jest.mock('../../../src/utils/docker');
 jest.mock('../../../src/utils/docker/buildx', () => ({
@@ -137,7 +137,7 @@ describe(getName(__filename), () => {
       [
         {
           depName: 'helm',
-          lookupName: 'helm/helm',
+          packageName: 'helm/helm',
           datasource: 'github-releases',
         },
       ],

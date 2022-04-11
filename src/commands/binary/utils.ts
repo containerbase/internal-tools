@@ -1,6 +1,6 @@
 import { getInput } from '@actions/core';
 import is from '@sindresorhus/is';
-import { getDefaultVersioning } from 'renovate/dist/datasource';
+import { getDefaultVersioning } from 'renovate/dist/modules/datasource';
 import { getArch, getArg, getDistro, isDryRun, readJson } from '../../util';
 import { readDockerConfig } from '../../utils/config';
 import {
