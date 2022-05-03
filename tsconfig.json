@@ -7,6 +7,9 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "useUnknownInCatchVariables": false /* we aren't prepared for enabling this by default since ts 4.4*/,
+    "noUnusedLocals": true,
+    "noImplicitOverride": true,
+    "importsNotUsedAsValues": "error",
     "lib": ["ES2021"],
     "types": ["node", "jest"]
   },

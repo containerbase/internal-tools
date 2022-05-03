@@ -1,123 +1,18 @@
 import { getInput, setFailed } from '@actions/core';
 import is from '@sindresorhus/is';
 import * as chalk from 'chalk';
-import {
-  ReleaseResult,
-  getDefaultVersioning,
-  getPkgReleases,
-} from 'renovate/dist/modules/datasource';
+import { getDefaultVersioning } from 'renovate/dist/modules/datasource';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { exec, getArg, isDryRun, readJson } from '../../util';
+import { BuildsResult, getBuildList } from '../../utils/builds';
 import { readDockerConfig } from '../../utils/config';
 import { build, publish } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';
 import { dockerDf, dockerPrune, dockerTag } from '../../utils/docker/common';
 import log from '../../utils/logger';
-import * as renovate from '../../utils/renovate';
-import { Config, ConfigFile } from '../../utils/types';
-
-renovate.register();
+import type { Config, ConfigFile } from '../../utils/types';
 
 export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
-
-let latestStable: string | undefined;
-
-function getVersions(versions: string[]): ReleaseResult {
-  return {
-    releases: versions.map((version) => ({
-      version,
-    })),
-  };
-}
-
-async function getBuildList({
-  datasource,
-  depName,
-  lookupName,
-  versioning,
-  startVersion,
-  ignoredVersions,
-  lastOnly,
-  forceUnstable,
-  versions,
-  latestVersion,
-  maxVersions,
-  extractVersion,
-}: Config): Promise<string[]> {
-  log('Looking up versions');
-  const ver = getVersioning(versioning);
-  const pkgResult = versions
-    ? getVersions(versions)
-    : await getPkgReleases({
-        datasource,
-        depName,
-        packageName: lookupName,
-        versioning,
-        extractVersion,
-      });
-  if (!pkgResult) {
-    return [];
-  }
-  let allVersions = pkgResult.releases
-    .map((v) => v.version)
-    .filter((v) => ver.isVersion(v) && ver.isCompatible(v, startVersion));
-
-  // filter duplicate versions (16.0.2+7 == 16.0.2+8)
-  allVersions = allVersions
-    .reverse()
-    .filter((v, i) => allVersions.findIndex((f) => ver.equals(f, v)) === i)
-    .reverse();
-
-  log(`Found ${allVersions.length} total versions`);
-  if (!allVersions.length) {
-    return [];
-  }
-  allVersions = allVersions
-    .filter((v) => v === startVersion || ver.isGreaterThan(v, startVersion))
-    .filter((v) => !ignoredVersions.includes(v));
-
-  if (!forceUnstable) {
-    log('Filter unstable versions');
-    allVersions = allVersions.filter((v) => ver.isStable(v));
-  }
-
-  log(`Found ${allVersions.length} versions within our range`);
-  log(`Candidates:`, allVersions.join(', '));
-
-  latestStable =
-    latestVersion ||
-    /* istanbul ignore next: not testable ts */
-    pkgResult.tags?.latest ||
-    allVersions.filter((v) => ver.isStable(v)).pop();
-  log('Latest stable version is', latestStable);
-
-  if (latestStable && !allVersions.includes(latestStable)) {
-    log.warn(
-      `LatestStable '${latestStable}' not buildable, candidates:`,
-      allVersions.join(', ')
-    );
-  }
-
-  const lastVersion = allVersions[allVersions.length - 1];
-  log('Most recent version is', lastVersion);
-
-  if (is.number(maxVersions) && maxVersions > 0) {
-    log(`Building last ${maxVersions} version only`);
-    allVersions = allVersions.slice(-maxVersions);
-  }
-
-  if (lastOnly) {
-    log('Building last version only');
-    allVersions = [latestStable && !forceUnstable ? latestStable : lastVersion];
-  }
-
-  if (allVersions.length) {
-    log('Build list:', allVersions.join(', '));
-  } else {
-    log('Nothing to build');
-  }
-  return allVersions;
-}
 
 function createTag(tagSuffix: string | undefined, version: string): string {
   return is.nonEmptyString(tagSuffix) && tagSuffix !== 'latest'
@@ -139,14 +34,14 @@ async function buildAndPush(
     majorMinor,
     prune,
   }: Config,
-  versions: string[]
+  tobuild: BuildsResult
 ): Promise<void> {
   const builds: string[] = [];
   const failed: string[] = [];
   const ver = getVersioning(versioning);
   const versionsMap = new Map<string, string>();
   if (majorMinor) {
-    for (const version of versions) {
+    for (const version of tobuild.versions) {
       const minor = ver.getMinor(version);
       const major = ver.getMajor(version);
       const isStable = ver.isStable(version);
@@ -168,7 +63,7 @@ async function buildAndPush(
 
   await exec('df', ['-h']);
 
-  for (const version of versions) {
+  for (const version of tobuild.versions) {
     const tag = createTag(tagSuffix, version.replace(/\+.+/, ''));
     const imageVersion = `${imagePrefix}/${image}:${tag}`;
     log(`Building ${imageVersion}`);
@@ -199,7 +94,7 @@ async function buildAndPush(
         tags.push(nTag);
       }
 
-      if (version === latestStable) {
+      if (version === tobuild.latestStable) {
         tags.push(tagSuffix ?? 'latest');
       }
 
@@ -253,7 +148,7 @@ async function buildAndPush(
 async function generateImages(config: Config): Promise<void> {
   const buildList = await getBuildList(config);
 
-  if (buildList.length === 0) {
+  if (!buildList?.versions.length) {
     setFailed(`No versions found.`);
     return;
   }

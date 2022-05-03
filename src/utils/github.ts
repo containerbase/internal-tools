@@ -1,11 +1,11 @@
 // istanbul ignore file
 import { context, getOctokit } from '@actions/github';
-import { GitHub } from '@actions/github/lib/utils';
+import type { GitHub } from '@actions/github/lib/utils';
 import { RequestError } from '@octokit/request-error';
 import is from '@sindresorhus/is';
 import { getArch, getDistro, readBuffer } from '../util';
 import log from './logger';
-import { BinaryBuilderConfig } from './types';
+import type { BinaryBuilderConfig } from './types';
 
 export { getOctokit };
 

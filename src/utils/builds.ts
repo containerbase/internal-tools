@@ -1,0 +1,129 @@
+import is from '@sindresorhus/is';
+import {
+  ReleaseResult,
+  getPkgReleases,
+} from 'renovate/dist/modules/datasource';
+import { get as getVersioning } from 'renovate/dist/modules/versioning';
+import log from './logger';
+import * as renovate from './renovate';
+
+renovate.register();
+
+let latestStable: string | undefined;
+
+function getVersions(versions: string[]): ReleaseResult {
+  return {
+    releases: versions.map((version) => ({
+      version,
+    })),
+  };
+}
+
+export interface BuildsConfig {
+  datasource: string;
+  depName: string;
+  forceUnstable?: boolean;
+  ignoredVersions: string[];
+  maxVersions?: number;
+  lastOnly: boolean;
+  latestVersion?: string;
+  lookupName?: string;
+  startVersion: string;
+  versioning: string;
+  versions?: string[];
+  extractVersion?: string;
+}
+
+export interface BuildsResult {
+  latestStable: string | undefined;
+  versions: string[];
+}
+
+export async function getBuildList({
+  datasource,
+  depName,
+  lookupName,
+  versioning,
+  startVersion,
+  ignoredVersions,
+  lastOnly,
+  forceUnstable,
+  versions,
+  latestVersion,
+  maxVersions,
+  extractVersion,
+}: BuildsConfig): Promise<BuildsResult | null> {
+  log('Looking up versions');
+  const ver = getVersioning(versioning);
+  const pkgResult = versions
+    ? getVersions(versions)
+    : await getPkgReleases({
+        datasource,
+        depName,
+        packageName: lookupName,
+        versioning,
+        extractVersion,
+      });
+  if (!pkgResult) {
+    return null;
+  }
+  let allVersions = pkgResult.releases
+    .map((v) => v.version)
+    .filter((v) => ver.isVersion(v) && ver.isCompatible(v, startVersion));
+
+  // filter duplicate versions (16.0.2+7 == 16.0.2+8)
+  allVersions = allVersions
+    .reverse()
+    .filter((v, i) => allVersions.findIndex((f) => ver.equals(f, v)) === i)
+    .reverse();
+
+  log(`Found ${allVersions.length} total versions`);
+  if (!allVersions.length) {
+    return null;
+  }
+  allVersions = allVersions
+    .filter((v) => v === startVersion || ver.isGreaterThan(v, startVersion))
+    .filter((v) => !ignoredVersions.includes(v));
+
+  if (!forceUnstable) {
+    log('Filter unstable versions');
+    allVersions = allVersions.filter((v) => ver.isStable(v));
+  }
+
+  log(`Found ${allVersions.length} versions within our range`);
+  log(`Candidates:`, allVersions.join(', '));
+
+  latestStable =
+    latestVersion ||
+    /* istanbul ignore next: not testable ts */
+    pkgResult.tags?.latest ||
+    allVersions.filter((v) => ver.isStable(v)).pop();
+  log('Latest stable version is', latestStable);
+
+  if (latestStable && !allVersions.includes(latestStable)) {
+    log.warn(
+      `LatestStable '${latestStable}' not buildable, candidates:`,
+      allVersions.join(', ')
+    );
+  }
+
+  const lastVersion = allVersions[allVersions.length - 1];
+  log('Most recent version is', lastVersion);
+
+  if (is.number(maxVersions) && maxVersions > 0) {
+    log(`Building last ${maxVersions} version only`);
+    allVersions = allVersions.slice(-maxVersions);
+  }
+
+  if (lastOnly) {
+    log('Building last version only');
+    allVersions = [latestStable && !forceUnstable ? latestStable : lastVersion];
+  }
+
+  if (allVersions.length) {
+    log('Build list:', allVersions.join(', '));
+  } else {
+    log('Nothing to build');
+  }
+  return { versions: allVersions, latestStable };
+}
