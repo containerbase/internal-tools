@@ -4,6 +4,8 @@ import {
   getPkgReleases,
 } from 'renovate/dist/modules/datasource';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
+import { configRegexPredicate } from 'renovate/dist/util/regex';
+import * as semver from 'semver';
 import log from './logger';
 import * as renovate from './renovate';
 
@@ -20,6 +22,7 @@ function getVersions(versions: string[]): ReleaseResult {
 }
 
 export interface BuildsConfig {
+  allowedVersions?: string;
   datasource: string;
   depName: string;
   forceUnstable?: boolean;
@@ -40,6 +43,7 @@ export interface BuildsResult {
 }
 
 export async function getBuildList({
+  allowedVersions,
   datasource,
   depName,
   lookupName,
@@ -88,6 +92,25 @@ export async function getBuildList({
   if (!forceUnstable) {
     log('Filter unstable versions');
     allVersions = allVersions.filter((v) => ver.isStable(v));
+  }
+
+  if (is.string(allowedVersions)) {
+    const isAllowedPred = configRegexPredicate(allowedVersions);
+    if (isAllowedPred) {
+      allVersions = allVersions.filter((version) => isAllowedPred(version));
+    } else if (ver.isValid(allowedVersions)) {
+      allVersions = allVersions.filter((version) =>
+        ver.matches(version, allowedVersions)
+      );
+    } else if (semver.validRange(allowedVersions)) {
+      allVersions = allVersions.filter((v) =>
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        semver.satisfies(semver.coerce(v)!, allowedVersions)
+      );
+    } else {
+      log.warn(`Invalid 'allowedVersions' options: ${allowedVersions}`);
+      return null;
+    }
   }
 
   log(`Found ${allVersions.length} versions within our range`);
