@@ -34,6 +34,7 @@ export interface BuildsConfig {
 }
 
 export type ConfigFile = {
+  allowedVersions?: string;
   datasource: string;
   image: string;
   depName?: string;
