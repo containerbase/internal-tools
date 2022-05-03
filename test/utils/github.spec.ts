@@ -1,6 +1,6 @@
 import * as _utils from '../../src/util';
 import { getBinaryName } from '../../src/utils/github';
-import { BinaryBuilderConfig } from '../../src/utils/types';
+import type { BinaryBuilderConfig } from '../../src/utils/types';
 import { getName, mocked, partial } from '../utils';
 
 jest.mock('../../src/util');

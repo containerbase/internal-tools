@@ -2,10 +2,10 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
-import { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
+import type { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import { which } from '@actions/io';
 import * as findUp from 'find-up';
-import { DockerArch } from './utils/docker/common';
+import type { DockerArch } from './utils/docker/common';
 import { ExecError, ExecResult } from './utils/types';
 
 export type ExecOptions = _ExecOptions;

@@ -1,6 +1,6 @@
 import { exec } from '../../util';
 import log from '../logger';
-import { ExecResult } from '../types';
+import type { ExecResult } from '../types';
 
 export enum DockerPlatform {
   x86_64 = 'linux/amd64',

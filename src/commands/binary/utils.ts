@@ -9,7 +9,7 @@ import {
   dockerRun,
 } from '../../utils/docker/common';
 import log from '../../utils/logger';
-import { BinaryBuilderConfig, ConfigFile } from '../../utils/types';
+import type { BinaryBuilderConfig, ConfigFile } from '../../utils/types';
 
 export async function getConfig(): Promise<BinaryBuilderConfig> {
   const configFile = getInput('config') || 'builder.json';

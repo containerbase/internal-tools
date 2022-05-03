@@ -1,4 +1,4 @@
-import { VersioningApi } from 'renovate/dist/modules/versioning';
+import type { VersioningApi } from 'renovate/dist/modules/versioning';
 import {
   GenericVersion,
   GenericVersioningApi,
