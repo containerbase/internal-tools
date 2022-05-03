@@ -5,7 +5,7 @@ export type ExecResult = {
 };
 
 export class ExecError extends Error implements ExecResult {
-  readonly name = 'ExecError';
+  override readonly name = 'ExecError';
 
   constructor(
     public readonly code: number,
@@ -15,6 +15,22 @@ export class ExecError extends Error implements ExecResult {
   ) {
     super(`ExecError: (${code}) ` + stderr.split('\n').slice(-10).join('\n'));
   }
+}
+
+export interface BuildsConfig {
+  buildArg: string;
+  buildArgs?: string[];
+  buildOnly: boolean;
+  tagSuffix?: string;
+  depName: string;
+  imagePrefix: string;
+  image: string;
+  ignoredVersions: string[];
+  majorMinor: boolean;
+  lastOnly: boolean;
+  dryRun: boolean;
+  prune: boolean;
+  versioning: string;
 }
 
 export type ConfigFile = {

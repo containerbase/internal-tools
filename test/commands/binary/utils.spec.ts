@@ -7,7 +7,7 @@ import {
 } from '../../../src/commands/binary/utils';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
-import { BinaryBuilderConfig } from '../../../src/utils/types';
+import type { BinaryBuilderConfig } from '../../../src/utils/types';
 import { getName, mocked, partial } from '../../utils';
 
 jest.mock('../../../src/util');

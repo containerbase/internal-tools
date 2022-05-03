@@ -1,13 +1,9 @@
 import 'source-map-support/register';
 import { setFailed } from '@actions/core';
 import * as chalk from 'chalk';
-import {
-  ReleaseResult,
-  getPkgReleases,
-} from 'renovate/dist/modules/datasource';
-import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import * as shell from 'shelljs';
 import { getArg, getWorkspace } from '../../util';
+import { getBuildList } from '../../utils/builds';
 import { init } from '../../utils/docker/buildx';
 import {
   getOctokit,
@@ -16,105 +12,9 @@ import {
   uploadAsset,
 } from '../../utils/github';
 import log from '../../utils/logger';
-import { BinaryBuilderConfig } from '../../utils/types';
 import { createBuilderImage, getConfig, runBuilder } from './utils';
 
-let builds = 99;
-
-let latestStable: string | undefined;
-
-function getVersions(versions: string[]): ReleaseResult {
-  return {
-    releases: versions.map((version) => ({
-      version,
-    })),
-  };
-}
-
-async function getBuildList({
-  datasource,
-  depName,
-  lookupName,
-  versioning,
-  startVersion,
-  ignoredVersions,
-  lastOnly,
-  forceUnstable,
-  versions,
-  latestVersion,
-  extractVersion,
-}: BinaryBuilderConfig): Promise<string[]> {
-  log('Looking up versions');
-  const ver = getVersioning(versioning);
-  const pkgResult = versions
-    ? getVersions(versions)
-    : await getPkgReleases({
-        datasource,
-        depName,
-        packageName: lookupName,
-        versioning,
-        extractVersion,
-      });
-  if (!pkgResult) {
-    return [];
-  }
-  let allVersions = pkgResult.releases
-    .map((v) => v.version)
-    .filter((v) => ver.isVersion(v) && ver.isCompatible(v, startVersion));
-  log(`Found ${allVersions.length} total versions`);
-  if (!allVersions.length) {
-    return [];
-  }
-  allVersions = allVersions
-    .filter(
-      (v) => /* istanbul ignore next */ !ver.isLessThanRange?.(v, startVersion)
-    )
-    .filter((v) => !ignoredVersions.includes(v));
-
-  // filter duplicate versions (16.0.2+7 == 16.0.2+8)
-  allVersions = allVersions
-    .reverse()
-    .filter((v, i) => allVersions.findIndex((f) => ver.equals(f, v)) === i)
-    .reverse();
-
-  if (!forceUnstable) {
-    log('Filter unstable versions');
-    allVersions = allVersions.filter((v) => ver.isStable(v));
-  }
-
-  log(`Found ${allVersions.length} versions within our range`);
-  log(`Candidates:`, allVersions.join(', '));
-
-  latestStable =
-    latestVersion ||
-    /* istanbul ignore next: not testable ts */
-    pkgResult.tags?.latest ||
-    allVersions.filter((v) => ver.isStable(v)).pop();
-  log('Latest stable version is ', latestStable);
-
-  if (latestStable && !allVersions.includes(latestStable)) {
-    log.warn(
-      `LatestStable '${latestStable}' not buildable, candidates: `,
-      allVersions.join(', ')
-    );
-  }
-
-  const lastVersion = allVersions[allVersions.length - 1];
-  log('Most recent version is ', lastVersion);
-
-  if (lastOnly) {
-    log('Building last version only');
-    allVersions = [latestStable && !forceUnstable ? latestStable : lastVersion];
-  }
-
-  // istanbul ignore else
-  if (allVersions.length) {
-    log('Build list: ', allVersions.join(', '));
-  } else {
-    log('Nothing to build');
-  }
-  return allVersions;
-}
+let toBuild = 99;
 
 export async function run(): Promise<void> {
   try {
@@ -133,9 +33,9 @@ export async function run(): Promise<void> {
 
     log('config:', JSON.stringify(cfg));
 
-    const versions = await getBuildList(cfg);
+    const builds = await getBuildList(cfg);
 
-    if (versions.length === 0) {
+    if (!builds?.versions.length) {
       setFailed(`No versions found.`);
       return;
     }
@@ -148,7 +48,7 @@ export async function run(): Promise<void> {
 
     const failed: string[] = [];
 
-    for (const version of versions) {
+    for (const version of builds.versions) {
       await updateRelease(api, cfg, version);
       if (await hasAsset(api, cfg, version)) {
         if (cfg.dryRun) {
@@ -163,7 +63,7 @@ export async function run(): Promise<void> {
       }
 
       // istanbul ignore if
-      if (builds-- <= 0) {
+      if (toBuild-- <= 0) {
         log.info('Build limit reached');
         break;
       }

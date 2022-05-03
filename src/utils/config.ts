@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is';
 import { readFile } from '../util';
-import { ConfigFile } from './types';
+import type { ConfigFile } from './types';
 
 const keys: (keyof ConfigFile)[] = [
   'datasource',
