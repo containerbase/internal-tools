@@ -43,7 +43,7 @@
   "devDependencies": {
     "@jest/globals": "27.5.1",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "8.0.4",
+    "@semantic-release/github": "8.0.5",
     "@semantic-release/npm": "9.0.1",
     "@types/jest": "27.5.2",
     "@types/node": "16.11.43",
