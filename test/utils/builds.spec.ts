@@ -1,6 +1,6 @@
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { BuildsConfig, getBuildList } from '../../src/utils/builds';
-import { getName, partial } from '../utils';
+import { partial } from '../utils';
 
 jest.mock('renovate/dist/modules/datasource');
 
@@ -14,7 +14,7 @@ const config = partial<BuildsConfig>({
   ignoredVersions: [],
 });
 
-describe(getName(__filename), () => {
+describe('utils/builds', () => {
   it('works', async () => {
     expect(await getBuildList({ ...config })).toEqual({
       versions: [version, '2.0.0'],

@@ -4,7 +4,7 @@ import * as _datasources from 'renovate/dist/modules/datasource';
 import { run } from '../../../src/commands/docker/builder';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker';
-import { getName, mocked } from '../../utils';
+import { mocked } from '../../utils';
 
 jest.mock('renovate/dist/modules/datasource');
 jest.mock('../../../src/util');
@@ -20,7 +20,7 @@ const docker = mocked(_docker);
 const datasources = mocked(_datasources);
 const version = '1.22.4';
 
-describe(getName(__filename), () => {
+describe('commands/docker/builder', () => {
   let args: Record<string, string | string[]> = {};
   beforeEach(() => {
     jest.resetAllMocks();

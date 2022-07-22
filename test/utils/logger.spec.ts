@@ -1,13 +1,13 @@
 import * as _core from '@actions/core';
 import * as chalk from 'chalk';
 import log from '../../src/utils/logger';
-import { getName, mocked } from '../utils';
+import { mocked } from '../utils';
 
 jest.unmock('../../src/utils/logger');
 
 const core = mocked(_core);
 
-describe(getName(__filename), () => {
+describe('utils/logger', () => {
   const logger = jest.fn();
 
   beforeEach(() => {

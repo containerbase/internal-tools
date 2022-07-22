@@ -1,11 +1,11 @@
 import * as _runner from '../src/runner';
-import { getName, mocked } from './utils';
+import { mocked } from './utils';
 
 jest.mock('../src/runner');
 
 const runner = mocked(_runner);
 
-describe(getName(__filename), () => {
+describe('index', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

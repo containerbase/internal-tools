@@ -1,12 +1,12 @@
 import * as _utils from '../../../src/util';
 import { init } from '../../../src/utils/docker/buildx';
-import { getName, mocked } from '../../utils';
+import { mocked } from '../../utils';
 
 jest.mock('../../../src/util');
 
 const utils = mocked(_utils);
 
-describe(getName(__filename), () => {
+describe('utils/docker/buildx', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

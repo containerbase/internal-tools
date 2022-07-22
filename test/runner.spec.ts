@@ -1,7 +1,7 @@
 import * as _core from '@actions/core';
 import run from '../src/runner';
 import { Commands } from '../src/types';
-import { getName, mocked } from './utils';
+import { mocked } from './utils';
 
 jest.mock('../src/commands/docker/config');
 jest.mock('../src/commands/docker/builder');
@@ -9,7 +9,7 @@ jest.mock('../src/commands/binary');
 
 const core = mocked(_core);
 
-describe(getName(__filename), () => {
+describe('runner', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

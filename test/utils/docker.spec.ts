@@ -10,7 +10,7 @@ import {
   splitImage,
 } from '../../src/utils/docker';
 import { ExecError } from '../../src/utils/types';
-import { getName, mocked } from '../utils';
+import { mocked } from '../utils';
 
 jest.mock('delay', () => () => Promise.resolve());
 jest.mock('../../src/util');
@@ -25,7 +25,7 @@ const tag = 'latest';
 const realm = 'https://auth.docker.io';
 const registry = 'https://index.docker.io';
 
-describe(getName(__filename), () => {
+describe('utils/docker', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     nock.cleanAll();
