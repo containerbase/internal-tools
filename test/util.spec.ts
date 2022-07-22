@@ -24,6 +24,7 @@ describe('util', () => {
       io.which.mockResolvedValueOnce('');
       expect(await util.exists('test')).toBe(true);
     });
+
     it('returns false', async () => {
       io.which.mockRejectedValueOnce(new Error());
       expect(await util.exists('test')).toBe(false);
@@ -56,6 +57,7 @@ describe('util', () => {
     afterEach(() => {
       delete process.env.CI;
     });
+
     it('false', () => {
       process.env.CI = 'true';
       core.getInput.mockReturnValueOnce('false');
@@ -63,6 +65,7 @@ describe('util', () => {
       expect(util.isDryRun()).toBe(false);
       expect(core.getInput).toHaveBeenCalledTimes(2);
     });
+
     it('true', () => {
       core.getInput.mockReturnValueOnce('true');
       expect(util.isDryRun()).toBe(true);
@@ -79,13 +82,16 @@ describe('util', () => {
 
   describe('getWorkspace', () => {
     let ws: string | undefined;
+
     beforeEach(() => {
       ws = process.env.GITHUB_WORKSPACE;
       delete process.env.GITHUB_WORKSPACE;
     });
+
     afterEach(() => {
       process.env.GITHUB_WORKSPACE = ws;
     });
+
     it('works', () => {
       expect(util.getWorkspace()).toBe(process.cwd());
       process.env.GITHUB_WORKSPACE = '/var/test';
@@ -105,6 +111,7 @@ describe('util', () => {
     afterEach(() => {
       delete process.env.GITHUB_WORKSPACE;
     });
+
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
       expect(await util.readJson('.prettierrc.json')).toEqual({
@@ -118,6 +125,7 @@ describe('util', () => {
     afterEach(() => {
       delete process.env.GITHUB_WORKSPACE;
     });
+
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
       expect(await util.readFile('Dockerfile')).toMatchSnapshot();
@@ -128,6 +136,7 @@ describe('util', () => {
     afterEach(() => {
       delete process.env.GITHUB_WORKSPACE;
     });
+
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
       expect(

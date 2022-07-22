@@ -11,7 +11,7 @@
     "noImplicitOverride": true,
     "importsNotUsedAsValues": "error",
     "lib": ["ES2021"],
-    "types": ["node", "jest"]
+    "types": ["node", "jest", "jest-extended"]
   },
   "exclude": ["node_modules", "**/__mocks__/*"]
 }

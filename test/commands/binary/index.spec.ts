@@ -25,6 +25,7 @@ const version = '2.7.2';
 
 describe('commands/binary/index', () => {
   let input: Record<string, string>;
+
   beforeEach(() => {
     jest.resetAllMocks();
     input = {};

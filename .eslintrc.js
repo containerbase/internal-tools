@@ -3,18 +3,24 @@ module.exports = {
   env: {
     node: true,
   },
-  parser: '@typescript-eslint/parser',
-  plugins: ['@renovate', '@typescript-eslint'],
+  plugins: [
+    '@renovate',
+    '@typescript-eslint',
+    'typescript-enum',
+    'jest-formatting',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
+    'plugin:jest/recommended',
     'plugin:jest/style',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:promise/recommended',
+    'plugin:jest-formatting/recommended',
     'prettier',
   ],
   parserOptions: {
@@ -60,6 +66,17 @@ module.exports = {
     '@typescript-eslint/camelcase': 0,
     '@typescript-eslint/no-floating-promises': 2,
   },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts'],
+    },
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true, // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
+        project: 'tsconfig.lint.json',
+      },
+    },
+  },
   overrides: [
     {
       files: ['*.ts'],
@@ -72,12 +89,14 @@ module.exports = {
       },
     },
     {
-      files: ['**/*.spec.ts'],
+      files: ['**/*.spec.ts', 'test/**'],
       env: {
         jest: true,
       },
       rules: {
         '@renovate/jest-root-describe': 2,
+
+        'jest/valid-title': [0, { ignoreTypeOfDescribeName: true }],
       },
     },
   ],
