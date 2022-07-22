@@ -3,7 +3,7 @@ import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as _io from '@actions/io';
 import * as util from '../src/util';
-import { getName, mocked } from './utils';
+import { mocked } from './utils';
 
 jest.mock('@actions/core');
 jest.mock('@actions/exec');
@@ -14,7 +14,7 @@ const core = mocked(_core);
 const exec = mocked(_exec);
 const io = mocked(_io);
 
-describe(getName(__filename), () => {
+describe('util', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

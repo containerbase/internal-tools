@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` catch errors 1`] = `
+exports[`commands/binary/index catch errors 1`] = `
 Array [
   Array [
     [Error: dummy],
@@ -8,7 +8,7 @@ Array [
 ]
 `;
 
-exports[` continues on errors 1`] = `
+exports[`commands/binary/index continues on errors 1`] = `
 Array [
   Array [
     "Versions failed: 2.7.2",
@@ -16,7 +16,7 @@ Array [
 ]
 `;
 
-exports[` works dummy: docker 1`] = `
+exports[`commands/binary/index works dummy: docker 1`] = `
 Array [
   Array [
     "--name",
@@ -29,7 +29,7 @@ Array [
 ]
 `;
 
-exports[` works python (dry-run): docker 1`] = `
+exports[`commands/binary/index works python (dry-run): docker 1`] = `
 Array [
   Array [
     "--name",
@@ -42,7 +42,7 @@ Array [
 ]
 `;
 
-exports[` works ruby (dry-run): docker 1`] = `
+exports[`commands/binary/index works ruby (dry-run): docker 1`] = `
 Array [
   Array [
     "--name",
@@ -55,7 +55,7 @@ Array [
 ]
 `;
 
-exports[` works ruby (no-assets): docker 1`] = `
+exports[`commands/binary/index works ruby (no-assets): docker 1`] = `
 Array [
   Array [
     "--name",
@@ -68,4 +68,4 @@ Array [
 ]
 `;
 
-exports[` works ruby: docker 1`] = `Array []`;
+exports[`commands/binary/index works ruby: docker 1`] = `Array []`;
