@@ -3,7 +3,7 @@ import { setFailed } from '@actions/core';
 import * as chalk from 'chalk';
 import * as shell from 'shelljs';
 import { getArg, getWorkspace } from '../../util';
-import { getBuildList } from '../../utils/builds';
+import { addHostRule, getBuildList } from '../../utils/builds';
 import { init } from '../../utils/docker/buildx';
 import {
   getOctokit,
@@ -30,6 +30,8 @@ export async function run(): Promise<void> {
 
     const token = getArg('token', { required: true });
     const api = getOctokit(token);
+
+    addHostRule({ matchHost: 'github.com', token });
 
     log('config:', JSON.stringify(cfg));
 
