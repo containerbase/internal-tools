@@ -22,6 +22,7 @@ const version = '1.22.4';
 
 describe('commands/docker/builder', () => {
   let args: Record<string, string | string[]> = {};
+
   beforeEach(() => {
     jest.resetAllMocks();
     core.getInput.mockReturnValueOnce('builder.json');
@@ -299,11 +300,7 @@ describe('commands/docker/builder', () => {
     });
 
     docker.build.mockRejectedValueOnce(new Error('failure'));
-    try {
-      await run();
-    } catch (e) {
-      expect((e as Error).message).toBe('failed');
-    }
+    await expect(run()).rejects.toThrow('failed');
   });
 
   it('throws missing-image', async () => {
@@ -314,21 +311,14 @@ describe('commands/docker/builder', () => {
     core.getInput.mockImplementationOnce(() => {
       throw new Error('missing-image');
     });
-    try {
-      await run();
-    } catch (e) {
-      expect((e as Error).message).toBe('missing-image');
-    }
+    await expect(run()).rejects.toThrow('missing-image');
   });
+
   it('throws missing-config', async () => {
     expect.assertions(1);
     jest.resetAllMocks();
     utils.readJson.mockResolvedValueOnce(undefined);
 
-    try {
-      await run();
-    } catch (e) {
-      expect((e as Error).message).toBe('missing-config');
-    }
+    await expect(run()).rejects.toThrow('missing-config');
   });
 });

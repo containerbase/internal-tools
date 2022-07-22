@@ -53,6 +53,7 @@ describe('utils/docker', () => {
     const headers = {
       'www-authenticate': `Bearer realm="${realm}/token",service="registry.docker.io",scope="repository:${image}:pull"`,
     };
+
     it('works', async () => {
       nock(registry).get('/v2/').reply(200, {}, headers);
       nock(realm)
@@ -64,6 +65,7 @@ describe('utils/docker', () => {
 
       expect(nock.isDone()).toBe(true);
     });
+
     it('fails with auth', async () => {
       nock(registry).get('/v2/').reply(200, {}, headers);
       nock(realm)
@@ -91,6 +93,7 @@ describe('utils/docker', () => {
 
   describe('getRemoteImageId', () => {
     const image = 'renovate/base';
+
     it('works', async () => {
       nock(registry)
         .get('/v2/')
@@ -159,6 +162,7 @@ describe('utils/docker', () => {
 
   describe('getLocalImageId', () => {
     const image = 'renovate/base';
+
     it('works', async () => {
       utils.exec.mockResolvedValueOnce({
         ...res,
@@ -183,6 +187,7 @@ describe('utils/docker', () => {
   describe('build', () => {
     const image = 'base';
     const cache = 'docker-build-cache';
+
     it('works', async () => {
       utils.exec.mockResolvedValueOnce({
         ...res,
@@ -243,6 +248,7 @@ describe('utils/docker', () => {
 
   describe('publish', () => {
     const image = 'base';
+
     beforeEach(() => {
       nock(registry)
         .get('/v2/')

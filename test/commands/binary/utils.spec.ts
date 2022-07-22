@@ -56,7 +56,9 @@ describe('commands/binary/utils', () => {
 
   describe('createBuilderImage', () => {
     it('works', async () => {
-      await createBuilderImage('', partial<BinaryBuilderConfig>({}));
+      await expect(
+        createBuilderImage('', partial<BinaryBuilderConfig>({}))
+      ).toResolve();
     });
 
     it('works with build args', async () => {
