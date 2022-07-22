@@ -16,5 +16,6 @@ module.exports = {
       statements: 100,
     },
   },
+  reporters: ci ? ['default', 'github-actions'] : ['default'],
   setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/test/setup.ts'],
 };
