@@ -176,6 +176,7 @@ jobs:
           command: docker-builder
           config: e2e/helm.json
           dry-run: true
+          token: ${{ github.token }}
 
       - name: docker-builder (java)
         uses: ./

@@ -32,6 +32,7 @@ describe(getName(__filename), () => {
   });
 
   it('works yarn', async () => {
+    args.token = 'ghp_xxx'; // coverage only
     utils.readFile.mockResolvedValue(
       `# renovate: datasource=npm depName=yarn versioning=npm\nARG YARN_VERSION=${version}\n`
     );
