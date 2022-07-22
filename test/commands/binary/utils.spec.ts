@@ -8,7 +8,7 @@ import {
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
 import type { BinaryBuilderConfig } from '../../../src/utils/types';
-import { getName, mocked, partial } from '../../utils';
+import { mocked, partial } from '../../utils';
 
 jest.mock('../../../src/util');
 jest.mock('../../../src/utils/docker/common');
@@ -19,7 +19,7 @@ const utils = mocked(_utils);
 
 jest.mock('../../../src/util');
 
-describe(getName(__filename), () => {
+describe('commands/binary/utils', () => {
   let input: Record<string, string>;
 
   beforeEach(() => {

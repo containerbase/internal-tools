@@ -1,7 +1,6 @@
 import { api } from '../../../src/utils/versioning/ubuntu';
-import { getName } from '../../utils';
 
-describe(getName(__filename), () => {
+describe('utils/versioning/ubuntu', () => {
   it('isVersion', () => {
     expect(api.isVersion('bionic')).toBe(true);
     expect(api.isVersion('focal')).toBe(true);

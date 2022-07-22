@@ -1,7 +1,6 @@
 import * as ds from '../../../src/utils/datasource';
-import { getName } from '../../utils';
 
-describe(getName(__filename), () => {
+describe('utils/datasource/index', () => {
   it('works', () => {
     ds.register();
   });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` createBuilderImage works with build args 1`] = `
+exports[`commands/binary/utils createBuilderImage works with build args 1`] = `
 Array [
   Array [
     "build",
@@ -17,7 +17,7 @@ Array [
 ]
 `;
 
-exports[` getConfig dummy (no-image) 1`] = `
+exports[`commands/binary/utils getConfig dummy (no-image) 1`] = `
 Object {
   "buildArg": "DUMMY_VERSION",
   "buildArgs": Array [],
@@ -30,7 +30,7 @@ Object {
 }
 `;
 
-exports[` getConfig dummy 1`] = `
+exports[`commands/binary/utils getConfig dummy 1`] = `
 Object {
   "buildArg": "DUMMY_VERSION",
   "buildArgs": Array [],
@@ -53,7 +53,7 @@ Object {
 }
 `;
 
-exports[` getConfig ruby 1`] = `
+exports[`commands/binary/utils getConfig ruby 1`] = `
 Object {
   "buildArg": "RUBY_VERSION",
   "buildArgs": Array [],
@@ -71,7 +71,7 @@ Object {
 }
 `;
 
-exports[` runBuilder works with build args 1`] = `
+exports[`commands/binary/utils runBuilder works with build args 1`] = `
 Array [
   Array [
     "--name",

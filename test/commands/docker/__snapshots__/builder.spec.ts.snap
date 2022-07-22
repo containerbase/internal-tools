@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` build-only yarn: build 1`] = `
+exports[`commands/docker/builder build-only yarn: build 1`] = `
 Array [
   Array [
     Object {
@@ -22,9 +22,9 @@ Array [
 ]
 `;
 
-exports[` build-only yarn: publish 1`] = `Array []`;
+exports[`commands/docker/builder build-only yarn: publish 1`] = `Array []`;
 
-exports[` last-only dummy: build 1`] = `
+exports[`commands/docker/builder last-only dummy: build 1`] = `
 Array [
   Array [
     Object {
@@ -45,7 +45,7 @@ Array [
 ]
 `;
 
-exports[` last-only dummy: publish 1`] = `
+exports[`commands/docker/builder last-only dummy: publish 1`] = `
 Array [
   Array [
     Object {
@@ -66,7 +66,7 @@ Array [
 ]
 `;
 
-exports[` updates image yarn (dry-run): build 1`] = `
+exports[`commands/docker/builder updates image yarn (dry-run): build 1`] = `
 Array [
   Array [
     Object {
@@ -88,7 +88,7 @@ Array [
 ]
 `;
 
-exports[` updates image yarn (dry-run): publish 1`] = `
+exports[`commands/docker/builder updates image yarn (dry-run): publish 1`] = `
 Array [
   Array [
     Object {
@@ -125,7 +125,7 @@ Array [
 ]
 `;
 
-exports[` works dummy: build 1`] = `
+exports[`commands/docker/builder works dummy: build 1`] = `
 Array [
   Array [
     Object {
@@ -160,7 +160,7 @@ Array [
 ]
 `;
 
-exports[` works dummy: publish 1`] = `
+exports[`commands/docker/builder works dummy: publish 1`] = `
 Array [
   Array [
     Object {
@@ -181,7 +181,7 @@ Array [
 ]
 `;
 
-exports[` works gradle: build 1`] = `
+exports[`commands/docker/builder works gradle: build 1`] = `
 Array [
   Array [
     Object {
@@ -235,7 +235,7 @@ Array [
 ]
 `;
 
-exports[` works gradle: publish 1`] = `
+exports[`commands/docker/builder works gradle: publish 1`] = `
 Array [
   Array [
     Object {
@@ -304,7 +304,7 @@ Array [
 ]
 `;
 
-exports[` works helm 1`] = `
+exports[`commands/docker/builder works helm 1`] = `
 Array [
   Array [
     Object {
@@ -318,7 +318,7 @@ Array [
 ]
 `;
 
-exports[` works helm: build 1`] = `
+exports[`commands/docker/builder works helm: build 1`] = `
 Array [
   Array [
     Object {
@@ -371,7 +371,7 @@ Array [
 ]
 `;
 
-exports[` works helm: publish 1`] = `
+exports[`commands/docker/builder works helm: publish 1`] = `
 Array [
   Array [
     Object {
@@ -432,7 +432,7 @@ Array [
 ]
 `;
 
-exports[` works java: build 1`] = `
+exports[`commands/docker/builder works java: build 1`] = `
 Array [
   Array [
     Object {
@@ -488,7 +488,7 @@ Array [
 ]
 `;
 
-exports[` works java: publish 1`] = `
+exports[`commands/docker/builder works java: publish 1`] = `
 Array [
   Array [
     Object {
@@ -573,7 +573,7 @@ Array [
 ]
 `;
 
-exports[` works pnpm: build 1`] = `
+exports[`commands/docker/builder works pnpm: build 1`] = `
 Array [
   Array [
     Object {
@@ -596,7 +596,7 @@ Array [
 ]
 `;
 
-exports[` works pnpm: publish 1`] = `
+exports[`commands/docker/builder works pnpm: publish 1`] = `
 Array [
   Array [
     Object {
@@ -633,7 +633,7 @@ Array [
 ]
 `;
 
-exports[` works swift 1`] = `
+exports[`commands/docker/builder works swift 1`] = `
 Array [
   Array [
     Object {
@@ -647,7 +647,7 @@ Array [
 ]
 `;
 
-exports[` works swift: build 1`] = `
+exports[`commands/docker/builder works swift: build 1`] = `
 Array [
   Array [
     Object {
@@ -715,7 +715,7 @@ Array [
 ]
 `;
 
-exports[` works swift: publish 1`] = `
+exports[`commands/docker/builder works swift: publish 1`] = `
 Array [
   Array [
     Object {
@@ -776,7 +776,7 @@ Array [
 ]
 `;
 
-exports[` works ubuntu: build 1`] = `
+exports[`commands/docker/builder works ubuntu: build 1`] = `
 Array [
   Array [
     Object {
@@ -815,7 +815,7 @@ Array [
 ]
 `;
 
-exports[` works ubuntu: publish 1`] = `
+exports[`commands/docker/builder works ubuntu: publish 1`] = `
 Array [
   Array [
     Object {
@@ -876,7 +876,7 @@ Array [
 ]
 `;
 
-exports[` works yarn: build 1`] = `
+exports[`commands/docker/builder works yarn: build 1`] = `
 Array [
   Array [
     Object {
@@ -898,7 +898,7 @@ Array [
 ]
 `;
 
-exports[` works yarn: publish 1`] = `
+exports[`commands/docker/builder works yarn: publish 1`] = `
 Array [
   Array [
     Object {

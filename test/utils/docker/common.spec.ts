@@ -4,13 +4,13 @@ import {
   dockerPrune,
   dockerRun,
 } from '../../../src/utils/docker/common';
-import { getName, mocked } from '../../utils';
+import { mocked } from '../../utils';
 
 jest.mock('../../../src/util');
 
 const utils = mocked(_utils);
 
-describe(getName(__filename), () => {
+describe('utils/docker/common', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

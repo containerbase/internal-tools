@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` already initialized 1`] = `
+exports[`utils/docker/buildx already initialized 1`] = `
 Array [
   Array [
     "docker",
@@ -12,7 +12,7 @@ Array [
 ]
 `;
 
-exports[` works 1`] = `
+exports[`utils/docker/buildx works 1`] = `
 Array [
   Array [
     "docker",

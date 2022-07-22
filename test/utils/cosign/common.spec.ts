@@ -6,7 +6,7 @@ jest.mock('../../../src/util');
 
 const utils = mocked(_utils);
 
-describe('utils/cosign', () => {
+describe('utils/cosign/common', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

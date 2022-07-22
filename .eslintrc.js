@@ -4,7 +4,7 @@ module.exports = {
     node: true,
   },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@renovate', '@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:import/errors',
@@ -76,7 +76,9 @@ module.exports = {
       env: {
         jest: true,
       },
-      rules: {},
+      rules: {
+        '@renovate/jest-root-describe': 2,
+      },
     },
   ],
 };

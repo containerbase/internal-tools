@@ -5,7 +5,7 @@ import { run } from '../../../src/commands/binary';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
 import * as _github from '../../../src/utils/github';
-import { getName, mocked } from '../../utils';
+import { mocked } from '../../utils';
 
 jest.mock('renovate/dist/modules/datasource');
 jest.mock('../../../src/util');
@@ -23,7 +23,7 @@ const datasources = mocked(_datasources);
 const github = mocked(_github);
 const version = '2.7.2';
 
-describe(getName(__filename), () => {
+describe('commands/binary/index', () => {
   let input: Record<string, string>;
   beforeEach(() => {
     jest.resetAllMocks();

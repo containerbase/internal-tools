@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` readBuffer works 1`] = `
+exports[`util readBuffer works 1`] = `
 "FROM renovate/renovate:19.225.3-slim
 
 FROM busybox:1.33.0
@@ -26,7 +26,7 @@ ENTRYPOINT [\\"echo\\" ]
 "
 `;
 
-exports[` readFile works 1`] = `
+exports[`util readFile works 1`] = `
 "FROM renovate/renovate:19.225.3-slim
 
 FROM busybox:1.33.0
