@@ -4,7 +4,7 @@ import * as chalk from 'chalk';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { exec, getArg, isDryRun, readJson } from '../../util';
-import { BuildsResult, getBuildList } from '../../utils/builds';
+import { BuildsResult, addHostRule, getBuildList } from '../../utils/builds';
 import { readDockerConfig } from '../../utils/config';
 import { build, publish } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';
@@ -199,6 +199,12 @@ export async function run(): Promise<void> {
     config.lastOnly = true;
   }
   log('config:', JSON.stringify(config));
+
+  const token = getArg('token');
+
+  if (token) {
+    addHostRule({ matchHost: 'github.com', token });
+  }
 
   await init();
 
