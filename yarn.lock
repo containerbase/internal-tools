@@ -3665,10 +3665,10 @@ columnify@^1.6.0:
     strip-ansi "^6.0.1"
     wcwidth "^1.0.0"
 
-commander@9.3.0:
-  version "9.3.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-9.3.0.tgz#f619114a5a2d2054e0d9ff1b31d5ccf89255e26b"
-  integrity sha512-hv95iU5uXPbK83mjrJKuZyFM/LBAoCV/XhVGkS5Je6tl7sxr6A0ITMw5WoRV46/UaJ46Nllm3Xt7IaJhXTIkzw==
+commander@9.4.0:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-9.4.0.tgz#bc4a40918fefe52e22450c111ecd6b7acce6f11c"
+  integrity sha512-sRPT+umqkz90UA8M1yqYfnHlZA7fF6nSphDtxeywPZ49ysjxDQybzk13CL+mXekDRG92skbcqCLVovuCusNmFw==
 
 commander@^2.19.0:
   version "2.20.3"
@@ -7980,10 +7980,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@32.122.4:
-  version "32.122.4"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-32.122.4.tgz#7a0fe64cfdec7ee8fc4bdf99da92924a2bb044e1"
-  integrity sha512-ySIZuB4r8+SM69ltfKFV6Jui0UaCuCcp4UGgovjfwCGgKAagWoQD05Mf5hKl3rPJ5Uon2XtDM2qiVeVNiGfqNQ==
+renovate@32.127.0:
+  version "32.127.0"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-32.127.0.tgz#aca647fd8b84ee7a2091db2f07df5ea31d6c9759"
+  integrity sha512-IGsDSdm0QGRoqoTvlAmQ0Ht8VzmgIPxLXGIa2jswChowVgt8hI6nAtKzCNZLqEmsif5c9p1wsDH5N12JXkdKMA==
   dependencies:
     "@aws-sdk/client-ec2" "3.112.0"
     "@aws-sdk/client-ecr" "3.112.0"
@@ -8005,7 +8005,7 @@ renovate@32.122.4:
     chalk "4.1.2"
     changelog-filename-regex "2.0.1"
     clean-git-ref "2.0.1"
-    commander "9.3.0"
+    commander "9.4.0"
     conventional-commits-detector "1.0.3"
     crypto-random-string "3.3.1"
     deepmerge "4.2.2"
