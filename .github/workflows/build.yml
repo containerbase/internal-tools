@@ -33,7 +33,7 @@ jobs:
           cache: yarn
 
       - name: Cache node_modules
-        uses: actions/cache@c1a5de879eb890d062a85ee0252d6036480b1fe2 # v3.2.1
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: node_modules
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -72,7 +72,7 @@ jobs:
           cache: yarn
 
       - name: Cache node_modules
-        uses: actions/cache@c1a5de879eb890d062a85ee0252d6036480b1fe2 # v3.2.1
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: node_modules
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -117,7 +117,7 @@ jobs:
           cache: yarn
 
       - name: Cache node_modules
-        uses: actions/cache@c1a5de879eb890d062a85ee0252d6036480b1fe2 # v3.2.1
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: node_modules
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -247,7 +247,7 @@ jobs:
           cache: yarn
 
       - name: Cache node_modules
-        uses: actions/cache@c1a5de879eb890d062a85ee0252d6036480b1fe2 # v3.2.1
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: node_modules
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
