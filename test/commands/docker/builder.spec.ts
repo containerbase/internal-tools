@@ -135,7 +135,7 @@ describe('commands/docker/builder', () => {
 
     await run();
 
-    expect(datasources.getPkgReleases.mock.calls).toMatchSnapshot([
+    expect(datasources.getPkgReleases.mock.calls).toMatchObject([
       [
         {
           depName: 'helm',
@@ -174,7 +174,7 @@ describe('commands/docker/builder', () => {
 
     await run();
 
-    expect(datasources.getPkgReleases.mock.calls).toMatchSnapshot([
+    expect(datasources.getPkgReleases.mock.calls).toMatchObject([
       [
         {
           depName: 'swift',
