@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`commands/binary/utils createBuilderImage works with build args 1`] = `
-Array [
-  Array [
+[
+  [
     "build",
     "--load",
     "-t",
@@ -18,12 +18,12 @@ Array [
 `;
 
 exports[`commands/binary/utils getConfig dummy (no-image) 1`] = `
-Object {
+{
   "buildArg": "DUMMY_VERSION",
-  "buildArgs": Array [],
+  "buildArgs": [],
   "datasource": "github-releases",
   "dryRun": undefined,
-  "ignoredVersions": Array [],
+  "ignoredVersions": [],
   "image": "dummy",
   "lastOnly": false,
   "versioning": "semver",
@@ -31,20 +31,20 @@ Object {
 `;
 
 exports[`commands/binary/utils getConfig dummy 1`] = `
-Object {
+{
   "buildArg": "DUMMY_VERSION",
-  "buildArgs": Array [],
+  "buildArgs": [],
   "datasource": "docker",
   "dryRun": undefined,
   "forceUnstable": true,
-  "ignoredVersions": Array [],
+  "ignoredVersions": [],
   "image": "dummy",
   "lastOnly": false,
   "latestStable": "12",
   "latestVersion": "15",
   "startVersion": "10",
   "versioning": "docker",
-  "versions": Array [
+  "versions": [
     "10",
     "12-alpine",
     "13",
@@ -54,12 +54,12 @@ Object {
 `;
 
 exports[`commands/binary/utils getConfig ruby 1`] = `
-Object {
+{
   "buildArg": "RUBY_VERSION",
-  "buildArgs": Array [],
+  "buildArgs": [],
   "datasource": "github-releases",
   "dryRun": undefined,
-  "ignoredVersions": Array [
+  "ignoredVersions": [
     "2.5.0-preview1",
     "2.5.0-rc1",
     "2.5.2",
@@ -72,8 +72,8 @@ Object {
 `;
 
 exports[`commands/binary/utils runBuilder works with build args 1`] = `
-Array [
-  Array [
+[
+  [
     "--name",
     "builder",
     "--volume",

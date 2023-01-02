@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`runner catch error 1`] = `
-Array [
-  Array [
+[
+  [
     "command",
   ],
 ]
 `;
 
 exports[`runner works 1`] = `
-Array [
-  Array [
+[
+  [
     "command",
   ],
 ]

@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`utils/docker build retries 1`] = `
-Array [
-  Array [
+[
+  [
     "docker",
-    Array [
+    [
       "buildx",
       "build",
       "--load",
@@ -12,9 +12,9 @@ Array [
       ".",
     ],
   ],
-  Array [
+  [
     "docker",
-    Array [
+    [
       "buildx",
       "build",
       "--load",
@@ -26,10 +26,10 @@ Array [
 `;
 
 exports[`utils/docker build throws 1`] = `
-Array [
-  Array [
+[
+  [
     "docker",
-    Array [
+    [
       "buildx",
       "build",
       "--load",
@@ -37,9 +37,9 @@ Array [
       ".",
     ],
   ],
-  Array [
+  [
     "docker",
-    Array [
+    [
       "buildx",
       "build",
       "--load",
@@ -51,10 +51,10 @@ Array [
 `;
 
 exports[`utils/docker build uses cache (dry-run) 1`] = `
-Array [
-  Array [
+[
+  [
     "docker",
-    Array [
+    [
       "buildx",
       "build",
       "--load",
@@ -69,10 +69,10 @@ Array [
 `;
 
 exports[`utils/docker build uses cache 1`] = `
-Array [
-  Array [
+[
+  [
     "docker",
-    Array [
+    [
       "buildx",
       "build",
       "--load",
@@ -86,10 +86,10 @@ Array [
 `;
 
 exports[`utils/docker build works 1`] = `
-Array [
-  Array [
+[
+  [
     "docker",
-    Array [
+    [
       "buildx",
       "build",
       "--load",
@@ -101,18 +101,18 @@ Array [
 `;
 
 exports[`utils/docker publish skips signing 1`] = `
-Array [
-  Array [
+[
+  [
     "docker",
-    Array [
+    [
       "inspect",
       "--format='{{.Id}}'",
       "renovate/base:latest",
     ],
   ],
-  Array [
+  [
     "docker",
-    Array [
+    [
       "push",
       "renovate/base:latest",
     ],
@@ -121,10 +121,10 @@ Array [
 `;
 
 exports[`utils/docker publish uptodate 1`] = `
-Array [
-  Array [
+[
+  [
     "docker",
-    Array [
+    [
       "inspect",
       "--format='{{.Id}}'",
       "renovate/base:latest",
@@ -134,10 +134,10 @@ Array [
 `;
 
 exports[`utils/docker publish works (dry-run) 1`] = `
-Array [
-  Array [
+[
+  [
     "docker",
-    Array [
+    [
       "inspect",
       "--format='{{.Id}}'",
       "renovate/base:latest",
@@ -147,25 +147,25 @@ Array [
 `;
 
 exports[`utils/docker publish works 1`] = `
-Array [
-  Array [
+[
+  [
     "docker",
-    Array [
+    [
       "inspect",
       "--format='{{.Id}}'",
       "renovate/base:latest",
     ],
   ],
-  Array [
+  [
     "docker",
-    Array [
+    [
       "push",
       "renovate/base:latest",
     ],
   ],
-  Array [
+  [
     "cosign",
-    Array [
+    [
       "sign",
       "renovate/base:latest",
     ],
