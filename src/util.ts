@@ -98,7 +98,9 @@ export async function readJson<T = unknown>(file: string): Promise<T> {
   const path = join(getWorkspace(), file);
   const res = await _import<T>(path);
   // istanbul ignore next
-  return 'default' in res ? res?.default : res;
+  return res && typeof res === 'object' && 'default' in res
+    ? res?.default
+    : res;
 }
 
 export async function readFile(file: string): Promise<string> {

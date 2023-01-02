@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`commands/docker/builder build-only yarn: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "YARN_VERSION=1.22.4",
       ],
       "cache": "docker-build-cache",
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "1",
         "1.22",
@@ -22,18 +22,18 @@ Array [
 ]
 `;
 
-exports[`commands/docker/builder build-only yarn: publish 1`] = `Array []`;
+exports[`commands/docker/builder build-only yarn: publish 1`] = `[]`;
 
 exports[`commands/docker/builder last-only dummy: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "IMAGE=slim",
         "DUMMY_VERSION=12",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "slim",
       ],
       "dryRun": undefined,
@@ -46,17 +46,17 @@ Array [
 `;
 
 exports[`commands/docker/builder last-only dummy: publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": undefined,
       "image": "dummy",
       "imagePrefix": "renovate",
       "tag": "12-slim",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "dummy",
       "imagePrefix": "renovate",
@@ -67,14 +67,14 @@ Array [
 `;
 
 exports[`commands/docker/builder updates image yarn (dry-run): build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "YARN_VERSION=1.22.4",
       ],
       "cache": "docker-build-cache",
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "1",
         "1.22",
@@ -89,33 +89,33 @@ Array [
 `;
 
 exports[`commands/docker/builder updates image yarn (dry-run): publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": true,
       "image": "yarn",
       "imagePrefix": "renovate",
       "tag": "1.22.4",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": true,
       "image": "yarn",
       "imagePrefix": "renovate",
       "tag": "1",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": true,
       "image": "yarn",
       "imagePrefix": "renovate",
       "tag": "1.22",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": true,
       "image": "yarn",
       "imagePrefix": "renovate",
@@ -126,14 +126,14 @@ Array [
 `;
 
 exports[`commands/docker/builder works dummy: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "DUMMY_VERSION=10",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
       ],
       "dryRun": undefined,
@@ -142,13 +142,13 @@ Array [
       "tag": "10",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "DUMMY_VERSION=13",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
       ],
       "dryRun": undefined,
@@ -161,17 +161,17 @@ Array [
 `;
 
 exports[`commands/docker/builder works dummy: publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": undefined,
       "image": "dummy",
       "imagePrefix": "renovate",
       "tag": "10",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "dummy",
       "imagePrefix": "renovate",
@@ -182,14 +182,14 @@ Array [
 `;
 
 exports[`commands/docker/builder works gradle: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "GRADLE_VERSION=3.5.5",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "3",
         "3.5",
@@ -200,13 +200,13 @@ Array [
       "tag": "3.5.5",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "GRADLE_VERSION=4.5",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "4",
       ],
@@ -216,13 +216,13 @@ Array [
       "tag": "4.5",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "GRADLE_VERSION=6.0",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "6",
       ],
@@ -236,65 +236,65 @@ Array [
 `;
 
 exports[`commands/docker/builder works gradle: publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "tag": "3.5.5",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "tag": "3",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "tag": "3.5",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "tag": "4.5",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "tag": "4",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "tag": "6.0",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "tag": "6",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
@@ -304,29 +304,15 @@ Array [
 ]
 `;
 
-exports[`commands/docker/builder works helm 1`] = `
-Array [
-  Array [
-    Object {
-      "datasource": "github-releases",
-      "depName": "helm",
-      "extractVersion": "^v(?<version>.*)$",
-      "packageName": "helm/helm",
-      "versioning": undefined,
-    },
-  ],
-]
-`;
-
 exports[`commands/docker/builder works helm: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "HELM_VERSION=3.4.0",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "3.4",
       ],
@@ -336,13 +322,13 @@ Array [
       "tag": "3.4.0",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "HELM_VERSION=3.7.0",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
       ],
       "dryRun": undefined,
@@ -351,13 +337,13 @@ Array [
       "tag": "3.7.0",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "HELM_VERSION=3.7.1",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "3",
         "3.7",
@@ -372,57 +358,57 @@ Array [
 `;
 
 exports[`commands/docker/builder works helm: publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
       "tag": "3.4.0",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
       "tag": "3.4",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
       "tag": "latest",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
       "tag": "3.7.0",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
       "tag": "3.7.1",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
       "tag": "3",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
@@ -433,14 +419,14 @@ Array [
 `;
 
 exports[`commands/docker/builder works java: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "JAVA_VERSION=8.0.302+8",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "8",
         "8.0",
@@ -451,13 +437,13 @@ Array [
       "tag": "8.0.302",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "JAVA_VERSION=11.0.12+7",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "11",
         "11.0",
@@ -468,13 +454,13 @@ Array [
       "tag": "11.0.12",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "JAVA_VERSION=16.0.2+9",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "16",
         "16.0",
@@ -489,81 +475,81 @@ Array [
 `;
 
 exports[`commands/docker/builder works java: publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "tag": "8.0.302",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "tag": "8",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "tag": "8.0",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "tag": "11.0.12",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "tag": "11",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "tag": "11.0",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "tag": "16.0.2",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "tag": "16",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "tag": "16.0",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
@@ -574,15 +560,15 @@ Array [
 `;
 
 exports[`commands/docker/builder works pnpm: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "IMAGE=slim",
         "PNPM_VERSION=5.0.0",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "slim",
         "5-slim",
         "5.0-slim",
@@ -597,33 +583,33 @@ Array [
 `;
 
 exports[`commands/docker/builder works pnpm: publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": undefined,
       "image": "pnpm",
       "imagePrefix": "ghcr.io/renovatebot",
       "tag": "5.0.0-slim",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "pnpm",
       "imagePrefix": "ghcr.io/renovatebot",
       "tag": "5-slim",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "pnpm",
       "imagePrefix": "ghcr.io/renovatebot",
       "tag": "5.0-slim",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "pnpm",
       "imagePrefix": "ghcr.io/renovatebot",
@@ -633,29 +619,15 @@ Array [
 ]
 `;
 
-exports[`commands/docker/builder works swift 1`] = `
-Array [
-  Array [
-    Object {
-      "datasource": "docker",
-      "depName": "swift",
-      "extractVersion": "^(?<version>\\\\d+\\\\.\\\\d+(?:\\\\.\\\\d+)?)$",
-      "packageName": undefined,
-      "versioning": "loose",
-    },
-  ],
-]
-`;
-
 exports[`commands/docker/builder works swift: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "SWIFT_VERSION=5.3",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
       ],
       "dryRun": undefined,
@@ -664,13 +636,13 @@ Array [
       "tag": "5.3",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "SWIFT_VERSION=5.3.1",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "5.3",
       ],
@@ -680,13 +652,13 @@ Array [
       "tag": "5.3.1",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "SWIFT_VERSION=5.4",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
       ],
       "dryRun": undefined,
@@ -695,13 +667,13 @@ Array [
       "tag": "5.4",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "SWIFT_VERSION=5.4.2",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "5",
         "5.4",
@@ -716,57 +688,57 @@ Array [
 `;
 
 exports[`commands/docker/builder works swift: publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "tag": "5.3",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "tag": "5.3.1",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "tag": "5.3",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "tag": "5.4",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "tag": "5.4.2",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "tag": "5",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
@@ -777,14 +749,14 @@ Array [
 `;
 
 exports[`commands/docker/builder works ubuntu: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "UBUNTU_VERSION=bionic",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "18",
         "18.4",
@@ -795,13 +767,13 @@ Array [
       "tag": "bionic",
     },
   ],
-  Array [
-    Object {
-      "buildArgs": Array [
+  [
+    {
+      "buildArgs": [
         "UBUNTU_VERSION=focal",
       ],
       "cache": undefined,
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "20",
         "20.4",
@@ -816,57 +788,57 @@ Array [
 `;
 
 exports[`commands/docker/builder works ubuntu: publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": undefined,
       "image": "ubuntu",
       "imagePrefix": "renovate",
       "tag": "bionic",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "ubuntu",
       "imagePrefix": "renovate",
       "tag": "18",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "ubuntu",
       "imagePrefix": "renovate",
       "tag": "18.4",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "ubuntu",
       "imagePrefix": "renovate",
       "tag": "focal",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "ubuntu",
       "imagePrefix": "renovate",
       "tag": "20",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "ubuntu",
       "imagePrefix": "renovate",
       "tag": "20.4",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "ubuntu",
       "imagePrefix": "renovate",
@@ -877,14 +849,14 @@ Array [
 `;
 
 exports[`commands/docker/builder works yarn: build 1`] = `
-Array [
-  Array [
-    Object {
-      "buildArgs": Array [
+[
+  [
+    {
+      "buildArgs": [
         "YARN_VERSION=1.22.4",
       ],
       "cache": "docker-build-cache",
-      "cacheTags": Array [
+      "cacheTags": [
         "latest",
         "1",
         "1.22",
@@ -899,33 +871,33 @@ Array [
 `;
 
 exports[`commands/docker/builder works yarn: publish 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "dryRun": undefined,
       "image": "yarn",
       "imagePrefix": "renovate",
       "tag": "1.22.4",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "yarn",
       "imagePrefix": "renovate",
       "tag": "1",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "yarn",
       "imagePrefix": "renovate",
       "tag": "1.22",
     },
   ],
-  Array [
-    Object {
+  [
+    {
       "dryRun": undefined,
       "image": "yarn",
       "imagePrefix": "renovate",

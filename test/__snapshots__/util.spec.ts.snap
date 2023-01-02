@@ -22,7 +22,7 @@ ARG JAVA_VERSION=8.0.302+8
 
 ARG DISTRO=latest
 RUN echo DISTRO=$DISTRO
-ENTRYPOINT [\\"echo\\" ]
+ENTRYPOINT ["echo" ]
 "
 `;
 
@@ -48,6 +48,6 @@ ARG JAVA_VERSION=8.0.302+8
 
 ARG DISTRO=latest
 RUN echo DISTRO=$DISTRO
-ENTRYPOINT [\\"echo\\" ]
+ENTRYPOINT ["echo" ]
 "
 `;
