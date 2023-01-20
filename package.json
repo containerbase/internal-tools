@@ -45,7 +45,7 @@
     "@renovate/eslint-plugin": "https://github.com/renovatebot/eslint-plugin#v0.0.5",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "8.0.7",
-    "@semantic-release/npm": "9.0.1",
+    "@semantic-release/npm": "9.0.2",
     "@types/jest": "29.2.5",
     "@types/node": "16.18.11",
     "@types/semver": "7.3.13",
