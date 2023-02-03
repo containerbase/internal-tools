@@ -7,7 +7,7 @@
   "author": "Rhys Arkins <rhys@arkins.net>",
   "main": "dist/index.js",
   "engines": {
-    "node": " >=16.0.0",
+    "node": "^16.13.0 || >=18.12.0",
     "yarn": ">=1.22.0"
   },
   "scripts": {
