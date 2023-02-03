@@ -44,8 +44,8 @@ export async function getAuthHeaders(
     );
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- TODO: fixme
-    const authUrl = `${authenticateHeader.parms
-      .realm!}?service=${authenticateHeader.parms
+    const authUrl = `${// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- TODO: fixme
+    authenticateHeader.parms.realm!}?service=${authenticateHeader.parms
       .service!}&scope=repository:${repository}:pull`;
     const authResponse = (
       await got<{ token?: string; access_token?: string }>(authUrl, {
