@@ -15,7 +15,6 @@ env:
   VERSION: v0
   NODE_VERSION: 16
   YARN_CACHE_KEY: v0
-  YARN_CACHE_FOLDER: .cache/yarn
   LOG_LEVEL: debug
 
 jobs:
@@ -32,15 +31,21 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: yarn
 
-      - name: Cache node_modules
+      - name: enable corepack
+        run: corepack enable
+
+      - name: Cache yarn
         uses: actions/cache@627f0f41f6904a5b1efbaed9f96d9eb58e92e920 # v3.2.4
         with:
-          path: node_modules
+          path: |
+            node_modules
+            .yarn/cache
+            .yarn/install-state.gz
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
 
   test:
     needs: prepare
@@ -71,15 +76,20 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: yarn
 
-      - name: Cache node_modules
+      - name: enable corepack
+        run: corepack enable
+
+      - name: Cache yarn
         uses: actions/cache@627f0f41f6904a5b1efbaed9f96d9eb58e92e920 # v3.2.4
         with:
-          path: node_modules
+          path: |
+            node_modules
+            .yarn/cache
+            .yarn/install-state.gz
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
+          fail-on-cache-miss: true
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
 
       - name: lint
         run: |
@@ -116,15 +126,20 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: yarn
 
-      - name: Cache node_modules
+      - name: enable corepack
+        run: corepack enable
+
+      - name: Cache yarn
         uses: actions/cache@627f0f41f6904a5b1efbaed9f96d9eb58e92e920 # v3.2.4
         with:
-          path: node_modules
+          path: |
+            node_modules
+            .yarn/cache
+            .yarn/install-state.gz
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
+          fail-on-cache-miss: true
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
 
       - run: yarn compile
 
@@ -246,15 +261,20 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: yarn
 
-      - name: Cache node_modules
+      - name: enable corepack
+        run: corepack enable
+
+      - name: Cache yarn
         uses: actions/cache@627f0f41f6904a5b1efbaed9f96d9eb58e92e920 # v3.2.4
         with:
-          path: node_modules
+          path: |
+            node_modules
+            .yarn/cache
+            .yarn/install-state.gz
           key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
+          fail-on-cache-miss: true
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
 
       - name: Push release branch
         run: git push origin release:release
