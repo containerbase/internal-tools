@@ -1,8 +1,8 @@
 diff --git a/lib/parsers.js b/lib/parsers.js
-index 3375f70ff7465318407a9ac04e95a865144d26ce..10030d17d08d0bdf3b7a81ff6ef2724615aff464 100644
+index 3375f70ff7465318407a9ac04e95a865144d26ce..8659d62d4e5716a474d1ee59cea99aaaa00db123 100644
 --- a/lib/parsers.js
 +++ b/lib/parsers.js
-@@ -2,7 +2,7 @@ var ParseAuth= /(\w+)\s+(.*)/  // -> scheme, params
+@@ -2,11 +2,11 @@ var ParseAuth= /(\w+)\s+(.*)/  // -> scheme, params
    , Separators= /([",=])/
    ;
  
@@ -11,11 +11,8 @@ index 3375f70ff7465318407a9ac04e95a865144d26ce..10030d17d08d0bdf3b7a81ff6ef27246
    // This parser will definitely fail if there is more than one challenge
    var tok, last_tok, _i, _len, key, value;
    var state= 0;   //0: token,
-@@ -56,7 +56,6 @@ parse_params= function (header) {
-         else {
-           return 'Unexpected token ('+tok+') after '+value+'"';
-         }
--        continue;
-       case 9: // expect commma
-         if (',' != tok) return 'Comma expected after '+value;
-         state= 0;
+-  m= header.split(Separators)
++  var m= header.split(Separators)
+   for (_i = 0, _len = m.length; _i < _len; _i++) {
+     last_tok= tok;
+     tok = m[_i];

@@ -13034,8 +13034,8 @@ __metadata:
 
 "www-authenticate@patch:www-authenticate@npm%3A0.6.2#./.yarn/patches/www-authenticate-npm-0.6.2-fdd88aa4ca.patch::locator=internal-tools%40workspace%3A.":
   version: 0.6.2
-  resolution: "www-authenticate@patch:www-authenticate@npm%3A0.6.2#./.yarn/patches/www-authenticate-npm-0.6.2-fdd88aa4ca.patch::version=0.6.2&hash=63836b&locator=internal-tools%40workspace%3A."
-  checksum: 856f18ba828b18b28da5770ba45544dfc729298a0928aeb49c2f0e67ffaee6757fefe8721c534007ef1abafb18b6b6b3634ca7924e2c9b7807037eee110c523b
+  resolution: "www-authenticate@patch:www-authenticate@npm%3A0.6.2#./.yarn/patches/www-authenticate-npm-0.6.2-fdd88aa4ca.patch::version=0.6.2&hash=dec884&locator=internal-tools%40workspace%3A."
+  checksum: 5d50bf5c8e020a0195d19788806be772cc2de5a295e7ddb00cb4f4877ed8bac33a6eb65960450dca8c2a5eedc141a4c8d844e732e81b60bd57f1a0fb5220ec34
   languageName: node
   linkType: hard
 

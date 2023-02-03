@@ -64,7 +64,7 @@ export async function getAuthHeaders(
       authorization: `Bearer ${token}`,
     };
   } catch (err) {
-    log.error(chalk.red('auth error'), (err as Error).message);
+    log.error(chalk.red('auth error'), err);
     throw new Error('Failed to obtain docker registry token');
   }
 }
