@@ -116,16 +116,18 @@ export async function getBuildList({
     }
   }
 
-  log(`Found ${allVersions.length} versions within our range`);
   if (!allVersions.length) {
+    log('Nothing to build');
     return null;
   }
+
+  log(`Found ${allVersions.length} versions within our range`);
   log(`Candidates:`, allVersions.join(', '));
 
   latestStable =
-    latestVersion ||
+    latestVersion ??
     /* istanbul ignore next: not testable ts */
-    pkgResult.tags?.latest ||
+    pkgResult.tags?.latest ??
     allVersions.filter((v) => ver.isStable(v)).pop();
   log('Latest stable version is', latestStable);
 
@@ -150,10 +152,6 @@ export async function getBuildList({
     allVersions = [latestStable && !forceUnstable ? latestStable : lastVersion];
   }
 
-  if (allVersions.length) {
-    log('Build list:', allVersions.join(', '));
-  } else {
-    log('Nothing to build');
-  }
+  log('Build list:', allVersions.join(', '));
   return { versions: allVersions, latestStable };
 }
