@@ -12,9 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  VERSION: v0
   NODE_VERSION: 16
-  YARN_CACHE_KEY: v0
   LOG_LEVEL: debug
 
 jobs:
@@ -41,9 +39,9 @@ jobs:
             node_modules
             .yarn/cache
             .yarn/install-state.gz
-          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
+            ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-
 
       - run: yarn install
 
@@ -86,7 +84,7 @@ jobs:
             node_modules
             .yarn/cache
             .yarn/install-state.gz
-          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           fail-on-cache-miss: true
 
       - run: yarn install
@@ -136,7 +134,7 @@ jobs:
             node_modules
             .yarn/cache
             .yarn/install-state.gz
-          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           fail-on-cache-miss: true
 
       - run: yarn install
@@ -271,7 +269,7 @@ jobs:
             node_modules
             .yarn/cache
             .yarn/install-state.gz
-          key: ${{ env.YARN_CACHE_KEY }}-${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           fail-on-cache-miss: true
 
       - run: yarn install
