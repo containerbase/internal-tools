@@ -1,8 +1,8 @@
 import is from '@sindresorhus/is';
+import { parse } from 'auth-header';
 import * as chalk from 'chalk';
 import * as delay from 'delay';
 import got, { HTTPError, Headers } from 'got';
-import * as wwwAuthenticate from 'www-authenticate';
 import { exists } from '../util';
 import { cosign } from './cosign/common';
 import { docker } from './docker/common';
@@ -39,13 +39,17 @@ export async function getAuthHeaders(
     if (apiCheckResponse.headers['www-authenticate'] === undefined) {
       return {};
     }
-    const params = new wwwAuthenticate.parsers.WWW_Authenticate(
+    const { scheme, params } = parse(
       apiCheckResponse.headers['www-authenticate']
-    )?.parms;
+    );
 
-    if (!params.realm || !params.service) {
+    if (
+      scheme.toUpperCase() !== 'BEARER' ||
+      !is.string(params.realm) ||
+      !is.string(params.service)
+    ) {
       throw new Error(
-        'Failed to obtain docker registry token! Missing `realm` or `service`.'
+        'Failed to obtain docker registry token! Invalid auth header.'
       );
     }
 
