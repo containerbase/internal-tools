@@ -1,5 +1,6 @@
 const ci = !!process.env.CI;
 
+/** @type {import('jest').Config} */
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
@@ -18,4 +19,5 @@ module.exports = {
   },
   reporters: ci ? ['default', 'github-actions'] : ['default'],
   setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/test/setup.ts'],
+  modulePathIgnorePatterns: ['dist/', 'coverage/'],
 };
