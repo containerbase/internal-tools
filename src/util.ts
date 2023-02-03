@@ -4,7 +4,7 @@ import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import type { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import { which } from '@actions/io';
-import findUp from 'find-up';
+import * as findUp from 'find-up';
 import type { DockerArch } from './utils/docker/common';
 import { ExecError, ExecResult } from './utils/types';
 
