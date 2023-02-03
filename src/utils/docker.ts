@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is';
 import * as chalk from 'chalk';
-import delay from 'delay';
+import * as delay from 'delay';
 import got, { HTTPError, Headers } from 'got';
 import * as wwwAuthenticate from 'www-authenticate';
 import { exists } from '../util';
