@@ -3583,6 +3583,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/auth-header@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@types/auth-header@npm:1.0.2"
+  checksum: 0fe39eea782a05195a99fc6dc919ac45ae3d320738b9ed4d8471529bb2e0e1759a9d5a669c418610fa1c5e7639ed3548e34089ff9bbd9f871a04dd614417a804
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.14":
   version: 7.1.20
   resolution: "@types/babel__core@npm:7.1.20"
@@ -7499,6 +7506,7 @@ __metadata:
     "@semantic-release/npm": 9.0.2
     "@sindresorhus/is": 4.6.0
     "@tsconfig/node16-strictest": ^1.0.4
+    "@types/auth-header": 1.0.2
     "@types/jest": 29.4.0
     "@types/node": 16.18.11
     "@types/semver": 7.3.13
@@ -7506,6 +7514,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 5.49.0
     "@typescript-eslint/parser": 5.49.0
     "@vercel/ncc": 0.36.1
+    auth-header: 1.0.0
     chalk: 4.1.2
     conventional-changelog-conventionalcommits: 5.0.0
     cross-env: 7.0.3
@@ -7538,7 +7547,6 @@ __metadata:
     ts-jest: 29.0.5
     tslib: 2.5.0
     typescript: 4.9.4
-    www-authenticate: 0.6.2
   languageName: unknown
   linkType: soft
 
@@ -13022,13 +13030,6 @@ __metadata:
     js-yaml: ^4.0.0
     write-file-atomic: ^3.0.3
   checksum: a7b142ffebb4e01e4aed325f8688a9ca372520bdd2ad4755f6569f7239a6bb0be2b8e6c39d0ba5603dbf3dd7f4f7be3be7de3d2ba6bbb8b121ce5a055769d99c
-  languageName: node
-  linkType: hard
-
-"www-authenticate@npm:0.6.2":
-  version: 0.6.2
-  resolution: "www-authenticate@npm:0.6.2"
-  checksum: 981130d018ea289e9ce342bb93a18f2df6ec6c6ba94b2f2ed7812665e33e3e041eade8312256217c590ed8a7b9c18c8a7ff03de106c10850b097be25bc027651
   languageName: node
   linkType: hard
 
