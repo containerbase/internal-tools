@@ -25,7 +25,8 @@ describe('commands/binary/utils', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     input = {};
-    core.getInput.mockImplementation((k) => input[k]);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- wrong core types
+    core.getInput.mockImplementation((k) => input[k]!);
     utils.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
   });
 
