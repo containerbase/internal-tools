@@ -39,14 +39,17 @@ export async function getAuthHeaders(
     if (apiCheckResponse.headers['www-authenticate'] === undefined) {
       return {};
     }
-    const authenticateHeader = new wwwAuthenticate.parsers.WWW_Authenticate(
+    const params = new wwwAuthenticate.parsers.WWW_Authenticate(
       apiCheckResponse.headers['www-authenticate']
-    );
+    )?.parms;
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- TODO: fixme
-    const authUrl = `${authenticateHeader.parms
-      .realm!}?service=${authenticateHeader.parms
-      .service!}&scope=repository:${repository}:pull`;
+    if (!params.realm || !params.service) {
+      throw new Error(
+        'Failed to obtain docker registry token! Missing `realm` or `service`.'
+      );
+    }
+
+    const authUrl = `${params.realm}?service=${params.service}&scope=repository:${repository}:pull`;
     const authResponse = (
       await got<{ token?: string; access_token?: string }>(authUrl, {
         responseType: 'json',
