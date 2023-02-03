@@ -117,6 +117,9 @@ export async function getBuildList({
   }
 
   log(`Found ${allVersions.length} versions within our range`);
+  if (!allVersions.length) {
+    return null;
+  }
   log(`Candidates:`, allVersions.join(', '));
 
   latestStable =
@@ -133,7 +136,8 @@ export async function getBuildList({
     );
   }
 
-  const lastVersion = allVersions[allVersions.length - 1];
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const lastVersion = allVersions.at(-1)!;
   log('Most recent version is', lastVersion);
 
   if (is.number(maxVersions) && maxVersions > 0) {
