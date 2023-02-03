@@ -13,3 +13,8 @@ yarn.lock
 
 *.snap
 *.sh
+
+
+# yarn v2+ https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.pnp.*
+.yarn/*

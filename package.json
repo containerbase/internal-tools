@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "engines": {
     "node": "^16.13.0 || >=18.12.0",
-    "yarn": ">=1.22.0"
+    "yarn": "^3.2.0"
   },
   "scripts": {
     "clean": "rm -rf dist",
@@ -76,12 +76,8 @@
     "ts-jest": "29.0.5",
     "typescript": "4.9.4"
   },
-  "resolutions": {
-    "**/gauge/**/ansi-regex": "^5.0.1",
-    "**/lock-verify/@iarna/cli": ">=2"
-  },
   "contributors": [
     "Michael Kriese <michael.kriese@visualon.de>"
   ],
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@3.3.1"
 }
