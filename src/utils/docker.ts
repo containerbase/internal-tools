@@ -15,7 +15,8 @@ export function splitImage(image: string): {
 } {
   const parts = image.split('/');
   if (parts.length > 2) {
-    return { registry: parts[0], repository: parts.slice(1).join('/') };
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return { registry: parts[0]!, repository: parts.slice(1).join('/') };
   } else {
     return { registry: 'index.docker.io', repository: image };
   }
@@ -42,7 +43,10 @@ export async function getAuthHeaders(
       apiCheckResponse.headers['www-authenticate']
     );
 
-    const authUrl = `${authenticateHeader.parms.realm}?service=${authenticateHeader.parms.service}&scope=repository:${repository}:pull`;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- TODO: fixme
+    const authUrl = `${authenticateHeader.parms
+      .realm!}?service=${authenticateHeader.parms
+      .service!}&scope=repository:${repository}:pull`;
     const authResponse = (
       await got<{ token?: string; access_token?: string }>(authUrl, {
         responseType: 'json',
