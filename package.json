@@ -23,7 +23,8 @@
     "prettier": "prettier \"{**/*,*}.*\" --check --ignore-unknown",
     "prettier:fix": "prettier \"{**/*,*}.*\" --write --ignore-unknown",
     "release": "semantic-release",
-    "start": "run-s compile && node dist"
+    "start": "run-s compile && node dist",
+    "test:node": "INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/node.json INPUT_IMAGE_PREFIX=containerbase/ INPUT_IMAGE=node yarn start"
   },
   "dependencies": {
     "@actions/core": "1.10.0",
@@ -48,7 +49,7 @@
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "8.0.7",
     "@semantic-release/npm": "9.0.2",
-    "@tsconfig/node16-strictest": "^1.0.4",
+    "@tsconfig/node16-strictest-esm": "1.0.3",
     "@types/jest": "29.4.0",
     "@types/node": "16.18.11",
     "@types/semver": "7.3.13",
@@ -57,6 +58,7 @@
     "@typescript-eslint/parser": "5.49.0",
     "@vercel/ncc": "0.36.1",
     "conventional-changelog-conventionalcommits": "5.0.0",
+    "cross-env": "7.0.3",
     "eslint": "8.32.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-formatter-gha": "1.4.1",
@@ -78,6 +80,9 @@
     "semantic-release": "19.0.5",
     "ts-jest": "29.0.5",
     "typescript": "4.9.4"
+  },
+  "resolutions": {
+    "www-authenticate@0.6.2": "patch:www-authenticate@npm%3A0.6.2#./.yarn/patches/www-authenticate-npm-0.6.2-fdd88aa4ca.patch"
   },
   "contributors": [
     "Michael Kriese <michael.kriese@visualon.de>"

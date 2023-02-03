@@ -12,12 +12,6 @@ export type ExecOptions = _ExecOptions;
 
 const DEFAULT_DISTRO = 'focal';
 
-type Module<T> = T | { default: T };
-
-async function _import<T>(path: string): Promise<Module<T>> {
-  return (await import(path)) as Promise<Module<T>>;
-}
-
 export async function exists(command: string): Promise<boolean> {
   try {
     await which(command, true);
@@ -92,12 +86,8 @@ export function getArch(): DockerArch {
 }
 
 export async function readJson<T = unknown>(file: string): Promise<T> {
-  const path = join(getWorkspace(), file);
-  const res = await _import<T>(path);
-  // istanbul ignore next
-  return res && typeof res === 'object' && 'default' in res
-    ? res?.default
-    : res;
+  const json = await readFile(file);
+  return JSON.parse(json) as T;
 }
 
 export async function readFile(file: string): Promise<string> {

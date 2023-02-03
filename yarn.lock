@@ -3576,10 +3576,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node16-strictest@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@tsconfig/node16-strictest@npm:1.0.4"
-  checksum: f644352bdb0d5f9c42bfe22d9b3c3b18447fa5e1ff4e99b758392856ee5a478daf525fa1ebbae8157980d47c32109302996a235710a0a158eb6980efe3dd5de6
+"@tsconfig/node16-strictest-esm@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@tsconfig/node16-strictest-esm@npm:1.0.3"
+  checksum: cc5650a1752e29f1adf5c4ff0a60e4f948c34d5a1e489a4504f3125c8b9b6f915f94dcd06e0936211a349d067469380e25f6ab461a4c0fd4a3b71c7108378fd7
   languageName: node
   linkType: hard
 
@@ -5404,7 +5404,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:7.0.3, cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
+"cross-env@npm:7.0.3":
+  version: 7.0.3
+  resolution: "cross-env@npm:7.0.3"
+  dependencies:
+    cross-spawn: ^7.0.1
+  bin:
+    cross-env: src/bin/cross-env.js
+    cross-env-shell: src/bin/cross-env-shell.js
+  checksum: 26f2f3ea2ab32617f57effb70d329c2070d2f5630adc800985d8b30b56e8bf7f5f439dd3a0358b79cee6f930afc23cf8e23515f17ccfb30092c6b62c6b630a79
+  languageName: node
+  linkType: hard
+
+"cross-spawn@npm:7.0.3, cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
   dependencies:
@@ -7486,7 +7498,7 @@ __metadata:
     "@semantic-release/github": 8.0.7
     "@semantic-release/npm": 9.0.2
     "@sindresorhus/is": 4.6.0
-    "@tsconfig/node16-strictest": ^1.0.4
+    "@tsconfig/node16-strictest-esm": 1.0.3
     "@types/jest": 29.4.0
     "@types/node": 16.18.11
     "@types/semver": 7.3.13
@@ -7496,6 +7508,7 @@ __metadata:
     "@vercel/ncc": 0.36.1
     chalk: 4.1.2
     conventional-changelog-conventionalcommits: 5.0.0
+    cross-env: 7.0.3
     delay: 5.0.0
     eslint: 8.32.0
     eslint-config-prettier: 8.6.0
@@ -13016,6 +13029,13 @@ __metadata:
   version: 0.6.2
   resolution: "www-authenticate@npm:0.6.2"
   checksum: 981130d018ea289e9ce342bb93a18f2df6ec6c6ba94b2f2ed7812665e33e3e041eade8312256217c590ed8a7b9c18c8a7ff03de106c10850b097be25bc027651
+  languageName: node
+  linkType: hard
+
+"www-authenticate@patch:www-authenticate@npm%3A0.6.2#./.yarn/patches/www-authenticate-npm-0.6.2-fdd88aa4ca.patch::locator=internal-tools%40workspace%3A.":
+  version: 0.6.2
+  resolution: "www-authenticate@patch:www-authenticate@npm%3A0.6.2#./.yarn/patches/www-authenticate-npm-0.6.2-fdd88aa4ca.patch::version=0.6.2&hash=63836b&locator=internal-tools%40workspace%3A."
+  checksum: 856f18ba828b18b28da5770ba45544dfc729298a0928aeb49c2f0e67ffaee6757fefe8721c534007ef1abafb18b6b6b3634ca7924e2c9b7807037eee110c523b
   languageName: node
   linkType: hard
 

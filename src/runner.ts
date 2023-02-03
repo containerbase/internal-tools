@@ -25,6 +25,7 @@ export default async function run(): Promise<void> {
         break;
     }
   } catch (error) {
+    // console.error(error)
     setFailed((error as Error).message);
   }
 }
