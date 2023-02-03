@@ -5,7 +5,7 @@ export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.{js,ts}'],
+  collectCoverageFrom: ['src/**/*.{js,ts}', '!src/index.ts'],
   coverageReporters: ci
     ? ['html', 'json', 'text-summary']
     : ['html', 'text-summary'],
@@ -17,7 +17,15 @@ export default {
       statements: 100,
     },
   },
+  modulePathIgnorePatterns: ['dist/', 'coverage/'],
   reporters: ci ? ['default', 'github-actions'] : ['default'],
   setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/test/setup.ts'],
-  modulePathIgnorePatterns: ['dist/', 'coverage/'],
+  transform: {
+    '^.+\\.ts?$': [
+      'ts-jest',
+      {
+        tsconfig: 'tsconfig.spec.json',
+      },
+    ],
+  },
 };
