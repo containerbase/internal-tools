@@ -89,6 +89,23 @@ describe('utils/docker', () => {
 
       expect(nock.isDone()).toBe(true);
     });
+
+    it('fails with missing service', async () => {
+      nock(registry)
+        .get('/v2/')
+        .reply(
+          200,
+          {},
+          {
+            'www-authenticate': `Bearer realm="${realm}/token",scope="repository:${image}:pull"`,
+          }
+        );
+      await expect(getAuthHeaders(registry.slice(8), image)).rejects.toThrow(
+        'Failed to obtain docker registry token'
+      );
+
+      expect(nock.isDone()).toBe(true);
+    });
   });
 
   describe('getRemoteImageId', () => {

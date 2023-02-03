@@ -12,13 +12,10 @@ export type ExecOptions = _ExecOptions;
 
 const DEFAULT_DISTRO = 'focal';
 
-/** webpack workaround for dynamic require */
-const _require = eval('require') as typeof require;
-
 type Module<T> = T | { default: T };
 
-function _import<T>(path: string): Promise<Module<T>> {
-  return Promise.resolve(_require(path)) as Promise<Module<T>>;
+async function _import<T>(path: string): Promise<Module<T>> {
+  return (await import(path)) as Promise<Module<T>>;
 }
 
 export async function exists(command: string): Promise<boolean> {
