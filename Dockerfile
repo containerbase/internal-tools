@@ -14,7 +14,7 @@ ARG PYTHON_VERSION=3.7.7
 # renovate: datasource=github-releases depName=helm lookupName=helm/helm
 ARG HELM_VERSION=3.4.0
 
-# renovate: datasource=adoptium-java depName=java
+# renovate: datasource=java-version depName=java
 ARG JAVA_VERSION=8.0.302+8
 
 ARG DISTRO=latest
