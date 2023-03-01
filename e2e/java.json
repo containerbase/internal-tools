@@ -1,5 +1,5 @@
 {
-  "datasource": "adoptium-java",
+  "datasource": "java-version",
   "image": "java",
   "startVersion": "8.0.0"
 }
