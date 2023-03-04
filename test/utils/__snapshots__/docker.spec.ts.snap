@@ -167,6 +167,7 @@ exports[`utils/docker publish works 1`] = `
     "cosign",
     [
       "sign",
+      "--yes",
       "renovate/base:latest",
     ],
   ],

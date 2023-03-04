@@ -256,5 +256,5 @@ async function sign(fullName: string): Promise<void> {
   }
 
   log('Signing image', fullName);
-  await cosign('sign', fullName);
+  await cosign('sign', '--yes', fullName);
 }
