@@ -21,6 +21,7 @@
     "prettier": "prettier \"{**/*,*}.*\" --check --ignore-unknown",
     "prettier:fix": "prettier \"{**/*,*}.*\" --write --ignore-unknown",
     "release": "run-s clean compile semantic-release",
+    "semantic-release": "semantic-release",
     "start": "run-s compile && node dist",
     "test:node": "INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/node.json INPUT_IMAGE_PREFIX=containerbase/ INPUT_IMAGE=node run-s start"
   },
