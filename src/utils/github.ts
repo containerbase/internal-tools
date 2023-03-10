@@ -3,7 +3,7 @@ import { context, getOctokit } from '@actions/github';
 import type { GitHub } from '@actions/github/lib/utils';
 import { RequestError } from '@octokit/request-error';
 import is from '@sindresorhus/is';
-import { getArch, getDistro, readBuffer } from '../util';
+import { getArch, getDistro, readBuffer, sleep } from '../util';
 import log from './logger';
 import type { BinaryBuilderConfig } from './types';
 
@@ -72,39 +72,61 @@ async function findRelease(
   return null;
 }
 
+async function getRelease(
+  api: GitHubOctokit,
+  version: string
+): Promise<GhRelease | null> {
+  try {
+    const { data } = await api.rest.repos.getReleaseByTag({
+      ...context.repo,
+      tag: version,
+    });
+
+    releaseCache?.set(version, data);
+    return data;
+  } catch (err) {
+    if (err instanceof RequestError && err.status == 404) {
+      return null;
+    }
+    throw err;
+  }
+}
+
 async function createRelease(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
-  version: string
+  version: string,
+  retry = true
 ): Promise<GhRelease> {
   try {
-    const { data } = await api.rest.repos.createRelease({
+    let data = await getRelease(api, version);
+    if (data) {
+      return data;
+    }
+
+    ({ data } = await api.rest.repos.createRelease({
       ...context.repo,
       tag_name: version,
       name: version,
       body: getBody(cfg, version),
-    });
+    }));
 
-    releaseCache?.set(data.tag_name, data);
+    releaseCache?.set(version, data);
     return data;
   } catch (err) {
     if (
+      retry &&
       err instanceof RequestError &&
       err.status == 422 &&
       err.response?.data
     ) {
       log(
-        'Release already created by other process, trying to fetch existing:',
+        'Release probably created by other process, retrying:',
         version,
         err.message
       );
-      const { data } = await api.rest.repos.getReleaseByTag({
-        ...context.repo,
-        tag: version,
-      });
-
-      releaseCache?.set(data.tag_name, data);
-      return data;
+      await sleep(250);
+      return await createRelease(api, cfg, version, false);
     }
     throw err;
   }
