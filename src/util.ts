@@ -137,3 +137,11 @@ export async function resolveFile(file: string): Promise<string> {
   }
   return join(pkg, '../', file);
 }
+
+/**
+ * Stop processing for some time.
+ * @param milliseconds time to sleep
+ */
+export function sleep(milliseconds: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}

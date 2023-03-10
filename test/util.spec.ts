@@ -176,4 +176,10 @@ describe('util', () => {
       expect(existsSync(file2)).toBe(false);
     });
   });
+
+  describe('sleep', () => {
+    it('works', async () => {
+      await expect(util.sleep(0)).toResolve();
+    });
+  });
 });
