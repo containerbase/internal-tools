@@ -12,16 +12,6 @@ Github Action used to build the [renovate](https://github.com/renovatebot/renova
 
 ## Example usage
 
-### github-cleanup
-
-Stop previous pending and running workflows.
-
-```yml
-- uses: renovatebot/gh-action@v0
-  with:
-    command: github-cleanup
-```
-
 ### docker-publish
 
 Publish image to docker registry only if image id has changed.
