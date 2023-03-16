@@ -66,8 +66,7 @@ export async function getBuildList({
     ? getVersions(versions)
     : await getPkgReleases({
         datasource,
-        depName,
-        packageName: lookupName,
+        packageName: lookupName ?? depName,
         versioning,
         extractVersion,
       });

@@ -138,7 +138,6 @@ describe('commands/docker/builder', () => {
     expect(datasources.getPkgReleases.mock.calls).toMatchObject([
       [
         {
-          depName: 'helm',
           packageName: 'helm/helm',
           datasource: 'github-releases',
         },
@@ -177,7 +176,7 @@ describe('commands/docker/builder', () => {
     expect(datasources.getPkgReleases.mock.calls).toMatchObject([
       [
         {
-          depName: 'swift',
+          packageName: 'swift',
           datasource: 'docker',
         },
       ],
