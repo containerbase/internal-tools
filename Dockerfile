@@ -19,4 +19,4 @@ ARG JAVA_VERSION=8.0.302+8
 
 ARG DISTRO=latest
 RUN echo DISTRO=$DISTRO
-ENTRYPOINT ["sh", "-c" "echo test > /cache/python-${1}-${DISTRO}-$(uname -p).tar.xz" ]
+ENTRYPOINT [ "/bin/sh", "-c", "echo test > /cache/python-3.7.5-focal-aarch64.tar.xz" ]

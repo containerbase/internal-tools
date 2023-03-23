@@ -2,6 +2,7 @@ node_modules/
 .vs/
 dist/
 coverage/
+.cache/
 
 # yarn
 yarn-error.log
