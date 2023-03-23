@@ -15,6 +15,8 @@ type GitHubOctokit = InstanceType<typeof GitHub>;
 interface GhAsset {
   name: string;
   browser_download_url: string;
+
+  size: number;
 }
 interface GhRelease {
   id: number;
@@ -221,6 +223,12 @@ export async function downloadAsset(
       responseType: 'buffer',
       resolveBodyOnly: true,
     });
+
+    if (buffer.length != asset.size) {
+      log.error('Wrong binary size');
+      return false;
+    }
+
     const name = getBinaryName(cfg, version);
     await writeFile(`.cache/${name}`, buffer);
   } catch (e) {
