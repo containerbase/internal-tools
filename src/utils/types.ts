@@ -75,3 +75,5 @@ export type BinaryBuilderConfig = {
   dryRun: boolean;
   versioning: string;
 } & ConfigFile;
+
+export const sumType = 'sha512';

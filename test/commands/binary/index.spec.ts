@@ -15,6 +15,7 @@ jest.mock('../../../src/utils/docker/buildx', () => ({
 }));
 jest.mock('../../../src/utils/github');
 jest.mock('../../../src/utils/datasource');
+jest.mock('../../../src/utils/sum');
 
 const core = mocked(_core);
 const utils = mocked(_utils);
@@ -44,11 +45,11 @@ describe('commands/binary/index', () => {
       releases: [{ version }, { version: '3.0.0-rc.24' }],
     });
 
-    github.hasAsset.mockResolvedValueOnce(true);
+    github.hasAsset.mockResolvedValueOnce(true).mockResolvedValueOnce(true);
 
     await run();
 
-    expect(docker.dockerRun.mock.calls).toMatchSnapshot('docker');
+    expect(docker.dockerRun).not.toHaveBeenCalled();
   });
 
   it('works ruby (dry-run)', async () => {
@@ -60,7 +61,7 @@ describe('commands/binary/index', () => {
       releases: [{ version }, { version: '3.0.0-rc.24' }],
     });
 
-    github.hasAsset.mockResolvedValueOnce(true);
+    github.hasAsset.mockResolvedValueOnce(true).mockResolvedValueOnce(true);
 
     await run();
 
@@ -80,6 +81,42 @@ describe('commands/binary/index', () => {
     await run();
 
     expect(docker.dockerRun.mock.calls).toMatchSnapshot('docker');
+    expect(github.uploadAsset).toHaveBeenCalledTimes(2);
+  });
+
+  it('works ruby (misssing checksum)', async () => {
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+    );
+    datasources.getPkgReleases.mockResolvedValueOnce({
+      releases: [{ version }, { version: '3.0.0-rc.24' }],
+    });
+
+    github.hasAsset.mockResolvedValueOnce(true);
+    github.downloadAsset.mockResolvedValueOnce(true);
+
+    await run();
+
+    expect(docker.dockerRun).not.toHaveBeenCalled();
+    expect(github.uploadAsset).toHaveBeenCalledTimes(1);
+  });
+
+  it('works ruby (misssing checksum fails)', async () => {
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+    );
+    datasources.getPkgReleases.mockResolvedValueOnce({
+      releases: [{ version }, { version: '3.0.0-rc.24' }],
+    });
+
+    github.hasAsset.mockResolvedValueOnce(true);
+    github.downloadAsset.mockResolvedValueOnce(true);
+    github.uploadAsset.mockRejectedValueOnce(new Error('error'));
+
+    await run();
+
+    expect(docker.dockerRun).not.toHaveBeenCalled();
+    expect(github.uploadAsset).toHaveBeenCalledTimes(1);
   });
 
   it('works dummy', async () => {
