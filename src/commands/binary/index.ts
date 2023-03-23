@@ -56,30 +56,29 @@ export async function run(): Promise<void> {
       await updateRelease(api, cfg, version);
       if (await hasAsset(api, cfg, version)) {
         if (!(await hasAsset(api, cfg, version, true))) {
-          if (cfg.dryRun) {
-            log.warn(
-              chalk.yellow(
-                '[DRY_RUN] Would create checksum file for exising release:'
-              ),
-              version
-            );
-          } else {
-            log('Creating checksum for existing version:', version);
-            if (!(await downloadAsset(api, cfg, version))) {
-              log.warn(chalk.yellow('Missing binary asset:'), version);
-              failed.push(version);
-              continue;
-            }
-            try {
-              await createChecksum(cfg, version);
-              await uploadAsset(api, cfg, version, true);
-            } catch (e) {
-              failed.push(version);
-              // eslint-disable-next-line
-              log(`Version ${version} failed: ${e.message}`);
-            }
+          log('Creating checksum for existing version:', version);
+          if (!(await downloadAsset(api, cfg, version))) {
+            log.warn(chalk.yellow('Missing binary asset:'), version);
+            failed.push(version);
             continue;
           }
+          try {
+            await createChecksum(cfg, version);
+            if (cfg.dryRun) {
+              log.warn(
+                chalk.yellow('[DRY_RUN] Would upload release asset:'),
+                version
+              );
+            } else {
+              log('Uploading release:', version);
+              await uploadAsset(api, cfg, version, true);
+            }
+          } catch (e) {
+            failed.push(version);
+            // eslint-disable-next-line
+            log(`Version ${version} failed: ${e.message}`);
+          }
+          continue;
         } else if (cfg.dryRun) {
           log.warn(
             chalk.yellow('[DRY_RUN] Would skipp existing version:'),

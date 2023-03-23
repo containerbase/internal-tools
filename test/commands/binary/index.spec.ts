@@ -101,6 +101,24 @@ describe('commands/binary/index', () => {
     expect(github.uploadAsset).toHaveBeenCalledTimes(1);
   });
 
+  it('works ruby (misssing checksum,dry-run)', async () => {
+    utils.isDryRun.mockReturnValueOnce(true);
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+    );
+    datasources.getPkgReleases.mockResolvedValueOnce({
+      releases: [{ version }, { version: '3.0.0-rc.24' }],
+    });
+
+    github.hasAsset.mockResolvedValueOnce(true);
+    github.downloadAsset.mockResolvedValueOnce(true);
+
+    await run();
+
+    expect(docker.dockerRun).not.toHaveBeenCalled();
+    expect(github.uploadAsset).not.toHaveBeenCalled();
+  });
+
   it('works ruby (misssing checksum fails)', async () => {
     utils.readFile.mockResolvedValue(
       `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
@@ -144,8 +162,9 @@ describe('commands/binary/index', () => {
 
     await run();
 
-    expect(docker.dockerRun.mock.calls).toMatchSnapshot('docker');
+    expect(docker.dockerRun).not.toHaveBeenCalled();
     expect(datasources.getPkgReleases).not.toHaveBeenCalled();
+    expect(github.uploadAsset).not.toHaveBeenCalled();
   });
 
   it('empty releases', async () => {
