@@ -1,4 +1,4 @@
-import { existsSync } from 'fs';
+import { existsSync, promises } from 'fs';
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as _io from '@actions/io';
@@ -129,6 +129,18 @@ describe('util', () => {
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
       expect(await util.readFile('Dockerfile')).toMatchSnapshot();
+    });
+  });
+
+  describe('writeFile', () => {
+    afterEach(() => {
+      delete process.env.GITHUB_WORKSPACE;
+    });
+
+    it('works', async () => {
+      process.env.GITHUB_WORKSPACE = process.cwd();
+      jest.spyOn(promises, 'writeFile').mockResolvedValueOnce();
+      await expect(util.writeFile('Dockerfile', 'FROM alpine')).toResolve();
     });
   });
 

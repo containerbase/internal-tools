@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is';
-import { readFile } from '../util';
-import type { ConfigFile } from './types';
+import { getArch, getDistro, readFile } from '../util';
+import { BinaryBuilderConfig, ConfigFile, sumType } from './types';
 
 const keys: (keyof ConfigFile)[] = [
   'datasource',
@@ -33,4 +33,17 @@ export async function readDockerConfig(cfg: ConfigFile): Promise<void> {
   if (m && m.groups) {
     checkArgs(cfg, m.groups);
   }
+}
+
+export function getBinaryName(
+  cfg: BinaryBuilderConfig,
+  version: string,
+  sum?: boolean | undefined
+): string {
+  const arch = getArch();
+  const ext = sum ? `.${sumType}` : '';
+  if (is.nonEmptyString(arch)) {
+    return `${cfg.image}-${version}-${getDistro()}-${arch}.tar.xz${ext}`;
+  }
+  return `${cfg.image}-${version}-${getDistro()}.tar.xz${ext}`;
 }
