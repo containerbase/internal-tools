@@ -222,7 +222,7 @@ export async function downloadAsset(
       resolveBodyOnly: true,
     });
     const name = getBinaryName(cfg, version);
-    await writeFile(name, buffer);
+    await writeFile(`.cache/${name}`, buffer);
   } catch (e) {
     // eslint-disable-next-line
     log(`Version ${version} failed: ${e.message}`, e.stack);
