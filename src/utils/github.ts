@@ -217,7 +217,7 @@ export async function downloadAsset(
 
   try {
     const buffer = await got({
-      href: asset.browser_download_url,
+      url: asset.browser_download_url,
       responseType: 'buffer',
       resolveBodyOnly: true,
     });
