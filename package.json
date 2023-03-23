@@ -48,7 +48,7 @@
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "8.0.7",
     "@semantic-release/npm": "9.0.2",
-    "@tsconfig/node16-strictest": "^1.0.4",
+    "@tsconfig/node16-strictest": "1.0.4",
     "@types/auth-header": "1.0.2",
     "@types/jest": "29.4.4",
     "@types/node": "16.18.16",
@@ -79,7 +79,7 @@
     "rimraf": "4.4.0",
     "semantic-release": "20.1.1",
     "ts-jest": "29.0.5",
-    "typescript": "4.9.5"
+    "typescript": "5.0.2"
   },
   "contributors": [
     "Michael Kriese <michael.kriese@visualon.de>"
