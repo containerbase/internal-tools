@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: 16
+  NODE_VERSION: 18
   LOG_LEVEL: debug
 
 jobs:
