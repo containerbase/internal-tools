@@ -2,8 +2,9 @@
 import { context, getOctokit } from '@actions/github';
 import type { GitHub } from '@actions/github/lib/utils';
 import { RequestError } from '@octokit/request-error';
-import is from '@sindresorhus/is';
-import { getArch, getDistro, readBuffer, sleep } from '../util';
+import got from 'got';
+import { readBuffer, sleep, writeFile } from '../util';
+import { getBinaryName } from './config';
 import log from './logger';
 import type { BinaryBuilderConfig } from './types';
 
@@ -13,6 +14,7 @@ type GitHubOctokit = InstanceType<typeof GitHub>;
 
 interface GhAsset {
   name: string;
+  browser_download_url: string;
 }
 interface GhRelease {
   id: number;
@@ -25,17 +27,6 @@ interface GhRelease {
 }
 
 let releaseCache: Map<string, GhRelease> | null = null;
-
-export function getBinaryName(
-  cfg: BinaryBuilderConfig,
-  version: string
-): string {
-  const arch = getArch();
-  if (is.nonEmptyString(arch)) {
-    return `${cfg.image}-${version}-${getDistro()}-${arch}.tar.xz`;
-  }
-  return `${cfg.image}-${version}-${getDistro()}.tar.xz`;
-}
 
 function getBody(cfg: BinaryBuilderConfig, version: string): string {
   return `### Bug Fixes
@@ -155,7 +146,8 @@ export async function updateRelease(
 export async function uploadAsset(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
-  version: string
+  version: string,
+  sum?: boolean | undefined
 ): Promise<void> {
   try {
     let rel = await findRelease(api, version);
@@ -166,7 +158,7 @@ export async function uploadAsset(
       release_id = rel.id;
     }
 
-    const name = getBinaryName(cfg, version);
+    const name = getBinaryName(cfg, version, sum);
     const buffer = await readBuffer(`.cache/${name}`);
 
     const { data } = await api.rest.repos.uploadReleaseAsset({
@@ -194,10 +186,48 @@ export async function uploadAsset(
 export async function hasAsset(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
+  version: string,
+  sum?: boolean | undefined
+): Promise<boolean> {
+  return (await findAsset(api, cfg, version, sum)) != null;
+}
+
+export async function findAsset(
+  api: GitHubOctokit,
+  cfg: BinaryBuilderConfig,
+  version: string,
+  sum?: boolean | undefined
+): Promise<GhAsset | null> {
+  const rel = await findRelease(api, version);
+  const name = getBinaryName(cfg, version, sum);
+
+  return rel?.assets.find((a) => a.name === name) ?? null;
+}
+
+export async function downloadAsset(
+  api: GitHubOctokit,
+  cfg: BinaryBuilderConfig,
   version: string
 ): Promise<boolean> {
-  const rel = await findRelease(api, version);
-  const name = getBinaryName(cfg, version);
+  const asset = await findAsset(api, cfg, version);
 
-  return rel?.assets.some((a) => a.name === name) ?? false;
+  if (!asset) {
+    return false;
+  }
+
+  try {
+    const buffer = await got({
+      href: asset.browser_download_url,
+      responseType: 'buffer',
+      resolveBodyOnly: true,
+    });
+    const name = getBinaryName(cfg, version);
+    await writeFile(name, buffer);
+  } catch (e) {
+    // eslint-disable-next-line
+    log(`Version ${version} failed: ${e.message}`, e.stack);
+    return false;
+  }
+
+  return true;
 }

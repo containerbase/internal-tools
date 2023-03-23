@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import * as fs from 'fs/promises';
 import { join } from 'path';
 import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
@@ -98,6 +98,14 @@ export async function readFile(file: string): Promise<string> {
 export async function readBuffer(file: string): Promise<Buffer> {
   const path = join(getWorkspace(), file);
   return await fs.readFile(path);
+}
+
+export async function writeFile(
+  file: string,
+  contents: string | Buffer
+): Promise<void> {
+  const path = join(getWorkspace(), file);
+  await fs.writeFile(path, contents);
 }
 
 export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;

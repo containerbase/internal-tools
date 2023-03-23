@@ -67,5 +67,3 @@ exports[`commands/binary/index works ruby (no-assets): docker 1`] = `
   ],
 ]
 `;
-
-exports[`commands/binary/index works ruby: docker 1`] = `[]`;
