@@ -13,10 +13,11 @@ exports[`commands/docker/builder build-only yarn: build 1`] = `
         "1",
         "1.22",
       ],
-      "dryRun": true,
+      "dryRun": undefined,
       "image": "yarn",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": false,
       "tag": "1.22.4",
       "tags": [
         "1",
@@ -27,8 +28,6 @@ exports[`commands/docker/builder build-only yarn: build 1`] = `
   ],
 ]
 `;
-
-exports[`commands/docker/builder build-only yarn: publish 1`] = `[]`;
 
 exports[`commands/docker/builder last-only dummy: build 1`] = `
 [
@@ -42,35 +41,15 @@ exports[`commands/docker/builder last-only dummy: build 1`] = `
       "cacheTags": [
         "slim",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "dummy",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "12-slim",
       "tags": [
         "slim",
       ],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder last-only dummy: publish 1`] = `
-[
-  [
-    {
-      "dryRun": undefined,
-      "image": "dummy",
-      "imagePrefix": "renovate",
-      "tag": "12-slim",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "dummy",
-      "imagePrefix": "renovate",
-      "tag": "slim",
     },
   ],
 ]
@@ -93,49 +72,13 @@ exports[`commands/docker/builder updates image yarn (dry-run): build 1`] = `
       "image": "yarn",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "1.22.4",
       "tags": [
         "1",
         "1.22",
         "latest",
       ],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder updates image yarn (dry-run): publish 1`] = `
-[
-  [
-    {
-      "dryRun": true,
-      "image": "yarn",
-      "imagePrefix": "renovate",
-      "tag": "1.22.4",
-    },
-  ],
-  [
-    {
-      "dryRun": true,
-      "image": "yarn",
-      "imagePrefix": "renovate",
-      "tag": "1",
-    },
-  ],
-  [
-    {
-      "dryRun": true,
-      "image": "yarn",
-      "imagePrefix": "renovate",
-      "tag": "1.22",
-    },
-  ],
-  [
-    {
-      "dryRun": true,
-      "image": "yarn",
-      "imagePrefix": "renovate",
-      "tag": "latest",
     },
   ],
 ]
@@ -152,10 +95,11 @@ exports[`commands/docker/builder works dummy: build 1`] = `
       "cacheTags": [
         "latest",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "dummy",
       "imagePrefix": "renovate",
       "platforms": undefined,
+      "push": true,
       "tag": "10",
       "tags": [],
     },
@@ -169,33 +113,13 @@ exports[`commands/docker/builder works dummy: build 1`] = `
       "cacheTags": [
         "latest",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "dummy",
       "imagePrefix": "renovate",
       "platforms": undefined,
+      "push": true,
       "tag": "13",
       "tags": [],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder works dummy: publish 1`] = `
-[
-  [
-    {
-      "dryRun": undefined,
-      "image": "dummy",
-      "imagePrefix": "renovate",
-      "tag": "10",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "dummy",
-      "imagePrefix": "renovate",
-      "tag": "13",
     },
   ],
 ]
@@ -214,10 +138,11 @@ exports[`commands/docker/builder works gradle: build 1`] = `
         "3",
         "3.5",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "3.5.5",
       "tags": [
         "3",
@@ -235,10 +160,11 @@ exports[`commands/docker/builder works gradle: build 1`] = `
         "latest",
         "4",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "4.5",
       "tags": [
         "4",
@@ -255,84 +181,16 @@ exports[`commands/docker/builder works gradle: build 1`] = `
         "latest",
         "6",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "gradle",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "6.0",
       "tags": [
         "6",
         "latest",
       ],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder works gradle: publish 1`] = `
-[
-  [
-    {
-      "dryRun": undefined,
-      "image": "gradle",
-      "imagePrefix": "renovate",
-      "tag": "3.5.5",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "gradle",
-      "imagePrefix": "renovate",
-      "tag": "3",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "gradle",
-      "imagePrefix": "renovate",
-      "tag": "3.5",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "gradle",
-      "imagePrefix": "renovate",
-      "tag": "4.5",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "gradle",
-      "imagePrefix": "renovate",
-      "tag": "4",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "gradle",
-      "imagePrefix": "renovate",
-      "tag": "6.0",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "gradle",
-      "imagePrefix": "renovate",
-      "tag": "6",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "gradle",
-      "imagePrefix": "renovate",
-      "tag": "latest",
     },
   ],
 ]
@@ -350,10 +208,11 @@ exports[`commands/docker/builder works helm: build 1`] = `
         "latest",
         "3.4",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "3.4.0",
       "tags": [
         "3.4",
@@ -370,10 +229,11 @@ exports[`commands/docker/builder works helm: build 1`] = `
       "cacheTags": [
         "latest",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "3.7.0",
       "tags": [],
     },
@@ -389,76 +249,16 @@ exports[`commands/docker/builder works helm: build 1`] = `
         "3",
         "3.7",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "3.7.1",
       "tags": [
         "3",
         "3.7",
       ],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder works helm: publish 1`] = `
-[
-  [
-    {
-      "dryRun": undefined,
-      "image": "helm",
-      "imagePrefix": "renovate",
-      "tag": "3.4.0",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "helm",
-      "imagePrefix": "renovate",
-      "tag": "3.4",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "helm",
-      "imagePrefix": "renovate",
-      "tag": "latest",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "helm",
-      "imagePrefix": "renovate",
-      "tag": "3.7.0",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "helm",
-      "imagePrefix": "renovate",
-      "tag": "3.7.1",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "helm",
-      "imagePrefix": "renovate",
-      "tag": "3",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "helm",
-      "imagePrefix": "renovate",
-      "tag": "3.7",
     },
   ],
 ]
@@ -477,10 +277,11 @@ exports[`commands/docker/builder works java: build 1`] = `
         "8",
         "8.0",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "8.0.302",
       "tags": [
         "8",
@@ -499,10 +300,11 @@ exports[`commands/docker/builder works java: build 1`] = `
         "11",
         "11.0",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "11.0.12",
       "tags": [
         "11",
@@ -521,101 +323,17 @@ exports[`commands/docker/builder works java: build 1`] = `
         "16",
         "16.0",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "java",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "16.0.2",
       "tags": [
         "16",
         "16.0",
         "latest",
       ],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder works java: publish 1`] = `
-[
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "8.0.302",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "8",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "8.0",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "11.0.12",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "11",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "11.0",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "16.0.2",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "16",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "16.0",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "java",
-      "imagePrefix": "renovate",
-      "tag": "latest",
     },
   ],
 ]
@@ -635,53 +353,17 @@ exports[`commands/docker/builder works pnpm: build 1`] = `
         "5-slim",
         "5.0-slim",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "pnpm",
       "imagePrefix": "ghcr.io/renovatebot",
       "platforms": [],
+      "push": true,
       "tag": "5.0.0-slim",
       "tags": [
         "5-slim",
         "5.0-slim",
         "slim",
       ],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder works pnpm: publish 1`] = `
-[
-  [
-    {
-      "dryRun": undefined,
-      "image": "pnpm",
-      "imagePrefix": "ghcr.io/renovatebot",
-      "tag": "5.0.0-slim",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "pnpm",
-      "imagePrefix": "ghcr.io/renovatebot",
-      "tag": "5-slim",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "pnpm",
-      "imagePrefix": "ghcr.io/renovatebot",
-      "tag": "5.0-slim",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "pnpm",
-      "imagePrefix": "ghcr.io/renovatebot",
-      "tag": "slim",
     },
   ],
 ]
@@ -698,10 +380,11 @@ exports[`commands/docker/builder works swift: build 1`] = `
       "cacheTags": [
         "latest",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "5.3",
       "tags": [],
     },
@@ -716,10 +399,11 @@ exports[`commands/docker/builder works swift: build 1`] = `
         "latest",
         "5.3",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "5.3.1",
       "tags": [
         "5.3",
@@ -735,10 +419,11 @@ exports[`commands/docker/builder works swift: build 1`] = `
       "cacheTags": [
         "latest",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "5.4",
       "tags": [],
     },
@@ -754,76 +439,16 @@ exports[`commands/docker/builder works swift: build 1`] = `
         "5",
         "5.4",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "5.4.2",
       "tags": [
         "5",
         "5.4",
       ],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder works swift: publish 1`] = `
-[
-  [
-    {
-      "dryRun": undefined,
-      "image": "swift",
-      "imagePrefix": "renovate",
-      "tag": "5.3",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "swift",
-      "imagePrefix": "renovate",
-      "tag": "5.3.1",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "swift",
-      "imagePrefix": "renovate",
-      "tag": "5.3",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "swift",
-      "imagePrefix": "renovate",
-      "tag": "5.4",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "swift",
-      "imagePrefix": "renovate",
-      "tag": "5.4.2",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "swift",
-      "imagePrefix": "renovate",
-      "tag": "5",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "swift",
-      "imagePrefix": "renovate",
-      "tag": "5.4",
     },
   ],
 ]
@@ -842,10 +467,11 @@ exports[`commands/docker/builder works ubuntu: build 1`] = `
         "18",
         "18.4",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "ubuntu",
       "imagePrefix": "renovate",
       "platforms": undefined,
+      "push": true,
       "tag": "bionic",
       "tags": [
         "18",
@@ -864,77 +490,17 @@ exports[`commands/docker/builder works ubuntu: build 1`] = `
         "20",
         "20.4",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "ubuntu",
       "imagePrefix": "renovate",
       "platforms": undefined,
+      "push": true,
       "tag": "focal",
       "tags": [
         "20",
         "20.4",
         "latest",
       ],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder works ubuntu: publish 1`] = `
-[
-  [
-    {
-      "dryRun": undefined,
-      "image": "ubuntu",
-      "imagePrefix": "renovate",
-      "tag": "bionic",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "ubuntu",
-      "imagePrefix": "renovate",
-      "tag": "18",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "ubuntu",
-      "imagePrefix": "renovate",
-      "tag": "18.4",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "ubuntu",
-      "imagePrefix": "renovate",
-      "tag": "focal",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "ubuntu",
-      "imagePrefix": "renovate",
-      "tag": "20",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "ubuntu",
-      "imagePrefix": "renovate",
-      "tag": "20.4",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "ubuntu",
-      "imagePrefix": "renovate",
-      "tag": "latest",
     },
   ],
 ]
@@ -953,53 +519,17 @@ exports[`commands/docker/builder works yarn: build 1`] = `
         "1",
         "1.22",
       ],
-      "dryRun": false,
+      "dryRun": undefined,
       "image": "yarn",
       "imagePrefix": "renovate",
       "platforms": [],
+      "push": true,
       "tag": "1.22.4",
       "tags": [
         "1",
         "1.22",
         "latest",
       ],
-    },
-  ],
-]
-`;
-
-exports[`commands/docker/builder works yarn: publish 1`] = `
-[
-  [
-    {
-      "dryRun": undefined,
-      "image": "yarn",
-      "imagePrefix": "renovate",
-      "tag": "1.22.4",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "yarn",
-      "imagePrefix": "renovate",
-      "tag": "1",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "yarn",
-      "imagePrefix": "renovate",
-      "tag": "1.22",
-    },
-  ],
-  [
-    {
-      "dryRun": undefined,
-      "image": "yarn",
-      "imagePrefix": "renovate",
-      "tag": "latest",
     },
   ],
 ]

@@ -57,7 +57,6 @@ exports[`utils/docker build uses cache (dry-run) 1`] = `
       "--build-arg=IMAGE=slim",
       "--cache-from=renovate/docker-build-cache:base-latest",
       "--cache-from=renovate/docker-build-cache:base-dummy",
-      "--load",
       ".",
     ],
   ],
@@ -73,8 +72,6 @@ exports[`utils/docker build uses cache 1`] = `
       "build",
       "--tag=renovate/base:latest",
       "--cache-from=renovate/docker-build-cache:base-latest",
-      "--cache-to=type=registry,ref=renovate/docker-build-cache:base-latest,mode=max",
-      "--load",
       ".",
     ],
   ],
@@ -90,72 +87,6 @@ exports[`utils/docker build works 1`] = `
       "build",
       "--tag=renovate/base:latest",
       ".",
-    ],
-  ],
-]
-`;
-
-exports[`utils/docker publish skips signing 1`] = `
-[
-  [
-    "docker",
-    [
-      "inspect",
-      "--format='{{.Id}}'",
-      "renovate/base:latest",
-    ],
-  ],
-  [
-    "docker",
-    [
-      "push",
-      "renovate/base:latest",
-    ],
-  ],
-]
-`;
-
-exports[`utils/docker publish uptodate 1`] = `
-[
-  [
-    "docker",
-    [
-      "inspect",
-      "--format='{{.Id}}'",
-      "renovate/base:latest",
-    ],
-  ],
-]
-`;
-
-exports[`utils/docker publish works (dry-run) 1`] = `
-[
-  [
-    "docker",
-    [
-      "inspect",
-      "--format='{{.Id}}'",
-      "renovate/base:latest",
-    ],
-  ],
-]
-`;
-
-exports[`utils/docker publish works 1`] = `
-[
-  [
-    "docker",
-    [
-      "inspect",
-      "--format='{{.Id}}'",
-      "renovate/base:latest",
-    ],
-  ],
-  [
-    "docker",
-    [
-      "push",
-      "renovate/base:latest",
     ],
   ],
 ]

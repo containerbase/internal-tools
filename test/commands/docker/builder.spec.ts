@@ -45,7 +45,6 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('works pnpm', async () => {
@@ -64,7 +63,6 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('works gradle', async () => {
@@ -91,7 +89,6 @@ describe('commands/docker/builder', () => {
       '6.0',
     ]);
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('works java', async () => {
@@ -115,7 +112,6 @@ describe('commands/docker/builder', () => {
       '16.0.2',
     ]);
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('works helm', async () => {
@@ -152,7 +148,6 @@ describe('commands/docker/builder', () => {
       '3.7.1',
     ]);
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('works swift', async () => {
@@ -191,7 +186,6 @@ describe('commands/docker/builder', () => {
       '5.4.2',
     ]);
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('works dummy', async () => {
@@ -201,7 +195,6 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('works ubuntu', async () => {
@@ -211,7 +204,6 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('last-only dummy', async () => {
@@ -232,7 +224,6 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('build-only yarn', async () => {
@@ -245,7 +236,6 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('updates image yarn (dry-run)', async () => {
@@ -257,7 +247,6 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build.mock.calls).toMatchSnapshot('build');
-    expect(docker.publish.mock.calls).toMatchSnapshot('publish');
   });
 
   it('no releases', async () => {

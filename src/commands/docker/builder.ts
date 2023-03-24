@@ -6,7 +6,7 @@ import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { exec, exists, getArg, isDryRun, readJson } from '../../util';
 import { BuildsResult, addHostRule, getBuildList } from '../../utils/builds';
 import { readDockerConfig } from '../../utils/config';
-import { BuildOptions, build, publish } from '../../utils/docker';
+import { build } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';
 import { dockerDf, dockerPrune } from '../../utils/docker/common';
 import { cosign } from '../../utils/docker/cosign';
@@ -113,7 +113,7 @@ async function buildAndPush(
         tags.push(tagSuffix ?? 'latest');
       }
 
-      const args = {
+      await build({
         image,
         imagePrefix,
         tag,
@@ -121,35 +121,19 @@ async function buildAndPush(
         cache,
         cacheTags,
         buildArgs: [...(buildArgs ?? []), `${buildArg}=${version}`],
-        dryRun: dryRun || buildOnly,
+        dryRun,
         platforms,
-      } satisfies BuildOptions;
-      await build(args);
+        push: !buildOnly,
+      });
 
-      if (!buildOnly) {
-        log(`Publish tags`);
-        if (platforms?.length) {
-          await build({
-            ...args,
-            push: true,
-          });
-        } else {
-          await publish({ image, imagePrefix, tag, dryRun });
-
-          for (const tag of tags) {
-            await publish({ image, imagePrefix, tag, dryRun });
-          }
-        }
-
-        if (shouldSign) {
+      if (!buildOnly && shouldSign) {
+        log('Signing image', imageVersion);
+        await cosign('sign', '--yes', imageVersion);
+        for (const imageVersion of tags.map(
+          (tag) => `${imagePrefix}/${image}:${tag}`
+        )) {
           log('Signing image', imageVersion);
           await cosign('sign', '--yes', imageVersion);
-          for (const imageVersion of tags.map(
-            (tag) => `${imagePrefix}/${image}:${tag}`
-          )) {
-            log('Signing image', imageVersion);
-            await cosign('sign', '--yes', imageVersion);
-          }
         }
       }
 
