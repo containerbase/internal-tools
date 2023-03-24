@@ -3,8 +3,6 @@ import { parse } from 'auth-header';
 import * as chalk from 'chalk';
 import * as delay from 'delay';
 import got, { HTTPError, Headers } from 'got';
-import { exists } from '../util';
-import { cosign } from './cosign/common';
 import { docker } from './docker/common';
 import log from './logger';
 import { ExecError } from './types';
@@ -146,8 +144,11 @@ export type BuildOptions = {
   cache?: string;
   cacheTags?: string[];
   tag?: string;
+  tags?: string[];
   dryRun?: boolean;
   buildArgs?: string[];
+  platforms?: string[];
+  push?: boolean;
 };
 
 const errors = [
@@ -166,15 +167,17 @@ export async function build({
   cache,
   cacheTags,
   tag = 'latest',
+  tags,
   dryRun,
   buildArgs,
+  platforms,
+  push,
 }: BuildOptions): Promise<void> {
-  const args = [
-    'buildx',
-    'build',
-    '--load',
-    `--tag=${imagePrefix}/${image}:${tag}`,
-  ];
+  const args = ['buildx', 'build', `--tag=${imagePrefix}/${image}:${tag}`];
+
+  if (tags?.length) {
+    args.push(...tags.map((tag) => `--tag=${imagePrefix}/${image}:${tag}`));
+  }
 
   if (is.nonEmptyArray(buildArgs)) {
     args.push(...buildArgs.map((b) => `--build-arg=${b}`));
@@ -192,6 +195,16 @@ export async function build({
 
     if (!dryRun) {
       args.push(`--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max`);
+    }
+
+    if (platforms?.length) {
+      args.push(`--platform=${platforms.join(',')}`);
+    } else {
+      args.push('--load');
+    }
+
+    if (!dryRun && push) {
+      args.push('--push');
     }
   }
 
@@ -244,17 +257,6 @@ export async function publish({
     log.warn(chalk.yellow('[DRY_RUN]'), chalk.blue('Would push:'), fullName);
   } else {
     await docker('push', fullName);
-    await sign(fullName);
   }
   log.info(chalk.blue('Processing image finished:', newId));
-}
-
-async function sign(fullName: string): Promise<void> {
-  if (!(await exists('cosign'))) {
-    log.warn('Cosign is not installed. Skipping container signing');
-    return;
-  }
-
-  log('Signing image', fullName);
-  await cosign('sign', '--yes', fullName);
 }

@@ -9,6 +9,7 @@ import { mocked } from '../../utils';
 jest.mock('renovate/dist/modules/datasource');
 jest.mock('../../../src/util');
 jest.mock('../../../src/utils/docker');
+jest.mock('../../../src/utils/docker/cosign');
 jest.mock('../../../src/utils/docker/buildx', () => ({
   init: () => Promise.resolve(),
 }));

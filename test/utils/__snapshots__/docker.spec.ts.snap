@@ -7,7 +7,6 @@ exports[`utils/docker build retries 1`] = `
     [
       "buildx",
       "build",
-      "--load",
       "--tag=renovate/base:latest",
       ".",
     ],
@@ -17,7 +16,6 @@ exports[`utils/docker build retries 1`] = `
     [
       "buildx",
       "build",
-      "--load",
       "--tag=renovate/base:latest",
       ".",
     ],
@@ -32,7 +30,6 @@ exports[`utils/docker build throws 1`] = `
     [
       "buildx",
       "build",
-      "--load",
       "--tag=renovate/base:latest",
       ".",
     ],
@@ -42,7 +39,6 @@ exports[`utils/docker build throws 1`] = `
     [
       "buildx",
       "build",
-      "--load",
       "--tag=renovate/base:latest",
       ".",
     ],
@@ -57,11 +53,11 @@ exports[`utils/docker build uses cache (dry-run) 1`] = `
     [
       "buildx",
       "build",
-      "--load",
       "--tag=renovate/base:latest",
       "--build-arg=IMAGE=slim",
       "--cache-from=renovate/docker-build-cache:base-latest",
       "--cache-from=renovate/docker-build-cache:base-dummy",
+      "--load",
       ".",
     ],
   ],
@@ -75,10 +71,10 @@ exports[`utils/docker build uses cache 1`] = `
     [
       "buildx",
       "build",
-      "--load",
       "--tag=renovate/base:latest",
       "--cache-from=renovate/docker-build-cache:base-latest",
       "--cache-to=type=registry,ref=renovate/docker-build-cache:base-latest,mode=max",
+      "--load",
       ".",
     ],
   ],
@@ -92,7 +88,6 @@ exports[`utils/docker build works 1`] = `
     [
       "buildx",
       "build",
-      "--load",
       "--tag=renovate/base:latest",
       ".",
     ],
@@ -160,14 +155,6 @@ exports[`utils/docker publish works 1`] = `
     "docker",
     [
       "push",
-      "renovate/base:latest",
-    ],
-  ],
-  [
-    "cosign",
-    [
-      "sign",
-      "--yes",
       "renovate/base:latest",
     ],
   ],

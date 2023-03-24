@@ -3,16 +3,15 @@ import is from '@sindresorhus/is';
 import * as chalk from 'chalk';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
-import { exec, getArg, isDryRun, readJson } from '../../util';
+import { exec, exists, getArg, isDryRun, readJson } from '../../util';
 import { BuildsResult, addHostRule, getBuildList } from '../../utils/builds';
 import { readDockerConfig } from '../../utils/config';
-import { build, publish } from '../../utils/docker';
+import { BuildOptions, build, publish } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';
-import { dockerDf, dockerPrune, dockerTag } from '../../utils/docker/common';
+import { dockerDf, dockerPrune } from '../../utils/docker/common';
+import { cosign } from '../../utils/docker/cosign';
 import log from '../../utils/logger';
-import type { Config, ConfigFile } from '../../utils/types';
-
-export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
+import type { ConfigFile, DockerBuilderConfig } from '../../utils/types';
 
 function createTag(tagSuffix: string | undefined, version: string): string {
   return is.nonEmptyString(tagSuffix) && tagSuffix !== 'latest'
@@ -33,7 +32,8 @@ async function buildAndPush(
     versioning,
     majorMinor,
     prune,
-  }: Config,
+    platforms,
+  }: DockerBuilderConfig,
   tobuild: BuildsResult
 ): Promise<void> {
   const builds: string[] = [];
@@ -62,6 +62,15 @@ async function buildAndPush(
   }
 
   await exec('df', ['-h']);
+
+  let shouldSign = false;
+
+  if (!dryRun && !buildOnly) {
+    shouldSign = await exists('cosign');
+    if (!shouldSign) {
+      log.warn('Cosign is not installed. Skipping container signing');
+    }
+  }
 
   for (const version of tobuild.versions) {
     const tag = createTag(tagSuffix, version.replace(/\+.+/, ''));
@@ -98,24 +107,43 @@ async function buildAndPush(
         tags.push(tagSuffix ?? 'latest');
       }
 
-      await build({
+      const args = {
         image,
         imagePrefix,
         tag,
+        tags,
         cache,
         cacheTags,
         buildArgs: [...(buildArgs ?? []), `${buildArg}=${version}`],
-        dryRun,
-      });
+        dryRun: dryRun || buildOnly,
+        platforms,
+      } satisfies BuildOptions;
+      await build(args);
 
       if (!buildOnly) {
-        await publish({ image, imagePrefix, tag, dryRun });
-        const source = tag;
-
-        for (const tag of tags) {
-          log(`Publish ${source} as ${tag}`);
-          await dockerTag({ image, imagePrefix, src: source, tgt: tag });
+        log(`Publish tags`);
+        if (platforms?.length) {
+          await build({
+            ...args,
+            push: true,
+          });
+        } else {
           await publish({ image, imagePrefix, tag, dryRun });
+
+          for (const tag of tags) {
+            await publish({ image, imagePrefix, tag, dryRun });
+          }
+        }
+
+        if (shouldSign) {
+          log('Signing image', imageVersion);
+          await cosign('sign', '--yes', imageVersion);
+          for (const imageVersion of tags.map(
+            (tag) => `${imagePrefix}/${image}:${tag}`
+          )) {
+            log('Signing image', imageVersion);
+            await cosign('sign', '--yes', imageVersion);
+          }
         }
       }
 
@@ -145,7 +173,7 @@ async function buildAndPush(
   }
 }
 
-async function generateImages(config: Config): Promise<void> {
+async function generateImages(config: DockerBuilderConfig): Promise<void> {
   const buildList = await getBuildList(config);
 
   if (!buildList?.versions.length) {
@@ -177,7 +205,7 @@ export async function run(): Promise<void> {
 
   await readDockerConfig(cfg);
 
-  const config: Config = {
+  const config: DockerBuilderConfig = {
     ...cfg,
     imagePrefix: getArg('image-prefix')?.replace(/\/$/, '') || 'renovate',
     image: cfg.image,
@@ -192,6 +220,7 @@ export async function run(): Promise<void> {
     majorMinor: getArg('major-minor') !== 'false',
     prune: getArg('prune') === 'true',
     versioning: cfg.versioning ?? getDefaultVersioning(cfg.datasource),
+    platforms: getArg('platforms', { multi: true }),
   };
 
   if (dryRun) {
