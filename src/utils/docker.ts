@@ -193,7 +193,7 @@ export async function build({
       }
     }
 
-    if (!dryRun) {
+    if (!dryRun && !push) {
       args.push(`--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max`);
     }
 
