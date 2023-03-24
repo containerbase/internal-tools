@@ -57,9 +57,3 @@ jobs:
           platforms: linux/amd64,linux/arm64
           config: e2e/testing.json
           last-only: true
-
-      - name: docker testing
-        run: |
-          docker buildx use
-          docker info renovatebot-builder
-          docker buildx ls

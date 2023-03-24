@@ -38,7 +38,8 @@ export async function init(use?: boolean): Promise<void> {
     await dockerBuildx('use', 'renovatebot-builder');
   }
 
+  await dockerBuildx('inspect', '--bootstrap', 'renovatebot-builder');
   process.env.BUILDX_BUILDER = 'renovatebot-builder';
 
-  await dockerBuildx('inspect', '--bootstrap');
+  await dockerBuildx('ls');
 }
