@@ -25,7 +25,14 @@ describe('utils/docker', () => {
         ...res,
       });
 
-      await build({ imagePrefix, image, buildArgs: [] });
+      await build({
+        imagePrefix,
+        image,
+        buildArgs: [],
+        tags: ['5'],
+        push: true,
+        platforms: ['linux/arm64'],
+      });
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
 
@@ -34,7 +41,7 @@ describe('utils/docker', () => {
         ...res,
       });
 
-      await build({ imagePrefix, image, cache });
+      await build({ imagePrefix, image, cache, push: true });
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
 

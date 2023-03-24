@@ -63,14 +63,15 @@ export async function build({
     if (!dryRun && push) {
       args.push(`--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max`);
     }
+  }
 
-    if (platforms?.length) {
-      args.push(`--platform=${platforms.join(',')}`);
-    }
+  if (platforms?.length) {
+    args.push(`--platform=${platforms.join(',')}`);
+  }
 
-    if (!dryRun && push) {
-      args.push('--push', '--provenance=false');
-    }
+  if (!dryRun && push) {
+    log.warn(chalk.yellow('[DRY_RUN]'), chalk.blue('Would push'));
+    args.push('--push', '--provenance=false');
   }
 
   for (let build = 0; ; build++) {

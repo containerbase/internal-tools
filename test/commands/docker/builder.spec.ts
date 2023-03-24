@@ -38,6 +38,7 @@ describe('commands/docker/builder', () => {
     utils.readFile.mockResolvedValue(
       `# renovate: datasource=npm depName=yarn versioning=npm\nARG YARN_VERSION=${version}\n`
     );
+    utils.exists.mockResolvedValue(true);
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '2.0.0-rc.24' }],
     });
