@@ -40,6 +40,9 @@ async function buildAndPush(
   const failed: string[] = [];
   const ver = getVersioning(versioning);
   const versionsMap = new Map<string, string>();
+
+  const dfExists = await exists('df');
+
   if (majorMinor) {
     for (const version of tobuild.versions) {
       const minor = ver.getMinor(version);
@@ -61,7 +64,10 @@ async function buildAndPush(
     }
   }
 
-  await exec('df', ['-h']);
+  // istanbul ignore if: only linux
+  if (dfExists) {
+    await exec('df', ['-h']);
+  }
 
   let shouldSign = false;
 
@@ -155,11 +161,17 @@ async function buildAndPush(
     }
 
     await dockerDf();
-    await exec('df', ['-h']);
+    // istanbul ignore if: only linux
+    if (dfExists) {
+      await exec('df', ['-h']);
+    }
 
     if (prune) {
       await dockerPrune();
-      await exec('df', ['-h']);
+      // istanbul ignore if: only linux
+      if (dfExists) {
+        await exec('df', ['-h']);
+      }
     }
   }
 

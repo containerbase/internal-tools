@@ -1,0 +1,57 @@
+name: build
+
+on:
+  push:
+    branches:
+      - feat/docker-builder/multi-platform
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  NODE_VERSION: 18
+  LOG_LEVEL: debug
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3.4.0
+
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+
+      - name: enable corepack
+        run: corepack enable
+
+      - name: Cache yarn
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        with:
+          path: |
+            node_modules
+            .yarn/cache
+            .yarn/install-state.gz
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          fail-on-cache-miss: true
+
+      - run: yarn install
+
+      - run: yarn compile
+
+      - name: Docker registry login
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+
+      - name: Build and Publish to ghcr.io
+        uses: ./
+        with:
+          command: docker-builder
+          image-prefix: ghcr.io/${{ github.repository_owner }}
+          platforms: linux/amd64,linux/arm64
+          config: e2e/testing.json

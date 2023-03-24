@@ -8,6 +8,7 @@ export async function init(): Promise<void> {
 
   if (buildx.stdout.includes('renovatebot-builder')) {
     log('Buildx already initialized');
+    process.env.BUILDX_BUILDER = 'renovatebot-builder';
     return;
   }
 
@@ -29,9 +30,10 @@ export async function init(): Promise<void> {
     '--name',
     'renovatebot-builder',
     '--driver',
-    'docker-container',
-    '--use'
+    'docker-container'
   );
+
+  process.env.BUILDX_BUILDER = 'renovatebot-builder';
 
   await dockerBuildx('inspect', '--bootstrap');
 }
