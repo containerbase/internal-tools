@@ -204,7 +204,7 @@ export async function build({
     }
 
     if (!dryRun && push) {
-      args.push('--push');
+      args.push('--push', '--provenance=false');
     }
   }
 
