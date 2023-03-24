@@ -3,7 +3,7 @@ import { docker, dockerBuildx, dockerRun } from './common';
 
 const SupportedPlatforms = 'arm64';
 
-export async function init(): Promise<void> {
+export async function init(use?: boolean): Promise<void> {
   const buildx = await dockerBuildx('ls');
 
   if (buildx.stdout.includes('renovatebot-builder')) {
@@ -32,6 +32,11 @@ export async function init(): Promise<void> {
     '--driver',
     'docker-container'
   );
+
+  // istanbul ignore if
+  if (use) {
+    await dockerBuildx('use', 'renovatebot-builder');
+  }
 
   process.env.BUILDX_BUILDER = 'renovatebot-builder';
 
