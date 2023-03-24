@@ -1,9 +1,11 @@
-name: testing
+name: e2e
 
 on:
-  push:
-    branches:
-      - feat/docker-builder/multi-platform
+  # use to test
+  # push:
+  #   branches:
+  #     - '**'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -12,10 +14,9 @@ permissions:
 env:
   NODE_VERSION: 18
   LOG_LEVEL: debug
-  BUILDX_NO_DEFAULT_ATTESTATION: true
 
 jobs:
-  testing:
+  e2e-testing:
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
