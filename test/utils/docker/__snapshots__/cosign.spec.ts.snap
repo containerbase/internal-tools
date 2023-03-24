@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`utils/cosign/common cosign 1`] = `
+exports[`utils/docker/cosign cosign 1`] = `
 [
   [
     "cosign",

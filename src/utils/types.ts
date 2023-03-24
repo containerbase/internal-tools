@@ -51,7 +51,7 @@ export type ConfigFile = {
   extractVersion?: string;
 };
 
-export type Config = {
+export type DockerBuilderConfig = {
   buildArg: string;
   buildArgs?: string[];
   buildOnly: boolean;
@@ -65,6 +65,7 @@ export type Config = {
   dryRun: boolean;
   prune: boolean;
   versioning: string;
+  platforms: string[];
 } & ConfigFile;
 
 export type BinaryBuilderConfig = {

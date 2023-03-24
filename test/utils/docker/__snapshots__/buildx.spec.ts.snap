@@ -54,7 +54,6 @@ exports[`utils/docker/buildx works 1`] = `
       "renovatebot-builder",
       "--driver",
       "docker-container",
-      "--use",
     ],
   ],
   [
@@ -63,6 +62,14 @@ exports[`utils/docker/buildx works 1`] = `
       "buildx",
       "inspect",
       "--bootstrap",
+      "renovatebot-builder",
+    ],
+  ],
+  [
+    "docker",
+    [
+      "buildx",
+      "ls",
     ],
   ],
 ]
