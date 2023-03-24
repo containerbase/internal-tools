@@ -1,0 +1,8 @@
+{
+  "image": "testing",
+  "versioning": "semver",
+  "versions": ["3.16.0", "3.16.4", "3.17.0", "3.17.2"],
+  "cache": "docker-build-cache",
+  "buildArg": "TESTING_VERSION",
+  "startVersion": "3.16.0"
+}

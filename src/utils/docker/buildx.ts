@@ -3,11 +3,12 @@ import { docker, dockerBuildx, dockerRun } from './common';
 
 const SupportedPlatforms = 'arm64';
 
-export async function init(): Promise<void> {
+export async function init(use?: boolean): Promise<void> {
   const buildx = await dockerBuildx('ls');
 
   if (buildx.stdout.includes('renovatebot-builder')) {
     log('Buildx already initialized');
+    process.env.BUILDX_BUILDER = 'renovatebot-builder';
     return;
   }
 
@@ -29,9 +30,16 @@ export async function init(): Promise<void> {
     '--name',
     'renovatebot-builder',
     '--driver',
-    'docker-container',
-    '--use'
+    'docker-container'
   );
 
-  await dockerBuildx('inspect', '--bootstrap');
+  // istanbul ignore if
+  if (use) {
+    await dockerBuildx('use', 'renovatebot-builder');
+  }
+
+  await dockerBuildx('inspect', '--bootstrap', 'renovatebot-builder');
+  process.env.BUILDX_BUILDER = 'renovatebot-builder';
+
+  await dockerBuildx('ls');
 }
