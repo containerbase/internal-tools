@@ -12,7 +12,7 @@ permissions:
 env:
   NODE_VERSION: 18
   LOG_LEVEL: debug
-  BUILDX_NO_DEFAULT_ATTESTATION: 1
+  BUILDX_NO_DEFAULT_ATTESTATION: true
 
 jobs:
   testing:
