@@ -3755,10 +3755,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.18.16":
-  version: 16.18.16
-  resolution: "@types/node@npm:16.18.16"
-  checksum: 69c422450f046fbdf1904c4fdb9fbc80fda379768f6e5402ac1434fb5955b7b3d0082f02fb9bcd4979f57649ecd9a934277492d757c6ea88d080ba101c1ced48
+"@types/node@npm:16.18.18":
+  version: 16.18.18
+  resolution: "@types/node@npm:16.18.18"
+  checksum: 021936e4fcd5cb038cd5d2d26328c7c0bf501d15793e48a12501129cf8770cbbe9a6936fcb64eeb10a102ff273c2606b75c1635a5834abd786014c98c112aaee
   languageName: node
   linkType: hard
 
@@ -7630,7 +7630,7 @@ __metadata:
     "@tsconfig/node16-strictest": 1.0.4
     "@types/auth-header": 1.0.2
     "@types/jest": 29.5.0
-    "@types/node": 16.18.16
+    "@types/node": 16.18.18
     "@types/semver": 7.3.13
     "@types/shelljs": 0.8.11
     "@typescript-eslint/eslint-plugin": 5.55.0
