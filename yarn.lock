@@ -3666,13 +3666,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/glob@npm:*":
-  version: 8.0.1
-  resolution: "@types/glob@npm:8.0.1"
+"@types/glob@npm:~7.2.0":
+  version: 7.2.0
+  resolution: "@types/glob@npm:7.2.0"
   dependencies:
-    "@types/minimatch": ^5.1.2
+    "@types/minimatch": "*"
     "@types/node": "*"
-  checksum: 98f3d0403c09638348a2f3b30aac2a3d6bdc306bce3ceb868f4794fef4f02727ccdf0dab0c7b7d65fd38a1afa1e48f02de56d29d2babe94ee9b204ca54acb31f
+  checksum: 6ae717fedfdfdad25f3d5a568323926c64f52ef35897bcac8aca8e19bc50c0bd84630bbd063e5d52078b2137d8e7d3c26eabebd1a2f03ff350fff8a91e79fc19
   languageName: node
   linkType: hard
 
@@ -3759,17 +3759,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/minimatch@npm:*":
+  version: 5.1.2
+  resolution: "@types/minimatch@npm:5.1.2"
+  checksum: 0391a282860c7cb6fe262c12b99564732401bdaa5e395bee9ca323c312c1a0f45efbf34dce974682036e857db59a5c9b1da522f3d6055aeead7097264c8705a8
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:^3.0.3":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
   checksum: c41d136f67231c3131cf1d4ca0b06687f4a322918a3a5adddc87ce90ed9dbd175a3610adee36b106ae68c0b92c637c35e02b58c8a56c424f71d30993ea220b92
-  languageName: node
-  linkType: hard
-
-"@types/minimatch@npm:^5.1.2":
-  version: 5.1.2
-  resolution: "@types/minimatch@npm:5.1.2"
-  checksum: 0391a282860c7cb6fe262c12b99564732401bdaa5e395bee9ca323c312c1a0f45efbf34dce974682036e857db59a5c9b1da522f3d6055aeead7097264c8705a8
   languageName: node
   linkType: hard
 
@@ -3852,13 +3852,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/shelljs@npm:0.8.11":
-  version: 0.8.11
-  resolution: "@types/shelljs@npm:0.8.11"
+"@types/shelljs@npm:0.8.12":
+  version: 0.8.12
+  resolution: "@types/shelljs@npm:0.8.12"
   dependencies:
-    "@types/glob": "*"
+    "@types/glob": ~7.2.0
     "@types/node": "*"
-  checksum: 559b81efba72f2b231485b26510aad68cccfe98dc74087d67dafd5511462997884db0ef18e0e56bf61a3a5789aa65a54dc04845a488bb0528d4a699e6151b99c
+  checksum: ffb47809abef9ee53f900c6b49adb1382d1d78af7f8b50dd474534e3f73127bc4a3849394e4c9de16481cd50203b12464141b4b49d48e88ba6b4c7cc2c85948c
   languageName: node
   linkType: hard
 
@@ -7659,7 +7659,7 @@ __metadata:
     "@types/jest": 29.5.0
     "@types/node": 16.18.23
     "@types/semver": 7.3.13
-    "@types/shelljs": 0.8.11
+    "@types/shelljs": 0.8.12
     "@typescript-eslint/eslint-plugin": 5.58.0
     "@typescript-eslint/parser": 5.58.0
     "@vercel/ncc": 0.36.1
