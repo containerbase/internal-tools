@@ -38,7 +38,7 @@
     "find-up": "5.0.0",
     "got": "11.8.6",
     "renovate": "35.48.2",
-    "semver": "7.4.0",
+    "semver": "7.5.0",
     "shelljs": "0.8.5",
     "strip-ansi": "7.0.1",
     "tslib": "2.5.0"
