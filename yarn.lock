@@ -2820,7 +2820,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/rest@npm:^19.0.0, @octokit/rest@npm:^19.0.7":
+"@octokit/rest@npm:^19.0.7":
   version: 19.0.11
   resolution: "@octokit/rest@npm:19.0.11"
   dependencies:
@@ -3368,14 +3368,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:8.0.7":
-  version: 8.0.7
-  resolution: "@semantic-release/github@npm:8.0.7"
+"@semantic-release/github@npm:8.0.8":
+  version: 8.0.8
+  resolution: "@semantic-release/github@npm:8.0.8"
   dependencies:
-    "@octokit/rest": ^19.0.0
+    "@octokit/core": ^4.2.1
+    "@octokit/plugin-paginate-rest": ^6.1.2
+    "@octokit/plugin-retry": ^4.1.3
+    "@octokit/plugin-throttling": ^5.2.3
     "@semantic-release/error": ^3.0.0
     aggregate-error: ^3.0.0
-    bottleneck: ^2.18.1
     debug: ^4.0.0
     dir-glob: ^3.0.0
     fs-extra: ^11.0.0
@@ -3386,11 +3388,10 @@ __metadata:
     lodash: ^4.17.4
     mime: ^3.0.0
     p-filter: ^2.0.0
-    p-retry: ^4.0.0
     url-join: ^4.0.0
   peerDependencies:
     semantic-release: ">=18.0.0-beta.1"
-  checksum: 7644048e0ee192702606de63518dbfd404d135132c5272f046250996fcd12b3b7cb24a7526cd440142bccbe042f7421e80f91c1b0c02e553555c9577959ef333
+  checksum: ac1afdd87513b5e3a7d812d3e7d6ec7c62f9fc586be5c175f060bae531bbd0c60dfdbf0f4915a302cb7c11db6ceb39f7deca90cf956f974f38e880a34ff38d59
   languageName: node
   linkType: hard
 
@@ -3870,13 +3871,6 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: e99fc7cc6265407987b30deda54c1c24bb1478803faf6037557a774b2f034c5b097ffd65847daa87e82a61a250d919f35c3588654b0fdaa816906650f596d1b0
-  languageName: node
-  linkType: hard
-
-"@types/retry@npm:0.12.0":
-  version: 0.12.0
-  resolution: "@types/retry@npm:0.12.0"
-  checksum: 61a072c7639f6e8126588bf1eb1ce8835f2cb9c2aba795c4491cf6310e013267b0c8488039857c261c387e9728c1b43205099223f160bb6a76b4374f741b5603
   languageName: node
   linkType: hard
 
@@ -4758,7 +4752,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bottleneck@npm:^2.15.3, bottleneck@npm:^2.18.1":
+"bottleneck@npm:^2.15.3":
   version: 2.19.5
   resolution: "bottleneck@npm:2.19.5"
   checksum: c5eef1bbea12cef1f1405e7306e7d24860568b0f7ac5eeab706a86762b3fc65ef6d1c641c8a166e4db90f412fc5c948fc5ce8008a8cd3d28c7212ef9c3482bda
@@ -7711,7 +7705,7 @@ __metadata:
     "@jest/globals": 29.5.0
     "@renovate/eslint-plugin": "https://github.com/renovatebot/eslint-plugin#v0.0.5"
     "@semantic-release/git": 10.0.1
-    "@semantic-release/github": 8.0.7
+    "@semantic-release/github": 8.0.8
     "@semantic-release/npm": 10.0.3
     "@sindresorhus/is": 4.6.0
     "@tsconfig/node16-strictest": 1.0.4
@@ -10663,16 +10657,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-retry@npm:^4.0.0":
-  version: 4.6.2
-  resolution: "p-retry@npm:4.6.2"
-  dependencies:
-    "@types/retry": 0.12.0
-    retry: ^0.13.1
-  checksum: 45c270bfddaffb4a895cea16cb760dcc72bdecb6cb45fef1971fa6ea2e91ddeafddefe01e444ac73e33b1b3d5d29fb0dd18a7effb294262437221ddc03ce0f2e
-  languageName: node
-  linkType: hard
-
 "p-throttle@npm:4.1.1":
   version: 4.1.1
   resolution: "p-throttle@npm:4.1.1"
@@ -11784,13 +11768,6 @@ __metadata:
   version: 0.12.0
   resolution: "retry@npm:0.12.0"
   checksum: 623bd7d2e5119467ba66202d733ec3c2e2e26568074923bc0585b6b99db14f357e79bdedb63cab56cec47491c4a0da7e6021a7465ca6dc4f481d3898fdd3158c
-  languageName: node
-  linkType: hard
-
-"retry@npm:^0.13.1":
-  version: 0.13.1
-  resolution: "retry@npm:0.13.1"
-  checksum: 47c4d5be674f7c13eee4cfe927345023972197dbbdfba5d3af7e461d13b44de1bfd663bfc80d2f601f8ef3fc8164c16dd99655a221921954a65d044a2fc1233b
   languageName: node
   linkType: hard
 
