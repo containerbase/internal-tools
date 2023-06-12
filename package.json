@@ -41,7 +41,7 @@
     "semver": "7.5.1",
     "shelljs": "0.8.5",
     "strip-ansi": "7.1.0",
-    "tslib": "2.5.2"
+    "tslib": "2.5.3"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",
