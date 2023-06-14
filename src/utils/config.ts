@@ -1,6 +1,7 @@
 import { getArch, getDistro, readFile } from '../util';
 import { BinaryBuilderConfig, ConfigFile, sumType } from './types';
 import is from '@sindresorhus/is';
+import escapeStringRegexp from 'escape-string-regexp';
 
 const keys: (keyof ConfigFile)[] = [
   'datasource',
@@ -23,9 +24,10 @@ function checkArgs(
 }
 
 export async function readDockerConfig(cfg: ConfigFile): Promise<void> {
+  const buildArg = escapeStringRegexp(cfg.buildArg as string);
   const dockerFileRe = new RegExp(
     '# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>.+?)(?: lookupName=(?<lookupName>.+?))?(?: versioning=(?<versioning>[a-z-]+?))?\\s' +
-      `(?:ENV|ARG) ${cfg.buildArg as string}=(?<latestVersion>.*)\\s`,
+      `(?:ENV|ARG) ${buildArg}=(?<latestVersion>.*)\\s`,
     'g'
   );
   const dockerfile = await readFile('Dockerfile');

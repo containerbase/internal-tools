@@ -8020,6 +8020,7 @@ __metadata:
     core-js: 3.31.0
     cross-env: 7.0.3
     delay: 5.0.0
+    escape-string-regexp: 5.0.0
     eslint: 8.42.0
     eslint-config-prettier: 8.8.0
     eslint-formatter-gha: 1.4.2
