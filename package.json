@@ -37,7 +37,7 @@
     "chalk": "4.1.2",
     "core-js": "3.31.0",
     "delay": "5.0.0",
-    "escape-string-regexp": "5.0.0",
+    "escape-string-regexp": "4.0.0",
     "find-up": "5.0.0",
     "got": "11.8.6",
     "renovate": "35.117.3",
