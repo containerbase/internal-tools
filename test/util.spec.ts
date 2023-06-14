@@ -117,6 +117,7 @@ describe('util', () => {
       expect(await util.readJson('.prettierrc.json')).toEqual({
         singleQuote: true,
         trailingComma: 'es5',
+        plugins: ['prettier-plugin-package'],
       });
     });
   });
