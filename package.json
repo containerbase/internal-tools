@@ -51,7 +51,7 @@
     "@jest/globals": "29.5.0",
     "@renovate/eslint-plugin": "https://github.com/renovatebot/eslint-plugin#v0.0.5",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "8.1.0",
+    "@semantic-release/github": "9.0.2",
     "@semantic-release/npm": "10.0.3",
     "@tsconfig/node16": "1.0.4",
     "@tsconfig/strictest": "2.0.1",
