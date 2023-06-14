@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import * as _core from '@actions/core';
-import * as _datasources from 'renovate/dist/modules/datasource';
 import { run } from '../../../src/commands/docker/builder';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker';
 import { mocked } from '../../utils';
+import * as _core from '@actions/core';
+import * as _datasources from 'renovate/dist/modules/datasource';
 
 jest.mock('renovate/dist/modules/datasource');
 jest.mock('../../../src/util');

@@ -1,8 +1,3 @@
-import { getInput, setFailed } from '@actions/core';
-import is from '@sindresorhus/is';
-import * as chalk from 'chalk';
-import { getDefaultVersioning } from 'renovate/dist/modules/datasource';
-import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { exec, exists, getArg, isDryRun, readJson } from '../../util';
 import { BuildsResult, addHostRule, getBuildList } from '../../utils/builds';
 import { readDockerConfig } from '../../utils/config';
@@ -12,6 +7,11 @@ import { dockerDf, dockerPrune } from '../../utils/docker/common';
 import { cosign } from '../../utils/docker/cosign';
 import log from '../../utils/logger';
 import type { ConfigFile, DockerBuilderConfig } from '../../utils/types';
+import { getInput, setFailed } from '@actions/core';
+import is from '@sindresorhus/is';
+import * as chalk from 'chalk';
+import { getDefaultVersioning } from 'renovate/dist/modules/datasource';
+import { get as getVersioning } from 'renovate/dist/modules/versioning';
 
 function createTag(tagSuffix: string | undefined, version: string): string {
   return is.nonEmptyString(tagSuffix) && tagSuffix !== 'latest'

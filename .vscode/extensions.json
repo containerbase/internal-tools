@@ -3,6 +3,7 @@
     "EditorConfig.editorconfig",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "Orta.vscode-jest"
+    "Orta.vscode-jest",
+    "arcanis.vscode-zipfs"
   ]
 }

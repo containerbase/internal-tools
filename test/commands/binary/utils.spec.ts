@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import * as _core from '@actions/core';
 import {
   createBuilderImage,
   getConfig,
@@ -9,6 +8,7 @@ import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
 import type { BinaryBuilderConfig } from '../../../src/utils/types';
 import { mocked, partial } from '../../utils';
+import * as _core from '@actions/core';
 
 jest.mock('../../../src/util');
 jest.mock('../../../src/utils/docker/common');

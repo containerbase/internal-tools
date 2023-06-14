@@ -1,3 +1,5 @@
+import log from './logger';
+import * as renovate from './renovate';
 import is from '@sindresorhus/is';
 import {
   ReleaseResult,
@@ -7,8 +9,6 @@ import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { add as addHostRule } from 'renovate/dist/util/host-rules';
 import { configRegexPredicate } from 'renovate/dist/util/regex';
 import * as semver from 'semver';
-import log from './logger';
-import * as renovate from './renovate';
 
 renovate.register();
 

@@ -1,7 +1,7 @@
-import * as _core from '@actions/core';
 import run from '../src/runner';
 import { Commands } from '../src/types';
 import { mocked } from './utils';
+import * as _core from '@actions/core';
 
 jest.mock('../src/commands/docker/config');
 jest.mock('../src/commands/docker/builder');
