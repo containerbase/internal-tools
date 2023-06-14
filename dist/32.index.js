@@ -734,8 +734,11 @@ async function getBuildList({ allowedVersions, datasource, depName, lookupName, 
 /* harmony export */ });
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25575);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(45602);
-/* harmony import */ var _sindresorhus_is__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(76827);
-/* harmony import */ var _sindresorhus_is__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_sindresorhus_is__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _sindresorhus_is__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(76827);
+/* harmony import */ var _sindresorhus_is__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_sindresorhus_is__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var escape_string_regexp__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15387);
+/* harmony import */ var escape_string_regexp__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(escape_string_regexp__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
@@ -749,14 +752,15 @@ const keys = [
 ];
 function checkArgs(cfg, groups) {
     for (const key of keys) {
-        if (!_sindresorhus_is__WEBPACK_IMPORTED_MODULE_2___default().string(cfg[key]) && _sindresorhus_is__WEBPACK_IMPORTED_MODULE_2___default().nonEmptyString(groups[key])) {
+        if (!_sindresorhus_is__WEBPACK_IMPORTED_MODULE_3___default().string(cfg[key]) && _sindresorhus_is__WEBPACK_IMPORTED_MODULE_3___default().nonEmptyString(groups[key])) {
             cfg[key] = groups[key];
         }
     }
 }
 async function readDockerConfig(cfg) {
+    const buildArg = escape_string_regexp__WEBPACK_IMPORTED_MODULE_2__(cfg.buildArg);
     const dockerFileRe = new RegExp('# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>.+?)(?: lookupName=(?<lookupName>.+?))?(?: versioning=(?<versioning>[a-z-]+?))?\\s' +
-        `(?:ENV|ARG) ${cfg.buildArg}=(?<latestVersion>.*)\\s`, 'g');
+        `(?:ENV|ARG) ${buildArg}=(?<latestVersion>.*)\\s`, 'g');
     const dockerfile = await (0,_util__WEBPACK_IMPORTED_MODULE_0__/* .readFile */ .pJ)('Dockerfile');
     const m = dockerFileRe.exec(dockerfile);
     if (m && m.groups) {
@@ -766,7 +770,7 @@ async function readDockerConfig(cfg) {
 function getBinaryName(cfg, version, sum) {
     const arch = (0,_util__WEBPACK_IMPORTED_MODULE_0__/* .getArch */ .bj)();
     const ext = sum ? `.${_types__WEBPACK_IMPORTED_MODULE_1__/* .sumType */ .N}` : '';
-    if (_sindresorhus_is__WEBPACK_IMPORTED_MODULE_2___default().nonEmptyString(arch)) {
+    if (_sindresorhus_is__WEBPACK_IMPORTED_MODULE_3___default().nonEmptyString(arch)) {
         return `${cfg.image}-${version}-${(0,_util__WEBPACK_IMPORTED_MODULE_0__/* .getDistro */ .Tl)()}-${arch}.tar.xz${ext}`;
     }
     return `${cfg.image}-${version}-${(0,_util__WEBPACK_IMPORTED_MODULE_0__/* .getDistro */ .Tl)()}.tar.xz${ext}`;
