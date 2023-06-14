@@ -1,5 +1,8 @@
 {
-  "extends": "@tsconfig/node16-strictest/tsconfig.json",
+  "extends": [
+    "@tsconfig/strictest/tsconfig.json",
+    "@tsconfig/node16/tsconfig.json"
+  ],
   "compilerOptions": {
     "outDir": "./dist",
     "types": ["node", "jest", "jest-extended"],
@@ -7,8 +10,7 @@
     "useUnknownInCatchVariables": false /* we aren't prepared for enabling this by default since ts 4.4*/,
     "noPropertyAccessFromIndexSignature": false /* makes code more complex */,
     "exactOptionalPropertyTypes": false /* doesn't work with renovate yet */,
-    "esModuleInterop": false /* no */,
-    "ignoreDeprecations": "5.0" /* required because of `@tsconfig/node16-strictest` */
+    "esModuleInterop": false /* no */
   },
   "exclude": ["node_modules/", "**/__mocks__/*", "dist/", "coverage/"]
 }
