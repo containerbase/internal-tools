@@ -1,7 +1,7 @@
 import { getArch, getDistro, readFile } from '../util';
 import { BinaryBuilderConfig, ConfigFile, sumType } from './types';
 import is from '@sindresorhus/is';
-import escapeStringRegexp from 'escape-string-regexp';
+import * as escapeStringRegexp from 'escape-string-regexp';
 
 const keys: (keyof ConfigFile)[] = [
   'datasource',
