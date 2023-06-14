@@ -1,7 +1,7 @@
-import * as _core from '@actions/core';
-import * as chalk from 'chalk';
 import log from '../../src/utils/logger';
 import { mocked } from '../utils';
+import * as _core from '@actions/core';
+import * as chalk from 'chalk';
 
 jest.unmock('../../src/utils/logger');
 

@@ -1,6 +1,3 @@
-import { getInput } from '@actions/core';
-import is from '@sindresorhus/is';
-import { getDefaultVersioning } from 'renovate/dist/modules/datasource';
 import { getArch, getArg, getDistro, isDryRun, readJson } from '../../util';
 import { readDockerConfig } from '../../utils/config';
 import {
@@ -10,6 +7,9 @@ import {
 } from '../../utils/docker/common';
 import log from '../../utils/logger';
 import type { BinaryBuilderConfig, ConfigFile } from '../../utils/types';
+import { getInput } from '@actions/core';
+import is from '@sindresorhus/is';
+import { getDefaultVersioning } from 'renovate/dist/modules/datasource';
 
 export async function getConfig(): Promise<BinaryBuilderConfig> {
   const configFile = getInput('config') || 'builder.json';

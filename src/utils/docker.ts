@@ -1,9 +1,9 @@
-import is from '@sindresorhus/is';
-import * as chalk from 'chalk';
-import * as delay from 'delay';
 import { docker } from './docker/common';
 import log from './logger';
 import { ExecError } from './types';
+import is from '@sindresorhus/is';
+import * as chalk from 'chalk';
+import * as delay from 'delay';
 
 export type BuildOptions = {
   image: string;

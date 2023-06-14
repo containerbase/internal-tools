@@ -1,6 +1,6 @@
-import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { BuildsConfig, getBuildList } from '../../src/utils/builds';
 import { partial } from '../utils';
+import { get as getVersioning } from 'renovate/dist/modules/versioning';
 
 jest.mock('renovate/dist/modules/datasource');
 

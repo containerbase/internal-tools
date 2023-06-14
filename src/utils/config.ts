@@ -1,6 +1,6 @@
-import is from '@sindresorhus/is';
 import { getArch, getDistro, readFile } from '../util';
 import { BinaryBuilderConfig, ConfigFile, sumType } from './types';
+import is from '@sindresorhus/is';
 
 const keys: (keyof ConfigFile)[] = [
   'datasource',
