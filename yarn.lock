@@ -3333,17 +3333,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/pep440@npm:2.1.16":
-  version: 2.1.16
-  resolution: "@renovatebot/pep440@npm:2.1.16"
-  checksum: 72a2271572f0d126cbeddfe3fa29db18513a94582cab2845f6807ec54d6895e70a56c111cac5ae12e141eb51bb40508e56e703397d9e69760bfedfe2ca41e07a
+"@renovatebot/pep440@npm:2.1.18":
+  version: 2.1.18
+  resolution: "@renovatebot/pep440@npm:2.1.18"
+  checksum: 3281b4d0b033c87cb6ea707a46df8baa3431be4d431ceec7498cf328087302ecf5cfaa9e65dd8034bc211982919b4f9498f391508e2ab60c00193d5810a79e00
   languageName: node
   linkType: hard
 
-"@renovatebot/ruby-semver@npm:3.0.2":
-  version: 3.0.2
-  resolution: "@renovatebot/ruby-semver@npm:3.0.2"
-  checksum: 70930e1804c6f074adb360f573951df5b283ffe43f2cf66ba825a94bad811ba53aa2cae0fcfdbbcefdf647dfb31c7d4e9c651febdb1d255c01e89e04ee8bb9ac
+"@renovatebot/ruby-semver@npm:3.0.3":
+  version: 3.0.3
+  resolution: "@renovatebot/ruby-semver@npm:3.0.3"
+  checksum: 82188985f003eb22acad5164573e942bdf4e5b9f8028029cfb9c7afc081770621c9637e35d2f813b7a137dae0938dd146df1eba1faea750df793aa9cbf6ed17a
   languageName: node
   linkType: hard
 
@@ -7999,7 +7999,7 @@ __metadata:
     prettier: 2.8.8
     prettier-plugin-package: 1.3.0
     pretty-quick: 3.1.3
-    renovate: 35.117.3
+    renovate: 35.131.0
     rimraf: 5.0.1
     semantic-release: 21.0.5
     semver: 7.5.1
@@ -11777,9 +11777,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:35.117.3":
-  version: 35.117.3
-  resolution: "renovate@npm:35.117.3"
+"renovate@npm:35.131.0":
+  version: 35.131.0
+  resolution: "renovate@npm:35.131.0"
   dependencies:
     "@aws-sdk/client-codecommit": 3.348.0
     "@aws-sdk/client-ec2": 3.348.0
@@ -11803,8 +11803,8 @@ __metadata:
     "@opentelemetry/semantic-conventions": 1.13.0
     "@qnighy/marshal": 0.1.3
     "@renovatebot/osv-offline": 1.2.12
-    "@renovatebot/pep440": 2.1.16
-    "@renovatebot/ruby-semver": 3.0.2
+    "@renovatebot/pep440": 2.1.18
+    "@renovatebot/ruby-semver": 3.0.3
     "@sindresorhus/is": 4.6.0
     "@types/ms": 0.7.31
     "@types/tmp": 0.2.3
@@ -11894,7 +11894,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 6cefbe57903016b53928c19178c4f086b13c10e32536a5406fce1f0c0aaca154cd4107d9789847013b9544f792873577d8b5b978dd49bf1ba7d8c5b5c868e7f1
+  checksum: c66c9d836ac1a140cbd2c3bd93cf1233bb51c8a62566c02ca7e99f5f33b922d315e0e6da807a30d1fbf3e36518677e4e6a29585540e27216ea6b8fc6d93a6d0d
   languageName: node
   linkType: hard
 
