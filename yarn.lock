@@ -7812,7 +7812,7 @@ __metadata:
     renovate: 35.131.0
     rimraf: 5.0.1
     semantic-release: 21.0.5
-    semver: 7.5.1
+    semver: 7.5.2
     shelljs: 0.8.5
     source-map-support: 0.5.21
     strip-ansi: 7.1.0
@@ -11983,7 +11983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.x, semver@npm:^7.0.0, semver@npm:^7.1.1, semver@npm:^7.1.2, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.1":
+"semver@npm:7.5.2, semver@npm:7.x, semver@npm:^7.0.0, semver@npm:^7.1.1, semver@npm:^7.1.2, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.1":
   version: 7.5.2
   resolution: "semver@npm:7.5.2"
   dependencies:
