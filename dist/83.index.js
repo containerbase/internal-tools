@@ -640,8 +640,8 @@ var dist_default = /*#__PURE__*/__webpack_require__.n(dist);
 var host_rules = __webpack_require__(19048);
 // EXTERNAL MODULE: ../.yarn/cache/renovate-npm-35.131.0-cc0ff0e972-c66c9d836a.zip/node_modules/renovate/dist/util/regex.js
 var regex = __webpack_require__(42759);
-// EXTERNAL MODULE: ../.yarn/cache/semver-npm-7.5.1-0736382fb9-d16dbedad5.zip/node_modules/semver/index.js
-var semver = __webpack_require__(19319);
+// EXTERNAL MODULE: ../.yarn/cache/semver-npm-7.5.2-28fb0fd2d6-3fdf5d1e6f.zip/node_modules/semver/index.js
+var semver = __webpack_require__(14923);
 ;// CONCATENATED MODULE: ./utils/builds.ts
 
 
