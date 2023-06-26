@@ -13306,10 +13306,10 @@ async function run() {
         logger/* default.info */.Z.info(source.yellow('Executing:'), ` ${cmd}`);
         switch (cmd) {
             case Commands.BinaryBuilder:
-                await (await Promise.all(/* import() */[__nccwpck_require__.e(843), __nccwpck_require__.e(399), __nccwpck_require__.e(575), __nccwpck_require__.e(83)]).then(__nccwpck_require__.bind(__nccwpck_require__, 93083))).run();
+                await (await Promise.all(/* import() */[__nccwpck_require__.e(843), __nccwpck_require__.e(447), __nccwpck_require__.e(575), __nccwpck_require__.e(83)]).then(__nccwpck_require__.bind(__nccwpck_require__, 93083))).run();
                 break;
             case Commands.DockerBuilder:
-                await (await Promise.all(/* import() */[__nccwpck_require__.e(843), __nccwpck_require__.e(399), __nccwpck_require__.e(32)]).then(__nccwpck_require__.bind(__nccwpck_require__, 79032))).run();
+                await (await Promise.all(/* import() */[__nccwpck_require__.e(843), __nccwpck_require__.e(447), __nccwpck_require__.e(32)]).then(__nccwpck_require__.bind(__nccwpck_require__, 79032))).run();
                 break;
             case Commands.DockerConfig:
                 await (await Promise.all(/* import() */[__nccwpck_require__.e(843), __nccwpck_require__.e(855)]).then(__nccwpck_require__.bind(__nccwpck_require__, 51855))).run();
