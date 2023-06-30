@@ -41,7 +41,7 @@
     "find-up": "5.0.0",
     "got": "11.8.6",
     "renovate": "35.141.3",
-    "semver": "7.5.2",
+    "semver": "7.5.3",
     "shelljs": "0.8.5",
     "source-map-support": "0.5.21",
     "strip-ansi": "7.1.0",
