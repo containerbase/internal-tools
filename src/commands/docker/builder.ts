@@ -33,6 +33,7 @@ async function buildAndPush(
     majorMinor,
     prune,
     platforms,
+    skipLatestTag,
   }: DockerBuilderConfig,
   tobuild: BuildsResult
 ): Promise<void> {
@@ -109,7 +110,7 @@ async function buildAndPush(
         tags.push(nTag);
       }
 
-      if (version === tobuild.latestStable) {
+      if (version === tobuild.latestStable && skipLatestTag !== false) {
         tags.push(tagSuffix ?? 'latest');
       }
 
