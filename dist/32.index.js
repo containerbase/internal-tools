@@ -262,7 +262,7 @@ async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly
                 cacheTags.push(nTag);
                 tags.push(nTag);
             }
-            if (version === tobuild.latestStable && skipLatestTag !== false) {
+            if (version === tobuild.latestStable && skipLatestTag !== true) {
                 tags.push(tagSuffix ?? 'latest');
             }
             await build({
