@@ -69,8 +69,9 @@ export async function build({
     args.push(`--platform=${platforms.join(',')}`);
   }
 
-  if (!dryRun && push) {
+  if (dryRun) {
     log.warn(chalk.yellow('[DRY_RUN]'), chalk.blue('Would push'));
+  } else if (push) {
     args.push('--push', '--provenance=false');
   }
 
