@@ -110,7 +110,7 @@ async function buildAndPush(
         tags.push(nTag);
       }
 
-      if (version === tobuild.latestStable && skipLatestTag !== false) {
+      if (version === tobuild.latestStable && skipLatestTag !== true) {
         tags.push(tagSuffix ?? 'latest');
       }
 
