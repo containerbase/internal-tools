@@ -150,8 +150,10 @@ async function build({ image, imagePrefix, cache, cacheTags, tag = 'latest', tag
     if (platforms?.length) {
         args.push(`--platform=${platforms.join(',')}`);
     }
-    if (!dryRun && push) {
+    if (dryRun) {
         logger/* default.warn */.Z.warn(source.yellow('[DRY_RUN]'), source.blue('Would push'));
+    }
+    else if (push) {
         args.push('--push', '--provenance=false');
     }
     for (let build = 0;; build++) {
