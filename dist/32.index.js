@@ -205,7 +205,7 @@ function createTag(tagSuffix, version) {
         ? `${version}-${tagSuffix}`
         : version;
 }
-async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly, cache, dryRun, tagSuffix, versioning, majorMinor, prune, platforms, }, tobuild) {
+async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly, cache, dryRun, tagSuffix, versioning, majorMinor, prune, platforms, skipLatestTag, }, tobuild) {
     const builds = [];
     const failed = [];
     const ver = (0,modules_versioning.get)(versioning);
@@ -262,7 +262,7 @@ async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly
                 cacheTags.push(nTag);
                 tags.push(nTag);
             }
-            if (version === tobuild.latestStable) {
+            if (version === tobuild.latestStable && skipLatestTag !== false) {
                 tags.push(tagSuffix ?? 'latest');
             }
             await build({
