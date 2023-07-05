@@ -49,6 +49,7 @@ export type ConfigFile = {
   latestVersion?: string;
   maxVersions?: number;
   extractVersion?: string;
+  skipLatestTag?: boolean;
 };
 
 export type DockerBuilderConfig = {
