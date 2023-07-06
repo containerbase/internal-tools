@@ -3,7 +3,7 @@
   "extends": ["github>renovatebot/.github"],
   "packageRules": [
     {
-      "matchFileNames": ["+(Dockerfile)"],
+      "matchFileNames": ["Dockerfile"],
       "enabled": false
     },
     {
