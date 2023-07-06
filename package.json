@@ -86,7 +86,7 @@
     "rimraf": "5.0.1",
     "semantic-release": "21.0.6",
     "ts-jest": "29.1.0",
-    "typescript": "5.1.5"
+    "typescript": "5.1.6"
   },
   "resolutions": {
     "eslint-plugin-import/tsconfig-paths": "4.2.0"
