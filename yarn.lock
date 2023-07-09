@@ -4193,7 +4193,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/core@npm:^4.0.0-rc.47":
+"@yarnpkg/core@npm:^4.0.0-rc.48":
   version: 4.0.0-rc.48
   resolution: "@yarnpkg/core@npm:4.0.0-rc.48"
   dependencies:
@@ -4234,15 +4234,6 @@ __metadata:
     "@yarnpkg/libzip": ^2.3.0
     tslib: ^1.13.0
   checksum: 0ca693f61d47bcf165411a121ed9123f512b1b5bfa5e1c6c8f280b4ffdbea9bf2a6db418f99ecfc9624587fdc695b2b64eb0fe7b4028e44095914b25ca99655e
-  languageName: node
-  linkType: hard
-
-"@yarnpkg/fslib@npm:^3.0.0-rc.47":
-  version: 3.0.0-rc.47
-  resolution: "@yarnpkg/fslib@npm:3.0.0-rc.47"
-  dependencies:
-    tslib: ^2.4.0
-  checksum: 9abf762620fbd0670e74d0cfb8d3f09a1e05b4da9e6be4421a491bf7ee4427a0adac9bfb1b35948359bdb3797c1805ecc6c229e36f080d9dbd49fa3883c3cb48
   languageName: node
   linkType: hard
 
@@ -4298,16 +4289,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/parsers@npm:^3.0.0-rc.47":
-  version: 3.0.0-rc.47
-  resolution: "@yarnpkg/parsers@npm:3.0.0-rc.47"
-  dependencies:
-    js-yaml: ^3.10.0
-    tslib: ^2.4.0
-  checksum: 958a2d71c1be3e9dea2e8035616d060cd4d5ee5a8292a0bf8474958f56bb6ed7c42ead4547076d22464a206e7fc109ef143d3ebeef31da5b6d2f61885d485da4
-  languageName: node
-  linkType: hard
-
 "@yarnpkg/parsers@npm:^3.0.0-rc.48":
   version: 3.0.0-rc.48.1
   resolution: "@yarnpkg/parsers@npm:3.0.0-rc.48.1"
@@ -4328,13 +4309,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/sdks@npm:3.0.0-rc.47":
-  version: 3.0.0-rc.47
-  resolution: "@yarnpkg/sdks@npm:3.0.0-rc.47"
+"@yarnpkg/sdks@npm:3.0.0-rc.48":
+  version: 3.0.0-rc.48
+  resolution: "@yarnpkg/sdks@npm:3.0.0-rc.48"
   dependencies:
-    "@yarnpkg/core": ^4.0.0-rc.47
-    "@yarnpkg/fslib": ^3.0.0-rc.47
-    "@yarnpkg/parsers": ^3.0.0-rc.47
+    "@yarnpkg/core": ^4.0.0-rc.48
+    "@yarnpkg/fslib": ^3.0.0-rc.48
+    "@yarnpkg/parsers": ^3.0.0-rc.48
     chalk: ^3.0.0
     clipanion: ^3.2.1
     comment-json: ^2.2.0
@@ -4342,7 +4323,7 @@ __metadata:
     tslib: ^2.4.0
   bin:
     sdks: ./lib/cli.js
-  checksum: 0d61e5853ec55be77f3cad6b8427b2f3effd1780de6d2f63f4de2ea512ac15b0aef8686392979de8f7989d8535d5cacb10ef160428769145dff6c30a06445cda
+  checksum: 0acbd80758d72636f5355bdb78ad1a52ae07a94c29680703cb4e8db02a4c8633a0007cfc9ee99b8e02ffb622300ae18c377c214c81e4521a87fa6db2cf4ce9d1
   languageName: node
   linkType: hard
 
@@ -7868,7 +7849,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 5.60.1
     "@typescript-eslint/parser": 5.60.1
     "@vercel/ncc": 0.36.1
-    "@yarnpkg/sdks": 3.0.0-rc.47
+    "@yarnpkg/sdks": 3.0.0-rc.48
     auth-header: 1.0.0
     chalk: 4.1.2
     conventional-changelog-conventionalcommits: 6.1.0
