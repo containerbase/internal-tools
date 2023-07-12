@@ -1,5 +1,5 @@
 import { setTimeout } from 'node:timers/promises';
-import { docker } from './docker/common';
+import { dockerBuildx } from './docker/common';
 import log from './logger';
 import { ExecError } from './types';
 import is from '@sindresorhus/is';
@@ -42,7 +42,7 @@ export async function build({
   platforms,
   push,
 }: BuildOptions): Promise<void> {
-  const args = ['buildx', 'build', `--tag=${imagePrefix}/${image}:${tag}`];
+  const args = ['build', `--tag=${imagePrefix}/${image}:${tag}`];
 
   if (tags?.length) {
     args.push(...tags.map((tag) => `--tag=${imagePrefix}/${image}:${tag}`));
@@ -66,11 +66,13 @@ export async function build({
     }
 
     if (!dryRun && push) {
-      args.push(`--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max`);
+      args.push(
+        `--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max,ignore-error=true`
+      );
       if (is.nonEmptyArray(cacheToTags)) {
         for (const ctag of cacheToTags) {
           args.push(
-            `--cache-to=type=registry,ref=${cacheImage}-${ctag},mode=max`
+            `--cache-to=type=registry,ref=${cacheImage}-${ctag},mode=max,ignore-error=true`
           );
         }
       }
@@ -89,7 +91,7 @@ export async function build({
 
   for (let build = 0; ; build++) {
     try {
-      await docker(...args, '.');
+      await dockerBuildx(...args, '.');
       break;
     } catch (e) {
       if (e instanceof ExecError && canRetry(e) && build < 2) {
