@@ -26,8 +26,6 @@ var config = __webpack_require__(37039);
 var logger = __webpack_require__(89142);
 // EXTERNAL MODULE: ../.yarn/cache/@actions-github-npm-5.1.1-61d3d8cdac-2210bd7f8e.zip/node_modules/@actions/github/lib/github.js
 var github = __webpack_require__(36679);
-// EXTERNAL MODULE: ../.yarn/cache/@octokit-request-error-npm-2.1.0-51ac624306-baec2b5700.zip/node_modules/@octokit/request-error/dist-node/index.js
-var dist_node = __webpack_require__(37127);
 // EXTERNAL MODULE: ../.yarn/cache/got-npm-11.8.6-89e7cd5d67-bbc783578a.zip/node_modules/got/dist/source/index.js
 var source = __webpack_require__(1846);
 var source_default = /*#__PURE__*/__webpack_require__.n(source);
@@ -39,12 +37,14 @@ var source_default = /*#__PURE__*/__webpack_require__.n(source);
 
 
 
-
 let releaseCache = null;
 function getBody(cfg, version) {
     return `### Bug Fixes
 
 * **deps:** update dependency ${cfg.image} to v${version}`;
+}
+function isRequestError(err) {
+    return err instanceof Error && 'status' in err;
 }
 async function findRelease(api, version) {
     try {
@@ -62,7 +62,7 @@ async function findRelease(api, version) {
         return releaseCache.get(version) ?? null;
     }
     catch (e) {
-        if (e instanceof dist_node.RequestError && e.status !== 404) {
+        if (isRequestError(e) && e.status !== 404) {
             throw e;
         }
     }
@@ -78,7 +78,7 @@ async function getRelease(api, version) {
         return data;
     }
     catch (err) {
-        if (err instanceof dist_node.RequestError && err.status == 404) {
+        if (isRequestError(err) && err.status == 404) {
             return null;
         }
         throw err;
@@ -101,7 +101,7 @@ async function createRelease(api, cfg, version, retry = true) {
     }
     catch (err) {
         if (retry &&
-            err instanceof dist_node.RequestError &&
+            isRequestError(err) &&
             err.status == 422 &&
             err.response?.data) {
             (0,logger/* default */.Z)('Release probably created by other process, retrying:', version, err.message);
@@ -151,7 +151,7 @@ async function uploadAsset(api, cfg, version, sum) {
         rel.assets.push(data);
     }
     catch (e) {
-        if (e instanceof dist_node.RequestError && e.status !== 404) {
+        if (isRequestError(e) && e.status !== 404) {
             throw e;
         }
     }
