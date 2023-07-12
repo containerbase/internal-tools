@@ -1,5 +1,6 @@
 // istanbul ignore file
-import { readBuffer, sleep, writeFile } from '../util';
+import { setTimeout } from 'node:timers/promises';
+import { readBuffer, writeFile } from '../util';
 import { getBinaryName } from './config';
 import log from './logger';
 import type { BinaryBuilderConfig } from './types';
@@ -128,7 +129,7 @@ async function createRelease(
         version,
         err.message
       );
-      await sleep(250);
+      await setTimeout(250);
       return await createRelease(api, cfg, version, false);
     }
     throw err;
