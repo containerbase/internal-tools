@@ -8,6 +8,9 @@ inputs:
     description: 'docker image prefix to use'
     required: false
     default: renovate
+  image-prefixes:
+    description: 'additional docker image prefixes to push to'
+    required: false
   image:
     description: 'docker image to operate on'
     required: false

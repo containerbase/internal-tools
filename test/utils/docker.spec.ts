@@ -43,6 +43,7 @@ describe('utils/docker', () => {
 
       await build({
         imagePrefix,
+        imagePrefixes: ['ghcr.io/renovatebot'],
         image,
         cache: 'ghcr.io/renovatebot/docker-build-cache',
         cacheToTags: ['dummy'],

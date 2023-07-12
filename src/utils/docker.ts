@@ -8,6 +8,7 @@ import * as chalk from 'chalk';
 export type BuildOptions = {
   image: string;
   imagePrefix: string;
+  imagePrefixes?: string[];
   cache?: string;
   cacheFromTags?: string[];
   cacheToTags?: string[];
@@ -32,6 +33,7 @@ function canRetry(err: ExecError): boolean {
 export async function build({
   image,
   imagePrefix,
+  imagePrefixes,
   cache,
   cacheFromTags,
   cacheToTags,
@@ -42,14 +44,21 @@ export async function build({
   platforms,
   push,
 }: BuildOptions): Promise<void> {
-  const args = ['build', `--tag=${imagePrefix}/${image}:${tag}`];
-
-  if (tags?.length) {
-    args.push(...tags.map((tag) => `--tag=${imagePrefix}/${image}:${tag}`));
-  }
+  const args = ['build'];
 
   if (is.nonEmptyArray(buildArgs)) {
     args.push(...buildArgs.map((b) => `--build-arg=${b}`));
+  }
+
+  if (platforms?.length) {
+    args.push(`--platform=${platforms.join(',')}`);
+  }
+
+  for (const prefix of [imagePrefix, ...(imagePrefixes ?? [])]) {
+    args.push(`--tag=${prefix}/${image}:${tag}`);
+    if (tags?.length) {
+      args.push(...tags.map((tag) => `--tag=${prefix}/${image}:${tag}`));
+    }
   }
 
   if (is.string(cache)) {
@@ -77,10 +86,6 @@ export async function build({
         }
       }
     }
-  }
-
-  if (platforms?.length) {
-    args.push(`--platform=${platforms.join(',')}`);
   }
 
   if (dryRun) {

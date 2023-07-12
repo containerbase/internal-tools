@@ -124,6 +124,10 @@ export function getArg(
   name: string,
   opts?: { required?: boolean; multi?: boolean }
 ): string | string[] {
+  // istanbul ignore if: just for local testing where dash is not allowed
+  if (process.env.NODE_ENV === 'debug') {
+    name = name.replace(/-/g, '_');
+  }
   const val = getInput(name, opts);
   return opts?.multi
     ? val.split(MultiArgsSplitRe).filter(is.nonEmptyStringAndNotWhitespace)

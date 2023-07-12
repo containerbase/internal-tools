@@ -22,6 +22,7 @@ function createTag(tagSuffix: string | undefined, version: string): string {
 async function buildAndPush(
   {
     imagePrefix,
+    imagePrefixes,
     image,
     buildArg,
     buildArgs,
@@ -119,6 +120,7 @@ async function buildAndPush(
       await build({
         image,
         imagePrefix,
+        imagePrefixes,
         tag,
         tags,
         cache,
@@ -208,6 +210,9 @@ export async function run(): Promise<void> {
   const config: DockerBuilderConfig = {
     ...cfg,
     imagePrefix: getArg('image-prefix')?.replace(/\/$/, '') || 'renovate',
+    imagePrefixes: getArg('image-prefixes', { multi: true })?.map((ip) =>
+      ip.replace(/\/$/, '')
+    ),
     image: cfg.image,
     depName: cfg.depName ?? cfg.image,
     buildArg: cfg.buildArg,
