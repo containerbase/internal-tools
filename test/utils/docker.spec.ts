@@ -3,7 +3,7 @@ import { build } from '../../src/utils/docker';
 import { ExecError } from '../../src/utils/types';
 import { mocked } from '../utils';
 
-jest.mock('delay', () => () => Promise.resolve());
+jest.mock('node:timers/promises');
 jest.mock('../../src/util');
 
 const utils = mocked(_utils);

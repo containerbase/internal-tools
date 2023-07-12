@@ -1,9 +1,9 @@
+import { setTimeout } from 'node:timers/promises';
 import { docker } from './docker/common';
 import log from './logger';
 import { ExecError } from './types';
 import is from '@sindresorhus/is';
 import * as chalk from 'chalk';
-import * as delay from 'delay';
 
 export type BuildOptions = {
   image: string;
@@ -94,7 +94,7 @@ export async function build({
     } catch (e) {
       if (e instanceof ExecError && canRetry(e) && build < 2) {
         log.error(chalk.red(`docker build error on try ${build}`), e);
-        await delay(5000);
+        await setTimeout(5000);
         continue;
       }
       throw e;

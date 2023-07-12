@@ -1,4 +1,4 @@
-import { BinaryLike, createHash } from 'crypto';
+import { BinaryLike, createHash } from 'node:crypto';
 import { readBuffer, writeFile } from '../util';
 import { getBinaryName } from './config';
 import { BinaryBuilderConfig, sumType } from './types';

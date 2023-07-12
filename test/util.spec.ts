@@ -1,4 +1,4 @@
-import { existsSync, promises } from 'fs';
+import { existsSync, promises } from 'node:fs';
 import * as util from '../src/util';
 import { mocked } from './utils';
 import * as _core from '@actions/core';
