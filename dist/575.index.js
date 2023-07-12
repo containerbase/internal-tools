@@ -3414,7 +3414,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 var universalUserAgent = __webpack_require__(76723);
 var beforeAfterHook = __webpack_require__(74383);
-var request = __webpack_require__(80157);
+var request = __webpack_require__(5323);
 var graphql = __webpack_require__(47771);
 var authToken = __webpack_require__(12787);
 
@@ -3994,7 +3994,7 @@ exports.endpoint = endpoint;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 
-var request = __webpack_require__(80157);
+var request = __webpack_require__(5323);
 var universalUserAgent = __webpack_require__(76723);
 
 const VERSION = "4.8.0";
@@ -4194,7 +4194,7 @@ exports.RequestError = RequestError;
 
 /***/ }),
 
-/***/ 80157:
+/***/ 5323:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
