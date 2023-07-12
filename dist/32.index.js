@@ -127,7 +127,7 @@ const errors = [
 function canRetry(err) {
     return errors.some((str) => err.stderr.includes(str));
 }
-async function build({ image, imagePrefix, cache, cacheTags, tag = 'latest', tags, dryRun, buildArgs, platforms, push, }) {
+async function build({ image, imagePrefix, cache, cacheFromTags, cacheToTags, tag = 'latest', tags, dryRun, buildArgs, platforms, push, }) {
     const args = ['buildx', 'build', `--tag=${imagePrefix}/${image}:${tag}`];
     if (tags?.length) {
         args.push(...tags.map((tag) => `--tag=${imagePrefix}/${image}:${tag}`));
@@ -136,15 +136,23 @@ async function build({ image, imagePrefix, cache, cacheTags, tag = 'latest', tag
         args.push(...buildArgs.map((b) => `--build-arg=${b}`));
     }
     if (dist_default().string(cache)) {
-        const cacheImage = `${imagePrefix}/${cache}:${image.replace(/\//g, '-')}`;
+        const cachePrefix = cache.split('/')[0]?.match(/[.:]/)
+            ? ''
+            : `${imagePrefix}/`;
+        const cacheImage = `${cachePrefix}${cache}:${image.replace(/\//g, '-')}`;
         args.push(`--cache-from=${cacheImage}-${tag}`);
-        if (dist_default().nonEmptyArray(cacheTags)) {
-            for (const ctag of cacheTags) {
+        if (dist_default().nonEmptyArray(cacheFromTags)) {
+            for (const ctag of cacheFromTags) {
                 args.push(`--cache-from=${cacheImage}-${ctag}`);
             }
         }
         if (!dryRun && push) {
             args.push(`--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max`);
+            if (dist_default().nonEmptyArray(cacheToTags)) {
+                for (const ctag of cacheToTags) {
+                    args.push(`--cache-to=type=registry,ref=${cacheImage}-${ctag},mode=max`);
+                }
+            }
         }
     }
     if (platforms?.length) {
@@ -245,24 +253,31 @@ async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly
         try {
             const minor = ver.getMinor(version);
             const major = ver.getMajor(version);
-            const cacheTags = [tagSuffix ?? 'latest'];
+            const cacheFromTags = [tagSuffix ?? 'latest'];
+            const cacheToTags = [];
             const tags = [];
-            if (dist_default().number(major) &&
-                majorMinor &&
-                versionsMap.get(`${major}`) === version) {
+            if (dist_default().number(major)) {
                 const nTag = createTag(tagSuffix, `${major}`);
-                cacheTags.push(nTag);
-                tags.push(nTag);
+                cacheFromTags.push(nTag);
+                if (versionsMap.get(`${major}`) === version) {
+                    cacheToTags.push(nTag);
+                    if (majorMinor) {
+                        tags.push(nTag);
+                    }
+                }
             }
-            if (dist_default().number(major) &&
-                dist_default().number(minor) &&
-                majorMinor &&
-                versionsMap.get(`${major}.${minor}`) === version) {
+            if (dist_default().number(major) && dist_default().number(minor)) {
                 const nTag = createTag(tagSuffix, `${major}.${minor}`);
-                cacheTags.push(nTag);
-                tags.push(nTag);
+                cacheFromTags.push(nTag);
+                if (versionsMap.get(`${major}.${minor}`) === version) {
+                    cacheToTags.push(nTag);
+                    if (majorMinor) {
+                        tags.push(nTag);
+                    }
+                }
             }
             if (version === tobuild.latestStable && skipLatestTag !== true) {
+                cacheToTags.push(tagSuffix ?? 'latest');
                 tags.push(tagSuffix ?? 'latest');
             }
             await build({
@@ -271,7 +286,8 @@ async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly
                 tag,
                 tags,
                 cache,
-                cacheTags,
+                cacheFromTags,
+                cacheToTags,
                 buildArgs: [...(buildArgs ?? []), `${buildArg}=${version}`],
                 dryRun,
                 platforms,
