@@ -20,6 +20,8 @@ var util = __webpack_require__(25575);
 var utils_builds = __webpack_require__(31107);
 // EXTERNAL MODULE: ./utils/docker/buildx.ts
 var buildx = __webpack_require__(96664);
+// EXTERNAL MODULE: external "node:timers/promises"
+var promises_ = __webpack_require__(99397);
 // EXTERNAL MODULE: ./utils/config.ts
 var config = __webpack_require__(37039);
 // EXTERNAL MODULE: ./utils/logger.ts + 2 modules
@@ -31,6 +33,7 @@ var source = __webpack_require__(1846);
 var source_default = /*#__PURE__*/__webpack_require__.n(source);
 ;// CONCATENATED MODULE: ./utils/github.ts
 // istanbul ignore file
+
 
 
 
@@ -105,7 +108,7 @@ async function createRelease(api, cfg, version, retry = true) {
             err.status == 422 &&
             err.response?.data) {
             (0,logger/* default */.Z)('Release probably created by other process, retrying:', version, err.message);
-            await (0,util/* sleep */._v)(250);
+            await (0,promises_.setTimeout)(250);
             return await createRelease(api, cfg, version, false);
         }
         throw err;
@@ -397,7 +400,6 @@ async function run() {
 /* harmony export */   "Gg": () => (/* binding */ exists),
 /* harmony export */   "NC": () => (/* binding */ writeFile),
 /* harmony export */   "Tl": () => (/* binding */ getDistro),
-/* harmony export */   "_v": () => (/* binding */ sleep),
 /* harmony export */   "a8": () => (/* binding */ getArg),
 /* harmony export */   "bj": () => (/* binding */ getArch),
 /* harmony export */   "oq": () => (/* binding */ getWorkspace),
@@ -417,8 +419,11 @@ async function run() {
 /* harmony import */ var _actions_exec__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_actions_exec__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _actions_io__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(66402);
 /* harmony import */ var _actions_io__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_actions_io__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _sindresorhus_is__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(76827);
+/* harmony import */ var _sindresorhus_is__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_sindresorhus_is__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var find_up__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(58614);
 /* harmony import */ var find_up__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(find_up__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -506,7 +511,9 @@ async function writeFile(file, contents) {
 const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 function getArg(name, opts) {
     const val = (0,_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)(name, opts);
-    return opts?.multi ? val.split(MultiArgsSplitRe).filter(Boolean) : val;
+    return opts?.multi
+        ? val.split(MultiArgsSplitRe).filter((_sindresorhus_is__WEBPACK_IMPORTED_MODULE_7___default().nonEmptyStringAndNotWhitespace))
+        : val;
 }
 let _pkg;
 /**
@@ -524,13 +531,6 @@ async function resolveFile(file) {
         throw new Error('Missing package.json');
     }
     return join(pkg, '../', file);
-}
-/**
- * Stop processing for some time.
- * @param milliseconds time to sleep
- */
-function sleep(milliseconds) {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
 
