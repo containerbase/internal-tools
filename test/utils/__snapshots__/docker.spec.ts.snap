@@ -53,8 +53,8 @@ exports[`utils/docker build uses cache (dry-run) 1`] = `
     [
       "buildx",
       "build",
-      "--tag=renovate/base:latest",
       "--build-arg=IMAGE=slim",
+      "--tag=renovate/base:latest",
       "--cache-from=renovate/docker-build-cache:base-latest",
       "--cache-from=renovate/docker-build-cache:base-dummy",
       ".",
@@ -71,6 +71,7 @@ exports[`utils/docker build uses cache 1`] = `
       "buildx",
       "build",
       "--tag=renovate/base:latest",
+      "--tag=ghcr.io/renovatebot/base:latest",
       "--cache-from=ghcr.io/renovatebot/docker-build-cache:base-latest",
       "--cache-to=type=registry,ref=ghcr.io/renovatebot/docker-build-cache:base-latest,mode=max,ignore-error=true",
       "--cache-to=type=registry,ref=ghcr.io/renovatebot/docker-build-cache:base-dummy,mode=max,ignore-error=true",
@@ -89,9 +90,9 @@ exports[`utils/docker build works 1`] = `
     [
       "buildx",
       "build",
+      "--platform=linux/arm64",
       "--tag=renovate/base:latest",
       "--tag=renovate/base:5",
-      "--platform=linux/arm64",
       "--push",
       "--provenance=false",
       ".",

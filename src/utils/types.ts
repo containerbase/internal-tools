@@ -59,6 +59,7 @@ export type DockerBuilderConfig = {
   tagSuffix?: string;
   depName: string;
   imagePrefix: string;
+  imagePrefixes: string[];
   image: string;
   ignoredVersions: string[];
   majorMinor: boolean;

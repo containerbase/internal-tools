@@ -54,6 +54,7 @@ describe('commands/docker/builder', () => {
     args = {
       ...args,
       'image-prefix': 'ghcr.io/renovatebot/',
+      'image-prefixes': ['ghcr.io/renovatebot/'],
       'build-args': ['IMAGE=slim'],
       'tag-suffix': 'slim',
     };
