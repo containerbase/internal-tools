@@ -5,7 +5,6 @@ import log from './logger';
 import type { BinaryBuilderConfig } from './types';
 import { context, getOctokit } from '@actions/github';
 import type { GitHub } from '@actions/github/lib/utils';
-import { RequestError } from '@octokit/request-error';
 import got from 'got';
 
 export { getOctokit };
@@ -36,6 +35,17 @@ function getBody(cfg: BinaryBuilderConfig, version: string): string {
 * **deps:** update dependency ${cfg.image} to v${version}`;
 }
 
+type RequestError = Error & {
+  status: number;
+  response: {
+    data: unknown;
+  };
+};
+
+function isRequestError(err: unknown): err is RequestError {
+  return err instanceof Error && 'status' in err;
+}
+
 async function findRelease(
   api: GitHubOctokit,
   version: string
@@ -58,7 +68,7 @@ async function findRelease(
 
     return releaseCache.get(version) ?? null;
   } catch (e) {
-    if (e instanceof RequestError && e.status !== 404) {
+    if (isRequestError(e) && e.status !== 404) {
       throw e;
     }
   }
@@ -78,7 +88,7 @@ async function getRelease(
     releaseCache?.set(version, data);
     return data;
   } catch (err) {
-    if (err instanceof RequestError && err.status == 404) {
+    if (isRequestError(err) && err.status == 404) {
       return null;
     }
     throw err;
@@ -109,7 +119,7 @@ async function createRelease(
   } catch (err) {
     if (
       retry &&
-      err instanceof RequestError &&
+      isRequestError(err) &&
       err.status == 422 &&
       err.response?.data
     ) {
@@ -179,7 +189,7 @@ export async function uploadAsset(
     // cache asset
     rel.assets.push(data);
   } catch (e) {
-    if (e instanceof RequestError && e.status !== 404) {
+    if (isRequestError(e) && e.status !== 404) {
       throw e;
     }
   }
