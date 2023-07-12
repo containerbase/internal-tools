@@ -3,85 +3,6 @@ exports.id = 32;
 exports.ids = [32];
 exports.modules = {
 
-/***/ 65537:
-/***/ ((module) => {
-
-
-
-// From https://github.com/sindresorhus/random-int/blob/c37741b56f76b9160b0b63dae4e9c64875128146/index.js#L13-L15
-const randomInteger = (minimum, maximum) => Math.floor((Math.random() * (maximum - minimum + 1)) + minimum);
-
-const createAbortError = () => {
-	const error = new Error('Delay aborted');
-	error.name = 'AbortError';
-	return error;
-};
-
-const createDelay = ({clearTimeout: defaultClear, setTimeout: set, willResolve}) => (ms, {value, signal} = {}) => {
-	if (signal && signal.aborted) {
-		return Promise.reject(createAbortError());
-	}
-
-	let timeoutId;
-	let settle;
-	let rejectFn;
-	const clear = defaultClear || clearTimeout;
-
-	const signalListener = () => {
-		clear(timeoutId);
-		rejectFn(createAbortError());
-	};
-
-	const cleanup = () => {
-		if (signal) {
-			signal.removeEventListener('abort', signalListener);
-		}
-	};
-
-	const delayPromise = new Promise((resolve, reject) => {
-		settle = () => {
-			cleanup();
-			if (willResolve) {
-				resolve(value);
-			} else {
-				reject(value);
-			}
-		};
-
-		rejectFn = reject;
-		timeoutId = (set || setTimeout)(settle, ms);
-	});
-
-	if (signal) {
-		signal.addEventListener('abort', signalListener, {once: true});
-	}
-
-	delayPromise.clear = () => {
-		clear(timeoutId);
-		timeoutId = null;
-		settle();
-	};
-
-	return delayPromise;
-};
-
-const createWithTimers = clearAndSet => {
-	const delay = createDelay({...clearAndSet, willResolve: true});
-	delay.reject = createDelay({...clearAndSet, willResolve: false});
-	delay.range = (minimum, maximum, options) => delay(randomInteger(minimum, maximum), options);
-	return delay;
-};
-
-const delay = createWithTimers();
-delay.createWithTimers = createWithTimers;
-
-module.exports = delay;
-// TODO: Remove this for the next major release
-module.exports["default"] = delay;
-
-
-/***/ }),
-
 /***/ 79032:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -99,6 +20,8 @@ var util = __webpack_require__(25575);
 var builds = __webpack_require__(31107);
 // EXTERNAL MODULE: ./utils/config.ts
 var utils_config = __webpack_require__(37039);
+// EXTERNAL MODULE: external "node:timers/promises"
+var promises_ = __webpack_require__(99397);
 // EXTERNAL MODULE: ./utils/docker/common.ts
 var common = __webpack_require__(89982);
 // EXTERNAL MODULE: ./utils/logger.ts + 2 modules
@@ -110,8 +33,6 @@ var dist = __webpack_require__(76827);
 var dist_default = /*#__PURE__*/__webpack_require__.n(dist);
 // EXTERNAL MODULE: ../.yarn/cache/chalk-npm-4.1.2-ba8b67ab80-fe75c9d5c7.zip/node_modules/chalk/source/index.js
 var source = __webpack_require__(9067);
-// EXTERNAL MODULE: ../.yarn/cache/delay-npm-5.0.0-1d1c758b46-62f151151e.zip/node_modules/delay/index.js
-var delay = __webpack_require__(65537);
 ;// CONCATENATED MODULE: ./utils/docker.ts
 
 
@@ -172,7 +93,7 @@ async function build({ image, imagePrefix, cache, cacheFromTags, cacheToTags, ta
         catch (e) {
             if (e instanceof types/* ExecError */.X && canRetry(e) && build < 2) {
                 logger/* default.error */.Z.error(source.red(`docker build error on try ${build}`), e);
-                await delay(5000);
+                await (0,promises_.setTimeout)(5000);
                 continue;
             }
             throw e;
@@ -404,10 +325,10 @@ async function run() {
 /* harmony export */   "zr": () => (/* binding */ readJson)
 /* harmony export */ });
 /* unused harmony exports getEnv, isCI, MultiArgsSplitRe, resolveFile */
-/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(73292);
-/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fs_promises__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(71017);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var node_fs_promises__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(93977);
+/* harmony import */ var node_fs_promises__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(node_fs_promises__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var node_path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(49411);
+/* harmony import */ var node_path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(node_path__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45602);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(91862);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_3__);
@@ -490,16 +411,16 @@ async function readJson(file) {
     return JSON.parse(json);
 }
 async function readFile(file) {
-    const path = (0,path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
-    return await fs_promises__WEBPACK_IMPORTED_MODULE_0__.readFile(path, 'utf8');
+    const path = (0,node_path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
+    return await node_fs_promises__WEBPACK_IMPORTED_MODULE_0__.readFile(path, 'utf8');
 }
 async function readBuffer(file) {
-    const path = (0,path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
-    return await fs_promises__WEBPACK_IMPORTED_MODULE_0__.readFile(path);
+    const path = (0,node_path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
+    return await node_fs_promises__WEBPACK_IMPORTED_MODULE_0__.readFile(path);
 }
 async function writeFile(file, contents) {
-    const path = (0,path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
-    await fs_promises__WEBPACK_IMPORTED_MODULE_0__.writeFile(path, contents);
+    const path = (0,node_path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
+    await node_fs_promises__WEBPACK_IMPORTED_MODULE_0__.writeFile(path, contents);
 }
 const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 function getArg(name, opts) {

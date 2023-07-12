@@ -37,10 +37,10 @@ async function run() {
 /* harmony export */   "zr": () => (/* binding */ readJson)
 /* harmony export */ });
 /* unused harmony exports getEnv, isCI, MultiArgsSplitRe, resolveFile */
-/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(73292);
-/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fs_promises__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(71017);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var node_fs_promises__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(93977);
+/* harmony import */ var node_fs_promises__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(node_fs_promises__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var node_path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(49411);
+/* harmony import */ var node_path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(node_path__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45602);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(91862);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_3__);
@@ -123,16 +123,16 @@ async function readJson(file) {
     return JSON.parse(json);
 }
 async function readFile(file) {
-    const path = (0,path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
-    return await fs_promises__WEBPACK_IMPORTED_MODULE_0__.readFile(path, 'utf8');
+    const path = (0,node_path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
+    return await node_fs_promises__WEBPACK_IMPORTED_MODULE_0__.readFile(path, 'utf8');
 }
 async function readBuffer(file) {
-    const path = (0,path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
-    return await fs_promises__WEBPACK_IMPORTED_MODULE_0__.readFile(path);
+    const path = (0,node_path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
+    return await node_fs_promises__WEBPACK_IMPORTED_MODULE_0__.readFile(path);
 }
 async function writeFile(file, contents) {
-    const path = (0,path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
-    await fs_promises__WEBPACK_IMPORTED_MODULE_0__.writeFile(path, contents);
+    const path = (0,node_path__WEBPACK_IMPORTED_MODULE_1__.join)(getWorkspace(), file);
+    await node_fs_promises__WEBPACK_IMPORTED_MODULE_0__.writeFile(path, contents);
 }
 const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 function getArg(name, opts) {

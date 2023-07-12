@@ -12968,11 +12968,35 @@ module.exports = require("node:dns");
 
 /***/ }),
 
+/***/ 93977:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs/promises");
+
+/***/ }),
+
+/***/ 49411:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:path");
+
+/***/ }),
+
 /***/ 84492:
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("node:stream");
+
+/***/ }),
+
+/***/ 99397:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:timers/promises");
 
 /***/ }),
 
