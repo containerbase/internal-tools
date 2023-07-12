@@ -1,5 +1,5 @@
-import * as fs from 'fs/promises';
-import { join } from 'path';
+import * as fs from 'node:fs/promises';
+import { join } from 'node:path';
 import type { DockerArch } from './utils/docker/common';
 import { ExecError, ExecResult } from './utils/types';
 import { endGroup, getInput, startGroup } from '@actions/core';
