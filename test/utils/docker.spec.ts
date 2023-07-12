@@ -41,7 +41,13 @@ describe('utils/docker', () => {
         ...res,
       });
 
-      await build({ imagePrefix, image, cache, push: true });
+      await build({
+        imagePrefix,
+        image,
+        cache: 'ghcr.io/renovatebot/docker-build-cache',
+        cacheToTags: ['dummy'],
+        push: true,
+      });
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
 
@@ -54,7 +60,7 @@ describe('utils/docker', () => {
         imagePrefix,
         image,
         cache,
-        cacheTags: ['dummy'],
+        cacheFromTags: ['dummy'],
         dryRun: true,
         buildArgs: ['IMAGE=slim'],
       });

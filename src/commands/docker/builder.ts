@@ -86,31 +86,33 @@ async function buildAndPush(
     try {
       const minor = ver.getMinor(version);
       const major = ver.getMajor(version);
-      const cacheTags: string[] = [tagSuffix ?? 'latest'];
+      const cacheFromTags: string[] = [tagSuffix ?? 'latest'];
+      const cacheToTags: string[] = [];
       const tags: string[] = [];
 
-      if (
-        is.number(major) &&
-        majorMinor &&
-        versionsMap.get(`${major}`) === version
-      ) {
+      if (is.number(major)) {
         const nTag = createTag(tagSuffix, `${major}`);
-        cacheTags.push(nTag);
-        tags.push(nTag);
+        cacheFromTags.push(nTag);
+        if (versionsMap.get(`${major}`) === version) {
+          cacheToTags.push(nTag);
+          if (majorMinor) {
+            tags.push(nTag);
+          }
+        }
       }
-
-      if (
-        is.number(major) &&
-        is.number(minor) &&
-        majorMinor &&
-        versionsMap.get(`${major}.${minor}`) === version
-      ) {
+      if (is.number(major) && is.number(minor)) {
         const nTag = createTag(tagSuffix, `${major}.${minor}`);
-        cacheTags.push(nTag);
-        tags.push(nTag);
+        cacheFromTags.push(nTag);
+        if (versionsMap.get(`${major}.${minor}`) === version) {
+          cacheToTags.push(nTag);
+          if (majorMinor) {
+            tags.push(nTag);
+          }
+        }
       }
 
       if (version === tobuild.latestStable && skipLatestTag !== true) {
+        cacheToTags.push(tagSuffix ?? 'latest');
         tags.push(tagSuffix ?? 'latest');
       }
 
@@ -120,7 +122,8 @@ async function buildAndPush(
         tag,
         tags,
         cache,
-        cacheTags,
+        cacheFromTags,
+        cacheToTags,
         buildArgs: [...(buildArgs ?? []), `${buildArg}=${version}`],
         dryRun,
         platforms,
