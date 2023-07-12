@@ -53,7 +53,10 @@ export async function build({
   }
 
   if (is.string(cache)) {
-    const cacheImage = `${imagePrefix}/${cache}:${image.replace(/\//g, '-')}`;
+    const cachePrefix = cache.split('/')[0]?.match(/[.:]/)
+      ? ''
+      : `${imagePrefix}/`;
+    const cacheImage = `${cachePrefix}${cache}:${image.replace(/\//g, '-')}`;
     args.push(`--cache-from=${cacheImage}-${tag}`);
 
     if (is.nonEmptyArray(cacheFromTags)) {
