@@ -6,6 +6,7 @@ import { endGroup, getInput, startGroup } from '@actions/core';
 import { exec as _exec } from '@actions/exec';
 import type { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import { which } from '@actions/io';
+import is from '@sindresorhus/is';
 import * as findUp from 'find-up';
 
 export type ExecOptions = _ExecOptions;
@@ -124,7 +125,9 @@ export function getArg(
   opts?: { required?: boolean; multi?: boolean }
 ): string | string[] {
   const val = getInput(name, opts);
-  return opts?.multi ? val.split(MultiArgsSplitRe).filter(Boolean) : val;
+  return opts?.multi
+    ? val.split(MultiArgsSplitRe).filter(is.nonEmptyStringAndNotWhitespace)
+    : val;
 }
 
 let _pkg: Promise<string | undefined>;
@@ -144,12 +147,4 @@ export async function resolveFile(file: string): Promise<string> {
     throw new Error('Missing package.json');
   }
   return join(pkg, '../', file);
-}
-
-/**
- * Stop processing for some time.
- * @param milliseconds time to sleep
- */
-export function sleep(milliseconds: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
