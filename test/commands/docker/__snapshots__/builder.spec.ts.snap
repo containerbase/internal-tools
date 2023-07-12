@@ -8,10 +8,15 @@ exports[`commands/docker/builder build-only yarn: build 1`] = `
         "YARN_VERSION=1.22.4",
       ],
       "cache": "docker-build-cache",
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
         "1",
         "1.22",
+      ],
+      "cacheToTags": [
+        "1",
+        "1.22",
+        "latest",
       ],
       "dryRun": undefined,
       "image": "yarn",
@@ -38,7 +43,11 @@ exports[`commands/docker/builder last-only dummy: build 1`] = `
         "DUMMY_VERSION=12",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
+        "slim",
+        "12-slim",
+      ],
+      "cacheToTags": [
         "slim",
       ],
       "dryRun": undefined,
@@ -63,10 +72,15 @@ exports[`commands/docker/builder updates image yarn (dry-run): build 1`] = `
         "YARN_VERSION=1.22.4",
       ],
       "cache": "docker-build-cache",
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
         "1",
         "1.22",
+      ],
+      "cacheToTags": [
+        "1",
+        "1.22",
+        "latest",
       ],
       "dryRun": true,
       "image": "yarn",
@@ -92,9 +106,11 @@ exports[`commands/docker/builder works dummy: build 1`] = `
         "DUMMY_VERSION=10",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "10",
       ],
+      "cacheToTags": [],
       "dryRun": undefined,
       "image": "dummy",
       "imagePrefix": "renovate",
@@ -110,9 +126,11 @@ exports[`commands/docker/builder works dummy: build 1`] = `
         "DUMMY_VERSION=13",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "13",
       ],
+      "cacheToTags": [],
       "dryRun": undefined,
       "image": "dummy",
       "imagePrefix": "renovate",
@@ -133,8 +151,12 @@ exports[`commands/docker/builder works gradle: build 1`] = `
         "GRADLE_VERSION=3.5.5",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "3",
+        "3.5",
+      ],
+      "cacheToTags": [
         "3",
         "3.5",
       ],
@@ -156,8 +178,12 @@ exports[`commands/docker/builder works gradle: build 1`] = `
         "GRADLE_VERSION=4.5",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "4",
+        "4.5",
+      ],
+      "cacheToTags": [
         "4",
       ],
       "dryRun": undefined,
@@ -177,9 +203,14 @@ exports[`commands/docker/builder works gradle: build 1`] = `
         "GRADLE_VERSION=6.0",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
         "6",
+        "6.0",
+      ],
+      "cacheToTags": [
+        "6",
+        "latest",
       ],
       "dryRun": undefined,
       "image": "gradle",
@@ -204,9 +235,14 @@ exports[`commands/docker/builder works helm: build 1`] = `
         "HELM_VERSION=3.4.0",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "3",
         "3.4",
+      ],
+      "cacheToTags": [
+        "3.4",
+        "latest",
       ],
       "dryRun": undefined,
       "image": "helm",
@@ -226,9 +262,12 @@ exports[`commands/docker/builder works helm: build 1`] = `
         "HELM_VERSION=3.7.0",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "3",
+        "3.7",
       ],
+      "cacheToTags": [],
       "dryRun": undefined,
       "image": "helm",
       "imagePrefix": "renovate",
@@ -244,8 +283,12 @@ exports[`commands/docker/builder works helm: build 1`] = `
         "HELM_VERSION=3.7.1",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "3",
+        "3.7",
+      ],
+      "cacheToTags": [
         "3",
         "3.7",
       ],
@@ -272,8 +315,12 @@ exports[`commands/docker/builder works java: build 1`] = `
         "JAVA_VERSION=8.0.302+8",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "8",
+        "8.0",
+      ],
+      "cacheToTags": [
         "8",
         "8.0",
       ],
@@ -295,8 +342,12 @@ exports[`commands/docker/builder works java: build 1`] = `
         "JAVA_VERSION=11.0.12+7",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "11",
+        "11.0",
+      ],
+      "cacheToTags": [
         "11",
         "11.0",
       ],
@@ -318,10 +369,15 @@ exports[`commands/docker/builder works java: build 1`] = `
         "JAVA_VERSION=16.0.2+9",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
         "16",
         "16.0",
+      ],
+      "cacheToTags": [
+        "16",
+        "16.0",
+        "latest",
       ],
       "dryRun": undefined,
       "image": "java",
@@ -348,10 +404,15 @@ exports[`commands/docker/builder works pnpm: build 1`] = `
         "PNPM_VERSION=5.0.0",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "slim",
         "5-slim",
         "5.0-slim",
+      ],
+      "cacheToTags": [
+        "5-slim",
+        "5.0-slim",
+        "slim",
       ],
       "dryRun": undefined,
       "image": "pnpm",
@@ -377,9 +438,12 @@ exports[`commands/docker/builder works swift: build 1`] = `
         "SWIFT_VERSION=5.3",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "5",
+        "5.3",
       ],
+      "cacheToTags": [],
       "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
@@ -395,8 +459,12 @@ exports[`commands/docker/builder works swift: build 1`] = `
         "SWIFT_VERSION=5.3.1",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "5",
+        "5.3",
+      ],
+      "cacheToTags": [
         "5.3",
       ],
       "dryRun": undefined,
@@ -416,9 +484,12 @@ exports[`commands/docker/builder works swift: build 1`] = `
         "SWIFT_VERSION=5.4",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "5",
+        "5.4",
       ],
+      "cacheToTags": [],
       "dryRun": undefined,
       "image": "swift",
       "imagePrefix": "renovate",
@@ -434,8 +505,12 @@ exports[`commands/docker/builder works swift: build 1`] = `
         "SWIFT_VERSION=5.4.2",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "5",
+        "5.4",
+      ],
+      "cacheToTags": [
         "5",
         "5.4",
       ],
@@ -462,8 +537,12 @@ exports[`commands/docker/builder works ubuntu: build 1`] = `
         "UBUNTU_VERSION=bionic",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
+        "18",
+        "18.4",
+      ],
+      "cacheToTags": [
         "18",
         "18.4",
       ],
@@ -485,10 +564,15 @@ exports[`commands/docker/builder works ubuntu: build 1`] = `
         "UBUNTU_VERSION=focal",
       ],
       "cache": undefined,
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
         "20",
         "20.4",
+      ],
+      "cacheToTags": [
+        "20",
+        "20.4",
+        "latest",
       ],
       "dryRun": undefined,
       "image": "ubuntu",
@@ -514,10 +598,15 @@ exports[`commands/docker/builder works yarn: build 1`] = `
         "YARN_VERSION=1.22.4",
       ],
       "cache": "docker-build-cache",
-      "cacheTags": [
+      "cacheFromTags": [
         "latest",
         "1",
         "1.22",
+      ],
+      "cacheToTags": [
+        "1",
+        "1.22",
+        "latest",
       ],
       "dryRun": undefined,
       "image": "yarn",

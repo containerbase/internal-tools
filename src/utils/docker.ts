@@ -9,7 +9,8 @@ export type BuildOptions = {
   image: string;
   imagePrefix: string;
   cache?: string;
-  cacheTags?: string[];
+  cacheFromTags?: string[];
+  cacheToTags?: string[];
   tag?: string;
   tags?: string[];
   dryRun?: boolean;
@@ -32,7 +33,8 @@ export async function build({
   image,
   imagePrefix,
   cache,
-  cacheTags,
+  cacheFromTags,
+  cacheToTags,
   tag = 'latest',
   tags,
   dryRun,
@@ -54,14 +56,21 @@ export async function build({
     const cacheImage = `${imagePrefix}/${cache}:${image.replace(/\//g, '-')}`;
     args.push(`--cache-from=${cacheImage}-${tag}`);
 
-    if (is.nonEmptyArray(cacheTags)) {
-      for (const ctag of cacheTags) {
+    if (is.nonEmptyArray(cacheFromTags)) {
+      for (const ctag of cacheFromTags) {
         args.push(`--cache-from=${cacheImage}-${ctag}`);
       }
     }
 
     if (!dryRun && push) {
       args.push(`--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max`);
+      if (is.nonEmptyArray(cacheToTags)) {
+        for (const ctag of cacheToTags) {
+          args.push(
+            `--cache-to=type=registry,ref=${cacheImage}-${ctag},mode=max`
+          );
+        }
+      }
     }
   }
 
