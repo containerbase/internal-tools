@@ -48,13 +48,19 @@ const errors = [
 function canRetry(err) {
     return errors.some((str) => err.stderr.includes(str));
 }
-async function build({ image, imagePrefix, cache, cacheFromTags, cacheToTags, tag = 'latest', tags, dryRun, buildArgs, platforms, push, }) {
-    const args = ['build', `--tag=${imagePrefix}/${image}:${tag}`];
-    if (tags?.length) {
-        args.push(...tags.map((tag) => `--tag=${imagePrefix}/${image}:${tag}`));
-    }
+async function build({ image, imagePrefix, imagePrefixes, cache, cacheFromTags, cacheToTags, tag = 'latest', tags, dryRun, buildArgs, platforms, push, }) {
+    const args = ['build'];
     if (dist_default().nonEmptyArray(buildArgs)) {
         args.push(...buildArgs.map((b) => `--build-arg=${b}`));
+    }
+    if (platforms?.length) {
+        args.push(`--platform=${platforms.join(',')}`);
+    }
+    for (const prefix of [imagePrefix, ...(imagePrefixes ?? [])]) {
+        args.push(`--tag=${prefix}/${image}:${tag}`);
+        if (tags?.length) {
+            args.push(...tags.map((tag) => `--tag=${prefix}/${image}:${tag}`));
+        }
     }
     if (dist_default().string(cache)) {
         const cachePrefix = cache.split('/')[0]?.match(/[.:]/)
@@ -75,9 +81,6 @@ async function build({ image, imagePrefix, cache, cacheFromTags, cacheToTags, ta
                 }
             }
         }
-    }
-    if (platforms?.length) {
-        args.push(`--platform=${platforms.join(',')}`);
     }
     if (dryRun) {
         logger/* default.warn */.Z.warn(source.yellow('[DRY_RUN]'), source.blue('Would push'));
@@ -134,7 +137,7 @@ function createTag(tagSuffix, version) {
         ? `${version}-${tagSuffix}`
         : version;
 }
-async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly, cache, dryRun, tagSuffix, versioning, majorMinor, prune, platforms, skipLatestTag, }, tobuild) {
+async function buildAndPush({ imagePrefix, imagePrefixes, image, buildArg, buildArgs, buildOnly, cache, dryRun, tagSuffix, versioning, majorMinor, prune, platforms, skipLatestTag, }, tobuild) {
     const builds = [];
     const failed = [];
     const ver = (0,modules_versioning.get)(versioning);
@@ -204,6 +207,7 @@ async function buildAndPush({ imagePrefix, image, buildArg, buildArgs, buildOnly
             await build({
                 image,
                 imagePrefix,
+                imagePrefixes,
                 tag,
                 tags,
                 cache,
@@ -276,6 +280,7 @@ async function run() {
     const config = {
         ...cfg,
         imagePrefix: (0,util/* getArg */.a8)('image-prefix')?.replace(/\/$/, '') || 'renovate',
+        imagePrefixes: (0,util/* getArg */.a8)('image-prefixes', { multi: true })?.map((ip) => ip.replace(/\/$/, '')),
         image: cfg.image,
         depName: cfg.depName ?? cfg.image,
         buildArg: cfg.buildArg,
@@ -426,6 +431,10 @@ async function writeFile(file, contents) {
 }
 const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 function getArg(name, opts) {
+    // istanbul ignore if: just for local testing where dash is not allowed
+    if (process.env.NODE_ENV === 'debug') {
+        name = name.replace(/-/g, '_');
+    }
     const val = (0,_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)(name, opts);
     return opts?.multi
         ? val.split(MultiArgsSplitRe).filter((_sindresorhus_is__WEBPACK_IMPORTED_MODULE_7___default().nonEmptyStringAndNotWhitespace))

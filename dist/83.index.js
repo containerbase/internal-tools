@@ -510,6 +510,10 @@ async function writeFile(file, contents) {
 }
 const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 function getArg(name, opts) {
+    // istanbul ignore if: just for local testing where dash is not allowed
+    if (process.env.NODE_ENV === 'debug') {
+        name = name.replace(/-/g, '_');
+    }
     const val = (0,_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)(name, opts);
     return opts?.multi
         ? val.split(MultiArgsSplitRe).filter((_sindresorhus_is__WEBPACK_IMPORTED_MODULE_7___default().nonEmptyStringAndNotWhitespace))
