@@ -1,6 +1,9 @@
-[![Build status](https://github.com/renovatebot/internal-tools/workflows/build/badge.svg)](https://github.com/renovatebot/internal-tools/actions?query=workflow%3Abuild)
-
 # Renovate docker builder action
+
+[![Build status](https://github.com/renovatebot/internal-tools/workflows/build/badge.svg)](https://github.com/renovatebot/internal-tools/actions?query=workflow%3Abuild)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/containerbase/internal-tools)
+![Licence: AGPL-3.0](https://img.shields.io/github/license/containerbase/internal-tools)
+[![codecov](https://codecov.io/gh/containerbase/internal-tools/branch/main/graph/badge.svg?token=NF90aCGVDB)](https://codecov.io/gh/containerbase/internal-tools)
 
 Github Action used to build the [renovate](https://github.com/renovatebot/renovate) docker images
 
