@@ -1330,7 +1330,7 @@ exports.restEndpointMethods = restEndpointMethods;
 
 /***/ }),
 
-/***/ 15596:
+/***/ 43863:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -3078,8 +3078,11 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
 
 		if (headers['transfer-encoding'] === 'chunked' && !headers['content-length']) {
 			response.once('close', function (hadError) {
+				// tests for socket presence, as in some situations the
+				// the 'socket' event is not triggered for the request
+				// (happens in deno), avoids `TypeError`
 				// if a data listener is still present we didn't end cleanly
-				const hasDataListener = socket.listenerCount('data') > 0;
+				const hasDataListener = socket && socket.listenerCount('data') > 0;
 
 				if (hasDataListener && !hadError) {
 					const err = new Error('Premature close');
@@ -4207,7 +4210,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var endpoint = __webpack_require__(34518);
 var universalUserAgent = __webpack_require__(76723);
 var isPlainObject = __webpack_require__(43917);
-var nodeFetch = _interopDefault(__webpack_require__(15596));
+var nodeFetch = _interopDefault(__webpack_require__(43863));
 var requestError = __webpack_require__(37127);
 
 const VERSION = "5.6.3";
@@ -6620,7 +6623,7 @@ function __ncc_wildcard$0 (arg) {
   else if (arg === "popd.js" || arg === "popd") return __webpack_require__(21660);
   else if (arg === "pushd.js" || arg === "pushd") return __webpack_require__(4126);
   else if (arg === "pwd.js" || arg === "pwd") return __webpack_require__(49624);
-  else if (arg === "rm.js" || arg === "rm") return __webpack_require__(27758);
+  else if (arg === "rm.js" || arg === "rm") return __webpack_require__(66908);
   else if (arg === "sed.js" || arg === "sed") return __webpack_require__(40866);
   else if (arg === "set.js" || arg === "set") return __webpack_require__(25321);
   else if (arg === "sort.js" || arg === "sort") return __webpack_require__(34537);
@@ -9119,7 +9122,7 @@ var fs = __webpack_require__(57147);
 var path = __webpack_require__(71017);
 var common = __webpack_require__(84971);
 var cp = __webpack_require__(82877);
-var rm = __webpack_require__(27758);
+var rm = __webpack_require__(66908);
 
 common.register('mv', _mv, {
   cmdOptions: {
@@ -9276,7 +9279,7 @@ module.exports = _pwd;
 
 /***/ }),
 
-/***/ 27758:
+/***/ 66908:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var common = __webpack_require__(84971);
