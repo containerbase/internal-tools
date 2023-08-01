@@ -26,7 +26,7 @@ exports[`commands/binary/utils getConfig dummy (no-image) 1`] = `
   "ignoredVersions": [],
   "image": "dummy",
   "lastOnly": false,
-  "versioning": "semver",
+  "versioning": "semver-coerced",
 }
 `;
 
@@ -67,7 +67,7 @@ exports[`commands/binary/utils getConfig ruby 1`] = `
   "image": "ruby",
   "lastOnly": false,
   "startVersion": "2.5.0",
-  "versioning": "semver",
+  "versioning": "semver-coerced",
 }
 `;
 
