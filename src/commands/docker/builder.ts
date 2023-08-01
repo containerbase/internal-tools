@@ -10,7 +10,7 @@ import type { ConfigFile, DockerBuilderConfig } from '../../utils/types';
 import { getInput, setFailed } from '@actions/core';
 import is from '@sindresorhus/is';
 import * as chalk from 'chalk';
-import { getDefaultVersioning } from 'renovate/dist/modules/datasource';
+import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 
 function createTag(tagSuffix: string | undefined, version: string): string {
