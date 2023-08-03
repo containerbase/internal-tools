@@ -13449,6 +13449,8 @@ __nccwpck_require__.r(__webpack_exports__);
 var structured_clone = __nccwpck_require__(86869);
 // EXTERNAL MODULE: ../.yarn/cache/source-map-support-npm-0.5.21-09ca99e250-43e98d700d.zip/node_modules/source-map-support/register.js
 var register = __nccwpck_require__(62797);
+;// CONCATENATED MODULE: external "node:process"
+const external_node_process_namespaceObject = require("node:process");
 ;// CONCATENATED MODULE: ./types.ts
 var Commands;
 (function (Commands) {
@@ -13498,6 +13500,10 @@ async function run() {
 
 
 
+
+// We don't need it.
+// https://docs.renovatebot.com/self-hosted-experimental/#renovate_x_ignore_re2
+external_node_process_namespaceObject.env.RENOVATE_X_IGNORE_RE2 = 'true';
 run().catch(console.error);
 
 })();
