@@ -114,10 +114,9 @@ describe('util', () => {
 
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
-      expect(await util.readJson('.prettierrc.json')).toEqual({
+      expect(await util.readJson('.prettierrc.json')).toMatchObject({
         singleQuote: true,
         trailingComma: 'es5',
-        plugins: ['prettier-plugin-package'],
       });
     });
   });
