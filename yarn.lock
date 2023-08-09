@@ -2917,17 +2917,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/pep440@npm:2.1.20":
-  version: 2.1.20
-  resolution: "@renovatebot/pep440@npm:2.1.20"
-  checksum: 58ff26f52af8489497b7309aec9de752a63b065bf37da97091c01e6b753e4e47944ab7e9fe2c4eb1c374e327c2b08ade88e6fc7d781e32f8d47572f9f5128c3a
+"@renovatebot/pep440@npm:3.0.3":
+  version: 3.0.3
+  resolution: "@renovatebot/pep440@npm:3.0.3"
+  checksum: 843faa1f80accd01378dc5ee97b09de3ade55485c3d8a2a8cfb63b894a9cd49e3cef959e65731246b8511bd1906e4092230a829eb1d671d66c66c650f979b2d3
   languageName: node
   linkType: hard
 
-"@renovatebot/ruby-semver@npm:3.0.6":
-  version: 3.0.6
-  resolution: "@renovatebot/ruby-semver@npm:3.0.6"
-  checksum: 5ce17ba90945406311c2da210ea3cba381424f5d9004eff0fb7acfab448af7ac4ab2eecedb7353fb93cf98ba0a34ce66b6ffe6a08ef837384516270560951af7
+"@renovatebot/ruby-semver@npm:3.0.10":
+  version: 3.0.10
+  resolution: "@renovatebot/ruby-semver@npm:3.0.10"
+  checksum: ccc443b7f40a22f77aac30261816fbc829199571b58a879ca1b05ae2c7eb8bda845f2d52b680b4a03fe55291f4bf191dbe46430c756497461e2ad09ed998dd07
   languageName: node
   linkType: hard
 
@@ -7565,12 +7565,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"handlebars@npm:4.7.7, handlebars@npm:^4.7.7":
-  version: 4.7.7
-  resolution: "handlebars@npm:4.7.7"
+"handlebars@npm:4.7.8, handlebars@npm:^4.7.7":
+  version: 4.7.8
+  resolution: "handlebars@npm:4.7.8"
   dependencies:
     minimist: ^1.2.5
-    neo-async: ^2.6.0
+    neo-async: ^2.6.2
     source-map: ^0.6.1
     uglify-js: ^3.1.4
     wordwrap: ^1.0.0
@@ -7579,7 +7579,7 @@ __metadata:
       optional: true
   bin:
     handlebars: bin/handlebars
-  checksum: 1e79a43f5e18d15742977cb987923eab3e2a8f44f2d9d340982bcb69e1735ed049226e534d7c1074eaddaf37e4fb4f471a8adb71cddd5bc8cf3f894241df5cee
+  checksum: 00e68bb5c183fd7b8b63322e6234b5ac8fbb960d712cb3f25587d559c2951d9642df83c04a1172c918c41bcfc81bfbd7a7718bbce93b893e0135fc99edea93ff
   languageName: node
   linkType: hard
 
@@ -8039,7 +8039,7 @@ __metadata:
     prettier: 3.0.0
     prettier-plugin-packagejson: 2.4.5
     pretty-quick: 3.1.3
-    renovate: 36.27.1
+    renovate: 36.40.3
     rimraf: 5.0.1
     semantic-release: 21.0.7
     semver: 7.5.4
@@ -10191,7 +10191,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"neo-async@npm:^2.6.0":
+"neo-async@npm:^2.6.2":
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
   checksum: deac9f8d00eda7b2e5cd1b2549e26e10a0faa70adaa6fdadca701cc55f49ee9018e427f424bac0c790b7c7e2d3068db97f3093f1093975f2acb8f8818b936ed9
@@ -11525,14 +11525,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"re2@npm:1.19.1":
-  version: 1.19.1
-  resolution: "re2@npm:1.19.1"
+"re2@npm:1.20.1":
+  version: 1.20.1
+  resolution: "re2@npm:1.20.1"
   dependencies:
     install-artifact-from-github: ^1.3.3
     nan: ^2.17.0
     node-gyp: ^9.4.0
-  checksum: 44f752ebc03b9973d797f126787664f2763dc983d52a872833b4c8988e64db644a74fa76570112b1cd6e44b2f845d3e58e9779f1a917cb5a511044a6ba62a206
+  checksum: 89a4e64f7cdf747a951116ad7aa007d8323f9083d5e171214f71f5c2c297e649476dde2caf08c9d48f5a0a82341c63bf2c1932c86652a78147b87ba17536ca9d
   languageName: node
   linkType: hard
 
@@ -11803,9 +11803,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:36.27.1":
-  version: 36.27.1
-  resolution: "renovate@npm:36.27.1"
+"renovate@npm:36.40.3":
+  version: 36.40.3
+  resolution: "renovate@npm:36.40.3"
   dependencies:
     "@aws-sdk/client-codecommit": 3.363.0
     "@aws-sdk/client-ec2": 3.363.0
@@ -11827,8 +11827,8 @@ __metadata:
     "@opentelemetry/semantic-conventions": 1.15.1
     "@qnighy/marshal": 0.1.3
     "@renovatebot/osv-offline": 1.3.1
-    "@renovatebot/pep440": 2.1.20
-    "@renovatebot/ruby-semver": 3.0.6
+    "@renovatebot/pep440": 3.0.3
+    "@renovatebot/ruby-semver": 3.0.10
     "@sindresorhus/is": 4.6.0
     "@types/ms": 0.7.31
     "@types/tmp": 0.2.3
@@ -11867,7 +11867,7 @@ __metadata:
     good-enough-parser: 1.1.23
     got: 11.8.6
     graph-data-structure: 3.3.0
-    handlebars: 4.7.7
+    handlebars: 4.7.8
     hasha: 5.2.2
     ignore: 5.2.4
     ini: 4.1.1
@@ -11893,7 +11893,7 @@ __metadata:
     parse-link-header: 2.0.0
     prettier: 2.8.8
     quick-lru: 5.1.1
-    re2: 1.19.1
+    re2: 1.20.1
     redis: 4.6.7
     remark: 13.0.0
     remark-github: 10.1.0
@@ -11919,7 +11919,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: a0bc5363b51e9f29836c27f9d17114710766ca2dbaab5402363afb344e638354e12d799844a294cdd87f600d3780dfc4a9ed6d39c79b647c240c8410b9b4ff97
+  checksum: 6469fac3cbfc4cbd72c0b49729b0af81e1fb9ad84bfa276a34914b60f03fa9ba635ed990a3a33a06aaf822659bfc529eb523e4b06dd30043cf1430375cca8949
   languageName: node
   linkType: hard
 
