@@ -13362,14 +13362,6 @@ module.exports = require("node:dns");
 
 /***/ }),
 
-/***/ 15673:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("node:events");
-
-/***/ }),
-
 /***/ 93977:
 /***/ ((module) => {
 
@@ -13391,14 +13383,6 @@ module.exports = require("node:path");
 
 "use strict";
 module.exports = require("node:stream");
-
-/***/ }),
-
-/***/ 76915:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("node:string_decoder");
 
 /***/ }),
 
