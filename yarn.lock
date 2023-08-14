@@ -4542,18 +4542,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"agentkeepalive@npm:4.3.0":
-  version: 4.3.0
-  resolution: "agentkeepalive@npm:4.3.0"
-  dependencies:
-    debug: ^4.1.0
-    depd: ^2.0.0
-    humanize-ms: ^1.2.1
-  checksum: 982453aa44c11a06826c836025e5162c846e1200adb56f2d075400da7d32d87021b3b0a58768d949d824811f5654223d5a8a3dad120921a2439625eb847c6260
-  languageName: node
-  linkType: hard
-
-"agentkeepalive@npm:^4.2.1":
+"agentkeepalive@npm:4.5.0, agentkeepalive@npm:^4.2.1":
   version: 4.5.0
   resolution: "agentkeepalive@npm:4.5.0"
   dependencies:
@@ -6011,13 +6000,6 @@ __metadata:
   version: 1.0.0
   resolution: "delegates@npm:1.0.0"
   checksum: a51744d9b53c164ba9c0492471a1a2ffa0b6727451bdc89e31627fdf4adda9d51277cfcbfb20f0a6f08ccb3c436f341df3e92631a3440226d93a8971724771fd
-  languageName: node
-  linkType: hard
-
-"depd@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "depd@npm:2.0.0"
-  checksum: abbe19c768c97ee2eed6282d8ce3031126662252c58d711f646921c9623f9052e3e1906443066beec1095832f534e57c523b7333f8e7e0d93051ab6baef5ab3a
   languageName: node
   linkType: hard
 
@@ -8040,7 +8022,7 @@ __metadata:
     prettier: 3.0.1
     prettier-plugin-packagejson: 2.4.5
     pretty-quick: 3.1.3
-    renovate: 36.40.6
+    renovate: 36.42.4
     rimraf: 5.0.1
     semantic-release: 21.0.7
     semver: 7.5.4
@@ -11811,9 +11793,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:36.40.6":
-  version: 36.40.6
-  resolution: "renovate@npm:36.40.6"
+"renovate@npm:36.42.4":
+  version: 36.42.4
+  resolution: "renovate@npm:36.42.4"
   dependencies:
     "@aws-sdk/client-codecommit": 3.363.0
     "@aws-sdk/client-ec2": 3.363.0
@@ -11842,7 +11824,7 @@ __metadata:
     "@types/tmp": 0.2.3
     "@yarnpkg/core": 3.5.2
     "@yarnpkg/parsers": 2.5.1
-    agentkeepalive: 4.3.0
+    agentkeepalive: 4.5.0
     aggregate-error: 3.1.0
     auth-header: 1.0.0
     aws4: 1.12.0
@@ -11927,7 +11909,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: f1b8da18cd6c3d85245640d1bfe0c25405187fe3bfcba105555700d042e125c9eb43c9159fdfede2c972bf99aa7a781e7d63a3021ac37a11036141ed7973433c
+  checksum: a055b41e2f88b8ce1469a035dbab271b1816f13f2a89db3bb9011439b3e523ebaf78bb91aa6573b62ab41c89825fe84c921e6cf30cf219ed2b48bc2dcb0481ee
   languageName: node
   linkType: hard
 
