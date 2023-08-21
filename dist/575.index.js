@@ -1330,7 +1330,7 @@ exports.restEndpointMethods = restEndpointMethods;
 
 /***/ }),
 
-/***/ 43863:
+/***/ 44879:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -2699,10 +2699,6 @@ function getNodeRequestOptions(request) {
 	let agent = request.agent;
 	if (typeof agent === 'function') {
 		agent = agent(parsedURL);
-	}
-
-	if (!headers.has('Connection') && !agent) {
-		headers.set('Connection', 'close');
 	}
 
 	// HTTP-network fetch step 4.2
@@ -4210,7 +4206,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var endpoint = __webpack_require__(34518);
 var universalUserAgent = __webpack_require__(76723);
 var isPlainObject = __webpack_require__(43917);
-var nodeFetch = _interopDefault(__webpack_require__(43863));
+var nodeFetch = _interopDefault(__webpack_require__(44879));
 var requestError = __webpack_require__(37127);
 
 const VERSION = "5.6.3";
@@ -6624,7 +6620,7 @@ function __ncc_wildcard$0 (arg) {
   else if (arg === "pushd.js" || arg === "pushd") return __webpack_require__(4126);
   else if (arg === "pwd.js" || arg === "pwd") return __webpack_require__(49624);
   else if (arg === "rm.js" || arg === "rm") return __webpack_require__(66908);
-  else if (arg === "sed.js" || arg === "sed") return __webpack_require__(40866);
+  else if (arg === "sed.js" || arg === "sed") return __webpack_require__(68426);
   else if (arg === "set.js" || arg === "set") return __webpack_require__(25321);
   else if (arg === "sort.js" || arg === "sort") return __webpack_require__(34537);
   else if (arg === "tail.js" || arg === "tail") return __webpack_require__(54953);
@@ -9487,7 +9483,7 @@ module.exports = _rm;
 
 /***/ }),
 
-/***/ 40866:
+/***/ 68426:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var common = __webpack_require__(84971);
