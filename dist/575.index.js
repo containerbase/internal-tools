@@ -1330,7 +1330,7 @@ exports.restEndpointMethods = restEndpointMethods;
 
 /***/ }),
 
-/***/ 44879:
+/***/ 91078:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -3120,6 +3120,7 @@ exports.Headers = Headers;
 exports.Request = Request;
 exports.Response = Response;
 exports.FetchError = FetchError;
+exports.AbortError = AbortError;
 
 
 /***/ }),
@@ -4206,7 +4207,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var endpoint = __webpack_require__(34518);
 var universalUserAgent = __webpack_require__(76723);
 var isPlainObject = __webpack_require__(43917);
-var nodeFetch = _interopDefault(__webpack_require__(44879));
+var nodeFetch = _interopDefault(__webpack_require__(91078));
 var requestError = __webpack_require__(37127);
 
 const VERSION = "5.6.3";
