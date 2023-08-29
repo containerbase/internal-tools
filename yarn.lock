@@ -3874,13 +3874,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:29.5.3":
-  version: 29.5.3
-  resolution: "@types/jest@npm:29.5.3"
+"@types/jest@npm:29.5.4":
+  version: 29.5.4
+  resolution: "@types/jest@npm:29.5.4"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: e36bb92e0b9e5ea7d6f8832baa42f087fc1697f6cd30ec309a07ea4c268e06ec460f1f0cfd2581daf5eff5763475190ec1ad8ac6520c49ccfe4f5c0a48bfa676
+  checksum: 38ed5942f44336452efd0f071eab60aaa57cd8d46530348d0a3aa5a691dcbf1366c4ca8f6ee8364efb45b4413bfefae443e5d4f469246a472a03b21ac11cd4ed
   languageName: node
   linkType: hard
 
@@ -8062,7 +8062,7 @@ __metadata:
     "@tsconfig/node16": 1.0.4
     "@tsconfig/strictest": 2.0.1
     "@types/auth-header": 1.0.2
-    "@types/jest": 29.5.3
+    "@types/jest": 29.5.4
     "@types/node": 16.18.42
     "@types/semver": 7.5.0
     "@types/shelljs": 0.8.12
