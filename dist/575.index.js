@@ -6621,13 +6621,13 @@ function __ncc_wildcard$0 (arg) {
   else if (arg === "pushd.js" || arg === "pushd") return __webpack_require__(4126);
   else if (arg === "pwd.js" || arg === "pwd") return __webpack_require__(49624);
   else if (arg === "rm.js" || arg === "rm") return __webpack_require__(66908);
-  else if (arg === "sed.js" || arg === "sed") return __webpack_require__(68426);
+  else if (arg === "sed.js" || arg === "sed") return __webpack_require__(40866);
   else if (arg === "set.js" || arg === "set") return __webpack_require__(25321);
   else if (arg === "sort.js" || arg === "sort") return __webpack_require__(34537);
   else if (arg === "tail.js" || arg === "tail") return __webpack_require__(54953);
   else if (arg === "tempdir.js" || arg === "tempdir") return __webpack_require__(15259);
   else if (arg === "test.js" || arg === "test") return __webpack_require__(41621);
-  else if (arg === "to.js" || arg === "to") return __webpack_require__(69753);
+  else if (arg === "to.js" || arg === "to") return __webpack_require__(56320);
   else if (arg === "toEnd.js" || arg === "toEnd") return __webpack_require__(42500);
   else if (arg === "touch.js" || arg === "touch") return __webpack_require__(70096);
   else if (arg === "uniq.js" || arg === "uniq") return __webpack_require__(67978);
@@ -9484,7 +9484,7 @@ module.exports = _rm;
 
 /***/ }),
 
-/***/ 68426:
+/***/ 40866:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var common = __webpack_require__(84971);
@@ -10006,7 +10006,7 @@ module.exports = _test;
 
 /***/ }),
 
-/***/ 69753:
+/***/ 56320:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var common = __webpack_require__(84971);
