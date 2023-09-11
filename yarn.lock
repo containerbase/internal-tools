@@ -7675,22 +7675,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:10.3.3":
-  version: 10.3.3
-  resolution: "glob@npm:10.3.3"
-  dependencies:
-    foreground-child: ^3.1.0
-    jackspeak: ^2.0.3
-    minimatch: ^9.0.1
-    minipass: ^5.0.0 || ^6.0.2 || ^7.0.0
-    path-scurry: ^1.10.1
-  bin:
-    glob: dist/cjs/src/bin.js
-  checksum: 29190d3291f422da0cb40b77a72fc8d2c51a36524e99b8bf412548b7676a6627489528b57250429612b6eec2e6fe7826d328451d3e694a9d15e575389308ec53
-  languageName: node
-  linkType: hard
-
-"glob@npm:^10.2.2, glob@npm:^10.2.5, glob@npm:^10.2.7":
+"glob@npm:10.3.4, glob@npm:^10.2.2, glob@npm:^10.2.5, glob@npm:^10.2.7":
   version: 10.3.4
   resolution: "glob@npm:10.3.4"
   dependencies:
@@ -8363,7 +8348,7 @@ __metadata:
     prettier: 3.0.3
     prettier-plugin-packagejson: 2.4.5
     pretty-quick: 3.1.3
-    renovate: 36.78.8
+    renovate: 36.91.0
     rimraf: 5.0.1
     semantic-release: 21.1.1
     semver: 7.5.4
@@ -9933,10 +9918,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:3.4.2, luxon@npm:^3.2.1, luxon@npm:^3.4.2":
-  version: 3.4.2
-  resolution: "luxon@npm:3.4.2"
-  checksum: efefdfaea90f4c8e502db8eb255385e6dac6733b6a9e1372eaf1a866cc1118363e235a3f6df505b837abc8bbcdfd8f0718a8de387b80cef9ee624d8791ca0844
+"luxon@npm:3.4.3, luxon@npm:^3.2.1, luxon@npm:^3.4.2":
+  version: 3.4.3
+  resolution: "luxon@npm:3.4.3"
+  checksum: 3eade81506224d038ed24035a0cd0dd4887848d7eba9361dce9ad8ef81380596a68153240be3988721f9690c624fb449fcf8fd8c3fc0681a6a8496faf48e92a3
   languageName: node
   linkType: hard
 
@@ -12267,9 +12252,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:36.78.8":
-  version: 36.78.8
-  resolution: "renovate@npm:36.78.8"
+"renovate@npm:36.91.0":
+  version: 36.91.0
+  resolution: "renovate@npm:36.91.0"
   dependencies:
     "@aws-sdk/client-codecommit": 3.363.0
     "@aws-sdk/client-ec2": 3.363.0
@@ -12327,7 +12312,7 @@ __metadata:
     fs-extra: 11.1.1
     git-url-parse: 13.1.0
     github-url-from-git: 1.5.0
-    glob: 10.3.3
+    glob: 10.3.4
     global-agent: 3.0.0
     good-enough-parser: 1.1.23
     got: 11.8.6
@@ -12342,7 +12327,7 @@ __metadata:
     json5: 2.2.3
     jsonata: 2.0.3
     klona: 2.0.6
-    luxon: 3.4.2
+    luxon: 3.4.3
     markdown-it: 13.0.1
     markdown-table: 2.0.0
     minimatch: 9.0.3
@@ -12384,7 +12369,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 18d9b4e712dfe0f71784b69d98922a4423fa404362c403575b9cf4103d9ff894758cceb638eda08cfd298abc4cae9f1b6b4006eb0f94cde537559883575d59ed
+  checksum: d87fa3064a2bc46b626f408c54263fb4ab6fc7559e494b0f151229e328b675e3230cbe8db27f0d3f28ec5379228719f663766c6bafb8094dbcf6d861ed7862d5
   languageName: node
   linkType: hard
 

@@ -40,7 +40,7 @@
     "escape-string-regexp": "4.0.0",
     "find-up": "5.0.0",
     "got": "11.8.6",
-    "renovate": "36.78.8",
+    "renovate": "36.91.0",
     "semver": "7.5.4",
     "shelljs": "0.8.5",
     "source-map-support": "0.5.21",
