@@ -3189,33 +3189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:9.0.4":
-  version: 9.0.4
-  resolution: "@semantic-release/github@npm:9.0.4"
-  dependencies:
-    "@octokit/core": ^5.0.0
-    "@octokit/plugin-paginate-rest": ^8.0.0
-    "@octokit/plugin-retry": ^6.0.0
-    "@octokit/plugin-throttling": ^7.0.0
-    "@semantic-release/error": ^4.0.0
-    aggregate-error: ^4.0.1
-    debug: ^4.3.4
-    dir-glob: ^3.0.1
-    globby: ^13.1.4
-    http-proxy-agent: ^7.0.0
-    https-proxy-agent: ^7.0.0
-    issue-parser: ^6.0.0
-    lodash-es: ^4.17.21
-    mime: ^3.0.0
-    p-filter: ^3.0.0
-    url-join: ^5.0.0
-  peerDependencies:
-    semantic-release: ">=20.1.0"
-  checksum: aaebe4260915a3bae119bae1d7b1fbd5cfbd3db512d90fe2b2cc6528306f887af348d560d9db09355943743670cdee7c9d4204cd79dc5e2eb594ab21534bf551
-  languageName: node
-  linkType: hard
-
-"@semantic-release/github@npm:^9.0.0":
+"@semantic-release/github@npm:9.0.5, @semantic-release/github@npm:^9.0.0":
   version: 9.0.5
   resolution: "@semantic-release/github@npm:9.0.5"
   dependencies:
@@ -8336,7 +8310,7 @@ __metadata:
     "@jest/globals": 29.6.4
     "@renovate/eslint-plugin": "https://github.com/renovatebot/eslint-plugin#v0.0.5"
     "@semantic-release/git": 10.0.1
-    "@semantic-release/github": 9.0.4
+    "@semantic-release/github": 9.0.5
     "@semantic-release/npm": 10.0.5
     "@sindresorhus/is": 4.6.0
     "@tsconfig/node16": 1.0.4
