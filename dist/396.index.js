@@ -112,8 +112,8 @@ async function cosign(...args) {
     return await (0,util/* exec */.GL)('cosign', [...args]);
 }
 
-// EXTERNAL MODULE: ../.yarn/cache/@actions-core-npm-1.10.0-6885534582-0a75621e00.zip/node_modules/@actions/core/lib/core.js
-var core = __webpack_require__(79184);
+// EXTERNAL MODULE: ../.yarn/cache/@actions-core-npm-1.10.1-3cb1000b4d-96524c2725.zip/node_modules/@actions/core/lib/core.js
+var core = __webpack_require__(80002);
 // EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.96.3-b7a6921aa0-ce0b21e38c.zip/node_modules/renovate/dist/modules/datasource/common.js
 var datasource_common = __webpack_require__(6398);
 // EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.96.3-b7a6921aa0-ce0b21e38c.zip/node_modules/renovate/dist/modules/versioning/index.js
@@ -334,7 +334,7 @@ async function run() {
 /* harmony import */ var node_path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(49411);
 /* harmony import */ var node_path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(node_path__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5689);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(79184);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(80002);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _actions_exec__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(84935);
 /* harmony import */ var _actions_exec__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_actions_exec__WEBPACK_IMPORTED_MODULE_4__);

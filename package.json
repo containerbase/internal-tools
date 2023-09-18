@@ -1,6 +1,6 @@
 {
   "name": "internal-tools",
-  "version": "1.21.25",
+  "version": "1.21.26",
   "private": true,
   "repository": "https://github.com/renovatebot/internal-tools.git",
   "license": "AGPL-3.0",
