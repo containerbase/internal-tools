@@ -3093,18 +3093,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/osv-offline@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@renovatebot/osv-offline@npm:1.3.6"
+"@renovatebot/osv-offline@npm:1.3.7":
+  version: 1.3.7
+  resolution: "@renovatebot/osv-offline@npm:1.3.7"
   dependencies:
     "@octokit/rest": ^19.0.13
     "@renovatebot/osv-offline-db": 1.4.0
     adm-zip: ~0.5.10
     fs-extra: ^11.1.1
     got: ^11.8.6
-    luxon: ^3.4.2
+    luxon: ^3.4.3
     node-fetch: ^2.7.0
-  checksum: 1eaeb2a5a77ead7cc587fab07635a66854c0baf98b9e8b866502d41578fb825ed57932590034ea722192c67251392c8e6f6ca5592bf1c1ae60b8e0ef28ddb131
+  checksum: 762c3357f9e9ea6c34442cfcd2e53e41c4d940a4476fd09519301e37167c35e3f1b59a62658c4f9c49c322ee824575cd072a44fcba1db9be37a34dea544de483
   languageName: node
   linkType: hard
 
@@ -3115,10 +3115,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/ruby-semver@npm:3.0.13":
-  version: 3.0.13
-  resolution: "@renovatebot/ruby-semver@npm:3.0.13"
-  checksum: 8db49acf23caa5788233d01c0b11923461ef55aab26547cd6c12b7cbe2fb0be398365251a0490af78f6e9683e86cec8635719e7b0f5f4def296657589eb046c7
+"@renovatebot/ruby-semver@npm:3.0.14":
+  version: 3.0.14
+  resolution: "@renovatebot/ruby-semver@npm:3.0.14"
+  checksum: 4a0eda54ec5e43d7bf5ed4a11bb349f75b9799b6722e9b4ec153bd39f8f62dd597979c7e7a7a8626089d97207a295e0132acfc0c6ea666f2089f510078b612a8
   languageName: node
   linkType: hard
 
@@ -5450,27 +5450,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cacache@npm:17.1.4, cacache@npm:^17.0.0, cacache@npm:^17.0.4, cacache@npm:^17.1.3":
-  version: 17.1.4
-  resolution: "cacache@npm:17.1.4"
-  dependencies:
-    "@npmcli/fs": ^3.1.0
-    fs-minipass: ^3.0.0
-    glob: ^10.2.2
-    lru-cache: ^7.7.1
-    minipass: ^7.0.3
-    minipass-collect: ^1.0.2
-    minipass-flush: ^1.0.5
-    minipass-pipeline: ^1.2.4
-    p-map: ^4.0.0
-    ssri: ^10.0.0
-    tar: ^6.1.11
-    unique-filename: ^3.0.0
-  checksum: b7751df756656954a51201335addced8f63fc53266fa56392c9f5ae83c8d27debffb4458ac2d168a744a4517ec3f2163af05c20097f93d17bdc2dc8a385e14a6
-  languageName: node
-  linkType: hard
-
-"cacache@npm:^18.0.0":
+"cacache@npm:18.0.0, cacache@npm:^18.0.0":
   version: 18.0.0
   resolution: "cacache@npm:18.0.0"
   dependencies:
@@ -5487,6 +5467,26 @@ __metadata:
     tar: ^6.1.11
     unique-filename: ^3.0.0
   checksum: 2cd6bf15551abd4165acb3a4d1ef0593b3aa2fd6853ae16b5bb62199c2faecf27d36555a9545c0e07dd03347ec052e782923bdcece724a24611986aafb53e152
+  languageName: node
+  linkType: hard
+
+"cacache@npm:^17.0.0, cacache@npm:^17.0.4, cacache@npm:^17.1.3":
+  version: 17.1.4
+  resolution: "cacache@npm:17.1.4"
+  dependencies:
+    "@npmcli/fs": ^3.1.0
+    fs-minipass: ^3.0.0
+    glob: ^10.2.2
+    lru-cache: ^7.7.1
+    minipass: ^7.0.3
+    minipass-collect: ^1.0.2
+    minipass-flush: ^1.0.5
+    minipass-pipeline: ^1.2.4
+    p-map: ^4.0.0
+    ssri: ^10.0.0
+    tar: ^6.1.11
+    unique-filename: ^3.0.0
+  checksum: b7751df756656954a51201335addced8f63fc53266fa56392c9f5ae83c8d27debffb4458ac2d168a744a4517ec3f2163af05c20097f93d17bdc2dc8a385e14a6
   languageName: node
   linkType: hard
 
@@ -8349,7 +8349,7 @@ __metadata:
     prettier: 3.0.3
     prettier-plugin-packagejson: 2.4.5
     pretty-quick: 3.1.3
-    renovate: 36.91.0
+    renovate: 36.96.3
     rimraf: 5.0.1
     semantic-release: 21.1.1
     semver: 7.5.4
@@ -9919,7 +9919,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:3.4.3, luxon@npm:^3.2.1, luxon@npm:^3.4.2":
+"luxon@npm:3.4.3, luxon@npm:^3.2.1, luxon@npm:^3.4.3":
   version: 3.4.3
   resolution: "luxon@npm:3.4.3"
   checksum: 3eade81506224d038ed24035a0cd0dd4887848d7eba9361dce9ad8ef81380596a68153240be3988721f9690c624fb449fcf8fd8c3fc0681a6a8496faf48e92a3
@@ -10618,13 +10618,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-html-parser@npm:6.1.6":
-  version: 6.1.6
-  resolution: "node-html-parser@npm:6.1.6"
+"node-html-parser@npm:6.1.8":
+  version: 6.1.8
+  resolution: "node-html-parser@npm:6.1.8"
   dependencies:
     css-select: ^5.1.0
     he: 1.2.0
-  checksum: 594dd7daf9c4894be632070e08491e2ac0397c64fabd2cba15c5e7f62f74c6f2d7e3be40931c22033233525dd8fb98ebf3e3017001d7030fa7d0d387f2a18680
+  checksum: ac0225f3b7a7d84f56a247f4d91d9fd0a4a6e7f43c081e53994806e73dcf33370f663010638269b1cc5976451c0667fa19aa157a6a83b21e0ebf48671e223126
   languageName: node
   linkType: hard
 
@@ -12253,9 +12253,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:36.91.0":
-  version: 36.91.0
-  resolution: "renovate@npm:36.91.0"
+"renovate@npm:36.96.3":
+  version: 36.96.3
+  resolution: "renovate@npm:36.96.3"
   dependencies:
     "@aws-sdk/client-codecommit": 3.363.0
     "@aws-sdk/client-ec2": 3.363.0
@@ -12277,9 +12277,9 @@ __metadata:
     "@opentelemetry/sdk-trace-node": 1.15.2
     "@opentelemetry/semantic-conventions": 1.15.2
     "@qnighy/marshal": 0.1.3
-    "@renovatebot/osv-offline": 1.3.6
+    "@renovatebot/osv-offline": 1.3.7
     "@renovatebot/pep440": 3.0.7
-    "@renovatebot/ruby-semver": 3.0.13
+    "@renovatebot/ruby-semver": 3.0.14
     "@sindresorhus/is": 4.6.0
     "@types/ms": 0.7.31
     "@types/tmp": 0.2.3
@@ -12291,7 +12291,7 @@ __metadata:
     aws4: 1.12.0
     azure-devops-node-api: 12.1.0
     bunyan: 1.8.15
-    cacache: 17.1.4
+    cacache: 18.0.0
     cacheable-lookup: 5.0.4
     chalk: 4.1.2
     changelog-filename-regex: 2.0.1
@@ -12335,7 +12335,7 @@ __metadata:
     moo: 0.5.2
     ms: 2.1.3
     nanoid: 3.3.6
-    node-html-parser: 6.1.6
+    node-html-parser: 6.1.8
     openpgp: 5.10.1
     p-all: 3.0.0
     p-map: 4.0.0
@@ -12370,7 +12370,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: d87fa3064a2bc46b626f408c54263fb4ab6fc7559e494b0f151229e328b675e3230cbe8db27f0d3f28ec5379228719f663766c6bafb8094dbcf6d861ed7862d5
+  checksum: ce0b21e38c7ad032be26fb085aa3ebae77f143046dba4e5fc879e5c78942fefaa8462dfb90ee767eb3cc0940db06a4d9571699610096f6b75b01b489e7b04c85
   languageName: node
   linkType: hard
 
