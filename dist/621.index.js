@@ -6615,7 +6615,7 @@ function __ncc_wildcard$0 (arg) {
   else if (arg === "head.js" || arg === "head") return __webpack_require__(40618);
   else if (arg === "ln.js" || arg === "ln") return __webpack_require__(97054);
   else if (arg === "ls.js" || arg === "ls") return __webpack_require__(47527);
-  else if (arg === "mkdir.js" || arg === "mkdir") return __webpack_require__(20480);
+  else if (arg === "mkdir.js" || arg === "mkdir") return __webpack_require__(19174);
   else if (arg === "mv.js" || arg === "mv") return __webpack_require__(41712);
   else if (arg === "popd.js" || arg === "popd") return __webpack_require__(406);
   else if (arg === "pushd.js" || arg === "pushd") return __webpack_require__(20270);
@@ -9005,7 +9005,7 @@ module.exports = _ls;
 
 /***/ }),
 
-/***/ 20480:
+/***/ 19174:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var common = __webpack_require__(47471);
