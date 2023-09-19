@@ -1682,7 +1682,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/core@npm:^29.6.4, @jest/core@npm:^29.7.0":
+"@jest/core@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/core@npm:29.7.0"
   dependencies:
@@ -1723,7 +1723,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/environment@npm:^29.6.4, @jest/environment@npm:^29.7.0":
+"@jest/environment@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/environment@npm:29.7.0"
   dependencies:
@@ -1744,7 +1744,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/expect@npm:^29.6.4, @jest/expect@npm:^29.7.0":
+"@jest/expect@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/expect@npm:29.7.0"
   dependencies:
@@ -1768,19 +1768,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/globals@npm:29.6.4":
-  version: 29.6.4
-  resolution: "@jest/globals@npm:29.6.4"
-  dependencies:
-    "@jest/environment": ^29.6.4
-    "@jest/expect": ^29.6.4
-    "@jest/types": ^29.6.3
-    jest-mock: ^29.6.3
-  checksum: a41b18871a248151264668a38b13cb305f03db112bfd89ec44e858af0e79066e0b03d6b68c8baf1ec6c578be6fdb87519389c83438608b91471d17a5724858e0
-  languageName: node
-  linkType: hard
-
-"@jest/globals@npm:^29.7.0":
+"@jest/globals@npm:29.7.0, @jest/globals@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/globals@npm:29.7.0"
   dependencies:
@@ -8430,7 +8418,7 @@ __metadata:
     "@actions/exec": 1.1.1
     "@actions/github": 5.1.1
     "@actions/io": 1.1.3
-    "@jest/globals": 29.6.4
+    "@jest/globals": 29.7.0
     "@renovate/eslint-plugin": "https://github.com/renovatebot/eslint-plugin#v0.0.5"
     "@semantic-release/git": 10.0.1
     "@semantic-release/github": 9.0.5
@@ -8465,7 +8453,7 @@ __metadata:
     find-up: 5.0.0
     got: 11.8.6
     husky: 8.0.3
-    jest: 29.6.4
+    jest: 29.7.0
     jest-extended: 4.0.1
     nock: 13.3.3
     npm-run-all: 4.1.5
@@ -9064,7 +9052,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-cli@npm:^29.6.4":
+"jest-cli@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest-cli@npm:29.7.0"
   dependencies:
@@ -9260,7 +9248,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-mock@npm:^29.6.3, jest-mock@npm:^29.7.0":
+"jest-mock@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest-mock@npm:29.7.0"
   dependencies:
@@ -9460,14 +9448,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:29.6.4":
-  version: 29.6.4
-  resolution: "jest@npm:29.6.4"
+"jest@npm:29.7.0":
+  version: 29.7.0
+  resolution: "jest@npm:29.7.0"
   dependencies:
-    "@jest/core": ^29.6.4
+    "@jest/core": ^29.7.0
     "@jest/types": ^29.6.3
     import-local: ^3.0.2
-    jest-cli: ^29.6.4
+    jest-cli: ^29.7.0
   peerDependencies:
     node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
   peerDependenciesMeta:
@@ -9475,7 +9463,7 @@ __metadata:
       optional: true
   bin:
     jest: bin/jest.js
-  checksum: ba28ca7a86d029bcd742bb254c0c8d0119c1e002ddae128ff6409ebabc0b29c36f69dbf3fdd326aff16e7b2500c9a918bbc6a9a5db4d966e035127242239439f
+  checksum: 17ca8d67504a7dbb1998cf3c3077ec9031ba3eb512da8d71cb91bcabb2b8995c4e4b292b740cb9bf1cbff5ce3e110b3f7c777b0cefb6f41ab05445f248d0ee0b
   languageName: node
   linkType: hard
 
