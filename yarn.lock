@@ -3196,33 +3196,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:9.0.5":
-  version: 9.0.5
-  resolution: "@semantic-release/github@npm:9.0.5"
-  dependencies:
-    "@octokit/core": ^5.0.0
-    "@octokit/plugin-paginate-rest": ^8.0.0
-    "@octokit/plugin-retry": ^6.0.0
-    "@octokit/plugin-throttling": ^7.0.0
-    "@semantic-release/error": ^4.0.0
-    aggregate-error: ^4.0.1
-    debug: ^4.3.4
-    dir-glob: ^3.0.1
-    globby: ^13.1.4
-    http-proxy-agent: ^7.0.0
-    https-proxy-agent: ^7.0.0
-    issue-parser: ^6.0.0
-    lodash-es: ^4.17.21
-    mime: ^3.0.0
-    p-filter: ^3.0.0
-    url-join: ^5.0.0
-  peerDependencies:
-    semantic-release: ">=20.1.0"
-  checksum: b4572431e094fac33c4b2235b882840bb16ea33de8202c3eece678dac4089b663508f1c2433503ad08f8eebefb7329a666f095394d1786ad2c6c4e38c3277d70
-  languageName: node
-  linkType: hard
-
-"@semantic-release/github@npm:^9.0.0":
+"@semantic-release/github@npm:9.0.6, @semantic-release/github@npm:^9.0.0":
   version: 9.0.6
   resolution: "@semantic-release/github@npm:9.0.6"
   dependencies:
@@ -3248,30 +3222,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/npm@npm:10.0.5":
-  version: 10.0.5
-  resolution: "@semantic-release/npm@npm:10.0.5"
-  dependencies:
-    "@semantic-release/error": ^4.0.0
-    aggregate-error: ^4.0.1
-    execa: ^8.0.0
-    fs-extra: ^11.0.0
-    lodash-es: ^4.17.21
-    nerf-dart: ^1.0.0
-    normalize-url: ^8.0.0
-    npm: ^9.5.0
-    rc: ^1.2.8
-    read-pkg: ^8.0.0
-    registry-auth-token: ^5.0.0
-    semver: ^7.1.2
-    tempy: ^3.0.0
-  peerDependencies:
-    semantic-release: ">=20.1.0"
-  checksum: 380f9c3db37b7f8bb0e66f6c0d4d1c816479b9bca5e28aa53d1f0759fbad6646ea1f5d7e14713232330e9fd8ad4d09f2df30619d6ab754f6315fa148b0c09830
-  languageName: node
-  linkType: hard
-
-"@semantic-release/npm@npm:^10.0.2":
+"@semantic-release/npm@npm:10.0.6, @semantic-release/npm@npm:^10.0.2":
   version: 10.0.6
   resolution: "@semantic-release/npm@npm:10.0.6"
   dependencies:
@@ -8414,8 +8365,8 @@ __metadata:
     "@jest/globals": 29.7.0
     "@renovate/eslint-plugin": "https://github.com/renovatebot/eslint-plugin#v0.0.5"
     "@semantic-release/git": 10.0.1
-    "@semantic-release/github": 9.0.5
-    "@semantic-release/npm": 10.0.5
+    "@semantic-release/github": 9.0.6
+    "@semantic-release/npm": 10.0.6
     "@sindresorhus/is": 4.6.0
     "@tsconfig/node16": 1.0.4
     "@tsconfig/strictest": 2.0.2
