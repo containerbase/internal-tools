@@ -4547,7 +4547,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/core@npm:^4.0.0-rc.50":
+"@yarnpkg/core@npm:^4.0.0-rc.51":
   version: 4.0.0-rc.51
   resolution: "@yarnpkg/core@npm:4.0.0-rc.51"
   dependencies:
@@ -4591,7 +4591,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/fslib@npm:^3.0.0-rc.50, @yarnpkg/fslib@npm:^3.0.0-rc.51":
+"@yarnpkg/fslib@npm:^3.0.0-rc.51":
   version: 3.0.0-rc.51
   resolution: "@yarnpkg/fslib@npm:3.0.0-rc.51"
   dependencies:
@@ -4643,7 +4643,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/parsers@npm:^3.0.0-rc.50, @yarnpkg/parsers@npm:^3.0.0-rc.51":
+"@yarnpkg/parsers@npm:^3.0.0-rc.51":
   version: 3.0.0-rc.51
   resolution: "@yarnpkg/parsers@npm:3.0.0-rc.51"
   dependencies:
@@ -4663,13 +4663,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/sdks@npm:3.0.0-rc.50":
-  version: 3.0.0-rc.50
-  resolution: "@yarnpkg/sdks@npm:3.0.0-rc.50"
+"@yarnpkg/sdks@npm:3.0.0-rc.51":
+  version: 3.0.0-rc.51
+  resolution: "@yarnpkg/sdks@npm:3.0.0-rc.51"
   dependencies:
-    "@yarnpkg/core": ^4.0.0-rc.50
-    "@yarnpkg/fslib": ^3.0.0-rc.50
-    "@yarnpkg/parsers": ^3.0.0-rc.50
+    "@yarnpkg/core": ^4.0.0-rc.51
+    "@yarnpkg/fslib": ^3.0.0-rc.51
+    "@yarnpkg/parsers": ^3.0.0-rc.51
     chalk: ^3.0.0
     clipanion: ^4.0.0-rc.2
     comment-json: ^2.2.0
@@ -4677,7 +4677,7 @@ __metadata:
     tslib: ^2.4.0
   bin:
     sdks: ./lib/cli.js
-  checksum: c6364f044ae8d628604c387cc49cc55ebf55f76cda5902cd9e1d1838551bb68b7a51fa6b23c1e3439be649812e6476573fbe97214ca5de3082d27915e7bbf053
+  checksum: b3895f0430643ae3f6834712d7d87487befcff186e225dba9c0ee789e6359f5d2ff890ecacd7a53f93afc91cc342946e4118cbe4bc1fb61530534d07ad51c745
   languageName: node
   linkType: hard
 
@@ -8378,7 +8378,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 6.7.0
     "@typescript-eslint/parser": 6.7.0
     "@vercel/ncc": 0.38.0
-    "@yarnpkg/sdks": 3.0.0-rc.50
+    "@yarnpkg/sdks": 3.0.0-rc.51
     auth-header: 1.0.0
     chalk: 4.1.2
     conventional-changelog-conventionalcommits: 6.1.0
