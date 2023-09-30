@@ -4062,10 +4062,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/auth-header@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@types/auth-header@npm:1.0.2"
-  checksum: 0fe39eea782a05195a99fc6dc919ac45ae3d320738b9ed4d8471529bb2e0e1759a9d5a669c418610fa1c5e7639ed3548e34089ff9bbd9f871a04dd614417a804
+"@types/auth-header@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@types/auth-header@npm:1.0.3"
+  checksum: 220115ae3d5a66cebd8fbdb9cd11fd684995e67c944ba486eb556600cf8cdacf797fa4c49cc1e434c07b45a005af7f579eb2bd71aa38902e7db28947db3ebf9e
   languageName: node
   linkType: hard
 
@@ -8528,7 +8528,7 @@ __metadata:
     "@sindresorhus/is": 4.6.0
     "@tsconfig/node16": 1.0.4
     "@tsconfig/strictest": 2.0.2
-    "@types/auth-header": 1.0.2
+    "@types/auth-header": 1.0.3
     "@types/jest": 29.5.5
     "@types/node": 16.18.53
     "@types/semver": 7.5.2
