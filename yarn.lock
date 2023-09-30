@@ -2470,17 +2470,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/plugin-paginate-rest@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "@octokit/plugin-paginate-rest@npm:8.0.0"
-  dependencies:
-    "@octokit/types": ^11.0.0
-  peerDependencies:
-    "@octokit/core": ">=5"
-  checksum: b5d7cee50523862c6ce7be057f7200e14ee4dcded462f27304c822c960a37efa23ed51080ea879f5d1e56e78f74baa17d2ce32eed5d726794abc35755777e32c
-  languageName: node
-  linkType: hard
-
 "@octokit/plugin-paginate-rest@npm:^9.0.0":
   version: 9.0.0
   resolution: "@octokit/plugin-paginate-rest@npm:9.0.0"
@@ -2534,18 +2523,6 @@ __metadata:
   peerDependencies:
     "@octokit/core": ">=5"
   checksum: 9c8663b5257cf4fa04cc737c064e9557501719d6d3af7cf8f46434a2117e1cf4b8d25d9eb4294ed255ad17a0ede853542649870612733f4b8ece97e24e391d22
-  languageName: node
-  linkType: hard
-
-"@octokit/plugin-throttling@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@octokit/plugin-throttling@npm:7.0.0"
-  dependencies:
-    "@octokit/types": ^11.0.0
-    bottleneck: ^2.15.3
-  peerDependencies:
-    "@octokit/core": ^5.0.0
-  checksum: 772dd3405cb89ac8e4f6e81cee4e1cbf61010461c6c88ebc9f3a557eefc8a039b2368e615b2bf5d97352f5faf0dc133d70ad8eb568fd429f58332292d29113c1
   languageName: node
   linkType: hard
 
@@ -2660,15 +2637,6 @@ __metadata:
   dependencies:
     "@octokit/openapi-types": ^18.0.0
   checksum: 8aafba2ff0cd2435fb70c291bf75ed071c0fa8a865cf6169648732068a35dec7b85a345851f18920ec5f3e94ee0e954988485caac0da09ec3f6781cc44fe153a
-  languageName: node
-  linkType: hard
-
-"@octokit/types@npm:^11.0.0":
-  version: 11.1.0
-  resolution: "@octokit/types@npm:11.1.0"
-  dependencies:
-    "@octokit/openapi-types": ^18.0.0
-  checksum: 72627a94ddaf7bc14db06572bcde67649aad608cd86548818380db9305f4c0ca9ca078a62dd883858a267e8ec8fd596a0fce416aa04197c439b9548efef609a7
   languageName: node
   linkType: hard
 
@@ -3243,33 +3211,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:9.0.6":
-  version: 9.0.6
-  resolution: "@semantic-release/github@npm:9.0.6"
-  dependencies:
-    "@octokit/core": ^5.0.0
-    "@octokit/plugin-paginate-rest": ^8.0.0
-    "@octokit/plugin-retry": ^6.0.0
-    "@octokit/plugin-throttling": ^7.0.0
-    "@semantic-release/error": ^4.0.0
-    aggregate-error: ^5.0.0
-    debug: ^4.3.4
-    dir-glob: ^3.0.1
-    globby: ^13.1.4
-    http-proxy-agent: ^7.0.0
-    https-proxy-agent: ^7.0.0
-    issue-parser: ^6.0.0
-    lodash-es: ^4.17.21
-    mime: ^3.0.0
-    p-filter: ^3.0.0
-    url-join: ^5.0.0
-  peerDependencies:
-    semantic-release: ">=20.1.0"
-  checksum: 5cdcf2c14c762c4381d5117a00f691143198937de8f83f7b6ec8bbd7854ec80e9830f13606929c2d2608e88ea2d983e78878bb9c152827237f703b5e78ae6cc3
-  languageName: node
-  linkType: hard
-
-"@semantic-release/github@npm:^9.0.0":
+"@semantic-release/github@npm:9.0.7, @semantic-release/github@npm:^9.0.0":
   version: 9.0.7
   resolution: "@semantic-release/github@npm:9.0.7"
   dependencies:
@@ -8523,7 +8465,7 @@ __metadata:
     "@jest/globals": 29.7.0
     "@renovate/eslint-plugin": "https://github.com/renovatebot/eslint-plugin#v0.0.5"
     "@semantic-release/git": 10.0.1
-    "@semantic-release/github": 9.0.6
+    "@semantic-release/github": 9.0.7
     "@semantic-release/npm": 10.0.6
     "@sindresorhus/is": 4.6.0
     "@tsconfig/node16": 1.0.4
