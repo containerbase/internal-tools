@@ -220,8 +220,8 @@ var core = __webpack_require__(80002);
 // EXTERNAL MODULE: ../.yarn/cache/@sindresorhus-is-npm-4.6.0-7cad05c55e-83839f13da.zip/node_modules/@sindresorhus/is/dist/index.js
 var dist = __webpack_require__(34409);
 var dist_default = /*#__PURE__*/__webpack_require__.n(dist);
-// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.107.1-e31fbc53d5-a2031816a0.zip/node_modules/renovate/dist/modules/datasource/common.js
-var datasource_common = __webpack_require__(76839);
+// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.109.4-ae29e2a402-80bf78ba01.zip/node_modules/renovate/dist/modules/datasource/common.js
+var datasource_common = __webpack_require__(88785);
 ;// CONCATENATED MODULE: ./commands/binary/utils.ts
 
 
@@ -552,8 +552,8 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: ./utils/logger.ts + 2 modules
 var logger = __webpack_require__(39201);
-// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.107.1-e31fbc53d5-a2031816a0.zip/node_modules/renovate/dist/modules/datasource/index.js
-var modules_datasource = __webpack_require__(28240);
+// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.109.4-ae29e2a402-80bf78ba01.zip/node_modules/renovate/dist/modules/datasource/index.js
+var modules_datasource = __webpack_require__(82325);
 ;// CONCATENATED MODULE: ./utils/datasource/index.ts
 
 
@@ -562,10 +562,10 @@ function register() {
     (0,modules_datasource.getDatasources)();
 }
 
-// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.107.1-e31fbc53d5-a2031816a0.zip/node_modules/renovate/dist/modules/versioning/generic.js
-var generic = __webpack_require__(417);
-// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.107.1-e31fbc53d5-a2031816a0.zip/node_modules/renovate/dist/modules/versioning/ubuntu/index.js
-var ubuntu = __webpack_require__(12458);
+// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.109.4-ae29e2a402-80bf78ba01.zip/node_modules/renovate/dist/modules/versioning/generic.js
+var generic = __webpack_require__(32476);
+// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.109.4-ae29e2a402-80bf78ba01.zip/node_modules/renovate/dist/modules/versioning/ubuntu/index.js
+var ubuntu = __webpack_require__(10938);
 ;// CONCATENATED MODULE: ./utils/versioning/ubuntu.ts
 
 
@@ -615,8 +615,8 @@ class CustomUbuntuVersioning extends generic.GenericVersioningApi {
 const api = new CustomUbuntuVersioning();
 /* harmony default export */ const versioning_ubuntu = ((/* unused pure expression or super */ null && (api)));
 
-// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.107.1-e31fbc53d5-a2031816a0.zip/node_modules/renovate/dist/modules/versioning/index.js
-var modules_versioning = __webpack_require__(8119);
+// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.109.4-ae29e2a402-80bf78ba01.zip/node_modules/renovate/dist/modules/versioning/index.js
+var modules_versioning = __webpack_require__(68918);
 ;// CONCATENATED MODULE: ./utils/versioning/index.ts
 
 
@@ -640,10 +640,10 @@ function renovate_register() {
 // EXTERNAL MODULE: ../.yarn/cache/@sindresorhus-is-npm-4.6.0-7cad05c55e-83839f13da.zip/node_modules/@sindresorhus/is/dist/index.js
 var dist = __webpack_require__(34409);
 var dist_default = /*#__PURE__*/__webpack_require__.n(dist);
-// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.107.1-e31fbc53d5-a2031816a0.zip/node_modules/renovate/dist/util/host-rules.js
-var host_rules = __webpack_require__(71796);
-// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.107.1-e31fbc53d5-a2031816a0.zip/node_modules/renovate/dist/util/regex.js
-var regex = __webpack_require__(61684);
+// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.109.4-ae29e2a402-80bf78ba01.zip/node_modules/renovate/dist/util/host-rules.js
+var host_rules = __webpack_require__(58413);
+// EXTERNAL MODULE: ../.yarn/cache/renovate-npm-36.109.4-ae29e2a402-80bf78ba01.zip/node_modules/renovate/dist/util/regex.js
+var regex = __webpack_require__(25244);
 // EXTERNAL MODULE: ../.yarn/cache/semver-npm-7.5.4-c4ad957fcd-12d8ad952f.zip/node_modules/semver/index.js
 var semver = __webpack_require__(17824);
 ;// CONCATENATED MODULE: ./utils/builds.ts
