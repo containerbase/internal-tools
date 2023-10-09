@@ -57,7 +57,7 @@
     "@tsconfig/strictest": "2.0.2",
     "@types/auth-header": "1.0.3",
     "@types/jest": "29.5.5",
-    "@types/node": "16.18.55",
+    "@types/node": "16.18.57",
     "@types/semver": "7.5.3",
     "@types/shelljs": "0.8.13",
     "@typescript-eslint/eslint-plugin": "6.7.4",
