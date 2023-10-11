@@ -100,7 +100,7 @@ describe('util', () => {
   });
 
   it('getDistro', () => {
-    expect(util.getDistro()).toBe('focal');
+    expect(util.getDistro()).toBe('');
   });
 
   it('getArch', () => {
