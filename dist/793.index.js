@@ -59,7 +59,6 @@ async function run() {
 
 
 
-const DEFAULT_DISTRO = 'focal';
 async function exists(command) {
     try {
         await (0,_actions_io__WEBPACK_IMPORTED_MODULE_5__.which)(command, true);
@@ -115,7 +114,7 @@ function getWorkspace() {
     return getEnv('GITHUB_WORKSPACE') || process.cwd();
 }
 function getDistro() {
-    return getEnv('DISTRO') || getEnv('FLAVOR') || DEFAULT_DISTRO;
+    return getEnv('DISTRO') || getEnv('FLAVOR');
 }
 function getArch() {
     return getEnv('ARCH');

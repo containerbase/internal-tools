@@ -352,7 +352,6 @@ async function run() {
 
 
 
-const DEFAULT_DISTRO = 'focal';
 async function exists(command) {
     try {
         await (0,_actions_io__WEBPACK_IMPORTED_MODULE_5__.which)(command, true);
@@ -408,7 +407,7 @@ function getWorkspace() {
     return getEnv('GITHUB_WORKSPACE') || process.cwd();
 }
 function getDistro() {
-    return getEnv('DISTRO') || getEnv('FLAVOR') || DEFAULT_DISTRO;
+    return getEnv('DISTRO') || getEnv('FLAVOR');
 }
 function getArch() {
     return getEnv('ARCH');
@@ -713,12 +712,17 @@ async function readDockerConfig(cfg) {
     }
 }
 function getBinaryName(cfg, version, sum) {
+    const distro = (0,_util__WEBPACK_IMPORTED_MODULE_0__/* .getDistro */ .Tl)();
     const arch = (0,_util__WEBPACK_IMPORTED_MODULE_0__/* .getArch */ .bj)();
     const ext = sum ? `.${_types__WEBPACK_IMPORTED_MODULE_1__/* .sumType */ .N}` : '';
-    if (_sindresorhus_is__WEBPACK_IMPORTED_MODULE_3___default().nonEmptyString(arch)) {
-        return `${cfg.image}-${version}-${(0,_util__WEBPACK_IMPORTED_MODULE_0__/* .getDistro */ .Tl)()}-${arch}.tar.xz${ext}`;
+    let image = `${cfg.image}-${version}`;
+    if (_sindresorhus_is__WEBPACK_IMPORTED_MODULE_3___default().nonEmptyString(distro)) {
+        image += `-${distro}`;
     }
-    return `${cfg.image}-${version}-${(0,_util__WEBPACK_IMPORTED_MODULE_0__/* .getDistro */ .Tl)()}.tar.xz${ext}`;
+    if (_sindresorhus_is__WEBPACK_IMPORTED_MODULE_3___default().nonEmptyString(arch)) {
+        image += `-${arch}`;
+    }
+    return `${image}.tar.xz${ext}`;
 }
 
 
