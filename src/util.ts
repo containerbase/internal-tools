@@ -11,8 +11,6 @@ import * as findUp from 'find-up';
 
 export type ExecOptions = _ExecOptions;
 
-const DEFAULT_DISTRO = 'focal';
-
 export async function exists(command: string): Promise<boolean> {
   try {
     await which(command, true);
@@ -79,7 +77,7 @@ export function getWorkspace(): string {
 }
 
 export function getDistro(): string {
-  return getEnv('DISTRO') || getEnv('FLAVOR') || DEFAULT_DISTRO;
+  return getEnv('DISTRO') || getEnv('FLAVOR');
 }
 
 export function getArch(): DockerArch {

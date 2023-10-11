@@ -8,7 +8,7 @@ exports[`commands/binary/utils createBuilderImage works with build args 1`] = `
     "-t",
     "builder",
     "--build-arg",
-    "DISTRO=undefined",
+    "DISTRO=focal",
     "--platform",
     "linux/arm64",
     "--build-arg=FLAVOR=focal",

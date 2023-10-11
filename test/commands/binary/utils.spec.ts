@@ -64,6 +64,7 @@ describe('commands/binary/utils', () => {
 
     it('works with build args', async () => {
       utils.getArch.mockReturnValueOnce('aarch64');
+      utils.getDistro.mockReturnValueOnce('focal');
       await createBuilderImage(
         '',
         partial<BinaryBuilderConfig>({ buildArgs: ['FLAVOR=focal'] })

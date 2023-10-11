@@ -42,10 +42,15 @@ export function getBinaryName(
   version: string,
   sum?: boolean | undefined
 ): string {
+  const distro = getDistro();
   const arch = getArch();
   const ext = sum ? `.${sumType}` : '';
-  if (is.nonEmptyString(arch)) {
-    return `${cfg.image}-${version}-${getDistro()}-${arch}.tar.xz${ext}`;
+  let image = `${cfg.image}-${version}`;
+  if (is.nonEmptyString(distro)) {
+    image += `-${distro}`;
   }
-  return `${cfg.image}-${version}-${getDistro()}.tar.xz${ext}`;
+  if (is.nonEmptyString(arch)) {
+    image += `-${arch}`;
+  }
+  return `${image}.tar.xz${ext}`;
 }
