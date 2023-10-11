@@ -45,15 +45,12 @@ export async function createBuilderImage(
   { buildArgs }: BinaryBuilderConfig
 ): Promise<void> {
   log('Creating builder image');
-  const args = [
-    'build',
-    '--load',
-    '-t',
-    'builder',
-    '--build-arg',
-    `DISTRO=${getDistro()}`,
-  ];
+  const args = ['build', '--load', '-t', 'builder'];
+  const distro = getDistro();
   const arch = getArch();
+  if (is.nonEmptyString(distro)) {
+    args.push('--build-arg', `DISTRO=${distro}`);
+  }
   if (is.nonEmptyString(arch)) {
     args.push('--platform', DockerPlatform[arch]);
   }
