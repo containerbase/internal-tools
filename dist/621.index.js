@@ -1461,7 +1461,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getApiBaseUrl = exports.getProxyAgent = exports.getAuthString = void 0;
-const httpClient = __importStar(__webpack_require__(87407));
+const httpClient = __importStar(__webpack_require__(47340));
 function getAuthString(token, options) {
     if (!token && !options.auth) {
         throw new Error('Parameter token or opts.auth is required');
@@ -3474,7 +3474,7 @@ var EE = (__webpack_require__(82361).EventEmitter)
 var path = __webpack_require__(71017)
 var assert = __webpack_require__(39491)
 var isAbsolute = __webpack_require__(79269)
-var globSync = __webpack_require__(97836)
+var globSync = __webpack_require__(72744)
 var common = __webpack_require__(65681)
 var setopts = common.setopts
 var ownProp = common.ownProp
@@ -4218,7 +4218,7 @@ Glob.prototype._stat2 = function (f, abs, er, stat, cb) {
 
 /***/ }),
 
-/***/ 97836:
+/***/ 72744:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = globSync
