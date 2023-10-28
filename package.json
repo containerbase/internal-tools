@@ -62,7 +62,7 @@
     "@types/shelljs": "0.8.13",
     "@typescript-eslint/eslint-plugin": "6.8.0",
     "@typescript-eslint/parser": "6.8.0",
-    "@vercel/ncc": "0.38.0",
+    "@vercel/ncc": "0.38.1",
     "@yarnpkg/sdks": "3.0.0-rc.53",
     "conventional-changelog-conventionalcommits": "6.1.0",
     "cross-env": "7.0.3",
