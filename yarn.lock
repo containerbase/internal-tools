@@ -4073,13 +4073,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/shelljs@npm:0.8.13":
-  version: 0.8.13
-  resolution: "@types/shelljs@npm:0.8.13"
+"@types/shelljs@npm:0.8.14":
+  version: 0.8.14
+  resolution: "@types/shelljs@npm:0.8.14"
   dependencies:
     "@types/glob": ~7.2.0
     "@types/node": "*"
-  checksum: 86ac87f4688aeb578c3a85fad1c6b4a740f3951d4c9b1d5e5fd9240225589b2c7a10aacff5c857a5f12961e55ffef40698a46e41d7b27cbdf9cf4bcaf1349a7a
+  checksum: d49ed5e5494e30a9d22c0d1104af8587a748da8ff372a6bb0aadf4329b4ae88360238473841f444a8eb067b8478829e55570c627c94f50ea45489bd36e99e567
   languageName: node
   linkType: hard
 
@@ -8278,7 +8278,7 @@ __metadata:
     "@types/jest": 29.5.6
     "@types/node": 16.18.59
     "@types/semver": 7.5.4
-    "@types/shelljs": 0.8.13
+    "@types/shelljs": 0.8.14
     "@typescript-eslint/eslint-plugin": 6.8.0
     "@typescript-eslint/parser": 6.8.0
     "@vercel/ncc": 0.38.1
