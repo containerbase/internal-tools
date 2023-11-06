@@ -1,6 +1,3 @@
-// Node v16 is missing structuredClone, so we polyfill it here.
-import 'core-js/actual/structured-clone';
-import 'source-map-support/register';
 import { env } from 'node:process';
 import run from './runner';
 

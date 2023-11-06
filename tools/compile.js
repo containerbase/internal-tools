@@ -1,5 +1,17 @@
-import shell from 'shelljs';
+import { build } from 'esbuild';
 
-shell.exec('ncc build ./index.ts -o ../dist -s --target es2022', {
-  cwd: './src',
+await build({
+  entryPoints: ['./src/index.ts'],
+  bundle: true,
+  platform: 'node',
+  target: 'node20',
+  minify: true,
+  tsconfig: 'tsconfig.dist.json',
+  sourcemap: true,
+  // format: "esm", // seperate issue
+  outdir: './dist/',
+  loader: {
+    '.node': 'copy',
+  },
+  external: ['dtrace-provider'],
 });
