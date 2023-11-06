@@ -100,5 +100,13 @@ module.exports = {
         'jest/valid-title': [0, { ignoreTypeOfDescribeName: true }],
       },
     },
+    {
+      files: ['tools/**/*.js'],
+      rules: {
+        // TODO: fix me
+        'import/default': 1,
+        'import/no-named-as-default-member': 1,
+      },
+    },
   ],
 };
