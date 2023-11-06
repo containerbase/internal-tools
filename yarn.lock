@@ -3854,10 +3854,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node16@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@tsconfig/node16@npm:1.0.4"
-  checksum: 202319785901f942a6e1e476b872d421baec20cf09f4b266a1854060efbf78cde16a4d256e8bc949d31e6cd9a90f1e8ef8fb06af96a65e98338a2b6b0de0a0ff
+"@tsconfig/node16@npm:16.1.1":
+  version: 16.1.1
+  resolution: "@tsconfig/node16@npm:16.1.1"
+  checksum: 26d83db06866083b543e73eda33585464362fd0835229b9a5b1185f0353b9b5db9ca4f66a4be53d4ec5d4c219be42b0a7582f8bcc7268f2f77b1c643375e490f
   languageName: node
   linkType: hard
 
@@ -8366,7 +8366,7 @@ __metadata:
     "@semantic-release/github": 9.2.1
     "@semantic-release/npm": 10.0.6
     "@sindresorhus/is": 4.6.0
-    "@tsconfig/node16": 1.0.4
+    "@tsconfig/node16": 16.1.1
     "@tsconfig/strictest": 2.0.2
     "@types/auth-header": 1.0.4
     "@types/jest": 29.5.6
