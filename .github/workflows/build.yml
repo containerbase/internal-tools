@@ -139,11 +139,11 @@ jobs:
           dry-run: true
           prune: true
 
-      - name: docker-builder (pnpm)
+      - name: docker-builder (yarn)
         uses: ./
         with:
           command: docker-builder
-          config: e2e/pnpm.json
+          config: e2e/yarn.json
           dry-run: true
           major-minor: false
 

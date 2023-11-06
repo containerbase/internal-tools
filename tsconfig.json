@@ -10,7 +10,9 @@
     "useUnknownInCatchVariables": false /* we aren't prepared for enabling this by default since ts 4.4*/,
     "noPropertyAccessFromIndexSignature": false /* makes code more complex */,
     "exactOptionalPropertyTypes": false /* doesn't work with renovate yet */,
-    "esModuleInterop": false /* no */
+    "esModuleInterop": false /* no */,
+    "module": "CommonJS",
+    "moduleResolution": "node"
   },
   "exclude": ["node_modules/", "**/__mocks__/*", "dist/", "coverage/"]
 }

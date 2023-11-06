@@ -92,6 +92,9 @@
   "pnpm": {
     "overrides": {
       "tsconfig-paths": "4.2.0"
-    }
+    },
+    "neverBuiltDependencies": [
+      "dtrace-provider"
+    ]
   }
 }
