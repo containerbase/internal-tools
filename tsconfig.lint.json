@@ -1,4 +1,5 @@
 {
   "extends": "./tsconfig",
-  "include": [".eslintrc.cjs", "**/*.ts", "**/*.js", "**/*.cjs", "**/*.mjs"]
+  "include": [".eslintrc.cjs", "**/*.ts", "**/*.js", "**/*.cjs", "**/*.mjs"],
+  "exclude": ["node_modules/", "**/__mocks__/*", "dist/", "coverage/", "tools/"]
 }

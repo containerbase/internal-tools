@@ -1,9 +1,9 @@
 import { setTimeout } from 'node:timers/promises';
+import is from '@sindresorhus/is';
+import * as chalk from 'chalk';
 import { dockerBuildx } from './docker/common';
 import log from './logger';
 import { ExecError } from './types';
-import is from '@sindresorhus/is';
-import * as chalk from 'chalk';
 
 export type BuildOptions = {
   image: string;

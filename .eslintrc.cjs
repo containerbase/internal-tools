@@ -26,7 +26,7 @@ module.exports = {
   ],
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: ['./tsconfig.lint.json'],
+    project: ['./tsconfig.lint.json', 'tools/jsconfig.json'],
   },
   rules: {
     curly: [2, 'all'],
@@ -69,12 +69,12 @@ module.exports = {
   },
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts'],
+      '@typescript-eslint/parser': ['.ts', '.js'],
     },
     'import/resolver': {
       typescript: {
         alwaysTryTypes: true, // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
-        project: 'tsconfig.lint.json',
+        project: ['tsconfig.lint.json', 'tools/jsconfig.json'],
       },
     },
   },
@@ -98,6 +98,14 @@ module.exports = {
         '@renovate/jest-root-describe': 2,
 
         'jest/valid-title': [0, { ignoreTypeOfDescribeName: true }],
+      },
+    },
+    {
+      files: ['tools/**/*.js'],
+      rules: {
+        // TODO: fix me
+        'import/default': 1,
+        'import/no-named-as-default-member': 1,
       },
     },
   ],
