@@ -23,28 +23,21 @@ jobs:
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
+      - name: enable corepack
+        run: corepack enable
+
       - name: Set up Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3.8.2
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: yarn
+          cache: pnpm
 
       - name: enable corepack
         run: corepack enable
 
-      - name: Cache yarn
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
-        with:
-          path: |
-            node_modules
-            .yarn/cache
-            .yarn/install-state.gz
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          fail-on-cache-miss: true
+      - run: pnpm install
 
-      - run: yarn install
-
-      - run: yarn compile
+      - run: pnpm compile
 
       - name: Docker registry login
         run: |

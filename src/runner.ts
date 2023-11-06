@@ -1,7 +1,7 @@
-import { Commands } from './types';
-import log from './utils/logger';
 import { getInput, setFailed } from '@actions/core';
 import * as chalk from 'chalk';
+import { Commands } from './types';
+import log from './utils/logger';
 
 export default async function run(): Promise<void> {
   try {
