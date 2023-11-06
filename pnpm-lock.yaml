@@ -32,9 +32,6 @@ dependencies:
   chalk:
     specifier: 4.1.2
     version: 4.1.2
-  core-js:
-    specifier: 3.33.1
-    version: 3.33.1
   escape-string-regexp:
     specifier: 4.0.0
     version: 4.0.0
@@ -50,12 +47,9 @@ dependencies:
   semver:
     specifier: 7.5.4
     version: 7.5.4
-  source-map-support:
-    specifier: 0.5.21
-    version: 0.5.21
   strip-ansi:
-    specifier: 7.1.0
-    version: 7.1.0
+    specifier: 6.0.1
+    version: 6.0.1
   tslib:
     specifier: 2.6.2
     version: 2.6.2
@@ -4608,11 +4602,6 @@ packages:
 
   /core-js-pure@3.33.2:
     resolution: {integrity: sha512-a8zeCdyVk7uF2elKIGz67AjcXOxjRbwOLz8SbklEso1V+2DoW4OkAMZN9S9GBgvZIaqQi/OemFX4OiSoQEmg1Q==}
-    requiresBuild: true
-    dev: false
-
-  /core-js@3.33.1:
-    resolution: {integrity: sha512-qVSq3s+d4+GsqN0teRCJtM6tdEEXyWxjzbhVrCHmBS5ZTM0FS2MOS0D13dUXAWDUN6a+lHI/N1hF9Ytz6iLl9Q==}
     requiresBuild: true
     dev: false
 
