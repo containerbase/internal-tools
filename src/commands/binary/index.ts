@@ -1,6 +1,6 @@
+import { mkdir } from 'node:fs/promises';
 import { setFailed } from '@actions/core';
 import chalk from 'chalk';
-import shell from 'shelljs';
 import { getArg, getWorkspace } from '../../util';
 import { addHostRule, getBuildList } from '../../utils/builds';
 import { init } from '../../utils/docker/buildx';
@@ -43,8 +43,7 @@ export async function run(): Promise<void> {
       return;
     }
 
-    // eslint-disable-next-line import/no-named-as-default-member
-    shell.mkdir('-p', `${ws}/.cache`);
+    await mkdir(`${ws}/.cache`, { recursive: true });
 
     await init();
 
