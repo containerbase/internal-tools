@@ -1,8 +1,5 @@
 {
   "extends": "./tsconfig",
-  "compilerOptions": {
-    "types": ["node"]
-  },
   "include": [".eslintrc.cjs", "**/*.ts", "**/*.js", "**/*.cjs", "**/*.mjs"],
   "exclude": ["node_modules/", "**/__mocks__/*", "dist/", "coverage/", "tools/"]
 }
