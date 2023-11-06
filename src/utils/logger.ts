@@ -1,5 +1,5 @@
 import { error as _error, warning as _warn } from '@actions/core';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import stripAnsi from 'strip-ansi';
 
 function write(prefix: string, ...args: unknown[]): void {

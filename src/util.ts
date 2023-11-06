@@ -5,7 +5,7 @@ import { exec as _exec } from '@actions/exec';
 import type { ExecOptions as _ExecOptions } from '@actions/exec/lib/interfaces';
 import { which } from '@actions/io';
 import is from '@sindresorhus/is';
-import * as findUp from 'find-up';
+import findUp from 'find-up';
 import type { DockerArch } from './utils/docker/common';
 import { ExecError, ExecResult } from './utils/types';
 

@@ -1,6 +1,3 @@
-// Node v16 is missing structuredClone, so we polyfill it here.
-import 'core-js/actual/structured-clone';
-
 import * as _core from '@actions/core';
 import * as nock from 'nock';
 import { mocked } from './utils';

@@ -1,6 +1,6 @@
 import { getInput, setFailed } from '@actions/core';
 import is from '@sindresorhus/is';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { exec, exists, getArg, isDryRun, readJson } from '../../util';

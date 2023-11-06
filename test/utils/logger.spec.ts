@@ -1,9 +1,11 @@
 import * as _core from '@actions/core';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import log from '../../src/utils/logger';
 import { mocked } from '../utils';
 
 jest.unmock('../../src/utils/logger');
+// TODO: fix test
+jest.mock('strip-ansi', () => jest.fn());
 
 const core = mocked(_core);
 

@@ -1,6 +1,6 @@
+import { mkdir } from 'node:fs/promises';
 import { setFailed } from '@actions/core';
-import * as chalk from 'chalk';
-import * as shell from 'shelljs';
+import chalk from 'chalk';
 import { getArg, getWorkspace } from '../../util';
 import { addHostRule, getBuildList } from '../../utils/builds';
 import { init } from '../../utils/docker/buildx';
@@ -43,7 +43,7 @@ export async function run(): Promise<void> {
       return;
     }
 
-    shell.mkdir('-p', `${ws}/.cache`);
+    await mkdir(`${ws}/.cache`, { recursive: true });
 
     await init();
 
