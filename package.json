@@ -41,7 +41,7 @@
     "semver": "7.5.4",
     "shelljs": "0.8.5",
     "source-map-support": "0.5.21",
-    "strip-ansi": "7.1.0",
+    "strip-ansi": "6.0.1",
     "tslib": "2.6.2"
   },
   "devDependencies": {

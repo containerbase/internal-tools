@@ -4,6 +4,8 @@ import log from '../../src/utils/logger';
 import { mocked } from '../utils';
 
 jest.unmock('../../src/utils/logger');
+// TODO: fix test
+jest.mock('strip-ansi', () => jest.fn());
 
 const core = mocked(_core);
 
