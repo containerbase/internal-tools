@@ -4082,19 +4082,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:20.8.10":
   version: 20.8.10
   resolution: "@types/node@npm:20.8.10"
   dependencies:
     undici-types: ~5.26.4
   checksum: 7c61190e43e8074a1b571e52ff14c880bc67a0447f2fe5ed0e1a023eb8a23d5f815658edb98890f7578afe0f090433c4a635c7c87311762544e20dd78723e515
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:16.18.59":
-  version: 16.18.59
-  resolution: "@types/node@npm:16.18.59"
-  checksum: 70f28744d239c48db056ff6355d2eb99305db54d1f9377b3f4458e92ffb4da8962a0c67665452d5f430cea2286ced256dac8f769660007aedd3676cf03ff28ad
   languageName: node
   linkType: hard
 
@@ -8377,7 +8370,7 @@ __metadata:
     "@tsconfig/strictest": 2.0.2
     "@types/auth-header": 1.0.4
     "@types/jest": 29.5.6
-    "@types/node": 16.18.59
+    "@types/node": 20.8.10
     "@types/semver": 7.5.4
     "@types/shelljs": 0.8.14
     "@typescript-eslint/eslint-plugin": 6.9.0
