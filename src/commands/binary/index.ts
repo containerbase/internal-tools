@@ -1,6 +1,6 @@
 import { mkdir } from 'node:fs/promises';
 import { setFailed } from '@actions/core';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { getArg, getWorkspace } from '../../util';
 import { addHostRule, getBuildList } from '../../utils/builds';
 import { init } from '../../utils/docker/buildx';
