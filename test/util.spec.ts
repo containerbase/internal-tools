@@ -1,9 +1,9 @@
 import { existsSync, promises } from 'node:fs';
-import * as util from '../src/util';
-import { mocked } from './utils';
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as _io from '@actions/io';
+import * as util from '../src/util';
+import { mocked } from './utils';
 
 jest.mock('@actions/core');
 jest.mock('@actions/exec');

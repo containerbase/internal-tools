@@ -1,3 +1,6 @@
+import { setFailed } from '@actions/core';
+import * as chalk from 'chalk';
+import * as shell from 'shelljs';
 import { getArg, getWorkspace } from '../../util';
 import { addHostRule, getBuildList } from '../../utils/builds';
 import { init } from '../../utils/docker/buildx';
@@ -11,9 +14,6 @@ import {
 import log from '../../utils/logger';
 import { createChecksum } from '../../utils/sum';
 import { createBuilderImage, getConfig, runBuilder } from './utils';
-import { setFailed } from '@actions/core';
-import * as chalk from 'chalk';
-import * as shell from 'shelljs';
 
 let toBuild = 99;
 

@@ -44,5 +44,5 @@ Without setting `CI=true` the action will always run in dry-run mode. Input must
 
 ```sh
 export INPUT_COMMAND=docker-builder
-yarn start
+pnpm start
 ```
