@@ -4223,7 +4223,7 @@ packages:
       '@npmcli/fs': 3.1.0
       fs-minipass: 3.0.3
       glob: 10.3.10
-      lru-cache: 10.0.3
+      lru-cache: 10.0.2
       minipass: 7.0.4
       minipass-collect: 1.0.2
       minipass-flush: 1.0.5
