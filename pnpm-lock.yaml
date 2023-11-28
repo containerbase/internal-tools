@@ -77,8 +77,8 @@ devDependencies:
     specifier: 2.0.2
     version: 2.0.2
   '@types/auth-header':
-    specifier: 1.0.5
-    version: 1.0.5
+    specifier: 1.0.6
+    version: 1.0.6
   '@types/jest':
     specifier: 29.5.8
     version: 29.5.8
@@ -3196,8 +3196,8 @@ packages:
     resolution: {integrity: sha512-jt4jIsWKvUvuY6adJnQJlb/UR7DdjC8CjHI/OaSQruj2yX9/K6+KOvDt/vD6udqos/FUk5Op66CvYT7TBLYO5Q==}
     dev: true
 
-  /@types/auth-header@1.0.5:
-    resolution: {integrity: sha512-pr9BoXauVJWTB8ecMNv3XVRQIz9VjW9VqW0HIRfNuNwbtaCxAhOs46yqyCuLw1/jcKYTw2zfzwGNL/SwzKDGcw==}
+  /@types/auth-header@1.0.6:
+    resolution: {integrity: sha512-TjQyS7b+msxND/uuvza7FWSiBBLtI5y9vB55rpTeMcO2M5DSs4ony9WNKDvZLJL2w5aJH2A4C+ht1c9MPHhJWQ==}
     dev: true
 
   /@types/babel__core@7.20.5:
