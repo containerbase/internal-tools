@@ -50,7 +50,7 @@
     "@tsconfig/node20": "20.1.2",
     "@tsconfig/strictest": "2.0.2",
     "@types/auth-header": "1.0.6",
-    "@types/jest": "29.5.8",
+    "@types/jest": "29.5.9",
     "@types/node": "20.9.2",
     "@types/semver": "7.5.5",
     "@typescript-eslint/eslint-plugin": "6.12.0",
