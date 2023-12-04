@@ -24,19 +24,10 @@ jobs:
         with:
           show-progress: false
 
-      - name: enable corepack
-        run: corepack enable
-
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
+      - name: 📥 Setup Node.js
+        uses: ./.github/actions/setup-node
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: enable corepack
-        run: corepack enable
-
-      - run: pnpm install
+          save-cache: true
 
   test:
     needs: prepare
@@ -62,19 +53,8 @@ jobs:
           fetch-depth: 10 # required by codecov
           show-progress: false
 
-      - name: enable corepack
-        run: corepack enable
-
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: enable corepack
-        run: corepack enable
-
-      - run: pnpm install
+      - name: 📥 Setup Node.js
+        uses: ./.github/actions/setup-node
 
       - name: lint
         run: |
@@ -107,19 +87,8 @@ jobs:
         with:
           show-progress: false
 
-      - name: enable corepack
-        run: corepack enable
-
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: enable corepack
-        run: corepack enable
-
-      - run: pnpm install
+      - name: 📥 Setup Node.js
+        uses: ./.github/actions/setup-node
 
       - run: pnpm compile
 
@@ -238,19 +207,8 @@ jobs:
           commit=$(git rev-parse HEAD)
           echo "commit=${commit}" >> $GITHUB_OUTPUT
 
-      - name: enable corepack
-        run: corepack enable
-
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: enable corepack
-        run: corepack enable
-
-      - run: pnpm install
+      - name: 📥 Setup Node.js
+        uses: ./.github/actions/setup-node
 
       - name: Push release branch
         run: git push origin release:release
