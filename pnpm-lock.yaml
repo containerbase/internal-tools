@@ -12,7 +12,7 @@ overrides:
 
 patchedDependencies:
   '@semantic-release/github@9.2.4':
-    hash: 7i5gixv2do2rypqaxtfhgr66d4
+    hash: 2ar4pcrynuvweociw4uxycd3oa
     path: patches/@semantic-release__github@9.2.4.patch
 
 dependencies:
@@ -71,7 +71,7 @@ devDependencies:
     version: 10.0.1(semantic-release@22.0.8)
   '@semantic-release/github':
     specifier: 9.2.4
-    version: 9.2.4(patch_hash=7i5gixv2do2rypqaxtfhgr66d4)(semantic-release@22.0.8)
+    version: 9.2.4(patch_hash=2ar4pcrynuvweociw4uxycd3oa)(semantic-release@22.0.8)
   '@semantic-release/npm':
     specifier: 11.0.1
     version: 11.0.1(semantic-release@22.0.8)
@@ -150,6 +150,9 @@ devDependencies:
   nock:
     specifier: 13.4.0
     version: 13.4.0
+  node-fetch:
+    specifier: 2.7.0
+    version: 2.7.0
   npm-run-all:
     specifier: 4.1.5
     version: 4.1.5
@@ -171,9 +174,6 @@ devDependencies:
   typescript:
     specifier: 5.3.2
     version: 5.3.2
-  undici:
-    specifier: 5.28.2
-    version: 5.28.2
 
 packages:
 
@@ -2660,7 +2660,7 @@ packages:
       - supports-color
     dev: true
 
-  /@semantic-release/github@9.2.4(patch_hash=7i5gixv2do2rypqaxtfhgr66d4)(semantic-release@22.0.8):
+  /@semantic-release/github@9.2.4(patch_hash=2ar4pcrynuvweociw4uxycd3oa)(semantic-release@22.0.8):
     resolution: {integrity: sha512-VMzqiuSLhHc0/1Q8M/FmWnOaclh5aXL2pQWceldWBYSWLNzQu8GOR4bkGl57ciUtvm+MCMi4FaStZxSDJGEfUg==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -7722,7 +7722,6 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
-    dev: false
 
   /node-gyp@10.0.1:
     resolution: {integrity: sha512-gg3/bHehQfZivQVfqIyy8wTdSymF9yTyP4CJifK73imyNMU8AIGQE2pUa7dNWfmMeG9cDVF2eehiRMv0LC1iAg==}
@@ -8918,7 +8917,7 @@ packages:
     dependencies:
       '@semantic-release/commit-analyzer': 11.1.0(semantic-release@22.0.8)
       '@semantic-release/error': 4.0.0
-      '@semantic-release/github': 9.2.4(patch_hash=7i5gixv2do2rypqaxtfhgr66d4)(semantic-release@22.0.8)
+      '@semantic-release/github': 9.2.4(patch_hash=2ar4pcrynuvweociw4uxycd3oa)(semantic-release@22.0.8)
       '@semantic-release/npm': 11.0.1(semantic-release@22.0.8)
       '@semantic-release/release-notes-generator': 12.1.0(semantic-release@22.0.8)
       aggregate-error: 5.0.0
@@ -9536,7 +9535,6 @@ packages:
 
   /tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
-    dev: false
 
   /traverse@0.6.7:
     resolution: {integrity: sha512-/y956gpUo9ZNCb99YjxG7OaslxZWHfCHAUUfshwqOXmxUIvqLjVO581BT+gM59+QV9tFe6/CGG53tsA1Y7RSdg==}
@@ -9963,14 +9961,12 @@ packages:
 
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
-    dev: false
 
   /whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
-    dev: false
 
   /which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}

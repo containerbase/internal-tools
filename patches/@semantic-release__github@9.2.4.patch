@@ -1,17 +1,17 @@
 diff --git a/lib/octokit.js b/lib/octokit.js
-index 798b5756c8bd47c7d800fb788bd1ecfe165b1371..abd4f9978336956bc66f06232c91f082c417067f 100644
+index 798b5756c8bd47c7d800fb788bd1ecfe165b1371..12c8cc538e586ab9ffcfd06f095b5a17e443f7f7 100644
 --- a/lib/octokit.js
 +++ b/lib/octokit.js
 @@ -2,6 +2,7 @@
  // @ts-check
-
+ 
  import { createRequire } from "node:module";
-+import { fetch } from 'undici';
-
++import fetch from 'node-fetch';
+ 
  // If maintaining @octokit/core and the separate plugins gets to cumbersome
  // then the `octokit` package can be used which has all these plugins included.
 @@ -50,7 +51,7 @@ export const SemanticReleaseOctokit = Octokit.plugin(
-
+ 
  /**
   * @param {{githubToken: string, proxy: any} | {githubUrl: string, githubApiPathPrefix: string, githubToken: string, proxy: any}} options
 - * @returns {{ auth: string, baseUrl?: string, request: { agent?: any } }}
