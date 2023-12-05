@@ -12,7 +12,7 @@ overrides:
 
 patchedDependencies:
   '@semantic-release/github@9.2.4':
-    hash: 2ar4pcrynuvweociw4uxycd3oa
+    hash: 7i5gixv2do2rypqaxtfhgr66d4
     path: patches/@semantic-release__github@9.2.4.patch
 
 dependencies:
@@ -71,7 +71,7 @@ devDependencies:
     version: 10.0.1(semantic-release@22.0.8)
   '@semantic-release/github':
     specifier: 9.2.4
-    version: 9.2.4(patch_hash=2ar4pcrynuvweociw4uxycd3oa)(semantic-release@22.0.8)
+    version: 9.2.4(patch_hash=7i5gixv2do2rypqaxtfhgr66d4)(semantic-release@22.0.8)
   '@semantic-release/npm':
     specifier: 11.0.1
     version: 11.0.1(semantic-release@22.0.8)
@@ -171,6 +171,9 @@ devDependencies:
   typescript:
     specifier: 5.3.2
     version: 5.3.2
+  undici:
+    specifier: 5.28.2
+    version: 5.28.2
 
 packages:
 
@@ -2657,7 +2660,7 @@ packages:
       - supports-color
     dev: true
 
-  /@semantic-release/github@9.2.4(patch_hash=2ar4pcrynuvweociw4uxycd3oa)(semantic-release@22.0.8):
+  /@semantic-release/github@9.2.4(patch_hash=7i5gixv2do2rypqaxtfhgr66d4)(semantic-release@22.0.8):
     resolution: {integrity: sha512-VMzqiuSLhHc0/1Q8M/FmWnOaclh5aXL2pQWceldWBYSWLNzQu8GOR4bkGl57ciUtvm+MCMi4FaStZxSDJGEfUg==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -8915,7 +8918,7 @@ packages:
     dependencies:
       '@semantic-release/commit-analyzer': 11.1.0(semantic-release@22.0.8)
       '@semantic-release/error': 4.0.0
-      '@semantic-release/github': 9.2.4(patch_hash=2ar4pcrynuvweociw4uxycd3oa)(semantic-release@22.0.8)
+      '@semantic-release/github': 9.2.4(patch_hash=7i5gixv2do2rypqaxtfhgr66d4)(semantic-release@22.0.8)
       '@semantic-release/npm': 11.0.1(semantic-release@22.0.8)
       '@semantic-release/release-notes-generator': 12.1.0(semantic-release@22.0.8)
       aggregate-error: 5.0.0
