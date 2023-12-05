@@ -91,6 +91,9 @@
     },
     "neverBuiltDependencies": [
       "dtrace-provider"
-    ]
+    ],
+    "patchedDependencies": {
+      "@semantic-release/github@9.2.4": "patches/@semantic-release__github@9.2.4.patch"
+    }
   }
 }

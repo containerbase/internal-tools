@@ -10,6 +10,11 @@ neverBuiltDependencies:
 overrides:
   tsconfig-paths: 4.2.0
 
+patchedDependencies:
+  '@semantic-release/github@9.2.4':
+    hash: 2ar4pcrynuvweociw4uxycd3oa
+    path: patches/@semantic-release__github@9.2.4.patch
+
 dependencies:
   '@actions/core':
     specifier: 1.10.1
@@ -66,7 +71,7 @@ devDependencies:
     version: 10.0.1(semantic-release@22.0.8)
   '@semantic-release/github':
     specifier: 9.2.4
-    version: 9.2.4(semantic-release@22.0.8)
+    version: 9.2.4(patch_hash=2ar4pcrynuvweociw4uxycd3oa)(semantic-release@22.0.8)
   '@semantic-release/npm':
     specifier: 11.0.1
     version: 11.0.1(semantic-release@22.0.8)
@@ -2652,7 +2657,7 @@ packages:
       - supports-color
     dev: true
 
-  /@semantic-release/github@9.2.4(semantic-release@22.0.8):
+  /@semantic-release/github@9.2.4(patch_hash=2ar4pcrynuvweociw4uxycd3oa)(semantic-release@22.0.8):
     resolution: {integrity: sha512-VMzqiuSLhHc0/1Q8M/FmWnOaclh5aXL2pQWceldWBYSWLNzQu8GOR4bkGl57ciUtvm+MCMi4FaStZxSDJGEfUg==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -2678,6 +2683,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+    patched: true
 
   /@semantic-release/npm@11.0.1(semantic-release@22.0.8):
     resolution: {integrity: sha512-nFcT0pgVwpXsPkzjqP3ObH+pILeN1AbYscCDuYwgZEPZukL+RsGhrtdT4HA1Gjb/y1bVbE90JNtMIcgRi5z/Fg==}
@@ -8909,7 +8915,7 @@ packages:
     dependencies:
       '@semantic-release/commit-analyzer': 11.1.0(semantic-release@22.0.8)
       '@semantic-release/error': 4.0.0
-      '@semantic-release/github': 9.2.4(semantic-release@22.0.8)
+      '@semantic-release/github': 9.2.4(patch_hash=2ar4pcrynuvweociw4uxycd3oa)(semantic-release@22.0.8)
       '@semantic-release/npm': 11.0.1(semantic-release@22.0.8)
       '@semantic-release/release-notes-generator': 12.1.0(semantic-release@22.0.8)
       aggregate-error: 5.0.0
