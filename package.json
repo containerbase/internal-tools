@@ -2,7 +2,7 @@
   "name": "internal-tools",
   "version": "0.0.0-PLACEHOLDER",
   "private": true,
-  "repository": "https://github.com/renovatebot/internal-tools.git",
+  "repository": "https://github.com/containerbase/internal-tools.git",
   "license": "AGPL-3.0",
   "author": "Rhys Arkins <rhys@arkins.net>",
   "contributors": [
