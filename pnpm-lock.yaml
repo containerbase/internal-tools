@@ -65,11 +65,11 @@ devDependencies:
     specifier: 10.0.1
     version: 10.0.1(semantic-release@22.0.10)
   '@semantic-release/github':
-    specifier: 9.2.4
-    version: 9.2.4(semantic-release@22.0.10)
+    specifier: 9.2.5
+    version: 9.2.5(semantic-release@22.0.10)
   '@semantic-release/npm':
-    specifier: 11.0.1
-    version: 11.0.1(semantic-release@22.0.10)
+    specifier: 11.0.2
+    version: 11.0.2(semantic-release@22.0.10)
   '@tsconfig/node20':
     specifier: 20.1.2
     version: 20.1.2
@@ -2652,8 +2652,8 @@ packages:
       - supports-color
     dev: true
 
-  /@semantic-release/github@9.2.4(semantic-release@22.0.10):
-    resolution: {integrity: sha512-VMzqiuSLhHc0/1Q8M/FmWnOaclh5aXL2pQWceldWBYSWLNzQu8GOR4bkGl57ciUtvm+MCMi4FaStZxSDJGEfUg==}
+  /@semantic-release/github@9.2.5(semantic-release@22.0.10):
+    resolution: {integrity: sha512-XWumFEOHiWllekymZjeVgkQCJ4YnD8020ZspAHYIIBNX8O4d/1ldeU5iNXu6NGkKlOCokyXh13KwVP0UEMm5kw==}
     engines: {node: '>=18'}
     peerDependencies:
       semantic-release: '>=20.1.0'
@@ -2679,8 +2679,8 @@ packages:
       - supports-color
     dev: true
 
-  /@semantic-release/npm@11.0.1(semantic-release@22.0.10):
-    resolution: {integrity: sha512-nFcT0pgVwpXsPkzjqP3ObH+pILeN1AbYscCDuYwgZEPZukL+RsGhrtdT4HA1Gjb/y1bVbE90JNtMIcgRi5z/Fg==}
+  /@semantic-release/npm@11.0.2(semantic-release@22.0.10):
+    resolution: {integrity: sha512-owtf3RjyPvRE63iUKZ5/xO4uqjRpVQDUB9+nnXj0xwfIeM9pRl+cG+zGDzdftR4m3f2s4Wyf3SexW+kF5DFtWA==}
     engines: {node: ^18.17 || >=20}
     peerDependencies:
       semantic-release: '>=20.1.0'
@@ -8910,8 +8910,8 @@ packages:
     dependencies:
       '@semantic-release/commit-analyzer': 11.1.0(semantic-release@22.0.10)
       '@semantic-release/error': 4.0.0
-      '@semantic-release/github': 9.2.4(semantic-release@22.0.10)
-      '@semantic-release/npm': 11.0.1(semantic-release@22.0.10)
+      '@semantic-release/github': 9.2.5(semantic-release@22.0.10)
+      '@semantic-release/npm': 11.0.2(semantic-release@22.0.10)
       '@semantic-release/release-notes-generator': 12.1.0(semantic-release@22.0.10)
       aggregate-error: 5.0.0
       cosmiconfig: 8.3.6(typescript@5.3.3)
