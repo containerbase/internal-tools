@@ -42,8 +42,8 @@ dependencies:
     specifier: 11.8.6
     version: 11.8.6
   renovate:
-    specifier: 37.115.0
-    version: 37.115.0(typanion@3.14.0)
+    specifier: 37.126.2
+    version: 37.126.2(typanion@3.14.0)
   semver:
     specifier: 7.5.4
     version: 7.5.4
@@ -7663,8 +7663,8 @@ packages:
     dev: false
     optional: true
 
-  /node-html-parser@6.1.11:
-    resolution: {integrity: sha512-FAgwwZ6h0DSDWxfD0Iq1tsDcBCxdJB1nXpLPPxX8YyVWzbfCjKWEzaynF4gZZ/8hziUmp7ZSaKylcn0iKhufUQ==}
+  /node-html-parser@6.1.12:
+    resolution: {integrity: sha512-/bT/Ncmv+fbMGX96XG9g05vFt43m/+SYKIs9oAemQVYyVcZmDAI2Xq/SbNcpOA35eF0Zk2av3Ksf+Xk8Vt8abA==}
     dependencies:
       css-select: 5.1.0
       he: 1.2.0
@@ -8516,8 +8516,8 @@ packages:
       - supports-color
     dev: false
 
-  /renovate@37.115.0(typanion@3.14.0):
-    resolution: {integrity: sha512-IvFcqRn0oV183gDiDl2ejzwlLfYCcoglDriPM5694/EfXBW6ZWE5ErcZPPHjOriyHs9UWuAytiNrcsNTVFQ3AA==}
+  /renovate@37.126.2(typanion@3.14.0):
+    resolution: {integrity: sha512-9juRpB2H9ofA13hJ4HiNyKW5LR26NYZyWYACfyUhzYEf1/1Ui9Gk88CZBpbYPAdtbxNM4pvLzNrRcuOXhvuiig==}
     engines: {node: ^18.12.0 || >=20.0.0, pnpm: ^8.0.0}
     hasBin: true
     dependencies:
@@ -8599,7 +8599,7 @@ packages:
       moo: 0.5.2
       ms: 2.1.3
       nanoid: 3.3.7
-      node-html-parser: 6.1.11
+      node-html-parser: 6.1.12
       openpgp: 5.11.0
       p-all: 3.0.0
       p-map: 4.0.0
@@ -8615,7 +8615,7 @@ packages:
       semver-stable: 3.0.0
       semver-utils: 1.1.4
       shlex: 2.1.2
-      simple-git: 3.21.0
+      simple-git: 3.22.0
       slugify: 1.6.6
       source-map-support: 0.5.21
       toml-eslint-parser: 0.9.3
@@ -8973,8 +8973,8 @@ packages:
       pkg-conf: 2.1.0
     dev: true
 
-  /simple-git@3.21.0:
-    resolution: {integrity: sha512-oTzw9248AF5bDTMk9MrxsRzEzivMlY+DWH0yWS4VYpMhNLhDWnN06pCtaUyPnqv/FpsdeNmRqmZugMABHRPdDA==}
+  /simple-git@3.22.0:
+    resolution: {integrity: sha512-6JujwSs0ac82jkGjMHiCnTifvf1crOiY/+tfs/Pqih6iow7VrpNKRRNdWm6RtaXpvvv/JGNYhlUtLhGFqHF+Yw==}
     dependencies:
       '@kwsites/file-exists': 1.1.1
       '@kwsites/promise-deferred': 1.1.1
