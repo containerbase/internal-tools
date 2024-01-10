@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: 20.10.0 # renovate: datasource=node depName=node
+  NODE_VERSION: 20.11.0 # renovate: datasource=node depName=node
   LOG_LEVEL: debug
 
 jobs:
