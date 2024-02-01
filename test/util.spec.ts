@@ -116,7 +116,7 @@ describe('util', () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
       expect(await util.readJson('.prettierrc.json')).toMatchObject({
         singleQuote: true,
-        trailingComma: 'es5',
+        trailingComma: 'all',
       });
     });
   });
