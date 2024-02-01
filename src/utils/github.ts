@@ -49,7 +49,7 @@ function isRequestError(err: unknown): err is RequestError {
 
 async function findRelease(
   api: GitHubOctokit,
-  version: string
+  version: string,
 ): Promise<GhRelease | null> {
   try {
     if (!releaseCache) {
@@ -78,7 +78,7 @@ async function findRelease(
 
 async function getRelease(
   api: GitHubOctokit,
-  version: string
+  version: string,
 ): Promise<GhRelease | null> {
   try {
     const { data } = await api.rest.repos.getReleaseByTag({
@@ -100,7 +100,7 @@ async function createRelease(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
   version: string,
-  retry = true
+  retry = true,
 ): Promise<GhRelease> {
   try {
     let data = await getRelease(api, version);
@@ -127,7 +127,7 @@ async function createRelease(
       log(
         'Release probably created by other process, retrying:',
         version,
-        err.message
+        err.message,
       );
       await setTimeout(250);
       return await createRelease(api, cfg, version, false);
@@ -139,7 +139,7 @@ async function createRelease(
 export async function updateRelease(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
-  version: string
+  version: string,
 ): Promise<void> {
   const body = getBody(cfg, version);
   const rel = await findRelease(api, version);
@@ -160,7 +160,7 @@ export async function uploadAsset(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
   version: string,
-  sum?: boolean | undefined
+  sum?: boolean | undefined,
 ): Promise<void> {
   try {
     let rel = await findRelease(api, version);
@@ -200,7 +200,7 @@ export async function hasAsset(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
   version: string,
-  sum?: boolean | undefined
+  sum?: boolean | undefined,
 ): Promise<boolean> {
   return (await findAsset(api, cfg, version, sum)) != null;
 }
@@ -209,7 +209,7 @@ export async function findAsset(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
   version: string,
-  sum?: boolean | undefined
+  sum?: boolean | undefined,
 ): Promise<GhAsset | null> {
   const rel = await findRelease(api, version);
   const name = getBinaryName(cfg, version, sum);
@@ -220,7 +220,7 @@ export async function findAsset(
 export async function downloadAsset(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
-  version: string
+  version: string,
 ): Promise<boolean> {
   const asset = await findAsset(api, cfg, version);
 

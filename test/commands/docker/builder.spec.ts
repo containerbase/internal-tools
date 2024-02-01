@@ -36,7 +36,7 @@ describe('commands/docker/builder', () => {
   it('works yarn', async () => {
     args.token = 'ghp_xxx'; // coverage only
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=npm depName=yarn versioning=npm\nARG YARN_VERSION=${version}\n`
+      `# renovate: datasource=npm depName=yarn versioning=npm\nARG YARN_VERSION=${version}\n`,
     );
     utils.exists.mockResolvedValue(true);
     datasources.getPkgReleases.mockResolvedValueOnce({
@@ -118,7 +118,7 @@ describe('commands/docker/builder', () => {
 
   it('works helm', async () => {
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=github-releases depName=helm lookupName=helm/helm\nARG HELM_VERSION=3.4.0\n`
+      `# renovate: datasource=github-releases depName=helm lookupName=helm/helm\nARG HELM_VERSION=3.4.0\n`,
     );
     utils.readJson.mockReset();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/helm.json'));
@@ -154,7 +154,7 @@ describe('commands/docker/builder', () => {
 
   it('works swift', async () => {
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=docker depName=swift versioning=loose\nARG SWIFT_VERSION=5.5.2\n`
+      `# renovate: datasource=docker depName=swift versioning=loose\nARG SWIFT_VERSION=5.5.2\n`,
     );
     utils.readJson.mockReset();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/swift.json'));

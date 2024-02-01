@@ -14,7 +14,7 @@ const keys: (keyof ConfigFile)[] = [
 
 function checkArgs(
   cfg: ConfigFile,
-  groups: Record<string, string | undefined>
+  groups: Record<string, string | undefined>,
 ): void {
   for (const key of keys) {
     if (!is.string(cfg[key]) && is.nonEmptyString(groups[key])) {
@@ -28,7 +28,7 @@ export async function readDockerConfig(cfg: ConfigFile): Promise<void> {
   const dockerFileRe = new RegExp(
     '# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>.+?)(?: lookupName=(?<lookupName>.+?))?(?: versioning=(?<versioning>[a-z-]+?))?\\s' +
       `(?:ENV|ARG) ${buildArg}=(?<latestVersion>.*)\\s`,
-    'g'
+    'g',
   );
   const dockerfile = await readFile('Dockerfile');
   const m = dockerFileRe.exec(dockerfile);
@@ -40,7 +40,7 @@ export async function readDockerConfig(cfg: ConfigFile): Promise<void> {
 export function getBinaryName(
   cfg: BinaryBuilderConfig,
   version: string,
-  sum?: boolean | undefined
+  sum?: boolean | undefined,
 ): string {
   const distro = getDistro();
   const arch = getArch();

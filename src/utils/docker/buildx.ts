@@ -21,7 +21,7 @@ export async function init(use?: boolean): Promise<void> {
     '--privileged',
     'tonistiigi/binfmt',
     '--install',
-    SupportedPlatforms
+    SupportedPlatforms,
   );
   await dockerBuildx('version');
 
@@ -30,7 +30,7 @@ export async function init(use?: boolean): Promise<void> {
     '--name',
     'renovatebot-builder',
     '--driver',
-    'docker-container'
+    'docker-container',
   );
 
   // istanbul ignore if
