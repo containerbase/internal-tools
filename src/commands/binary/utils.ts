@@ -42,7 +42,7 @@ export async function getConfig(): Promise<BinaryBuilderConfig> {
 
 export async function createBuilderImage(
   ws: string,
-  { buildArgs }: BinaryBuilderConfig
+  { buildArgs }: BinaryBuilderConfig,
 ): Promise<void> {
   log('Creating builder image');
   const args = ['build', '--load', '-t', 'builder'];

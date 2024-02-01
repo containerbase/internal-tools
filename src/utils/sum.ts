@@ -9,7 +9,7 @@ export function hash(file: BinaryLike): string {
 
 export async function createChecksum(
   cfg: BinaryBuilderConfig,
-  version: string
+  version: string,
 ): Promise<void> {
   const name = getBinaryName(cfg, version);
   const sumName = getBinaryName(cfg, version, true);

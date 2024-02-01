@@ -38,7 +38,7 @@ describe('commands/binary/utils', () => {
 
     it('dummy', async () => {
       utils.readJson.mockResolvedValueOnce(
-        require('./__fixtures__/dummy.json')
+        require('./__fixtures__/dummy.json'),
       );
       expect(await getConfig()).toMatchSnapshot();
     });
@@ -58,7 +58,7 @@ describe('commands/binary/utils', () => {
   describe('createBuilderImage', () => {
     it('works', async () => {
       await expect(
-        createBuilderImage('', partial<BinaryBuilderConfig>({}))
+        createBuilderImage('', partial<BinaryBuilderConfig>({})),
       ).toResolve();
     });
 
@@ -67,7 +67,7 @@ describe('commands/binary/utils', () => {
       utils.getDistro.mockReturnValueOnce('focal');
       await createBuilderImage(
         '',
-        partial<BinaryBuilderConfig>({ buildArgs: ['FLAVOR=focal'] })
+        partial<BinaryBuilderConfig>({ buildArgs: ['FLAVOR=focal'] }),
       );
 
       expect(docker.dockerBuildx).toHaveBeenCalledTimes(1);

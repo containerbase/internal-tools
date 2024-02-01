@@ -25,8 +25,8 @@ describe('utils/versioning/ubuntu', () => {
     expect(api.sortVersions('bionic', '18.04')).toBe(0);
     expect(
       ['18.04', 'bionic', '20.04', '16.04'].sort((a, b) =>
-        api.sortVersions(a, b)
-      )
+        api.sortVersions(a, b),
+      ),
     ).toEqual(['16.04', '18.04', 'bionic', '20.04']);
   });
 });

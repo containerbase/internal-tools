@@ -24,7 +24,7 @@ describe('utils/builds', () => {
 
   it('uses allowedVersions with regex', async () => {
     expect(
-      await getBuildList({ ...config, allowedVersions: '/^1\\./' })
+      await getBuildList({ ...config, allowedVersions: '/^1\\./' }),
     ).toEqual({
       versions: [version],
       latestStable: version,
@@ -38,7 +38,7 @@ describe('utils/builds', () => {
         ...config,
         allowedVersions: '^16',
         versions: ['12.0.0', '16.0.1', '16.1.1', '17.0.1'],
-      })
+      }),
     ).toEqual({
       versions: ['16.0.1', '16.1.1'],
       latestStable: '16.1.1',
@@ -52,7 +52,7 @@ describe('utils/builds', () => {
         versioning: 'nuget',
         allowedVersions: '^16',
         versions: ['12.0.0', '16.0.1', '16.1.1', '17.0.1'],
-      })
+      }),
     ).toEqual({
       versions: ['16.0.1', '16.1.1'],
       latestStable: '16.1.1',
@@ -65,7 +65,7 @@ describe('utils/builds', () => {
         ...config,
         versioning: 'node',
         allowedVersions: '^16/',
-      })
+      }),
     ).toBeNull();
   });
 });

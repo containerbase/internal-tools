@@ -70,7 +70,7 @@ describe('utils/docker', () => {
 
     it('retries', async () => {
       utils.exec.mockRejectedValueOnce(
-        new ExecError(1, 'failed', 'unexpected status: 400 Bad Request', '')
+        new ExecError(1, 'failed', 'unexpected status: 400 Bad Request', ''),
       );
       utils.exec.mockResolvedValueOnce({
         ...res,
@@ -82,7 +82,7 @@ describe('utils/docker', () => {
 
     it('throws', async () => {
       utils.exec.mockRejectedValueOnce(
-        new ExecError(1, 'failed', 'unexpected status: 400 Bad Request', '')
+        new ExecError(1, 'failed', 'unexpected status: 400 Bad Request', ''),
       );
       utils.exec.mockRejectedValueOnce(new Error('failure'));
 

@@ -39,7 +39,7 @@ describe('commands/binary/index', () => {
 
   it('works ruby', async () => {
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '3.0.0-rc.24' }],
@@ -55,7 +55,7 @@ describe('commands/binary/index', () => {
   it('works ruby (dry-run)', async () => {
     utils.isDryRun.mockReturnValueOnce(true);
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '3.0.0-rc.24' }],
@@ -70,7 +70,7 @@ describe('commands/binary/index', () => {
 
   it('works ruby (no-assets)', async () => {
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '3.0.0-rc.24' }],
@@ -86,7 +86,7 @@ describe('commands/binary/index', () => {
 
   it('works ruby (misssing checksum)', async () => {
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '3.0.0-rc.24' }],
@@ -104,7 +104,7 @@ describe('commands/binary/index', () => {
   it('works ruby (misssing checksum,dry-run)', async () => {
     utils.isDryRun.mockReturnValueOnce(true);
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '3.0.0-rc.24' }],
@@ -121,7 +121,7 @@ describe('commands/binary/index', () => {
 
   it('works ruby (misssing checksum fails)', async () => {
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '3.0.0-rc.24' }],
@@ -155,7 +155,7 @@ describe('commands/binary/index', () => {
     utils.readJson.mockReset();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/python.json'));
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=docker depName=python versioning=docker\nARG PYTHON_VERSION=3.9.1`
+      `# renovate: datasource=docker depName=python versioning=docker\nARG PYTHON_VERSION=3.9.1`,
     );
 
     github.hasAsset.mockResolvedValueOnce(true);
@@ -188,7 +188,7 @@ describe('commands/binary/index', () => {
 
   it('catch errors', async () => {
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '3.0.0-rc.24' }],
@@ -204,7 +204,7 @@ describe('commands/binary/index', () => {
 
   it('continues on errors', async () => {
     utils.readFile.mockResolvedValue(
-      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
     );
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [{ version }, { version: '3.0.0-rc.24' }],
