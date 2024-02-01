@@ -66,7 +66,7 @@ export async function run(): Promise<void> {
             if (cfg.dryRun) {
               log.warn(
                 chalk.yellow('[DRY_RUN] Would upload release asset:'),
-                version
+                version,
               );
             } else {
               log('Uploading release:', version);
@@ -81,7 +81,7 @@ export async function run(): Promise<void> {
         } else if (cfg.dryRun) {
           log.warn(
             chalk.yellow('[DRY_RUN] Would skipp existing version:'),
-            version
+            version,
           );
         } else {
           log('Skipping existing version:', version);
@@ -105,7 +105,7 @@ export async function run(): Promise<void> {
         if (cfg.dryRun) {
           log.warn(
             chalk.yellow('[DRY_RUN] Would upload release asset:'),
-            version
+            version,
           );
         } else {
           log('Uploading release:', version);

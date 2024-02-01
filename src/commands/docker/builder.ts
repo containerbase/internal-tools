@@ -36,7 +36,7 @@ async function buildAndPush(
     platforms,
     skipLatestTag,
   }: DockerBuilderConfig,
-  tobuild: BuildsResult
+  tobuild: BuildsResult,
 ): Promise<void> {
   const builds: string[] = [];
   const failed: string[] = [];
@@ -136,7 +136,7 @@ async function buildAndPush(
         log('Signing image', imageVersion);
         await cosign('sign', '--yes', imageVersion);
         for (const imageVersion of tags.map(
-          (tag) => `${imagePrefix}/${image}:${tag}`
+          (tag) => `${imagePrefix}/${image}:${tag}`,
         )) {
           log('Signing image', imageVersion);
           await cosign('sign', '--yes', imageVersion);
@@ -211,7 +211,7 @@ export async function run(): Promise<void> {
     ...cfg,
     imagePrefix: getArg('image-prefix')?.replace(/\/$/, '') || 'renovate',
     imagePrefixes: getArg('image-prefixes', { multi: true })?.map((ip) =>
-      ip.replace(/\/$/, '')
+      ip.replace(/\/$/, ''),
     ),
     image: cfg.image,
     depName: cfg.depName ?? cfg.image,

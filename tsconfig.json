@@ -1,7 +1,7 @@
 {
   "extends": [
     "@tsconfig/strictest/tsconfig.json",
-    "@tsconfig/node20/tsconfig.json"
+    "@tsconfig/node20/tsconfig.json",
   ],
   "compilerOptions": {
     "outDir": "./dist",
@@ -12,7 +12,7 @@
     "exactOptionalPropertyTypes": false /* doesn't work with renovate yet */,
     "esModuleInterop": true,
     "module": "CommonJS",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
   },
-  "exclude": ["node_modules/", "**/__mocks__/*", "dist/", "coverage/"]
+  "exclude": ["node_modules/", "**/__mocks__/*", "dist/", "coverage/"],
 }

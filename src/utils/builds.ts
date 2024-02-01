@@ -102,12 +102,12 @@ export async function getBuildList({
       allVersions = allVersions.filter((version) => isAllowedPred(version));
     } else if (ver.isValid(allowedVersions)) {
       allVersions = allVersions.filter((version) =>
-        ver.matches(version, allowedVersions)
+        ver.matches(version, allowedVersions),
       );
     } else if (semver.validRange(allowedVersions)) {
       allVersions = allVersions.filter((v) =>
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        semver.satisfies(semver.coerce(v)!, allowedVersions)
+        semver.satisfies(semver.coerce(v)!, allowedVersions),
       );
     } else {
       log.warn(`Invalid 'allowedVersions' options: ${allowedVersions}`);
@@ -133,7 +133,7 @@ export async function getBuildList({
   if (latestStable && !allVersions.includes(latestStable)) {
     log.warn(
       `LatestStable '${latestStable}' not buildable, candidates:`,
-      allVersions.join(', ')
+      allVersions.join(', '),
     );
   }
 

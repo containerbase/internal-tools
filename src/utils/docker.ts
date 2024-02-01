@@ -76,12 +76,12 @@ export async function build({
 
     if (!dryRun && push) {
       args.push(
-        `--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max,ignore-error=true`
+        `--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max,ignore-error=true`,
       );
       if (is.nonEmptyArray(cacheToTags)) {
         for (const ctag of cacheToTags) {
           args.push(
-            `--cache-to=type=registry,ref=${cacheImage}-${ctag},mode=max,ignore-error=true`
+            `--cache-to=type=registry,ref=${cacheImage}-${ctag},mode=max,ignore-error=true`,
           );
         }
       }

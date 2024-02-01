@@ -24,7 +24,7 @@ export async function exists(command: string): Promise<boolean> {
 export async function exec(
   cmd: string,
   args: string[],
-  options?: ExecOptions
+  options?: ExecOptions,
 ): Promise<ExecResult> {
   let stdout = '';
   let stderr = '';
@@ -101,7 +101,7 @@ export async function readBuffer(file: string): Promise<Buffer> {
 
 export async function writeFile(
   file: string,
-  contents: string | Buffer
+  contents: string | Buffer,
 ): Promise<void> {
   const path = join(getWorkspace(), file);
   await fs.writeFile(path, contents);
@@ -112,15 +112,15 @@ export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 export function getArg(name: string, opts?: { required?: boolean }): string;
 export function getArg(
   name: string,
-  opts?: { required?: boolean; multi: true }
+  opts?: { required?: boolean; multi: true },
 ): string[];
 export function getArg(
   name: string,
-  opts?: { required?: boolean; multi?: boolean }
+  opts?: { required?: boolean; multi?: boolean },
 ): string | string[];
 export function getArg(
   name: string,
-  opts?: { required?: boolean; multi?: boolean }
+  opts?: { required?: boolean; multi?: boolean },
 ): string | string[] {
   // istanbul ignore if: just for local testing where dash is not allowed
   if (process.env.NODE_ENV === 'debug') {
