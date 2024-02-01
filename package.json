@@ -25,6 +25,9 @@
     "test:node": "NODE_ENV=debug INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/node.json INPUT_IMAGE_PREFIX=containerbase/ INPUT_IMAGE=node run-s start",
     "test:testing": "NODE_ENV=debug INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/testing.json INPUT_IMAGE_PREFIXES=ghcr.io/containerbase/ INPUT_PLATFORMS=linux/amd64,linux/arm64 run-s start"
   },
+  "resolutions": {
+    "tsconfig-paths": "4.2.0"
+  },
   "dependencies": {
     "@actions/core": "1.10.1",
     "@actions/exec": "1.1.1",
@@ -86,9 +89,6 @@
     "pnpm": "^8.0.0"
   },
   "pnpm": {
-    "overrides": {
-      "tsconfig-paths": "4.2.0"
-    },
     "neverBuiltDependencies": [
       "dtrace-provider"
     ]
