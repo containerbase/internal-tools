@@ -39,7 +39,7 @@
     "escape-string-regexp": "4.0.0",
     "find-up": "5.0.0",
     "got": "11.8.6",
-    "renovate": "37.153.2",
+    "renovate": "37.172.2",
     "semver": "7.5.4",
     "strip-ansi": "6.0.1",
     "tslib": "2.6.2"
