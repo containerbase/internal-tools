@@ -55,7 +55,7 @@
     "@types/auth-header": "1.0.6",
     "@types/jest": "29.5.12",
     "@types/node": "20.11.20",
-    "@types/semver": "7.5.7",
+    "@types/semver": "7.5.8",
     "@typescript-eslint/eslint-plugin": "7.0.2",
     "@typescript-eslint/parser": "7.0.2",
     "conventional-changelog-conventionalcommits": "7.0.2",
