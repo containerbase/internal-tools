@@ -5,7 +5,7 @@ import {
 } from 'renovate/dist/modules/datasource';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { add as addHostRule } from 'renovate/dist/util/host-rules';
-import { configRegexPredicate } from 'renovate/dist/util/string-match';
+import { getRegexPredicate } from 'renovate/dist/util/string-match';
 import * as semver from 'semver';
 import log from './logger';
 import * as renovate from './renovate';
@@ -97,7 +97,7 @@ export async function getBuildList({
   }
 
   if (is.string(allowedVersions)) {
-    const isAllowedPred = configRegexPredicate(allowedVersions);
+    const isAllowedPred = getRegexPredicate(allowedVersions);
     if (isAllowedPred) {
       allVersions = allVersions.filter((version) => isAllowedPred(version));
     } else if (ver.isValid(allowedVersions)) {
