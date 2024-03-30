@@ -51,7 +51,7 @@
     "@semantic-release/github": "9.2.6",
     "@semantic-release/npm": "11.0.3",
     "@tsconfig/node20": "20.1.4",
-    "@tsconfig/strictest": "2.0.4",
+    "@tsconfig/strictest": "2.0.5",
     "@types/auth-header": "1.0.6",
     "@types/jest": "29.5.12",
     "@types/node": "20.11.30",
