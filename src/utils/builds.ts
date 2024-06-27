@@ -1,4 +1,4 @@
-import is from '@sindresorhus/is';
+import { isNumber, isString } from '@sindresorhus/is';
 import {
   ReleaseResult,
   getPkgReleases,
@@ -96,7 +96,7 @@ export async function getBuildList({
     allVersions = allVersions.filter((v) => ver.isStable(v));
   }
 
-  if (is.string(allowedVersions)) {
+  if (isString(allowedVersions)) {
     const isAllowedPred = getRegexPredicate(allowedVersions);
     if (isAllowedPred) {
       allVersions = allVersions.filter((version) => isAllowedPred(version));
@@ -142,7 +142,7 @@ export async function getBuildList({
   const lastVersion = allVersions.at(-1)!;
   log('Most recent version is', lastVersion);
 
-  if (is.number(maxVersions) && maxVersions > 0) {
+  if (isNumber(maxVersions) && maxVersions > 0) {
     log(`Building last ${maxVersions} version only`);
     allVersions = allVersions.slice(-maxVersions);
   }
