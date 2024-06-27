@@ -1,9 +1,15 @@
 import { getInput } from '@actions/core';
-import is from '@sindresorhus/is';
+import {
+  isNonEmptyArray,
+  isNonEmptyString,
+  isObject,
+  isString,
+} from '@sindresorhus/is';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
 import { getArch, getArg, getDistro, isDryRun, readJson } from '../../util';
 import { readDockerConfig } from '../../utils/config';
 import {
+  DockerArch,
   DockerPlatform,
   dockerBuildx,
   dockerRun,
@@ -16,15 +22,15 @@ export async function getConfig(): Promise<BinaryBuilderConfig> {
 
   const cfg = await readJson<ConfigFile>(configFile);
 
-  if (!is.object(cfg)) {
+  if (!isObject(cfg)) {
     throw new Error('missing-config');
   }
 
-  if (!is.string(cfg.image)) {
+  if (!isString(cfg.image)) {
     cfg.image = getInput('image', { required: true });
   }
 
-  if (!is.string(cfg.buildArg)) {
+  if (!isString(cfg.buildArg)) {
     cfg.buildArg = cfg.image.toUpperCase() + '_VERSION';
   }
 
@@ -48,13 +54,13 @@ export async function createBuilderImage(
   const args = ['build', '--load', '-t', 'builder'];
   const distro = getDistro();
   const arch = getArch();
-  if (is.nonEmptyString(distro)) {
+  if (isNonEmptyString(distro)) {
     args.push('--build-arg', `DISTRO=${distro}`);
   }
-  if (is.nonEmptyString(arch)) {
-    args.push('--platform', DockerPlatform[arch]);
+  if (isNonEmptyString(arch)) {
+    args.push('--platform', DockerPlatform[arch as DockerArch]);
   }
-  if (is.nonEmptyArray(buildArgs)) {
+  if (isNonEmptyArray(buildArgs)) {
     args.push(...buildArgs.map((b) => `--build-arg=${b}`));
   }
   await dockerBuildx(...args, ws);
@@ -63,8 +69,8 @@ export async function createBuilderImage(
 export async function runBuilder(ws: string, version: string): Promise<void> {
   const args = ['--name', 'builder', '--volume', `${ws}/.cache:/cache`];
   const arch = getArch();
-  if (is.nonEmptyString(arch)) {
-    args.push('--platform', DockerPlatform[arch]);
+  if (isNonEmptyString(arch)) {
+    args.push('--platform', DockerPlatform[arch as DockerArch]);
   }
   await dockerRun(...args, 'builder', version);
 }
