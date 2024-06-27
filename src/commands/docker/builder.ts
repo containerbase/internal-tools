@@ -1,5 +1,10 @@
 import { getInput, setFailed } from '@actions/core';
-import is from '@sindresorhus/is';
+import {
+  isNonEmptyString,
+  isNumber,
+  isObject,
+  isString,
+} from '@sindresorhus/is';
 import chalk from 'chalk';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
@@ -14,7 +19,7 @@ import log from '../../utils/logger';
 import type { ConfigFile, DockerBuilderConfig } from '../../utils/types';
 
 function createTag(tagSuffix: string | undefined, version: string): string {
-  return is.nonEmptyString(tagSuffix) && tagSuffix !== 'latest'
+  return isNonEmptyString(tagSuffix) && tagSuffix !== 'latest'
     ? `${version}-${tagSuffix}`
     : version;
 }
@@ -51,14 +56,14 @@ async function buildAndPush(
       const major = ver.getMajor(version);
       const isStable = ver.isStable(version);
 
-      if (isStable && is.number(major) && `${major}` !== version) {
+      if (isStable && isNumber(major) && `${major}` !== version) {
         versionsMap.set(`${major}`, version);
       }
 
       if (
         isStable &&
-        is.number(major) &&
-        is.number(minor) &&
+        isNumber(major) &&
+        isNumber(minor) &&
         `${major}.${minor}` !== version
       ) {
         versionsMap.set(`${major}.${minor}`, version);
@@ -93,7 +98,7 @@ async function buildAndPush(
       const cacheToTags: string[] = [];
       const tags: string[] = [];
 
-      if (is.number(major)) {
+      if (isNumber(major)) {
         const nTag = createTag(tagSuffix, `${major}`);
         cacheFromTags.push(nTag);
         if (versionsMap.get(`${major}`) === version) {
@@ -103,7 +108,7 @@ async function buildAndPush(
           }
         }
       }
-      if (is.number(major) && is.number(minor)) {
+      if (isNumber(major) && isNumber(minor)) {
         const nTag = createTag(tagSuffix, `${major}.${minor}`);
         cacheFromTags.push(nTag);
         if (versionsMap.get(`${major}.${minor}`) === version) {
@@ -198,16 +203,16 @@ export async function run(): Promise<void> {
 
   const cfg = await readJson<ConfigFile>(configFile);
 
-  if (!is.object(cfg)) {
+  if (!isObject(cfg)) {
     throw new Error('missing-config');
   }
 
   // TODO: validation
-  if (!is.string(cfg.image)) {
+  if (!isString(cfg.image)) {
     cfg.image = getInput('image', { required: true });
   }
 
-  if (!is.string(cfg.buildArg)) {
+  if (!isString(cfg.buildArg)) {
     cfg.buildArg = cfg.image.toUpperCase() + '_VERSION';
   }
 

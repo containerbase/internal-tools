@@ -1,5 +1,5 @@
 import { setTimeout } from 'node:timers/promises';
-import is from '@sindresorhus/is';
+import { isNonEmptyArray, isString } from '@sindresorhus/is';
 import chalk from 'chalk';
 import { dockerBuildx } from './docker/common';
 import log from './logger';
@@ -46,7 +46,7 @@ export async function build({
 }: BuildOptions): Promise<void> {
   const args = ['build'];
 
-  if (is.nonEmptyArray(buildArgs)) {
+  if (isNonEmptyArray(buildArgs)) {
     args.push(...buildArgs.map((b) => `--build-arg=${b}`));
   }
 
@@ -61,14 +61,14 @@ export async function build({
     }
   }
 
-  if (is.string(cache)) {
+  if (isString(cache)) {
     const cachePrefix = cache.split('/')[0]?.match(/[.:]/)
       ? ''
       : `${imagePrefix}/`;
     const cacheImage = `${cachePrefix}${cache}:${image.replace(/\//g, '-')}`;
     args.push(`--cache-from=${cacheImage}-${tag}`);
 
-    if (is.nonEmptyArray(cacheFromTags)) {
+    if (isNonEmptyArray(cacheFromTags)) {
       for (const ctag of cacheFromTags) {
         args.push(`--cache-from=${cacheImage}-${ctag}`);
       }
@@ -78,7 +78,7 @@ export async function build({
       args.push(
         `--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max,ignore-error=true`,
       );
-      if (is.nonEmptyArray(cacheToTags)) {
+      if (isNonEmptyArray(cacheToTags)) {
         for (const ctag of cacheToTags) {
           args.push(
             `--cache-to=type=registry,ref=${cacheImage}-${ctag},mode=max,ignore-error=true`,

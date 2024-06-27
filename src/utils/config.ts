@@ -1,4 +1,4 @@
-import is from '@sindresorhus/is';
+import { isNonEmptyString, isString } from '@sindresorhus/is';
 import escapeStringRegexp from 'escape-string-regexp';
 import { getArch, getDistro, readFile } from '../util';
 import { BinaryBuilderConfig, ConfigFile, sumType } from './types';
@@ -17,7 +17,7 @@ function checkArgs(
   groups: Record<string, string | undefined>,
 ): void {
   for (const key of keys) {
-    if (!is.string(cfg[key]) && is.nonEmptyString(groups[key])) {
+    if (!isString(cfg[key]) && isNonEmptyString(groups[key])) {
       cfg[key] = groups[key] as never;
     }
   }
@@ -46,10 +46,10 @@ export function getBinaryName(
   const arch = getArch();
   const ext = sum ? `.${sumType}` : '';
   let image = `${cfg.image}-${version}`;
-  if (is.nonEmptyString(distro)) {
+  if (isNonEmptyString(distro)) {
     image += `-${distro}`;
   }
-  if (is.nonEmptyString(arch)) {
+  if (isNonEmptyString(arch)) {
     image += `-${arch}`;
   }
   return `${image}.tar.xz${ext}`;
