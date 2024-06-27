@@ -19,6 +19,7 @@ interface GhAsset {
 
   size: number;
 }
+
 interface GhRelease {
   id: number;
   name: string | null;
@@ -164,6 +165,40 @@ export async function uploadAsset(
   sum?: boolean | undefined,
 ): Promise<void> {
   try {
+    const name = getBinaryName(cfg, version, sum);
+    const buffer = await readBuffer(`.cache/${name}`);
+
+    await uploadFile(api, cfg, version, name, buffer);
+  } catch (e) {
+    if (isRequestError(e) && e.status !== 404) {
+      throw e;
+    }
+  }
+}
+
+export async function uploadVersionAsset(
+  api: GitHubOctokit,
+  cfg: BinaryBuilderConfig,
+  version: string,
+): Promise<void> {
+  try {
+    const buffer = Buffer.from(version, 'utf8');
+    await uploadFile(api, cfg, version, 'version', buffer);
+  } catch (e) {
+    if (isRequestError(e) && e.status !== 404) {
+      throw e;
+    }
+  }
+}
+
+export async function uploadFile(
+  api: GitHubOctokit,
+  cfg: BinaryBuilderConfig,
+  version: string,
+  name: string,
+  buffer: Buffer,
+): Promise<void> {
+  try {
     let rel = await findRelease(api, version);
     let release_id = rel?.id ?? 0;
 
@@ -171,9 +206,6 @@ export async function uploadAsset(
       rel = await createRelease(api, cfg, version);
       release_id = rel.id;
     }
-
-    const name = getBinaryName(cfg, version, sum);
-    const buffer = await readBuffer(`.cache/${name}`);
 
     const { data } = await api.rest.repos.uploadReleaseAsset({
       ...context.repo,
@@ -203,18 +235,23 @@ export async function hasAsset(
   version: string,
   sum?: boolean | undefined,
 ): Promise<boolean> {
-  return (await findAsset(api, cfg, version, sum)) != null;
+  const name = getBinaryName(cfg, version, sum);
+  return (await findAsset(api, name, version)) != null;
 }
 
-export async function findAsset(
+export async function hasVersionAsset(
   api: GitHubOctokit,
-  cfg: BinaryBuilderConfig,
   version: string,
-  sum?: boolean | undefined,
+): Promise<boolean> {
+  return (await findAsset(api, 'version', version)) != null;
+}
+
+async function findAsset(
+  api: GitHubOctokit,
+  name: string,
+  version: string,
 ): Promise<GhAsset | null> {
   const rel = await findRelease(api, version);
-  const name = getBinaryName(cfg, version, sum);
-
   return rel?.assets.find((a) => a.name === name) ?? null;
 }
 
@@ -223,7 +260,8 @@ export async function downloadAsset(
   cfg: BinaryBuilderConfig,
   version: string,
 ): Promise<boolean> {
-  const asset = await findAsset(api, cfg, version);
+  const name = getBinaryName(cfg, version);
+  const asset = await findAsset(api, name, version);
 
   if (!asset) {
     return false;
