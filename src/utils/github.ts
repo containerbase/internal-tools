@@ -152,6 +152,7 @@ export async function updateRelease(
     release_id: rel.id,
     name: version,
     body,
+    make_latest: 'legacy',
   });
 
   releaseCache?.set(data.tag_name, data);
