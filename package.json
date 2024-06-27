@@ -38,7 +38,7 @@
     "@sindresorhus/is": "4.6.0",
     "auth-header": "1.0.0",
     "chalk": "5.3.0",
-    "escape-string-regexp": "4.0.0",
+    "escape-string-regexp": "5.0.0",
     "find-up": "5.0.0",
     "got": "11.8.6",
     "renovate": "37.420.1",
