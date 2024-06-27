@@ -1,4 +1,5 @@
-import { existsSync, promises } from 'node:fs';
+import { existsSync } from 'node:fs';
+import fs from 'node:fs/promises';
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as _io from '@actions/io';
@@ -10,6 +11,10 @@ vi.mock('@actions/core');
 vi.mock('@actions/exec');
 vi.mock('@actions/io');
 vi.mock('../src/utils/logger');
+vi.mock('node:fs/promises', async (imp) => ({
+  ...(await imp<typeof fs>()),
+  writeFile: vi.fn(),
+}));
 
 const core = mocked(_core);
 const exec = mocked(_exec);
@@ -136,7 +141,6 @@ describe('util', () => {
 
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
-      vi.spyOn(promises, 'writeFile').mockResolvedValueOnce();
       await expect(util.writeFile('Dockerfile', 'FROM alpine')).toResolve();
     });
   });
