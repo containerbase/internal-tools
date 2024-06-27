@@ -63,7 +63,7 @@ jobs:
 
       - run: pnpm compile
 
-      - run: pnpm jest --maxWorkers=2 --ci --coverage
+      - run: pnpm test:vitest
         env:
           FORCE_COLOR: true
 
