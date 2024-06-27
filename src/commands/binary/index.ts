@@ -8,8 +8,10 @@ import {
   downloadAsset,
   getOctokit,
   hasAsset,
+  hasVersionAsset,
   updateRelease,
   uploadAsset,
+  uploadVersionAsset,
 } from '../../utils/github';
 import log from '../../utils/logger';
 import { createChecksum } from '../../utils/sum';
@@ -53,6 +55,9 @@ export async function run(): Promise<void> {
 
     for (const version of builds.versions) {
       await updateRelease(api, cfg, version);
+      if (!(await hasVersionAsset(api, version))) {
+        await uploadVersionAsset(api, cfg, version);
+      }
       if (await hasAsset(api, cfg, version)) {
         if (!(await hasAsset(api, cfg, version, true))) {
           log('Creating checksum for existing version:', version);
