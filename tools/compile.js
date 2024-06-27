@@ -1,3 +1,4 @@
+import { env } from 'node:process';
 import { build } from 'esbuild';
 
 await build({
@@ -5,7 +6,7 @@ await build({
   bundle: true,
   platform: 'node',
   target: 'node20',
-  minify: true,
+  minify: !!env['CI'],
   tsconfig: 'tsconfig.dist.json',
   sourcemap: true,
   format: 'esm',
@@ -14,4 +15,5 @@ await build({
     '.node': 'copy',
   },
   external: ['dtrace-provider'],
+  inject: ['tools/cjs-shim.ts'],
 });
