@@ -122,10 +122,12 @@ export function getArg(
   name: string,
   opts?: { required?: boolean; multi?: boolean },
 ): string | string[] {
+  /* c8 ignore start */
   // istanbul ignore if: just for local testing where dash is not allowed
   if (process.env.NODE_ENV === 'debug') {
     name = name.replace(/-/g, '_');
   }
+  /* c8 ignore stop */
   const val = getInput(name, opts);
   return opts?.multi
     ? val.split(MultiArgsSplitRe).filter(is.nonEmptyStringAndNotWhitespace)
@@ -144,9 +146,11 @@ export async function resolveFile(file: string): Promise<string> {
     _pkg = findUp('package.json', { cwd: __dirname, type: 'file' });
   }
   const pkg = await _pkg;
+  /* c8 ignore start */
   // istanbul ignore if
   if (!pkg) {
     throw new Error('Missing package.json');
   }
+  /* c8 ignore stop */
   return join(pkg, '../', file);
 }

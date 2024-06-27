@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as _core from '@actions/core';
 import * as _datasources from 'renovate/dist/modules/datasource';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { run } from '../../../src/commands/binary';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
 import * as _github from '../../../src/utils/github';
 import { mocked } from '../../utils';
 
-jest.mock('renovate/dist/modules/datasource');
-jest.mock('../../../src/util');
-jest.mock('../../../src/utils/docker/common');
-jest.mock('../../../src/utils/docker/buildx', () => ({
+vi.mock('renovate/dist/modules/datasource');
+vi.mock('../../../src/util');
+vi.mock('../../../src/utils/docker/common');
+vi.mock('../../../src/utils/docker/buildx', () => ({
   init: () => Promise.resolve(),
 }));
-jest.mock('../../../src/utils/github');
-jest.mock('../../../src/utils/datasource');
-jest.mock('../../../src/utils/sum');
+vi.mock('../../../src/utils/github');
+vi.mock('../../../src/utils/datasource');
+vi.mock('../../../src/utils/sum');
 
 const core = mocked(_core);
 const utils = mocked(_utils);
@@ -28,7 +29,6 @@ describe('commands/binary/index', () => {
   let input: Record<string, string>;
 
   beforeEach(() => {
-    jest.resetAllMocks();
     input = {};
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- wrong core types
     core.getInput.mockImplementation((k) => input[k]!);

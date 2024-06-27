@@ -1,10 +1,14 @@
 import * as _core from '@actions/core';
+import * as matchers from 'jest-extended';
 import * as nock from 'nock';
+import { afterAll, beforeAll, expect, vi } from 'vitest';
 import { mocked } from './utils';
 
-jest.mock('@actions/core');
-jest.mock('@actions/github');
-jest.mock('../src/utils/logger');
+expect.extend(matchers);
+
+vi.mock('@actions/core');
+vi.mock('@actions/github');
+vi.mock('../src/utils/logger');
 
 const core = mocked(_core);
 
@@ -14,6 +18,5 @@ beforeAll(() => {
 });
 
 afterAll(() => {
-  jest.clearAllMocks();
   nock.restore();
 });

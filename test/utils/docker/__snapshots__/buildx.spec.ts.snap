@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`utils/docker/buildx already initialized 1`] = `
+exports[`utils/docker/buildx > already initialized 1`] = `
 [
   [
     "docker",
@@ -12,7 +12,7 @@ exports[`utils/docker/buildx already initialized 1`] = `
 ]
 `;
 
-exports[`utils/docker/buildx works 1`] = `
+exports[`utils/docker/buildx > works 1`] = `
 [
   [
     "docker",

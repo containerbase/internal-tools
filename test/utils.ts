@@ -1,9 +1,12 @@
+import { MaybeMockedDeep } from '@vitest/spy';
+import { vi } from 'vitest';
+
 /**
  * Simple wrapper for getting mocked version of a module
- * @param module module which is mocked by `jest.mock`
+ * @param module module which is mocked by `vi.mock`
  */
-export function mocked<T>(module: T): jest.Mocked<T> {
-  return module as never;
+export function mocked<T>(module: T): MaybeMockedDeep<T> {
+  return vi.mocked(module, true);
 }
 
 /**

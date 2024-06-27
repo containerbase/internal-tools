@@ -1,9 +1,10 @@
+import { describe, expect, it, vi } from 'vitest';
 import * as _utils from '../../src/util';
 import { getBinaryName } from '../../src/utils/config';
 import type { BinaryBuilderConfig } from '../../src/utils/types';
 import { mocked, partial } from '../utils';
 
-jest.mock('../../src/util');
+vi.mock('../../src/util');
 
 const utils = mocked(_utils);
 

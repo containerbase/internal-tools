@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as _core from '@actions/core';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   createBuilderImage,
   getConfig,
@@ -10,20 +11,19 @@ import * as _docker from '../../../src/utils/docker/common';
 import type { BinaryBuilderConfig } from '../../../src/utils/types';
 import { mocked, partial } from '../../utils';
 
-jest.mock('../../../src/util');
-jest.mock('../../../src/utils/docker/common');
+vi.mock('../../../src/util');
+vi.mock('../../../src/utils/docker/common');
 
 const core = mocked(_core);
 const docker = mocked(_docker);
 const utils = mocked(_utils);
 
-jest.mock('../../../src/util');
+vi.mock('../../../src/util');
 
 describe('commands/binary/utils', () => {
   let input: Record<string, string>;
 
   beforeEach(() => {
-    jest.resetAllMocks();
     input = {};
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- wrong core types
     core.getInput.mockImplementation((k) => input[k]!);
