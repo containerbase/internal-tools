@@ -1,16 +1,13 @@
+import { describe, expect, it, vi } from 'vitest';
 import * as _utils from '../../../src/util';
 import { init } from '../../../src/utils/docker/buildx';
 import { mocked } from '../../utils';
 
-jest.mock('../../../src/util');
+vi.mock('../../../src/util');
 
 const utils = mocked(_utils);
 
 describe('utils/docker/buildx', () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
   it('works', async () => {
     utils.exec.mockResolvedValueOnce({
       code: 0,

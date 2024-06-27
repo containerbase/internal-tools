@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as _core from '@actions/core';
 import * as _datasources from 'renovate/dist/modules/datasource';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { run } from '../../../src/commands/docker/builder';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker';
 import { mocked } from '../../utils';
 
-jest.mock('renovate/dist/modules/datasource');
-jest.mock('../../../src/util');
-jest.mock('../../../src/utils/docker');
-jest.mock('../../../src/utils/docker/cosign');
-jest.mock('../../../src/utils/docker/buildx', () => ({
+vi.mock('renovate/dist/modules/datasource');
+vi.mock('../../../src/util');
+vi.mock('../../../src/utils/docker');
+vi.mock('../../../src/utils/docker/cosign');
+vi.mock('../../../src/utils/docker/buildx', () => ({
   init: () => Promise.resolve(),
 }));
-jest.mock('../../../src/utils/datasource');
+vi.mock('../../../src/utils/datasource');
 
 const core = mocked(_core);
 const utils = mocked(_utils);
@@ -25,7 +26,6 @@ describe('commands/docker/builder', () => {
   let args: Record<string, string | string[]> = {};
 
   beforeEach(() => {
-    jest.resetAllMocks();
     core.getInput.mockReturnValueOnce('builder.json');
     core.getInput.mockReturnValueOnce('yarn');
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
@@ -191,7 +191,7 @@ describe('commands/docker/builder', () => {
   });
 
   it('works dummy', async () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
 
     await run();
@@ -200,7 +200,7 @@ describe('commands/docker/builder', () => {
   });
 
   it('works ubuntu', async () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/ubuntu.json'));
 
     await run();
@@ -296,7 +296,7 @@ describe('commands/docker/builder', () => {
 
   it('throws missing-image', async () => {
     expect.assertions(1);
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     utils.readJson.mockResolvedValueOnce({});
     core.getInput.mockReturnValueOnce('');
     core.getInput.mockImplementationOnce(() => {
@@ -307,7 +307,7 @@ describe('commands/docker/builder', () => {
 
   it('throws missing-config', async () => {
     expect.assertions(1);
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     utils.readJson.mockResolvedValueOnce(undefined);
 
     await expect(run()).rejects.toThrow('missing-config');

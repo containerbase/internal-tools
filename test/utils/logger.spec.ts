@@ -1,19 +1,18 @@
 import * as _core from '@actions/core';
 import chalk from 'chalk';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import log from '../../src/utils/logger';
 import { mocked } from '../utils';
 
-jest.unmock('../../src/utils/logger');
-// TODO: fix test
-jest.mock('strip-ansi', () => jest.fn());
+vi.unmock('../../src/utils/logger');
+vi.mock('strip-ansi');
 
 const core = mocked(_core);
 
 describe('utils/logger', () => {
-  const logger = jest.fn();
+  const logger = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
     console.log = logger;
     console.dir = logger;
   });

@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { api } from '../../../src/utils/versioning/ubuntu';
 
 describe('utils/versioning/ubuntu', () => {

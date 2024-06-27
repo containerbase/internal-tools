@@ -1,4 +1,5 @@
 // istanbul ignore file
+/* c8 ignore start */
 import { setTimeout } from 'node:timers/promises';
 import { context, getOctokit } from '@actions/github';
 import type { GitHub } from '@actions/github/lib/utils';

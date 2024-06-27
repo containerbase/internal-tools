@@ -89,11 +89,13 @@ export async function run(): Promise<void> {
         }
       }
 
+      /* c8 ignore start */
       // istanbul ignore if
       if (toBuild-- <= 0) {
         log.info('Build limit reached');
         break;
       }
+      /* c8 ignore stop */
 
       log.info('Processing version:', version);
 

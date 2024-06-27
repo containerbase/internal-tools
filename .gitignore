@@ -3,6 +3,7 @@ node_modules/
 dist/
 coverage/
 .cache/
+html/
 
 # yarn
 yarn-error.log

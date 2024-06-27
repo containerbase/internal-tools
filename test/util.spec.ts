@@ -2,23 +2,20 @@ import { existsSync, promises } from 'node:fs';
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as _io from '@actions/io';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import * as util from '../src/util';
 import { mocked } from './utils';
 
-jest.mock('@actions/core');
-jest.mock('@actions/exec');
-jest.mock('@actions/io');
-jest.mock('../src/utils/logger');
+vi.mock('@actions/core');
+vi.mock('@actions/exec');
+vi.mock('@actions/io');
+vi.mock('../src/utils/logger');
 
 const core = mocked(_core);
 const exec = mocked(_exec);
 const io = mocked(_io);
 
 describe('util', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   describe('exists', () => {
     it('returns true', async () => {
       io.which.mockResolvedValueOnce('');
@@ -139,7 +136,7 @@ describe('util', () => {
 
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
-      jest.spyOn(promises, 'writeFile').mockResolvedValueOnce();
+      vi.spyOn(promises, 'writeFile').mockResolvedValueOnce();
       await expect(util.writeFile('Dockerfile', 'FROM alpine')).toResolve();
     });
   });
@@ -173,6 +170,7 @@ describe('util', () => {
     });
 
     it('multi (null)', () => {
+      core.getInput.mockReturnValueOnce('');
       expect(util.getArg('dockerfile', { multi: true })).toEqual([]);
     });
   });

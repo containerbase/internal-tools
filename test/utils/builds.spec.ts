@@ -1,8 +1,9 @@
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
+import { describe, expect, it, vi } from 'vitest';
 import { BuildsConfig, getBuildList } from '../../src/utils/builds';
 import { partial } from '../utils';
 
-jest.mock('renovate/dist/modules/datasource');
+vi.mock('renovate/dist/modules/datasource');
 
 const version = '1.22.4';
 

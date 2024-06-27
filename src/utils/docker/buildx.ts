@@ -33,10 +33,12 @@ export async function init(use?: boolean): Promise<void> {
     'docker-container',
   );
 
+  /* c8 ignore start */
   // istanbul ignore if
   if (use) {
     await dockerBuildx('use', 'renovatebot-builder');
   }
+  /* c8 ignore stop */
 
   await dockerBuildx('inspect', '--bootstrap', 'renovatebot-builder');
   process.env.BUILDX_BUILDER = 'renovatebot-builder';

@@ -66,10 +66,12 @@ async function buildAndPush(
     }
   }
 
+  /* c8 ignore start */
   // istanbul ignore if: only linux
   if (dfExists) {
     await exec('df', ['-h']);
   }
+  /* c8 ignore stop */
 
   let shouldSign = false;
 
@@ -151,17 +153,21 @@ async function buildAndPush(
     }
 
     await dockerDf();
+    /* c8 ignore start */
     // istanbul ignore if: only linux
     if (dfExists) {
       await exec('df', ['-h']);
     }
+    /* c8 ignore stop */
 
     if (prune) {
       await dockerPrune();
+      /* c8 ignore start */
       // istanbul ignore if: only linux
       if (dfExists) {
         await exec('df', ['-h']);
       }
+      /* c8 ignore stop */
     }
   }
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`utils/docker build retries 1`] = `
+exports[`utils/docker > build > retries 1`] = `
 [
   [
     "docker",
@@ -23,7 +23,7 @@ exports[`utils/docker build retries 1`] = `
 ]
 `;
 
-exports[`utils/docker build throws 1`] = `
+exports[`utils/docker > build > throws 1`] = `
 [
   [
     "docker",
@@ -46,7 +46,7 @@ exports[`utils/docker build throws 1`] = `
 ]
 `;
 
-exports[`utils/docker build uses cache (dry-run) 1`] = `
+exports[`utils/docker > build > uses cache (dry-run) 1`] = `
 [
   [
     "docker",
@@ -63,7 +63,7 @@ exports[`utils/docker build uses cache (dry-run) 1`] = `
 ]
 `;
 
-exports[`utils/docker build uses cache 1`] = `
+exports[`utils/docker > build > uses cache 1`] = `
 [
   [
     "docker",
@@ -83,7 +83,7 @@ exports[`utils/docker build uses cache 1`] = `
 ]
 `;
 
-exports[`utils/docker build works 1`] = `
+exports[`utils/docker > build > works 1`] = `
 [
   [
     "docker",
