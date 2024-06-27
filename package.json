@@ -40,7 +40,7 @@
     "escape-string-regexp": "4.0.0",
     "find-up": "5.0.0",
     "got": "11.8.6",
-    "renovate": "37.342.1",
+    "renovate": "37.420.1",
     "semver": "7.6.2",
     "strip-ansi": "6.0.1",
     "tslib": "2.6.3"
@@ -59,7 +59,7 @@
     "@types/semver": "7.5.8",
     "@typescript-eslint/eslint-plugin": "7.13.1",
     "@typescript-eslint/parser": "7.13.1",
-    "conventional-changelog-conventionalcommits": "7.0.2",
+    "conventional-changelog-conventionalcommits": "8.0.0",
     "cross-env": "7.0.3",
     "esbuild": "0.21.5",
     "eslint": "8.57.0",
@@ -80,7 +80,7 @@
     "prettier": "3.3.2",
     "prettier-plugin-packagejson": "2.5.0",
     "rimraf": "5.0.7",
-    "semantic-release": "23.1.1",
+    "semantic-release": "24.0.0",
     "ts-jest": "29.1.5",
     "typescript": "5.5.2"
   },
