@@ -16,4 +16,7 @@ await build({
   },
   external: ['dtrace-provider'],
   inject: ['tools/cjs-shim.ts'],
+  // https://github.com/microsoft/node-jsonc-parser/issues/57#issuecomment-1634726605
+  // https://esbuild.github.io/api/#main-fields
+  mainFields: ['module', 'main'],
 });
