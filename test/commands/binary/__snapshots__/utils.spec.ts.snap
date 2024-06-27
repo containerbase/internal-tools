@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`commands/binary/utils createBuilderImage works with build args 1`] = `
+exports[`commands/binary/utils > createBuilderImage > works with build args 1`] = `
 [
   [
     "build",
@@ -17,7 +17,7 @@ exports[`commands/binary/utils createBuilderImage works with build args 1`] = `
 ]
 `;
 
-exports[`commands/binary/utils getConfig dummy (no-image) 1`] = `
+exports[`commands/binary/utils > getConfig > dummy (no-image) 1`] = `
 {
   "buildArg": "DUMMY_VERSION",
   "buildArgs": [],
@@ -30,7 +30,7 @@ exports[`commands/binary/utils getConfig dummy (no-image) 1`] = `
 }
 `;
 
-exports[`commands/binary/utils getConfig dummy 1`] = `
+exports[`commands/binary/utils > getConfig > dummy 1`] = `
 {
   "buildArg": "DUMMY_VERSION",
   "buildArgs": [],
@@ -53,7 +53,7 @@ exports[`commands/binary/utils getConfig dummy 1`] = `
 }
 `;
 
-exports[`commands/binary/utils getConfig ruby 1`] = `
+exports[`commands/binary/utils > getConfig > ruby 1`] = `
 {
   "buildArg": "RUBY_VERSION",
   "buildArgs": [],
@@ -71,7 +71,7 @@ exports[`commands/binary/utils getConfig ruby 1`] = `
 }
 `;
 
-exports[`commands/binary/utils runBuilder works with build args 1`] = `
+exports[`commands/binary/utils > runBuilder > works with build args 1`] = `
 [
   [
     "--name",

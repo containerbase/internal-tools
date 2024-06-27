@@ -1,10 +1,11 @@
+import { describe, expect, it, vi } from 'vitest';
 import * as _utils from '../../src/util';
 import { build } from '../../src/utils/docker';
 import { ExecError } from '../../src/utils/types';
 import { mocked } from '../utils';
 
-jest.mock('node:timers/promises');
-jest.mock('../../src/util');
+vi.mock('node:timers/promises');
+vi.mock('../../src/util');
 
 const utils = mocked(_utils);
 const res = { code: 0, stdout: '', stderr: '' };
@@ -12,10 +13,6 @@ const res = { code: 0, stdout: '', stderr: '' };
 const imagePrefix = 'renovate';
 
 describe('utils/docker', () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
   describe('build', () => {
     const image = 'base';
     const cache = 'docker-build-cache';

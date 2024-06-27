@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`commands/docker/builder build-only yarn: build 1`] = `
+exports[`commands/docker/builder > build-only yarn > build 1`] = `
 [
   [
     {
@@ -35,7 +35,7 @@ exports[`commands/docker/builder build-only yarn: build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder last-only dummy: build 1`] = `
+exports[`commands/docker/builder > last-only dummy > build 1`] = `
 [
   [
     {
@@ -66,7 +66,7 @@ exports[`commands/docker/builder last-only dummy: build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder updates image yarn (dry-run): build 1`] = `
+exports[`commands/docker/builder > updates image yarn (dry-run) > build 1`] = `
 [
   [
     {
@@ -101,7 +101,7 @@ exports[`commands/docker/builder updates image yarn (dry-run): build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder works dummy: build 1`] = `
+exports[`commands/docker/builder > works dummy > build 1`] = `
 [
   [
     {
@@ -148,7 +148,7 @@ exports[`commands/docker/builder works dummy: build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder works gradle: build 1`] = `
+exports[`commands/docker/builder > works gradle > build 1`] = `
 [
   [
     {
@@ -235,7 +235,7 @@ exports[`commands/docker/builder works gradle: build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder works helm: build 1`] = `
+exports[`commands/docker/builder > works helm > build 1`] = `
 [
   [
     {
@@ -318,7 +318,7 @@ exports[`commands/docker/builder works helm: build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder works java: build 1`] = `
+exports[`commands/docker/builder > works java > build 1`] = `
 [
   [
     {
@@ -409,7 +409,7 @@ exports[`commands/docker/builder works java: build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder works pnpm: build 1`] = `
+exports[`commands/docker/builder > works pnpm > build 1`] = `
 [
   [
     {
@@ -447,7 +447,7 @@ exports[`commands/docker/builder works pnpm: build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder works swift: build 1`] = `
+exports[`commands/docker/builder > works swift > build 1`] = `
 [
   [
     {
@@ -550,7 +550,7 @@ exports[`commands/docker/builder works swift: build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder works ubuntu: build 1`] = `
+exports[`commands/docker/builder > works ubuntu > build 1`] = `
 [
   [
     {
@@ -613,7 +613,7 @@ exports[`commands/docker/builder works ubuntu: build 1`] = `
 ]
 `;
 
-exports[`commands/docker/builder works yarn: build 1`] = `
+exports[`commands/docker/builder > works yarn > build 1`] = `
 [
   [
     {

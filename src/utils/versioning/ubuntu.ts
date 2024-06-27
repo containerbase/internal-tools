@@ -25,15 +25,18 @@ class CustomUbuntuVersioning extends GenericVersioningApi {
   protected override _compare(version1: string, version2: string): number {
     const parsed1 = this._parse(version1);
     const parsed2 = this._parse(version2);
+    /* c8 ignore start */
     // istanbul ignore if
     if (!parsed1 || !parsed2) {
       return 1;
     }
+    /* c8 ignore stop */
     const length = Math.max(parsed1.release.length, parsed2.release.length);
     for (let i = 0; i < length; i += 1) {
       const part1 = parsed1.release[i];
       const part2 = parsed2.release[i];
       // shorter is bigger 2.1 > 2.1.1
+      /* c8 ignore start */
       // istanbul ignore if
       if (part1 === undefined) {
         return 1;
@@ -42,6 +45,7 @@ class CustomUbuntuVersioning extends GenericVersioningApi {
       if (part2 === undefined) {
         return -1;
       }
+      /* c8 ignore stop */
       if (part1 !== part2) {
         return part1 - part2;
       }

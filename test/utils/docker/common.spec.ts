@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import * as _utils from '../../../src/util';
 import {
   dockerDf,
@@ -6,15 +7,11 @@ import {
 } from '../../../src/utils/docker/common';
 import { mocked } from '../../utils';
 
-jest.mock('../../../src/util');
+vi.mock('../../../src/util');
 
 const utils = mocked(_utils);
 
 describe('utils/docker/common', () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
   it('dockerPrune', async () => {
     await dockerPrune();
     expect(utils.exec.mock.calls).toMatchSnapshot();

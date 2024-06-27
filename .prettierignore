@@ -4,6 +4,7 @@ dist/
 coverage/
 .cache/
 yarn.lock
+html/
 
 .editorconfig
 .*ignore
