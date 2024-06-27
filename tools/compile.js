@@ -8,7 +8,7 @@ await build({
   minify: true,
   tsconfig: 'tsconfig.dist.json',
   sourcemap: true,
-  // format: "esm", // seperate issue
+  format: 'esm',
   outdir: './dist/',
   loader: {
     '.node': 'copy',
