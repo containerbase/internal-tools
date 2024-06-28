@@ -58,18 +58,18 @@ export async function run(): Promise<void> {
         log.warn(chalk.yellow('[DRY_RUN] Would update release:'), version);
       } else {
         log('Updating release:', version);
-        await updateRelease(api, cfg, version);
+        await updateRelease(api, cfg, version, builds.latestStable);
       }
 
       if (!(await hasVersionAsset(api, version))) {
         if (cfg.dryRun) {
           log.warn(
             chalk.yellow('[DRY_RUN] Would upload version asset:'),
-            version,
+            builds.latestStable ?? version,
           );
         } else {
-          log('Uploading version file:', version);
-          await uploadVersionAsset(api, cfg, version);
+          log('Uploading version file:', builds.latestStable ?? version);
+          await uploadVersionAsset(api, cfg, version, builds.latestStable);
         }
       }
 

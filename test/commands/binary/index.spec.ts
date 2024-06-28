@@ -50,6 +50,7 @@ describe('commands/binary/index', () => {
     await run();
 
     expect(docker.dockerRun).not.toHaveBeenCalled();
+    expect(github.uploadVersionAsset).toHaveBeenCalled();
   });
 
   it('works ruby (dry-run)', async () => {
@@ -62,10 +63,12 @@ describe('commands/binary/index', () => {
     });
 
     github.hasAsset.mockResolvedValueOnce(true).mockResolvedValueOnce(true);
+    github.hasVersionAsset.mockResolvedValueOnce(true);
 
     await run();
 
     expect(docker.dockerRun.mock.calls).toMatchSnapshot('docker');
+    expect(github.uploadVersionAsset).not.toHaveBeenCalled();
   });
 
   it('works ruby (no-assets)', async () => {
