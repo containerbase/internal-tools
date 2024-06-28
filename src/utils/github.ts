@@ -142,6 +142,7 @@ export async function updateRelease(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
   version: string,
+  latestStable: string | undefined,
 ): Promise<void> {
   const body = getBody(cfg, version);
   const rel = await findRelease(api, version);
@@ -153,7 +154,11 @@ export async function updateRelease(
     release_id: rel.id,
     name: version,
     body,
-    make_latest: 'legacy',
+    make_latest: latestStable
+      ? latestStable === version
+        ? 'true'
+        : 'false'
+      : 'legacy',
   });
 
   releaseCache?.set(data.tag_name, data);
@@ -181,9 +186,10 @@ export async function uploadVersionAsset(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
   version: string,
+  latestStable: string | undefined,
 ): Promise<void> {
   try {
-    const buffer = Buffer.from(version, 'utf8');
+    const buffer = Buffer.from(latestStable ?? version, 'utf8');
     await uploadFile(api, cfg, version, 'version', buffer);
   } catch (e) {
     if (isRequestError(e) && e.status !== 404) {
