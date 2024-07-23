@@ -170,16 +170,9 @@ export async function uploadAsset(
   version: string,
   sum?: boolean | undefined,
 ): Promise<void> {
-  try {
-    const name = getBinaryName(cfg, version, sum);
-    const buffer = await readBuffer(`.cache/${name}`);
-
-    await uploadFile(api, cfg, version, name, buffer);
-  } catch (e) {
-    if (isRequestError(e) && e.status !== 404) {
-      throw e;
-    }
-  }
+  const name = getBinaryName(cfg, version, sum);
+  const buffer = await readBuffer(`.cache/${name}`);
+  await uploadFile(api, cfg, version, name, buffer);
 }
 
 export async function uploadVersionAsset(
@@ -188,14 +181,8 @@ export async function uploadVersionAsset(
   version: string,
   latestStable: string | undefined,
 ): Promise<void> {
-  try {
-    const buffer = Buffer.from(latestStable ?? version, 'utf8');
-    await uploadFile(api, cfg, version, 'version', buffer);
-  } catch (e) {
-    if (isRequestError(e) && e.status !== 404) {
-      throw e;
-    }
-  }
+  const buffer = Buffer.from(latestStable ?? version, 'utf8');
+  await uploadFile(api, cfg, version, 'version', buffer);
 }
 
 export async function uploadFile(
@@ -230,7 +217,9 @@ export async function uploadFile(
     // cache asset
     rel.assets.push(data);
   } catch (e) {
-    if (isRequestError(e) && e.status !== 404) {
+    // don't throw if exist
+    // https://docs.github.com/en/rest/releases/assets?apiVersion=2022-11-28#upload-a-release-asset--status-codes
+    if (isRequestError(e) && e.status !== 422) {
       throw e;
     }
   }
