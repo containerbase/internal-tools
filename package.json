@@ -83,7 +83,7 @@
     "prettier-plugin-packagejson": "2.5.1",
     "rimraf": "5.0.10",
     "semantic-release": "24.0.0",
-    "ts-jest": "29.2.3",
+    "ts-jest": "29.2.4",
     "typescript": "5.5.4",
     "vite": "5.3.5",
     "vite-tsconfig-paths": "4.3.2",
