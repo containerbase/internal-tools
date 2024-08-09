@@ -38,6 +38,11 @@ export interface BuildsConfig {
   versioning: string;
   versions?: string[];
   extractVersion?: string;
+  /**
+   * If `true` process versions from highest to lowest,
+   * otherwise process from lowest to highest.
+   */
+  reverse?: boolean;
 }
 
 export interface BuildsResult {
@@ -59,6 +64,7 @@ export async function getBuildList({
   latestVersion,
   maxVersions,
   extractVersion,
+  reverse,
 }: BuildsConfig): Promise<BuildsResult | null> {
   log('Looking up versions');
   const ver = getVersioning(versioning);
@@ -150,6 +156,10 @@ export async function getBuildList({
   if (lastOnly) {
     log('Building last version only');
     allVersions = [latestStable && !forceUnstable ? latestStable : lastVersion];
+  }
+
+  if (reverse) {
+    allVersions.reverse();
   }
 
   log('Build list:', allVersions.join(', '));

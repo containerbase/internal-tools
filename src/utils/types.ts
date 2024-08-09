@@ -50,6 +50,11 @@ export type ConfigFile = {
   maxVersions?: number;
   extractVersion?: string;
   skipLatestTag?: boolean;
+  /**
+   * If `true` process versions from highest to lowest,
+   * otherwise process from lowest to highest.
+   */
+  reverse?: boolean;
 };
 
 export type DockerBuilderConfig = {
