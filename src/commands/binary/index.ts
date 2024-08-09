@@ -90,7 +90,7 @@ export async function run(): Promise<void> {
               );
             } else {
               log('Uploading release:', version);
-              await uploadAsset(api, cfg, version, true);
+              await uploadAsset(api, cfg, version, builds.latestStable, true);
             }
           } catch (e) {
             failed.push(version);
@@ -131,8 +131,8 @@ export async function run(): Promise<void> {
           );
         } else {
           log('Uploading release:', version);
-          await uploadAsset(api, cfg, version);
-          await uploadAsset(api, cfg, version, true);
+          await uploadAsset(api, cfg, version, builds.latestStable);
+          await uploadAsset(api, cfg, version, builds.latestStable, true);
         }
       } catch (e) {
         failed.push(version);

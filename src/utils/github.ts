@@ -102,6 +102,7 @@ async function createRelease(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
   version: string,
+  latestStable: string | undefined,
   retry = true,
 ): Promise<GhRelease> {
   try {
@@ -115,6 +116,11 @@ async function createRelease(
       tag_name: version,
       name: version,
       body: getBody(cfg, version),
+      make_latest: latestStable
+        ? latestStable === version
+          ? 'true'
+          : 'false'
+        : 'legacy',
     }));
 
     releaseCache?.set(version, data);
@@ -132,7 +138,7 @@ async function createRelease(
         err.message,
       );
       await setTimeout(250);
-      return await createRelease(api, cfg, version, false);
+      return await createRelease(api, cfg, version, latestStable, false);
     }
     throw err;
   }
@@ -168,11 +174,12 @@ export async function uploadAsset(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
   version: string,
+  latestStable: string | undefined,
   sum?: boolean | undefined,
 ): Promise<void> {
   const name = getBinaryName(cfg, version, sum);
   const buffer = await readBuffer(`.cache/${name}`);
-  await uploadFile(api, cfg, version, name, buffer);
+  await uploadFile(api, cfg, version, name, buffer, latestStable);
 }
 
 export async function uploadVersionAsset(
@@ -182,7 +189,7 @@ export async function uploadVersionAsset(
   latestStable: string | undefined,
 ): Promise<void> {
   const buffer = Buffer.from(latestStable ?? version, 'utf8');
-  await uploadFile(api, cfg, version, 'version', buffer);
+  await uploadFile(api, cfg, version, 'version', buffer, latestStable);
 }
 
 export async function uploadFile(
@@ -191,13 +198,14 @@ export async function uploadFile(
   version: string,
   name: string,
   buffer: Buffer,
+  latestStable: string | undefined,
 ): Promise<void> {
   try {
     let rel = await findRelease(api, version);
     let release_id = rel?.id ?? 0;
 
     if (rel == null) {
-      rel = await createRelease(api, cfg, version);
+      rel = await createRelease(api, cfg, version, latestStable);
       release_id = rel.id;
     }
 
