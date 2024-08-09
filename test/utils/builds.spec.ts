@@ -39,9 +39,10 @@ describe('utils/builds', () => {
         ...config,
         allowedVersions: '^16',
         versions: ['12.0.0', '16.0.1', '16.1.1', '17.0.1'],
+        reverse: true,
       }),
     ).toEqual({
-      versions: ['16.0.1', '16.1.1'],
+      versions: ['16.1.1', '16.0.1'],
       latestStable: '16.1.1',
     });
   });
