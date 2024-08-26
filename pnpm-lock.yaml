@@ -42,8 +42,8 @@ importers:
         specifier: 14.4.2
         version: 14.4.2
       renovate:
-        specifier: 38.39.6
-        version: 38.39.6(@aws-sdk/client-sso-oidc@3.621.0(@aws-sdk/client-sts@3.621.0))(encoding@0.1.13)(typanion@3.14.0)
+        specifier: 38.52.3
+        version: 38.52.3(@aws-sdk/client-sso-oidc@3.621.0(@aws-sdk/client-sts@3.621.0))(encoding@0.1.13)(typanion@3.14.0)
       semver:
         specifier: 7.6.3
         version: 7.6.3
@@ -3495,10 +3495,6 @@ packages:
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
-  ignore@5.3.1:
-    resolution: {integrity: sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==}
-    engines: {node: '>= 4'}
-
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
@@ -5050,8 +5046,8 @@ packages:
   remark@13.0.0:
     resolution: {integrity: sha512-HDz1+IKGtOyWN+QgBiAT0kn+2s6ovOxHyPAFGKVE81VSzJ+mq7RwHFledEvB5F1p4iJvOah/LOKdFuzvRnNLCA==}
 
-  renovate@38.39.6:
-    resolution: {integrity: sha512-+tIQxQTDC4OBi47HVzL6jb70/ESbQEthtEghqHq7ILc+7zC1NbwsFGj9FXO1cCaQv4Xq6CtkMPVJ8MB8l6dh+Q==}
+  renovate@38.52.3:
+    resolution: {integrity: sha512-AAUvfeOWIu7UsUP33GyPvwfNtAzebeyRQsHAFopNHJ9pYusgQF8YBebu7qh1tHBQOQ43MgG1fExa9k3/pwrTbQ==}
     engines: {node: ^20.15.1, pnpm: ^9.0.0}
     hasBin: true
 
@@ -10603,8 +10599,6 @@ snapshots:
   ieee754@1.2.1:
     optional: true
 
-  ignore@5.3.1: {}
-
   ignore@5.3.2: {}
 
   immediate@3.0.6: {}
@@ -12320,7 +12314,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@38.39.6(@aws-sdk/client-sso-oidc@3.621.0(@aws-sdk/client-sts@3.621.0))(encoding@0.1.13)(typanion@3.14.0):
+  renovate@38.52.3(@aws-sdk/client-sso-oidc@3.621.0(@aws-sdk/client-sts@3.621.0))(encoding@0.1.13)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.621.0
       '@aws-sdk/client-ec2': 3.621.0
@@ -12386,7 +12380,7 @@ snapshots:
       got: 11.8.6
       graph-data-structure: 3.5.0
       handlebars: 4.7.8
-      ignore: 5.3.1
+      ignore: 5.3.2
       ini: 4.1.3
       js-yaml: 4.1.0
       json-dup-key-validator: 1.0.3
