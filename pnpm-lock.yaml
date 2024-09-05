@@ -115,8 +115,8 @@ importers:
         specifier: 9.1.0
         version: 9.1.0(eslint@8.57.0)
       eslint-formatter-gha:
-        specifier: 1.5.0
-        version: 1.5.0
+        specifier: 1.5.1
+        version: 1.5.1
       eslint-import-resolver-typescript:
         specifier: 3.6.3
         version: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.29.1)(eslint@8.57.0)
@@ -2897,8 +2897,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-formatter-gha@1.5.0:
-    resolution: {integrity: sha512-mpZ8g/rfxn/igeAapQpbUrnvaP3zPpru3Y2I1yfDdRazzcNvYJmrAb9NLbNce0TQYbLBmg38X/drUOv0QhLyaw==}
+  eslint-formatter-gha@1.5.1:
+    resolution: {integrity: sha512-OSMS0XdM2Z5DhTMfRJx/1NiOH+zMYvrq6VXoARgR7mikwkQ5lG8uKBE2GIbM6sxcX13gI4M8x0vyhLNp3RIG7A==}
 
   eslint-formatter-json@8.40.0:
     resolution: {integrity: sha512-0bXo4At1EoEU23gFfN7wcDeqRXDHLJnvDOuQKD3Q6FkBlk7L2oVNPYg/sciIWdYrUnCBcKuMit3IWXkdSfzChg==}
@@ -9869,7 +9869,7 @@ snapshots:
     dependencies:
       eslint: 8.57.0
 
-  eslint-formatter-gha@1.5.0:
+  eslint-formatter-gha@1.5.1:
     dependencies:
       eslint-formatter-json: 8.40.0
       eslint-formatter-stylish: 8.40.0
