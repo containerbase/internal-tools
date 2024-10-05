@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@actions/core':
-        specifier: 1.10.1
-        version: 1.10.1
+        specifier: 1.11.0
+        version: 1.11.0
       '@actions/exec':
         specifier: 1.1.1
         version: 1.1.1
@@ -183,8 +183,8 @@ importers:
 
 packages:
 
-  '@actions/core@1.10.1':
-    resolution: {integrity: sha512-3lBR9EDAY+iYIpTnTIXmWcNbX3T2kCkAEQGIQx4NVQ0575nk2k3GRZDTPQG+vVtS2izSLmINlxXf0uLtnrTP+g==}
+  '@actions/core@1.11.0':
+    resolution: {integrity: sha512-I21jQUzEjbZolw3jFZ/0iHGCb+rePCww9MaA0SbVFae4FpBTQWP1GIvr/m5Y6GVaxrDz7p3RhBtpBzwkA3rPSA==}
 
   '@actions/exec@1.1.1':
     resolution: {integrity: sha512-+sCcHHbVdk93a0XT19ECtO/gIXoxvdsgQLzb2fE2/5sIZmWQuluYyjPQtrtTHdU1YzTZ7bAPN4sITq2xi1679w==}
@@ -5902,10 +5902,6 @@ packages:
   util@0.12.5:
     resolution: {integrity: sha512-kZf/K6hEIrWHI6XqOFUiiMa+79wE/D8Q+NCNAWclkyg3b4d2k7s0QGepNjiABc+aR3N1PAyHL7p6UcLY6LmrnA==}
 
-  uuid@8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    hasBin: true
-
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
@@ -6142,10 +6138,10 @@ packages:
 
 snapshots:
 
-  '@actions/core@1.10.1':
+  '@actions/core@1.11.0':
     dependencies:
+      '@actions/exec': 1.1.1
       '@actions/http-client': 2.2.3
-      uuid: 8.3.2
 
   '@actions/exec@1.1.1':
     dependencies:
@@ -13382,8 +13378,6 @@ snapshots:
       is-typed-array: 1.1.13
       which-typed-array: 1.1.15
 
-  uuid@8.3.2: {}
-
   uuid@9.0.1: {}
 
   v8-to-istanbul@9.3.0:
@@ -13450,7 +13444,7 @@ snapshots:
 
   vitest-github-actions-reporter@0.11.1(vitest@2.1.2):
     dependencies:
-      '@actions/core': 1.10.1
+      '@actions/core': 1.11.0
       vitest: 2.1.2(@types/node@20.16.10)(@vitest/ui@2.1.2)
 
   vitest@2.1.2(@types/node@20.16.10)(@vitest/ui@2.1.2):
