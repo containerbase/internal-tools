@@ -44,7 +44,7 @@
     "renovate": "38.132.3",
     "semver": "7.6.3",
     "strip-ansi": "7.1.0",
-    "tslib": "2.8.0"
+    "tslib": "2.8.1"
   },
   "devDependencies": {
     "@jest/globals": "29.7.0",
