@@ -108,9 +108,6 @@ importers:
       conventional-changelog-conventionalcommits:
         specifier: 8.0.0
         version: 8.0.0
-      cross-env:
-        specifier: 7.0.3
-        version: 7.0.3
       esbuild:
         specifier: 0.24.0
         version: 0.24.0
@@ -2627,11 +2624,6 @@ packages:
 
   cronstrue@2.50.0:
     resolution: {integrity: sha512-ULYhWIonJzlScCCQrPUG5uMXzXxSixty4djud9SS37DoNxDdkeRocxzHuAo4ImRBUK+mAuU5X9TSwEDccnnuPg==}
-    hasBin: true
-
-  cross-env@7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
     hasBin: true
 
   cross-spawn@7.0.3:
@@ -9587,10 +9579,6 @@ snapshots:
       luxon: 3.5.0
 
   cronstrue@2.50.0: {}
-
-  cross-env@7.0.3:
-    dependencies:
-      cross-spawn: 7.0.3
 
   cross-spawn@7.0.3:
     dependencies:
