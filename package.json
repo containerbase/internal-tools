@@ -84,7 +84,7 @@
     "rimraf": "6.0.1",
     "semantic-release": "24.2.0",
     "ts-jest": "29.2.5",
-    "typescript": "5.5.4",
+    "typescript": "5.6.3",
     "vite": "5.4.10",
     "vite-tsconfig-paths": "5.0.1",
     "vitest": "2.1.4",
