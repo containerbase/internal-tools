@@ -112,7 +112,6 @@ export async function getBuildList({
       );
     } else if (semver.validRange(allowedVersions)) {
       allVersions = allVersions.filter((v) =>
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         semver.satisfies(semver.coerce(v)!, allowedVersions),
       );
     } else {
@@ -144,7 +143,6 @@ export async function getBuildList({
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const lastVersion = allVersions.at(-1)!;
   log('Most recent version is', lastVersion);
 

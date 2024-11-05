@@ -24,7 +24,7 @@ function checkArgs(
 }
 
 export async function readDockerConfig(cfg: ConfigFile): Promise<void> {
-  const buildArg = escapeStringRegexp(cfg.buildArg as string);
+  const buildArg = escapeStringRegexp(cfg.buildArg!);
   const dockerFileRe = new RegExp(
     '# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>.+?)(?: lookupName=(?<lookupName>.+?))?(?: versioning=(?<versioning>[a-z-]+?))?\\s' +
       `(?:ENV|ARG) ${buildArg}=(?<latestVersion>.*)\\s`,
@@ -32,7 +32,7 @@ export async function readDockerConfig(cfg: ConfigFile): Promise<void> {
   );
   const dockerfile = await readFile('Dockerfile');
   const m = dockerFileRe.exec(dockerfile);
-  if (m && m.groups) {
+  if (m?.groups) {
     checkArgs(cfg, m.groups);
   }
 }
