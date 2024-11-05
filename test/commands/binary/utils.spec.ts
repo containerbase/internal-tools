@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import * as _core from '@actions/core';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
@@ -25,7 +24,6 @@ describe('commands/binary/utils', () => {
 
   beforeEach(() => {
     input = {};
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- wrong core types
     core.getInput.mockImplementation((k) => input[k]!);
     utils.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
   });

@@ -5,7 +5,7 @@ import { dockerBuildx } from './docker/common';
 import log from './logger';
 import { ExecError } from './types';
 
-export type BuildOptions = {
+export interface BuildOptions {
   image: string;
   imagePrefix: string;
   imagePrefixes?: string[];
@@ -18,7 +18,7 @@ export type BuildOptions = {
   buildArgs?: string[];
   platforms?: string[];
   push?: boolean;
-};
+}
 
 const errors = [
   'unexpected status: 400 Bad Request',

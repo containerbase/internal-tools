@@ -1,8 +1,8 @@
-export type ExecResult = {
+export interface ExecResult {
   readonly code: number;
   readonly stdout: string;
   readonly stderr: string;
-};
+}
 
 export class ExecError extends Error implements ExecResult {
   override readonly name = 'ExecError';
@@ -33,7 +33,7 @@ export interface BuildsConfig {
   versioning: string;
 }
 
-export type ConfigFile = {
+export interface ConfigFile {
   allowedVersions?: string;
   datasource: string;
   image: string;
@@ -55,7 +55,7 @@ export type ConfigFile = {
    * otherwise process from lowest to highest.
    */
   reverse?: boolean;
-};
+}
 
 export type DockerBuilderConfig = {
   buildArg: string;
