@@ -97,6 +97,9 @@ module.exports = {
         '@renovate/jest-root-describe': 2,
 
         'jest/valid-title': [0, { ignoreTypeOfDescribeName: true }],
+
+        // TODO: fix me
+        '@typescript-eslint/no-require-imports': 0,
       },
     },
     {

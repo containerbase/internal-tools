@@ -40,7 +40,7 @@ export async function readDockerConfig(cfg: ConfigFile): Promise<void> {
 export function getBinaryName(
   cfg: BinaryBuilderConfig,
   version: string,
-  sum?: boolean | undefined,
+  sum?: boolean,
 ): string {
   const distro = getDistro();
   const arch = getArch();
