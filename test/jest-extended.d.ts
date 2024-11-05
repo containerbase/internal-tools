@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type CustomMatchers from 'jest-extended';
 import 'vitest';
 
