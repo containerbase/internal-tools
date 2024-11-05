@@ -175,7 +175,7 @@ export async function uploadAsset(
   cfg: BinaryBuilderConfig,
   version: string,
   latestStable: string | undefined,
-  sum?: boolean | undefined,
+  sum?: boolean,
 ): Promise<void> {
   const name = getBinaryName(cfg, version, sum);
   const buffer = await readBuffer(`.cache/${name}`);
@@ -237,7 +237,7 @@ export async function hasAsset(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
   version: string,
-  sum?: boolean | undefined,
+  sum?: boolean,
 ): Promise<boolean> {
   const name = getBinaryName(cfg, version, sum);
   return (await findAsset(api, name, version)) != null;

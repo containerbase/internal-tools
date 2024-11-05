@@ -36,9 +36,12 @@ describe('util', () => {
   describe('exec', () => {
     it('works', async () => {
       exec.exec.mockImplementationOnce((_cmd, _args, opts) => {
-        opts?.listeners?.stdout && opts.listeners.stdout(Buffer.from('test'));
-        opts?.listeners?.stderr &&
+        if (opts?.listeners?.stdout) {
+          opts.listeners.stdout(Buffer.from('test'));
+        }
+        if (opts?.listeners?.stderr) {
           opts.listeners.stderr(Buffer.from('testerr'));
+        }
         return Promise.resolve(0);
       });
       expect(await util.exec('dummy-cmd', [])).toEqual({
