@@ -14,5 +14,5 @@
     "module": "ESNext",
     "moduleResolution": "Bundler"
   },
-  "exclude": ["node_modules/", "**/__mocks__/*", "dist/", "coverage/"]
+  "exclude": ["node_modules/", "**/__mocks__/*", "dist/", "coverage/", "html/"]
 }
