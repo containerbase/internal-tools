@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import * as _core from '@actions/core';
 import * as _datasources from 'renovate/dist/modules/datasource';
 import { beforeEach, describe, expect, it, vi } from 'vitest';

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import * as _core from '@actions/core';
 import * as _datasources from 'renovate/dist/modules/datasource';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -30,7 +29,6 @@ describe('commands/binary/index', () => {
 
   beforeEach(() => {
     input = {};
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- wrong core types
     core.getInput.mockImplementation((k) => input[k]!);
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/ruby.json'));
     utils.getArg.mockImplementation((_, o) => (o?.multi ? [] : ''));
