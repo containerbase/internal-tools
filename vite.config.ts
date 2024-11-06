@@ -1,5 +1,4 @@
 import { env } from 'node:process';
-// eslint-disable-next-line import-x/no-rename-default
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 import GitHubActionsReporter from 'vitest-github-actions-reporter';
