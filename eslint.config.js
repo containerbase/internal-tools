@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable import-x/no-named-as-default-member */
+/* eslint-disable import/no-named-as-default-member */
 import js from '@eslint/js';
 import renovate from '@renovate/eslint-plugin';
-// eslint-disable-next-line import-x/no-rename-default
 import vitest from '@vitest/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import eslintPluginImportX from 'eslint-plugin-import-x';
+import eslintPluginImport from 'eslint-plugin-import';
 import pluginPromise from 'eslint-plugin-promise';
 import globals from 'globals';
-// eslint-disable-next-line import-x/no-rename-default
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
@@ -30,10 +28,10 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
-  eslintPluginImportX.flatConfigs.errors,
-  eslintPluginImportX.flatConfigs.warnings,
-  eslintPluginImportX.flatConfigs.recommended,
-  eslintPluginImportX.flatConfigs.typescript,
+  eslintPluginImport.flatConfigs.errors,
+  eslintPluginImport.flatConfigs.warnings,
+  eslintPluginImport.flatConfigs.recommended,
+  eslintPluginImport.flatConfigs.typescript,
   vitest.configs.recommended,
   pluginPromise.configs['flat/recommended'],
   {
@@ -59,10 +57,7 @@ export default tseslint.config(
     },
 
     settings: {
-      'import-x/parsers': {
-        '@typescript-eslint/parser': ['.ts', '.js'],
-      },
-      'import-x/resolver': {
+      'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
           project: ['tsconfig.lint.json', 'tools/jsconfig.json'],
@@ -86,7 +81,7 @@ export default tseslint.config(
         },
       ],
 
-      'import-x/order': [
+      'import/order': [
         'error',
         {
           alphabetize: {
@@ -146,8 +141,8 @@ export default tseslint.config(
   {
     files: ['tools/**/*.js'],
     rules: {
-      'import-x/default': 1,
-      'import-x/no-named-as-default-member': 1,
+      'import/default': 1,
+      'import/no-named-as-default-member': 1,
     },
   },
 );
