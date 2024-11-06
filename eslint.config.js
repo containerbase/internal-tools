@@ -3,10 +3,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable import/no-named-as-default-member */
 import js from '@eslint/js';
+// @ts-expect-error no types available
 import renovate from '@renovate/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier';
+// @ts-expect-error no types available
 import eslintPluginImport from 'eslint-plugin-import';
+// @ts-expect-error no types available
 import pluginPromise from 'eslint-plugin-promise';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
