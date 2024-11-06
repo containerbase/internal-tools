@@ -81,6 +81,9 @@ importers:
       '@types/auth-header':
         specifier: 1.0.6
         version: 1.0.6
+      '@types/eslint-config-prettier':
+        specifier: 6.11.3
+        version: 6.11.3
       '@types/node':
         specifier: 20.17.6
         version: 20.17.6
@@ -1842,6 +1845,9 @@ packages:
 
   '@types/emscripten@1.39.13':
     resolution: {integrity: sha512-cFq+fO/isvhvmuP/+Sl4K4jtU6E23DoivtbO4r50e3odaxAiVdbfSYRDdJ4gCdxx+3aRjhphS5ZMwIH4hFy/Cw==}
+
+  '@types/eslint-config-prettier@6.11.3':
+    resolution: {integrity: sha512-3wXCiM8croUnhg9LdtZUJQwNcQYGWxxdOWDjPe1ykCqJFPVpzAKfs/2dgSoCtAvdPeaponcWPI7mPcGGp9dkKQ==}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -8575,6 +8581,8 @@ snapshots:
       '@types/responselike': 1.0.3
 
   '@types/emscripten@1.39.13': {}
+
+  '@types/eslint-config-prettier@6.11.3': {}
 
   '@types/estree@1.0.6': {}
 
