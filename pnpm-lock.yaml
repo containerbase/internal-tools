@@ -39,8 +39,8 @@ importers:
         specifier: 7.0.0
         version: 7.0.0
       got:
-        specifier: 14.4.3
-        version: 14.4.3
+        specifier: 14.4.4
+        version: 14.4.4
       renovate:
         specifier: 39.0.4
         version: 39.0.4(@aws-sdk/client-sso-oidc@3.658.1(@aws-sdk/client-sts@3.658.1))(encoding@0.1.13)(typanion@3.14.0)
@@ -3364,8 +3364,8 @@ packages:
     resolution: {integrity: sha512-6tfZ91bOr7bOXnK7PRDCGBLa1H4U080YHNaAQ2KsMGlLEzRbk44nsZF2E1IeRc3vtJHPVbKCYgdFbaGO2ljd8g==}
     engines: {node: '>=10.19.0'}
 
-  got@14.4.3:
-    resolution: {integrity: sha512-iTC0Z87yxSijWTh/IpvGpwOhIQK7+GgWkYrMRoN/hB9qeRj9RPuLGODwevs0p5idUf7nrxCVa5IlOmK3b8z+KA==}
+  got@14.4.4:
+    resolution: {integrity: sha512-tqiF7eSgTBwQkxb1LxsEpva8TaMYVisbhplrFVmw9GQE3855Z+MH/mnsXLLOkDxR6hZJRFMj5VTAZ8lmTF8ZOA==}
     engines: {node: '>=20'}
 
   graceful-fs@4.2.10:
@@ -10461,7 +10461,7 @@ snapshots:
       p-cancelable: 2.1.1
       responselike: 2.0.1
 
-  got@14.4.3:
+  got@14.4.4:
     dependencies:
       '@sindresorhus/is': 7.0.1
       '@szmarczak/http-timer': 5.0.1
