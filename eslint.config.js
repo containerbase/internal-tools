@@ -1,15 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable import/no-named-as-default-member */
+import eslintContainerbase from '@containerbase/eslint-plugin';
 import js from '@eslint/js';
-// @ts-expect-error no types available
-import renovate from '@renovate/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier';
-// @ts-expect-error no types available
 import eslintPluginImport from 'eslint-plugin-import';
-// @ts-expect-error no types available
 import pluginPromise from 'eslint-plugin-promise';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -37,12 +31,8 @@ export default tseslint.config(
   eslintPluginImport.flatConfigs.typescript,
   vitest.configs.recommended,
   pluginPromise.configs['flat/recommended'],
+  eslintContainerbase.configs.all,
   {
-    plugins: {
-      '@renovate': renovate,
-      '@vitest': vitest,
-    },
-
     linterOptions: {
       reportUnusedDisableDirectives: true,
     },
@@ -131,13 +121,6 @@ export default tseslint.config(
       },
     },
     rules: {
-      '@renovate/jest-root-describe': 2,
-      'jest/valid-title': [
-        0,
-        {
-          ignoreTypeOfDescribeName: true,
-        },
-      ],
       '@typescript-eslint/no-require-imports': 0,
     },
   },
