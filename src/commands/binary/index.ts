@@ -2,9 +2,14 @@ import { mkdir } from 'node:fs/promises';
 import { setFailed } from '@actions/core';
 import chalk from 'chalk';
 import { getArg, getWorkspace } from '../../util';
-import { addHostRule, getBuildList } from '../../utils/builds';
+import {
+  type BuildsResult,
+  addHostRule,
+  getBuildList,
+} from '../../utils/builds';
 import { init } from '../../utils/docker/buildx';
 import {
+  type GitHubOctokit,
   downloadAsset,
   getOctokit,
   hasAsset,
@@ -15,6 +20,7 @@ import {
 } from '../../utils/github';
 import log from '../../utils/logger';
 import { createChecksum } from '../../utils/sum';
+import type { BinaryBuilderConfig } from '../../utils/types';
 import { createBuilderImage, getConfig, runBuilder } from './utils';
 
 let toBuild = 99;
@@ -61,18 +67,6 @@ export async function run(): Promise<void> {
         await updateRelease(api, cfg, version, builds.latestStable);
       }
 
-      if (!(await hasVersionAsset(api, version))) {
-        if (cfg.dryRun) {
-          log.warn(
-            chalk.yellow('[DRY_RUN] Would upload version asset:'),
-            builds.latestStable ?? version,
-          );
-        } else {
-          log('Uploading version file:', builds.latestStable ?? version);
-          await uploadVersionAsset(api, cfg, version, builds.latestStable);
-        }
-      }
-
       if (await hasAsset(api, cfg, version)) {
         if (!(await hasAsset(api, cfg, version, true))) {
           log('Creating checksum for existing version:', version);
@@ -92,6 +86,8 @@ export async function run(): Promise<void> {
               log('Uploading release:', version);
               await uploadAsset(api, cfg, version, builds.latestStable, true);
             }
+
+            await uploadVersionAssetIfNeeded(api, version, cfg, builds);
           } catch (e) {
             failed.push(version);
             // eslint-disable-next-line
@@ -134,6 +130,8 @@ export async function run(): Promise<void> {
           await uploadAsset(api, cfg, version, builds.latestStable);
           await uploadAsset(api, cfg, version, builds.latestStable, true);
         }
+
+        await uploadVersionAssetIfNeeded(api, version, cfg, builds);
       } catch (e) {
         failed.push(version);
         // eslint-disable-next-line
@@ -147,5 +145,24 @@ export async function run(): Promise<void> {
   } catch (error) {
     log((error as Error).stack);
     setFailed(error as Error);
+  }
+}
+
+async function uploadVersionAssetIfNeeded(
+  api: GitHubOctokit,
+  version: string,
+  cfg: BinaryBuilderConfig,
+  builds: BuildsResult,
+): Promise<void> {
+  if (!(await hasVersionAsset(api, version))) {
+    if (cfg.dryRun) {
+      log.warn(
+        chalk.yellow('[DRY_RUN] Would upload version asset:'),
+        builds.latestStable ?? version,
+      );
+    } else {
+      log('Uploading version file:', builds.latestStable ?? version);
+      await uploadVersionAsset(api, cfg, version, builds.latestStable);
+    }
   }
 }
