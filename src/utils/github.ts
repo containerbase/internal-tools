@@ -11,7 +11,7 @@ import type { BinaryBuilderConfig } from './types';
 
 export { getOctokit };
 
-type GitHubOctokit = InstanceType<typeof GitHub>;
+export type GitHubOctokit = InstanceType<typeof GitHub>;
 
 interface GhAsset {
   name: string;
