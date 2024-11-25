@@ -48,7 +48,7 @@ describe('commands/binary/index', () => {
     await run();
 
     expect(docker.dockerRun).not.toHaveBeenCalled();
-    expect(github.uploadVersionAsset).toHaveBeenCalled();
+    expect(github.uploadVersionAsset).not.toHaveBeenCalled();
   });
 
   it('works ruby (dry-run)', async () => {
