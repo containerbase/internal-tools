@@ -30,8 +30,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       chalk:
-        specifier: 5.3.0
-        version: 5.3.0
+        specifier: 5.4.0
+        version: 5.4.0
       escape-string-regexp:
         specifier: 5.0.0
         version: 5.0.0
@@ -2410,6 +2410,10 @@ packages:
 
   chalk@5.3.0:
     resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
+  chalk@5.4.0:
+    resolution: {integrity: sha512-ZkD35Mx92acjB2yNJgziGqT9oKHEOxjTBTDRpOsRWtdecL/0jM3z5kM/CTzHWvHIen1GvkM85p6TuFfDGfc8/Q==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   changelog-filename-regex@2.0.1:
@@ -9390,6 +9394,8 @@ snapshots:
 
   chalk@5.3.0: {}
 
+  chalk@5.4.0: {}
+
   changelog-filename-regex@2.0.1: {}
 
   char-regex@1.0.2: {}
@@ -11575,7 +11581,7 @@ snapshots:
     dependencies:
       ansi-escapes: 7.0.0
       ansi-regex: 6.1.0
-      chalk: 5.3.0
+      chalk: 5.4.0
       cli-highlight: 2.1.11
       cli-table3: 0.6.5
       marked: 12.0.2
