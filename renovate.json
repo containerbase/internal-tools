@@ -11,6 +11,10 @@
       "semanticCommitType": "build"
     },
     {
+      "matchFileNames": ["setup-node/action.yml"],
+      "semanticCommitType": "build"
+    },
+    {
       "matchPackageNames": ["renovate"],
       "extends": ["schedule:weekly"],
       "automerge": true,
