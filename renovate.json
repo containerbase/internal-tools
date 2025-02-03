@@ -11,7 +11,7 @@
       "semanticCommitType": "build"
     },
     {
-      "matchFileNames": ["setup-node/action.yml"],
+      "matchFileNames": ["setup/action.yml"],
       "semanticCommitType": "build"
     },
     {
