@@ -24,8 +24,9 @@ jobs:
           show-progress: false
 
       - name: 📥 Setup Node.js
-        uses: ./setup-node
+        uses: ./setup
         with:
+          checkout: false
           save-cache: true
 
   test:
@@ -49,7 +50,9 @@ jobs:
           show-progress: false
 
       - name: 📥 Setup Node.js
-        uses: ./setup-node
+        uses: ./setup
+        with:
+          checkout: false
 
       - name: lint
         run: |
@@ -85,7 +88,9 @@ jobs:
           show-progress: false
 
       - name: 📥 Setup Node.js
-        uses: ./setup-node
+        uses: ./setup
+        with:
+          checkout: false
 
       - run: pnpm compile
 
@@ -206,7 +211,9 @@ jobs:
           echo "commit=${commit}" >> $GITHUB_OUTPUT
 
       - name: 📥 Setup Node.js
-        uses: ./setup-node
+        uses: ./setup
+        with:
+          checkout: false
 
       - name: Push release branch
         run: git push origin release:release
