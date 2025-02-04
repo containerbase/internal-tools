@@ -166,11 +166,11 @@ importers:
         specifier: 8.22.0
         version: 8.22.0(eslint@9.19.0)(typescript@5.7.3)
       vite:
-        specifier: 5.4.14
-        version: 5.4.14(@types/node@20.17.16)
+        specifier: 6.0.11
+        version: 6.0.11(@types/node@20.17.16)(yaml@2.7.0)
       vite-tsconfig-paths:
         specifier: 5.1.4
-        version: 5.1.4(typescript@5.7.3)(vite@5.4.14(@types/node@20.17.16))
+        version: 5.1.4(typescript@5.7.3)(vite@6.0.11(@types/node@20.17.16)(yaml@2.7.0))
       vitest:
         specifier: 2.1.9
         version: 2.1.9(@types/node@20.17.16)(@vitest/ui@2.1.8)
@@ -6075,6 +6075,46 @@ packages:
       sugarss:
         optional: true
       terser:
+        optional: true
+
+  vite@6.0.11:
+    resolution: {integrity: sha512-4VL9mQPKoHy4+FE0NnRE/kbY51TOfaknxAjt3fJbGJxhIpBZiqVzlZDEesWWsuREXHwNdAoOFZ9MkPEVXczHwg==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
+      jiti: '>=1.21.0'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      sass-embedded: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.16.0
+      tsx: ^4.8.1
+      yaml: ^2.4.2
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      jiti:
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+      tsx:
+        optional: true
+      yaml:
         optional: true
 
   vitest-github-actions-reporter@0.11.1:
@@ -13590,13 +13630,13 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@5.4.14(@types/node@20.17.16)):
+  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@6.0.11(@types/node@20.17.16)(yaml@2.7.0)):
     dependencies:
       debug: 4.4.0
       globrex: 0.1.2
       tsconfck: 3.1.4(typescript@5.7.3)
     optionalDependencies:
-      vite: 5.4.14(@types/node@20.17.16)
+      vite: 6.0.11(@types/node@20.17.16)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -13609,6 +13649,16 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.17.16
       fsevents: 2.3.3
+
+  vite@6.0.11(@types/node@20.17.16)(yaml@2.7.0):
+    dependencies:
+      esbuild: 0.24.2
+      postcss: 8.5.1
+      rollup: 4.34.0
+    optionalDependencies:
+      '@types/node': 20.17.16
+      fsevents: 2.3.3
+      yaml: 2.7.0
 
   vitest-github-actions-reporter@0.11.1(vitest@2.1.9):
     dependencies:
