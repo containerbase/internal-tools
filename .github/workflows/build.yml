@@ -26,8 +26,7 @@ jobs:
         with:
           show-progress: false
 
-      - name: ⚙️ Setup
-        uses: ./setup
+      - uses: ./setup
         with:
           checkout: false
           save-cache: true
