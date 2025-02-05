@@ -78,9 +78,10 @@ runs:
     - if: inputs.apt-proxy == 'true'
       shell: bash
       run: |
-        echo "Preparing squid-deb-proxy"
+        echo "::group::Preparing squid-deb-proxy"
         set -e
         sudo apt-get -qq update
         sudo apt-get install -y squid-deb-proxy
         echo "ppa.launchpad.net" | sudo tee -a /etc/squid-deb-proxy/mirror-dstdomain.acl.d/containerbase.acl
         sudo systemctl reload squid-deb-proxy
+        echo "::endgroup::"
