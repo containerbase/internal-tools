@@ -23,7 +23,7 @@ jobs:
         with:
           show-progress: false
 
-      - name: 📥 Setup Node.js
+      - name: ⚙️ Setup
         uses: ./setup
         with:
           checkout: false
@@ -49,8 +49,7 @@ jobs:
           fetch-depth: 10 # required by codecov
           show-progress: false
 
-      - name: 📥 Setup Node.js
-        uses: ./setup
+      - uses: ./setup
         with:
           checkout: false
 
@@ -87,8 +86,7 @@ jobs:
         with:
           show-progress: false
 
-      - name: 📥 Setup Node.js
-        uses: ./setup
+      - uses: ./setup
         with:
           checkout: false
 
@@ -210,8 +208,7 @@ jobs:
           commit=$(git rev-parse HEAD)
           echo "commit=${commit}" >> $GITHUB_OUTPUT
 
-      - name: 📥 Setup Node.js
-        uses: ./setup
+      - uses: ./setup
         with:
           checkout: false
 
