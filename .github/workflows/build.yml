@@ -10,6 +10,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 env:
   LOG_LEVEL: debug
 
@@ -178,6 +181,11 @@ jobs:
 
     # tests shouldn't need more than 15 min
     timeout-minutes: 15
+
+    permissions:
+      contents: write
+      issues: write
+      id-token: write
 
     steps:
       - name: Init platform
