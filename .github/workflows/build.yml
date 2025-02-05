@@ -10,6 +10,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 env:
   LOG_LEVEL: debug
 
@@ -23,7 +26,7 @@ jobs:
         with:
           show-progress: false
 
-      - name: 📥 Setup Node.js
+      - name: ⚙️ Setup
         uses: ./setup
         with:
           checkout: false
@@ -49,8 +52,7 @@ jobs:
           fetch-depth: 10 # required by codecov
           show-progress: false
 
-      - name: 📥 Setup Node.js
-        uses: ./setup
+      - uses: ./setup
         with:
           checkout: false
 
@@ -87,8 +89,7 @@ jobs:
         with:
           show-progress: false
 
-      - name: 📥 Setup Node.js
-        uses: ./setup
+      - uses: ./setup
         with:
           checkout: false
 
@@ -181,6 +182,11 @@ jobs:
     # tests shouldn't need more than 15 min
     timeout-minutes: 15
 
+    permissions:
+      contents: write
+      issues: write
+      id-token: write
+
     steps:
       - name: Init platform
         id: init
@@ -210,8 +216,7 @@ jobs:
           commit=$(git rev-parse HEAD)
           echo "commit=${commit}" >> $GITHUB_OUTPUT
 
-      - name: 📥 Setup Node.js
-        uses: ./setup
+      - uses: ./setup
         with:
           checkout: false
 

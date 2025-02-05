@@ -5,8 +5,16 @@ inputs:
     description: 'Checkout repository'
     required: false
     default: 'true'
+  node:
+    description: 'Setup node and pnpm'
+    required: false
+    default: 'true'
   save-cache:
     description: 'Save cache when needed'
+    required: false
+    default: 'false'
+  apt-proxy:
+    description: 'Setup apt proxy'
     required: false
     default: 'false'
 
@@ -19,52 +27,60 @@ runs:
       with:
         show-progress: false
 
-    - name: ⚙️ Calculate `CACHE_KEY`
-      shell: bash
+    - shell: bash
+      if: inputs.node == 'true'
       run: |
         echo 'CACHE_KEY=node_modules-${{
           hashFiles('.node-version', 'pnpm-lock.yaml')
         }}' >> "$GITHUB_ENV"
 
-    - name: ♻️ Restore `node_modules`
-      uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+    - uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+      if: inputs.node == 'true'
       id: node-modules-restore
       with:
         path: node_modules
         key: ${{ env.CACHE_KEY }}
         enableCrossOsArchive: true
 
-    - name: Calculate `CACHE_HIT`
-      shell: bash
+    - shell: bash
+      if: inputs.node == 'true'
       run: |
         echo 'CACHE_HIT=${{
           (steps.node-modules-restore.outputs.cache-hit == 'true') && 'true' || ''
         }}' >> "$GITHUB_ENV"
 
-    - name: ⚙️ Setup pnpm
-      uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+    - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      if: inputs.node == 'true'
       # TODO: Use standalone version?
       # with:
       #   standalone: true
 
-    - name: ⚙️ Setup Node.js ${{ inputs.node-version }}
-      uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+    - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+      if: inputs.node == 'true'
       with:
         node-version-file: .node-version
         cache: ${{ env.CACHE_HIT != 'true' && 'pnpm' || '' }}
 
-    - name: 📥 Install dependencies
-      if: env.CACHE_HIT != 'true'
+    - if: inputs.node == 'true' && env.CACHE_HIT != 'true'
       shell: bash
       run: pnpm install --frozen-lockfile
       env:
         # Other environment variables
         HUSKY: '0' # By default do not run HUSKY install
 
-    - name: ♻️ Write `node_modules` cache
-      if: inputs.save-cache == 'true' && env.CACHE_HIT != 'true'
+    - if: inputs.node == 'true' && inputs.save-cache == 'true' && env.CACHE_HIT != 'true'
       uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       with:
         path: node_modules
         key: ${{ env.CACHE_KEY }}
         enableCrossOsArchive: true
+
+    - if: inputs.apt-proxy == 'true'
+      shell: bash
+      run: |
+        echo "Preparing squid-deb-proxy"
+        set -e
+        sudo apt-get -qq update
+        sudo apt-get install -y squid-deb-proxy
+        echo "ppa.launchpad.net" | sudo tee -a /etc/squid-deb-proxy/mirror-dstdomain.acl.d/containerbase.acl
+        sudo systemctl reload squid-deb-proxy
