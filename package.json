@@ -57,7 +57,7 @@
     "@tsconfig/strictest": "2.0.5",
     "@types/auth-header": "1.0.6",
     "@types/eslint-config-prettier": "6.11.3",
-    "@types/node": "20.17.16",
+    "@types/node": "20.17.17",
     "@types/semver": "7.5.8",
     "@vitest/coverage-v8": "3.0.5",
     "@vitest/eslint-plugin": "1.1.25",
