@@ -9,6 +9,10 @@ inputs:
     description: 'Setup node and pnpm'
     required: false
     default: 'true'
+  pnpm-cache:
+    description: 'Paths to pnpm node_modules to cache'
+    required: false
+    default: 'node_modules'
   save-cache:
     description: 'Save cache when needed'
     required: false
@@ -38,7 +42,7 @@ runs:
       if: inputs.node == 'true'
       id: node-modules-restore
       with:
-        path: node_modules
+        path: ${{ inputs.pnpm-cache }}
         key: ${{ env.CACHE_KEY }}
         enableCrossOsArchive: true
 
@@ -71,7 +75,7 @@ runs:
     - if: inputs.node == 'true' && inputs.save-cache == 'true' && env.CACHE_HIT != 'true'
       uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       with:
-        path: node_modules
+        path: ${{ inputs.pnpm-cache }}
         key: ${{ env.CACHE_KEY }}
         enableCrossOsArchive: true
 
