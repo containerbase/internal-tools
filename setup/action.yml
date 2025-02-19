@@ -9,6 +9,10 @@ inputs:
     description: 'Setup node and pnpm'
     required: false
     default: 'true'
+  node-version:
+    description: 'Override node version from .node-version file'
+    required: false
+    default: ''
   pnpm-cache:
     description: 'Paths to pnpm node_modules to cache'
     required: false
@@ -34,9 +38,15 @@ runs:
     - shell: bash
       if: inputs.node == 'true'
       run: |
-        echo 'CACHE_KEY=node_modules-${{
-          hashFiles('.node-version', 'pnpm-lock.yaml')
-        }}' >> "$GITHUB_ENV"
+        if [ -n "${{ inputs.node-version }}" ]; then
+          echo 'CACHE_KEY=node_modules-${{ inputs.node-version }}-${{
+            hashFiles('pnpm-lock.yaml')
+          }}' >> "$GITHUB_ENV"
+        else
+          echo 'CACHE_KEY=node_modules-${{
+            hashFiles('.node-version', 'pnpm-lock.yaml')
+          }}' >> "$GITHUB_ENV"
+        fi
 
     - uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       if: inputs.node == 'true'
@@ -62,7 +72,8 @@ runs:
     - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
       if: inputs.node == 'true'
       with:
-        node-version-file: .node-version
+        node-version: ${{ inputs.node-version }}
+        node-version-file: ${{ inputs.node-version && '.node-version' || '' }}
         cache: ${{ env.CACHE_HIT != 'true' && 'pnpm' || '' }}
 
     - if: inputs.node == 'true' && env.CACHE_HIT != 'true'
