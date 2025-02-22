@@ -73,7 +73,7 @@ runs:
       if: inputs.node == 'true'
       with:
         node-version: ${{ inputs.node-version }}
-        node-version-file: ${{ inputs.node-version != '' && '.node-version' || '' }}
+        node-version-file: ${{ inputs.node-version == '' && '.node-version' || '' }}
         cache: ${{ env.CACHE_HIT != 'true' && 'pnpm' || '' }}
 
     - if: inputs.node == 'true' && env.CACHE_HIT != 'true'
