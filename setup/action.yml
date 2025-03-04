@@ -40,11 +40,11 @@ runs:
       run: |
         if [ -n "${{ inputs.node-version }}" ]; then
           echo 'CACHE_KEY=node_modules-${{ inputs.node-version }}-${{
-            hashFiles('pnpm-lock.yaml')
+            hashFiles('package.json', 'pnpm-lock.yaml')
           }}' >> "$GITHUB_ENV"
         else
           echo 'CACHE_KEY=node_modules-${{
-            hashFiles('.node-version', 'pnpm-lock.yaml')
+            hashFiles('.node-version', 'package.json', 'pnpm-lock.yaml')
           }}' >> "$GITHUB_ENV"
         fi
 
