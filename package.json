@@ -60,7 +60,7 @@
     "@types/node": "20.17.24",
     "@types/semver": "7.5.8",
     "@vitest/coverage-v8": "3.0.8",
-    "@vitest/eslint-plugin": "1.1.37",
+    "@vitest/eslint-plugin": "1.1.38",
     "@vitest/spy": "3.0.8",
     "@vitest/ui": "3.0.8",
     "conventional-changelog-conventionalcommits": "8.0.0",
