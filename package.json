@@ -97,6 +97,9 @@
   "pnpm": {
     "neverBuiltDependencies": [
       "dtrace-provider"
+    ],
+    "ignoredBuiltDependencies": [
+      "dtrace-provider"
     ]
   }
 }
