@@ -1,7 +1,6 @@
 import { env } from 'node:process';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
-import GitHubActionsReporter from 'vitest-github-actions-reporter';
 
 const ci = !!env.CI;
 
@@ -12,9 +11,7 @@ export default defineConfig({
       reporter: ci ? ['json', 'text'] : ['html', 'text'],
       include: ['src/**/*.{js,ts}'],
     },
-    reporters: ci
-      ? ['default', new GitHubActionsReporter()]
-      : ['default', 'html'],
+    reporters: ci ? ['default', 'github-actions'] : ['default', 'html'],
     restoreMocks: true,
     setupFiles: './test/setup.ts',
   },
