@@ -97,8 +97,18 @@
     "neverBuiltDependencies": [
       "dtrace-provider"
     ],
+    "overrides": {
+      "esbuild": "0.25.1"
+    },
+    "patchedDependencies": {
+      "@baszalmstra/rattler": "patches/@baszalmstra__rattler.patch",
+      "re2": "patches/re2.patch"
+    },
     "ignoredBuiltDependencies": [
-      "dtrace-provider"
+      "dtrace-provider",
+      "moment",
+      "mv",
+      "safe-json-stringify"
     ]
   }
 }
