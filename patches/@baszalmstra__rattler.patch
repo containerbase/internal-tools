@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index a9ecae2c7b1a0d7a0eac94189fc8bc186efd636a..37d3877a173433cac02c66ba642dfc002821a16a 100644
+--- a/package.json
++++ b/package.json
+@@ -18,6 +18,7 @@
+     ],
+     "exports": {
+         ".": {
++            "module": "./dist/rattler.bundler.mjs",
+             "types": "./dist/index.d.ts",
+             "require": "./dist/rattler.node.cjs",
+             "import": "./dist/rattler.bundler.mjs"

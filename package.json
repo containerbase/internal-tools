@@ -41,7 +41,7 @@
     "escape-string-regexp": "5.0.0",
     "find-up": "7.0.0",
     "got": "14.4.6",
-    "renovate": "39.205.1",
+    "renovate": "39.230.2",
     "semver": "7.7.1",
     "strip-ansi": "7.1.0",
     "tslib": "2.8.1"
@@ -97,8 +97,18 @@
     "neverBuiltDependencies": [
       "dtrace-provider"
     ],
+    "overrides": {
+      "esbuild": "0.25.1"
+    },
+    "patchedDependencies": {
+      "@baszalmstra/rattler": "patches/@baszalmstra__rattler.patch",
+      "re2": "patches/re2.patch"
+    },
     "ignoredBuiltDependencies": [
-      "dtrace-provider"
+      "dtrace-provider",
+      "moment",
+      "mv",
+      "safe-json-stringify"
     ]
   }
 }
