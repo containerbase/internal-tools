@@ -51,8 +51,8 @@ importers:
         specifier: 14.4.7
         version: 14.4.7
       renovate:
-        specifier: 40.3.1
-        version: 40.3.1(encoding@0.1.13)(typanion@3.14.0)
+        specifier: 40.11.7
+        version: 40.11.7(encoding@0.1.13)(typanion@3.14.0)
       semver:
         specifier: 7.7.1
         version: 7.7.1
@@ -1190,12 +1190,12 @@ packages:
     resolution: {integrity: sha512-fdDH1LSGfZdTH2sxdpVMw31BanV28K/Gry0cVFxaNP77neJSkd82mM8ErPNYs9e+0O7SdHBLTDzDgwUuy18RnQ==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@pnpm/catalogs.protocol-parser@1000.0.0':
-    resolution: {integrity: sha512-8eC25RAiu8BTaEseQmbo5xemlSwl06pMsUVORiYGX7JZEDb0UQVXOnbqFFJMPe/dyO8uwGXnDb350nauMzaraA==}
+  '@pnpm/catalogs.protocol-parser@1001.0.0':
+    resolution: {integrity: sha512-9rHKCMRvhfv7TSAVSCVLI+8OZhi1OcT8lanAGqOPbGgQTkFrPH3PfEWJNxz43xqrXRa4HCFRAMu+g19su5eRLA==}
     engines: {node: '>=18.12'}
 
-  '@pnpm/catalogs.resolver@1000.0.2':
-    resolution: {integrity: sha512-5xp3InFRgl6YzovSYoKs0NTalcVKRj4KkD/d0zIBsKp2cae0G/t2ZZVq3J5rS1Ytf4qkv4oe5SZWpd1oV7Hkew==}
+  '@pnpm/catalogs.resolver@1000.0.3':
+    resolution: {integrity: sha512-MT0l2EDAxNXpZoij3sO0eIrFSUC7trimRxNRUYvNQNeEOU07KEiCAfic2CTvFtnoqFV1/2YRqsniJLokfsJVqA==}
     engines: {node: '>=18.12'}
 
   '@pnpm/catalogs.types@1000.0.0':
@@ -1234,12 +1234,12 @@ packages:
     resolution: {integrity: sha512-c83qWb22rNRuB0UaVCI0uRPNRr8Z0FWnEIvT47jiHAmOIUHbBOg5XvV7pM5x+rKn9HRpjxquDbXYSXr3fAKFcw==}
     engines: {node: '>=12'}
 
-  '@pnpm/parse-overrides@1000.0.2':
-    resolution: {integrity: sha512-NII/zHEDIqtSNkDS39TD0r6ukKdZaQPwn6EjDEHYFacgbHN2d3i261paQvm0Pm0oX4svV+5x5YWHUTIbQJItDg==}
+  '@pnpm/parse-overrides@1001.0.0':
+    resolution: {integrity: sha512-yTf60b3QCDk84OwfSRdZ5xkqlWhxnjd8/VKPrdZCGQYxcKTLHCQnlFj8PL6FoR43U230TJuBKgL91Uvk/Q0M5g==}
     engines: {node: '>=18.12'}
 
-  '@pnpm/parse-wanted-dependency@1000.0.0':
-    resolution: {integrity: sha512-SKK9m7leIQ0u6S+/LXREF0wTrFnyKiirLza6Dt0l7CL9pZdZtuI3mMvz6gNBFnIjTKJPwacdqRywT3bfK8W+FQ==}
+  '@pnpm/parse-wanted-dependency@1001.0.0':
+    resolution: {integrity: sha512-cIZao+Jdu/4znu76d3ttAWBycDj6GWKiDVNlx1GVgqYgS/Qn7ak3Lm0FGIMAIHr5oOnX63jwzKIhW35AHNaTjQ==}
     engines: {node: '>=18.12'}
 
   '@pnpm/read-project-manifest@4.1.1':
@@ -2650,8 +2650,8 @@ packages:
     resolution: {integrity: sha512-onMB0OkDjkXunhdW9htFjEhqrD54+M94i6ackoUkjHKbRnXdyEyKRelp4nJ1kAz32+s27jP1FsebpJCVl0BsvA==}
     engines: {node: '>=18.0'}
 
-  cronstrue@2.59.0:
-    resolution: {integrity: sha512-YKGmAy84hKH+hHIIER07VCAHf9u0Ldelx1uU6EBxsRPDXIA1m5fsKmJfyC3xBhw6cVC/1i83VdbL4PvepTrt8A==}
+  cronstrue@2.60.0:
+    resolution: {integrity: sha512-wyjlMlSaKyRjpDh1WP1Oqcy98zMT0OPJlBgffIr8Edx1/ZDpwkTb9IOzHL7CipyW5va7eJ9hC4D1X7gtq8Cuww==}
     hasBin: true
 
   cross-spawn@7.0.6:
@@ -2762,10 +2762,6 @@ packages:
 
   des.js@1.1.0:
     resolution: {integrity: sha512-r17GxjhUCjSRy8aiJpr8/UadFIzMzJGexI3Nmz4ADi9LYSFx4gTBp80+NaX/YsXWWLhpZ7v/v/ubEc/bCNfKwg==}
-
-  detect-indent@6.1.0:
-    resolution: {integrity: sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==}
-    engines: {node: '>=8'}
 
   detect-indent@7.0.1:
     resolution: {integrity: sha512-Mc7QhQ8s+cLrnUfU/Ji94vG/r8M26m8f++vyres4ZoojaRDpZ1eSIh/EpzLNwlWuvzSZ3UbDFspjFvTDXe6e/g==}
@@ -4165,8 +4161,8 @@ packages:
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
 
-  json-stringify-pretty-compact@3.0.0:
-    resolution: {integrity: sha512-Rc2suX5meI0S3bfdZuA7JMFBGkJ875ApfVyq2WHELjBiiG22My/l7/8zPpH/CfFVQHuVLd8NLR0nv6vi0BYYKA==}
+  json-stringify-pretty-compact@4.0.0:
+    resolution: {integrity: sha512-3CNZ2DnrpByG9Nqj6Xo8vqbjT4F6N+tb4Gb28ESAZjYZ5yqvmc56J+/kuIwkaAMOyblTQhUW7PxMkUb8Q36N3Q==}
 
   json-stringify-safe@5.0.1:
     resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
@@ -4364,8 +4360,8 @@ packages:
     resolution: {integrity: sha512-a54IwgWPaeBCAAsv13YgmALOF1elABB08FxO9i+r4VFk5Vl4pKokRPeX8u5TCgSsPi6ec1otfLjdOpVcgbpshg==}
     hasBin: true
 
-  markdown-table@2.0.0:
-    resolution: {integrity: sha512-Ezda85ToJUBhM6WGaG6veasyym+Tbs3cMAw/ZhOPqXiYsr0jgocBV3j3nx+4lk47plLlIqjwuTm/ywVI+zjJ/A==}
+  markdown-table@3.0.4:
+    resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
 
   marked-terminal@7.3.0:
     resolution: {integrity: sha512-t4rBvPsHc57uE/2nJOLmMbZCQ4tgAccAED3ngXQqW6g+TxA488JzJ+FK3lQkzBQOI1mRV/r/Kq+1ZlJ4D0owQw==}
@@ -5297,8 +5293,8 @@ packages:
   remark@13.0.0:
     resolution: {integrity: sha512-HDz1+IKGtOyWN+QgBiAT0kn+2s6ovOxHyPAFGKVE81VSzJ+mq7RwHFledEvB5F1p4iJvOah/LOKdFuzvRnNLCA==}
 
-  renovate@40.3.1:
-    resolution: {integrity: sha512-jRoChIzv8/SLHrdOHQ919/F29OLGR139ahFEA5oOkKQIMtow2ryDWZmar+RoFotFR9/fC2yUviFjbpbI1NsiPw==}
+  renovate@40.11.7:
+    resolution: {integrity: sha512-7fb5nAnG3Dqu1j6PV/raafHpjnH+1OOyeOy1tOpq6MQ925UciHBxaecFzMD2oZ3w030iRDPan+PcVacMnnvJqw==}
     engines: {node: ^22.13.0, pnpm: ^10.0.0}
     hasBin: true
 
@@ -6414,6 +6410,9 @@ packages:
 
   zod@3.24.3:
     resolution: {integrity: sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==}
+
+  zod@3.24.4:
+    resolution: {integrity: sha512-OdqJE9UDRPwWsrHjLN2F8bPxvwJBK22EHLWtanu0LSYr5YqzsaaW3RMgmjwr8Rypg5k+meEJdSPXJZXE/yqOMg==}
 
   zwitch@1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
@@ -8155,11 +8154,11 @@ snapshots:
 
   '@pkgr/core@0.1.2': {}
 
-  '@pnpm/catalogs.protocol-parser@1000.0.0': {}
+  '@pnpm/catalogs.protocol-parser@1001.0.0': {}
 
-  '@pnpm/catalogs.resolver@1000.0.2':
+  '@pnpm/catalogs.resolver@1000.0.3':
     dependencies:
-      '@pnpm/catalogs.protocol-parser': 1000.0.0
+      '@pnpm/catalogs.protocol-parser': 1001.0.0
       '@pnpm/error': 1000.0.2
 
   '@pnpm/catalogs.types@1000.0.0': {}
@@ -8192,14 +8191,14 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@pnpm/parse-overrides@1000.0.2':
+  '@pnpm/parse-overrides@1001.0.0':
     dependencies:
-      '@pnpm/catalogs.resolver': 1000.0.2
+      '@pnpm/catalogs.resolver': 1000.0.3
       '@pnpm/catalogs.types': 1000.0.0
       '@pnpm/error': 1000.0.2
-      '@pnpm/parse-wanted-dependency': 1000.0.0
+      '@pnpm/parse-wanted-dependency': 1001.0.0
 
-  '@pnpm/parse-wanted-dependency@1000.0.0':
+  '@pnpm/parse-wanted-dependency@1001.0.0':
     dependencies:
       validate-npm-package-name: 5.0.0
 
@@ -8295,7 +8294,7 @@ snapshots:
       fs-extra: 11.3.0
       toml-eslint-parser: 0.10.0
       upath: 2.0.1
-      zod: 3.24.3
+      zod: 3.24.4
 
   '@renovatebot/kbpgp@4.0.1':
     dependencies:
@@ -9886,7 +9885,7 @@ snapshots:
 
   croner@9.0.0: {}
 
-  cronstrue@2.59.0: {}
+  cronstrue@2.60.0: {}
 
   cross-spawn@7.0.6:
     dependencies:
@@ -9981,8 +9980,6 @@ snapshots:
     dependencies:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
-
-  detect-indent@6.1.0: {}
 
   detect-indent@7.0.1: {}
 
@@ -11742,7 +11739,7 @@ snapshots:
 
   json-stable-stringify-without-jsonify@1.0.1: {}
 
-  json-stringify-pretty-compact@3.0.0: {}
+  json-stringify-pretty-compact@4.0.0: {}
 
   json-stringify-safe@5.0.1: {}
 
@@ -11961,9 +11958,7 @@ snapshots:
       punycode.js: 2.3.1
       uc.micro: 2.1.0
 
-  markdown-table@2.0.0:
-    dependencies:
-      repeat-string: 1.6.1
+  markdown-table@3.0.4: {}
 
   marked-terminal@7.3.0(marked@12.0.2):
     dependencies:
@@ -12870,7 +12865,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@40.3.1(encoding@0.1.13)(typanion@3.14.0):
+  renovate@40.11.7(encoding@0.1.13)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.799.0
       '@aws-sdk/client-ec2': 3.800.0
@@ -12896,7 +12891,7 @@ snapshots:
       '@opentelemetry/sdk-trace-base': 2.0.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-trace-node': 2.0.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.32.0
-      '@pnpm/parse-overrides': 1000.0.2
+      '@pnpm/parse-overrides': 1001.0.0
       '@qnighy/marshal': 0.1.3
       '@renovatebot/detect-tools': 1.1.0
       '@renovatebot/kbpgp': 4.0.1
@@ -12920,10 +12915,10 @@ snapshots:
       commander: 13.1.0
       conventional-commits-detector: 1.0.3
       croner: 9.0.0
-      cronstrue: 2.59.0
+      cronstrue: 2.60.0
       deepmerge: 4.3.1
       dequal: 2.0.3
-      detect-indent: 6.1.0
+      detect-indent: 7.0.1
       diff: 7.0.0
       editorconfig: 2.0.1
       email-addresses: 5.0.0
@@ -12932,7 +12927,7 @@ snapshots:
       emojibase-regex: 16.0.0
       extract-zip: 2.0.1
       find-packages: 10.0.4
-      find-up: 5.0.0
+      find-up: 7.0.0
       fs-extra: 11.3.0
       git-url-parse: 16.1.0
       github-url-from-git: 1.5.0
@@ -12946,14 +12941,14 @@ snapshots:
       ignore: 7.0.4
       ini: 5.0.0
       json-dup-key-validator: 1.0.3
-      json-stringify-pretty-compact: 3.0.0
+      json-stringify-pretty-compact: 4.0.0
       json5: 2.2.3
       jsonata: 2.0.6
       jsonc-parser: 3.3.1
       klona: 2.0.6
       luxon: 3.6.1
       markdown-it: 14.1.0
-      markdown-table: 2.0.0
+      markdown-table: 3.0.4
       minimatch: 10.0.1
       moo: 0.5.2
       ms: 2.1.3
@@ -12987,7 +12982,7 @@ snapshots:
       vuln-vects: 1.1.0
       xmldoc: 1.3.0
       yaml: 2.7.1
-      zod: 3.24.3
+      zod: 3.24.4
     optionalDependencies:
       better-sqlite3: 11.9.1
       openpgp: 6.1.0
@@ -14262,5 +14257,7 @@ snapshots:
       zod: 3.24.3
 
   zod@3.24.3: {}
+
+  zod@3.24.4: {}
 
   zwitch@1.0.5: {}
