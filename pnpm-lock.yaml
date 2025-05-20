@@ -51,8 +51,8 @@ importers:
         specifier: 14.4.7
         version: 14.4.7
       renovate:
-        specifier: 40.14.6
-        version: 40.14.6(encoding@0.1.13)(typanion@3.14.0)
+        specifier: 40.18.3
+        version: 40.18.3(encoding@0.1.13)(typanion@3.14.0)
       semver:
         specifier: 7.7.2
         version: 7.7.2
@@ -4717,8 +4717,8 @@ packages:
     resolution: {integrity: sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ==}
     engines: {node: '>=18'}
 
-  openpgp@6.1.0:
-    resolution: {integrity: sha512-fRTeitP+hoGJD3kbdUlAI++wE6MvfvXw1rBqHwmBMxIpLjowatJ2zb5ThkORpIkSz5F12wO+xCYRSTbT7M4qKA==}
+  openpgp@6.1.1:
+    resolution: {integrity: sha512-V/DXZ5AGCz3q4X8psUSc3q4SxnH/bfICaTSpNcla7wvBFhrxa9/ajm31rtMwZ1qj7Fu2oMpfX6ZcxKmTBlb6Yg==}
     engines: {node: '>= 18.0.0'}
 
   optionator@0.9.4:
@@ -5145,8 +5145,8 @@ packages:
   remark@13.0.0:
     resolution: {integrity: sha512-HDz1+IKGtOyWN+QgBiAT0kn+2s6ovOxHyPAFGKVE81VSzJ+mq7RwHFledEvB5F1p4iJvOah/LOKdFuzvRnNLCA==}
 
-  renovate@40.14.6:
-    resolution: {integrity: sha512-7A5MQYF7haeECm2q684DxEMkqQwJNSFc9F5tHBZVs0yENobpSrAbrAieoSA0aFkV+UV2cZJURNcGXMpiu7QMTQ==}
+  renovate@40.18.3:
+    resolution: {integrity: sha512-I3CxspBWFE13PNHLt+T3Guzgow5lQcGMeGUQ0RmwE8Xq2BMhIUDuykZEwz2iWbxRC0OJ2qSAec0JtW9c49xy3Q==}
     engines: {node: ^22.13.0, pnpm: ^10.0.0}
     hasBin: true
 
@@ -5293,11 +5293,6 @@ packages:
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
-    hasBin: true
-
-  semver@7.7.1:
-    resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
-    engines: {node: '>=10'}
     hasBin: true
 
   semver@7.7.2:
@@ -12028,7 +12023,7 @@ snapshots:
     dependencies:
       mimic-function: 5.0.1
 
-  openpgp@6.1.0:
+  openpgp@6.1.1:
     optional: true
 
   optionator@0.9.4:
@@ -12485,7 +12480,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@40.14.6(encoding@0.1.13)(typanion@3.14.0):
+  renovate@40.18.3(encoding@0.1.13)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.799.0
       '@aws-sdk/client-ec2': 3.800.0
@@ -12587,7 +12582,7 @@ snapshots:
       remark: 13.0.0
       remark-github: 10.1.0
       safe-stable-stringify: 2.5.0
-      semver: 7.7.1
+      semver: 7.7.2
       semver-stable: 3.0.0
       semver-utils: 1.1.4
       shlex: 2.1.2
@@ -12605,7 +12600,7 @@ snapshots:
       zod: 3.24.4
     optionalDependencies:
       better-sqlite3: 11.10.0
-      openpgp: 6.1.0
+      openpgp: 6.1.1
       re2: 1.21.5(patch_hash=018babd22b7ce951bcd10d6246f1e541a7ac7ba212f7fa8985e774ece67d08e1)
     transitivePeerDependencies:
       - aws-crt
@@ -12799,8 +12794,6 @@ snapshots:
   semver@5.7.2: {}
 
   semver@6.3.1: {}
-
-  semver@7.7.1: {}
 
   semver@7.7.2: {}
 
