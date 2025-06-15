@@ -103,8 +103,8 @@ importers:
         specifier: 3.2.3
         version: 3.2.3(vitest@3.2.3)
       '@vitest/eslint-plugin':
-        specifier: 1.2.3
-        version: 1.2.3(eslint@9.28.0)(typescript@5.8.3)(vitest@3.2.3)
+        specifier: 1.2.4
+        version: 1.2.4(eslint@9.28.0)(typescript@5.8.3)(vitest@3.2.3)
       '@vitest/spy':
         specifier: 3.2.3
         version: 3.2.3
@@ -2039,8 +2039,8 @@ packages:
       '@vitest/browser':
         optional: true
 
-  '@vitest/eslint-plugin@1.2.3':
-    resolution: {integrity: sha512-xtpLNdn5dDoe9gU4IVqo9IDp+gCenoIcjwLrf9G7vBSiXGhDbd9T4+hB7TAb+5Q+qlZNUg6du3X1HWVoui0D6w==}
+  '@vitest/eslint-plugin@1.2.4':
+    resolution: {integrity: sha512-4gcw3Kvh1cvwEA1dhPbcwoNmJJXQAaeSiP4UZ8Y9SFdxKuMKrt3moxQ1DLklugjw8S1zhziDp/vPrB3x0UEHKQ==}
     peerDependencies:
       eslint: '>= 8.57.0'
       typescript: '>= 5.0.0'
@@ -9002,7 +9002,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/eslint-plugin@1.2.3(eslint@9.28.0)(typescript@5.8.3)(vitest@3.2.3)':
+  '@vitest/eslint-plugin@1.2.4(eslint@9.28.0)(typescript@5.8.3)(vitest@3.2.3)':
     dependencies:
       '@typescript-eslint/utils': 8.34.0(eslint@9.28.0)(typescript@5.8.3)
       eslint: 9.28.0
