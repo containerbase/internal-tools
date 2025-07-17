@@ -23,9 +23,9 @@
     "release": "run-s clean compile semantic-release",
     "semantic-release": "semantic-release",
     "start": "run-s compile && node dist",
-    "test:vitest": "vitest run --coverage",
     "test:node": "NODE_ENV=debug INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/node.json INPUT_IMAGE_PREFIX=containerbase/ INPUT_IMAGE=node run-s start",
-    "test:testing": "NODE_ENV=debug INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/testing.json INPUT_IMAGE_PREFIXES=ghcr.io/containerbase/ INPUT_PLATFORMS=linux/amd64,linux/arm64 run-s start"
+    "test:testing": "NODE_ENV=debug INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/testing.json INPUT_IMAGE_PREFIXES=ghcr.io/containerbase/ INPUT_PLATFORMS=linux/amd64,linux/arm64 run-s start",
+    "test:vitest": "vitest run --coverage"
   },
   "resolutions": {
     "tsconfig-paths": "4.2.0"
