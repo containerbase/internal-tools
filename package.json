@@ -23,9 +23,9 @@
     "release": "run-s clean compile semantic-release",
     "semantic-release": "semantic-release",
     "start": "run-s compile && node dist",
-    "test:vitest": "vitest run --coverage",
     "test:node": "NODE_ENV=debug INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/node.json INPUT_IMAGE_PREFIX=containerbase/ INPUT_IMAGE=node run-s start",
-    "test:testing": "NODE_ENV=debug INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/testing.json INPUT_IMAGE_PREFIXES=ghcr.io/containerbase/ INPUT_PLATFORMS=linux/amd64,linux/arm64 run-s start"
+    "test:testing": "NODE_ENV=debug INPUT_COMMAND=docker-builder INPUT_DRY_RUN=true INPUT_CONFIG=e2e/testing.json INPUT_IMAGE_PREFIXES=ghcr.io/containerbase/ INPUT_PLATFORMS=linux/amd64,linux/arm64 run-s start",
+    "test:vitest": "vitest run --coverage"
   },
   "resolutions": {
     "tsconfig-paths": "4.2.0"
@@ -77,8 +77,8 @@
     "lint-staged": "16.1.2",
     "nock": "14.0.5",
     "npm-run-all2": "8.0.4",
-    "prettier": "3.5.3",
-    "prettier-plugin-packagejson": "2.5.10",
+    "prettier": "3.6.2",
+    "prettier-plugin-packagejson": "2.5.18",
     "rimraf": "6.0.1",
     "semantic-release": "24.2.7",
     "ts-jest": "29.4.0",
