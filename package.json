@@ -64,7 +64,7 @@
     "@vitest/spy": "3.2.4",
     "@vitest/ui": "3.2.4",
     "conventional-changelog-conventionalcommits": "8.0.0",
-    "esbuild": "0.25.8",
+    "esbuild": "0.25.9",
     "eslint": "9.33.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-formatter-gha": "1.6.0",
@@ -98,7 +98,7 @@
       "dtrace-provider"
     ],
     "overrides": {
-      "esbuild": "0.25.8"
+      "esbuild": "0.25.9"
     },
     "patchedDependencies": {
       "@baszalmstra/rattler": "patches/@baszalmstra__rattler.patch",
