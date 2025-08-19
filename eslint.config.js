@@ -1,12 +1,15 @@
-/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable import-x/no-named-as-default-member */
 import eslintContainerbase from '@containerbase/eslint-plugin';
 import js from '@eslint/js';
 import vitest from '@vitest/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import eslintPluginImport from 'eslint-plugin-import';
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
+import * as importX from 'eslint-plugin-import-x';
 import pluginPromise from 'eslint-plugin-promise';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+
+const jsFiles = { files: ['**/*.{js,cjs,mjs,mts,ts}'] };
 
 export default tseslint.config(
   {
@@ -22,45 +25,44 @@ export default tseslint.config(
       '**/*.snap',
     ],
   },
-  js.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
-  eslintPluginImport.flatConfigs.errors,
-  eslintPluginImport.flatConfigs.warnings,
-  eslintPluginImport.flatConfigs.recommended,
-  eslintPluginImport.flatConfigs.typescript,
-  vitest.configs.recommended,
-  pluginPromise.configs['flat/recommended'],
-  eslintContainerbase.configs.all,
   {
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.stylisticTypeChecked,
+  vitest.configs.recommended,
+  pluginPromise.configs['flat/recommended'],
+  eslintContainerbase.configs.all,
+  {
+    ...jsFiles,
+    extends: [importX.flatConfigs.recommended, importX.flatConfigs.typescript],
 
     languageOptions: {
       globals: {
         ...globals.node,
       },
+
       ecmaVersion: 'latest',
       sourceType: 'module',
+
       parserOptions: {
-        projectService: true,
         tsconfigRootDir: import.meta.dirname,
+        projectService: true,
       },
     },
 
     settings: {
-      'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-          project: ['tsconfig.lint.json', 'tools/jsconfig.json'],
-        },
-      },
+      'import-x/resolver-next': [
+        createTypeScriptImportResolver({ project: 'tsconfig.lint.json' }),
+      ],
     },
   },
   eslintConfigPrettier,
   {
-    files: ['**/*.ts', '**/*.js', '**/*.mjs'],
+    ...jsFiles,
     rules: {
       curly: [2, 'all'],
 
@@ -74,7 +76,7 @@ export default tseslint.config(
         },
       ],
 
-      'import/order': [
+      'import-x/order': [
         'error',
         {
           alphabetize: {
@@ -115,11 +117,6 @@ export default tseslint.config(
   },
   {
     files: ['**/*.spec.ts', 'test/**'],
-    languageOptions: {
-      globals: {
-        ...globals.jest,
-      },
-    },
     rules: {
       '@typescript-eslint/no-require-imports': 0,
     },
@@ -127,8 +124,8 @@ export default tseslint.config(
   {
     files: ['tools/**/*.js'],
     rules: {
-      'import/default': 1,
-      'import/no-named-as-default-member': 1,
+      'import-x/default': 1,
+      'import-x/no-named-as-default-member': 1,
     },
   },
 );
