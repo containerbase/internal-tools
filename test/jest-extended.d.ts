@@ -7,5 +7,6 @@ declare module 'vitest' {
   interface Assertion<T = any> extends CustomMatchers<T> {}
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   interface AsymmetricMatchersContaining<T = any> extends CustomMatchers<T> {}
-  interface ExpectStatic extends CustomMatchers<T> {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  interface ExpectStatic<T = any> extends CustomMatchers<T> {}
 }
