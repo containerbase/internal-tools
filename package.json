@@ -72,7 +72,7 @@
     "eslint-plugin-promise": "7.2.1",
     "globals": "16.3.0",
     "husky": "9.1.7",
-    "jest-extended": "4.0.2",
+    "jest-extended": "6.0.0",
     "lint-staged": "16.1.5",
     "nock": "14.0.10",
     "npm-run-all2": "8.0.4",
