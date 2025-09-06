@@ -94,8 +94,8 @@ importers:
         specifier: 20.19.12
         version: 20.19.12
       '@types/semver':
-        specifier: 7.7.0
-        version: 7.7.0
+        specifier: 7.7.1
+        version: 7.7.1
       '@vitest/coverage-v8':
         specifier: 3.2.4
         version: 3.2.4(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.19.12)(yaml@2.8.1))
@@ -1621,8 +1621,8 @@ packages:
   '@types/responselike@1.0.3':
     resolution: {integrity: sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==}
 
-  '@types/semver@7.7.0':
-    resolution: {integrity: sha512-k107IF4+Xr7UHjwDc7Cfd6PRQfbdkiRabXGRjo07b4WyPahFBZCZ1sE+BNxYIJPPg73UkfOsVOLwqVc/6ETrIA==}
+  '@types/semver@7.7.1':
+    resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
 
   '@types/treeify@1.0.3':
     resolution: {integrity: sha512-hx0o7zWEUU4R2Amn+pjCBQQt23Khy/Dk56gQU5xi5jtPL1h83ACJCeFaB2M/+WO1AntvWrSoVnnCAfI1AQH4Cg==}
@@ -7917,7 +7917,7 @@ snapshots:
     dependencies:
       '@types/node': 20.19.12
 
-  '@types/semver@7.7.0': {}
+  '@types/semver@7.7.1': {}
 
   '@types/treeify@1.0.3': {}
 
@@ -8159,7 +8159,7 @@ snapshots:
   '@yarnpkg/core@4.4.3(typanion@3.14.0)':
     dependencies:
       '@arcanis/slice-ansi': 1.1.1
-      '@types/semver': 7.7.0
+      '@types/semver': 7.7.1
       '@types/treeify': 1.0.3
       '@yarnpkg/fslib': 3.1.2
       '@yarnpkg/libzip': 3.2.1(@yarnpkg/fslib@3.1.2)
