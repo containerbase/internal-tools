@@ -43,7 +43,7 @@
     "got": "14.4.8",
     "renovate": "41.97.9",
     "semver": "7.7.2",
-    "strip-ansi": "7.1.0",
+    "strip-ansi": "7.1.2",
     "tslib": "2.8.1"
   },
   "devDependencies": {
