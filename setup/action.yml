@@ -75,6 +75,7 @@ runs:
         node-version: ${{ inputs.node-version }}
         node-version-file: ${{ inputs.node-version == '' && '.node-version' || '' }}
         cache: ${{ env.CACHE_HIT != 'true' && 'pnpm' || '' }}
+        package-manager-cache: false
 
     - if: inputs.node == 'true' && env.CACHE_HIT != 'true'
       shell: bash
