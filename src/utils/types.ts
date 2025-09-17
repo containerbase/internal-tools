@@ -85,3 +85,7 @@ export type BinaryBuilderConfig = {
 } & ConfigFile;
 
 export const sumType = 'sha512';
+
+export interface DockerBuildxMetaData {
+  'containerimage.digest'?: string;
+}

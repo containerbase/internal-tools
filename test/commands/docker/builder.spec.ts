@@ -30,6 +30,7 @@ describe('commands/docker/builder', () => {
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/yarn.json'));
     args = {};
     utils.getArg.mockImplementation((n, o) => args[n] ?? (o?.multi ? [] : ''));
+    docker.build.mockResolvedValue({});
   });
 
   it('works yarn', async () => {
@@ -50,6 +51,7 @@ describe('commands/docker/builder', () => {
   it('works pnpm', async () => {
     utils.readJson.mockReset();
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/pnpm.json'));
+    utils.exists.mockResolvedValue(true);
     args = {
       ...args,
       'image-prefix': 'ghcr.io/renovatebot/',

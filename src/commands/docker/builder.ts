@@ -124,7 +124,7 @@ async function buildAndPush(
         tags.push(tagSuffix ?? 'latest');
       }
 
-      await build({
+      const meta = await build({
         image,
         imagePrefix,
         imagePrefixes,
@@ -140,13 +140,16 @@ async function buildAndPush(
       });
 
       if (!buildOnly && shouldSign) {
-        log('Signing image', imageVersion);
-        await cosign('sign', '--yes', imageVersion);
-        for (const imageVersion of tags.map(
-          (tag) => `${imagePrefix}/${image}:${tag}`,
-        )) {
-          log('Signing image', imageVersion);
-          await cosign('sign', '--yes', imageVersion);
+        for (const prefix of [imagePrefix, ...imagePrefixes]) {
+          log(
+            'Signing image',
+            `${prefix}/${image}@${meta['containerimage.digest']}`,
+          );
+          await cosign(
+            'sign',
+            '--yes',
+            `${prefix}/${image}@${meta['containerimage.digest']}`,
+          );
         }
       }
 

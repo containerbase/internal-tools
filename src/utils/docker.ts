@@ -1,9 +1,12 @@
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 import { setTimeout } from 'node:timers/promises';
 import { isNonEmptyArray, isString } from '@sindresorhus/is';
 import chalk from 'chalk';
 import { dockerBuildx } from './docker/common';
 import log from './logger';
-import { ExecError } from './types';
+import { DockerBuildxMetaData, ExecError } from './types';
 
 export interface BuildOptions {
   image: string;
@@ -43,7 +46,7 @@ export async function build({
   buildArgs,
   platforms,
   push,
-}: BuildOptions): Promise<void> {
+}: BuildOptions): Promise<DockerBuildxMetaData> {
   const args = ['build'];
 
   if (isNonEmptyArray(buildArgs)) {
@@ -94,17 +97,30 @@ export async function build({
     args.push('--push', '--provenance=false');
   }
 
-  for (let build = 0; ; build++) {
-    try {
-      await dockerBuildx(...args, '.');
-      break;
-    } catch (e) {
-      if (e instanceof ExecError && canRetry(e) && build < 2) {
-        log.error(chalk.red(`docker build error on try ${build}`), e);
-        await setTimeout(5000);
-        continue;
+  const tmpDir = await fs.mkdtemp(
+    path.join(os.tmpdir(), 'internal-tools-docker-build-'),
+  );
+  const metadataFile = path.join(tmpDir, 'metadata.json');
+  args.push('--metadata-file', metadataFile);
+  try {
+    for (let build = 0; ; build++) {
+      try {
+        await dockerBuildx(...args, '.');
+        break;
+      } catch (e) {
+        if (e instanceof ExecError && canRetry(e) && build < 2) {
+          log.error(chalk.red(`docker build error on try ${build}`), e);
+          await setTimeout(5000);
+          continue;
+        }
+        throw e;
       }
-      throw e;
     }
+
+    return JSON.parse(
+      await fs.readFile(metadataFile, 'utf8'),
+    ) as DockerBuildxMetaData;
+  } finally {
+    await fs.rm(tmpDir, { recursive: true, force: true });
   }
 }
