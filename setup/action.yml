@@ -56,6 +56,11 @@ runs:
         key: ${{ env.CACHE_KEY }}
         enableCrossOsArchive: true
 
+      # Ensure npm 11.5.1 or later for trusted publishing
+    - shell: bash
+      if: inputs.node == 'true'
+      run: npm install -g npm@latest
+
     - shell: bash
       if: inputs.node == 'true'
       run: |
