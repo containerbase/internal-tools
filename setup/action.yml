@@ -77,6 +77,11 @@ runs:
         cache: ${{ env.CACHE_HIT != 'true' && 'pnpm' || '' }}
         package-manager-cache: false
 
+      # Ensure npm 11.5.1 or later for trusted publishing
+    - shell: bash
+      if: inputs.node == 'true'
+      run: npm install -g npm@latest
+
     - if: inputs.node == 'true' && env.CACHE_HIT != 'true'
       shell: bash
       run: pnpm install --frozen-lockfile
