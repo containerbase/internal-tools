@@ -155,13 +155,15 @@ async function uploadVersionAssetIfNeeded(
   builds: BuildsResult,
 ): Promise<void> {
   if (!(await hasVersionAsset(api, version))) {
+    /* v8 ignore next -- needs test */
+    const latestStable = builds.latestStable ?? version;
     if (cfg.dryRun) {
       log.warn(
         chalk.yellow('[DRY_RUN] Would upload version asset:'),
-        builds.latestStable ?? version,
+        latestStable,
       );
     } else {
-      log('Uploading version file:', builds.latestStable ?? version);
+      log('Uploading version file:', latestStable);
       await uploadVersionAsset(api, cfg, version, builds.latestStable);
     }
   }

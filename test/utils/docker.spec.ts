@@ -1,9 +1,11 @@
-import { describe, expect, it, vi } from 'vitest';
+import fs from 'node:fs/promises';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as _utils from '../../src/util';
 import { build } from '../../src/utils/docker';
 import { ExecError } from '../../src/utils/types';
 import { mocked } from '../utils';
 
+vi.mock('node:fs/promises');
 vi.mock('node:timers/promises');
 vi.mock('../../src/util');
 
@@ -16,6 +18,11 @@ describe('utils/docker', () => {
   describe('build', () => {
     const image = 'base';
     const cache = 'docker-build-cache';
+
+    beforeEach(() => {
+      vi.mocked(fs).readFile.mockResolvedValue('{}');
+      vi.mocked(fs).mkdtemp.mockResolvedValue('/tmp/tmp-12345');
+    });
 
     it('works', async () => {
       utils.exec.mockResolvedValueOnce({
