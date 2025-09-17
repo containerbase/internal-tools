@@ -11,7 +11,7 @@ export default defineConfig({
       reporter: ci ? ['json', 'text'] : ['html', 'text'],
       include: ['src/**/*.{js,ts}'],
     },
-    reporters: ci ? ['default', 'github-actions'] : ['default', 'html'],
+    reporters: ci ? ['default', 'github-actions'] : ['default'],
     restoreMocks: true,
     setupFiles: './test/setup.ts',
   },
