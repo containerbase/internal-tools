@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
-import path from 'node:path';
 import { setTimeout } from 'node:timers/promises';
 import { isNonEmptyArray, isString } from '@sindresorhus/is';
 import chalk from 'chalk';
@@ -98,9 +97,9 @@ export async function build({
   }
 
   const tmpDir = await fs.mkdtemp(
-    path.join(os.tmpdir(), 'internal-tools-docker-build-'),
+    `${os.tmpdir()}/internal-tools-docker-build-`,
   );
-  const metadataFile = path.join(tmpDir, 'metadata.json');
+  const metadataFile = `${tmpDir}/metadata.json`;
   args.push('--metadata-file', metadataFile);
   try {
     for (let build = 0; ; build++) {
