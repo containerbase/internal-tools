@@ -96,18 +96,6 @@
     "patchedDependencies": {
       "@baszalmstra/rattler": "patches/@baszalmstra__rattler.patch",
       "re2": "patches/re2.patch"
-    },
-    "ignoredBuiltDependencies": [
-      "better-sqlite3",
-      "core-js-pure",
-      "dtrace-provider",
-      "esbuild",
-      "moment",
-      "mv",
-      "protobufjs",
-      "re2",
-      "safe-json-stringify",
-      "unrs-resolver"
-    ]
+    }
   }
 }

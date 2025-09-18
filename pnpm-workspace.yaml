@@ -7,16 +7,5 @@ includeWorkspaceRoot: true
 strictPeerDependencies: true
 strictDepBuilds: true
 
-onlyBuiltDependencies: []
-
-ignoredBuiltDependencies:
-  - better-sqlite3
-  - core-js-pure
-  - dtrace-provider
-  - esbuild
-  - moment
-  - mv
-  - protobufjs
+onlyBuiltDependencies:
   - re2
-  - safe-json-stringify
-  - unrs-resolver
