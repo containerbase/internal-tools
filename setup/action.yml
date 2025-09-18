@@ -38,12 +38,15 @@ runs:
     - shell: bash
       if: inputs.node == 'true'
       run: |
+        os='${{ runner.os != 'Linux' && format('-{0}', runner.os) || '' }}'
         if [ -n "${{ inputs.node-version }}" ]; then
-          echo 'CACHE_KEY=node_modules-${{ inputs.node-version }}-${{
+          echo 'CACHE_KEY=node_modules${os}-${{
+            inputs.node-version
+          }}-${{
             hashFiles('package.json', 'pnpm-lock.yaml')
           }}' >> "$GITHUB_ENV"
         else
-          echo 'CACHE_KEY=node_modules-${{
+          echo 'CACHE_KEY=node_modules${os}-${{
             hashFiles('.node-version', 'package.json', 'pnpm-lock.yaml')
           }}' >> "$GITHUB_ENV"
         fi
