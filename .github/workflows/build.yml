@@ -197,6 +197,7 @@ jobs:
     strategy:
       matrix:
         os:
+          - linux
           - macos
           - windows
 
@@ -208,12 +209,14 @@ jobs:
       - uses: ./setup
         with:
           checkout: false
+          cache: false
           node-version: ${{ env.NODE_VERSION }}
 
       - name: validate cache key
         shell: bash
         run: |
-          re="^node_modules-${{runner.os}}-${{ env.NODE_VERSION }}-[0-9a-z]+$"
+          os="${{ runner.os != 'Linux' && format('-{0}', runner.os) || '' }}"
+          re="^node_modules${os}-${{ env.NODE_VERSION }}-[0-9a-z]+$"
           if [[ ${CACHE_KEY} =~ $re ]]; then
             echo "Cache key ok: ${CACHE_KEY}"
           else

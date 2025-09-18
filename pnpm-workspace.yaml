@@ -5,3 +5,19 @@ packages: []
 includeWorkspaceRoot: true
 
 strictPeerDependencies: true
+strictDepBuilds: true
+
+neverBuiltDependencies:
+  - dtrace-provider
+
+ignoredBuiltDependencies:
+  - better-sqlite3
+  - core-js-pure
+  - dtrace-provider
+  - esbuild
+  - moment
+  - mv
+  - protobufjs
+  - re2
+  - safe-json-stringify
+  - unrs-resolver
