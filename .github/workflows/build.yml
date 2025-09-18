@@ -15,9 +15,10 @@ permissions:
 
 env:
   LOG_LEVEL: debug
+  NODE_VERSION: 22 # renovate: datasource=node-version depName=node
 
 jobs:
-  prepare:
+  setup:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -31,8 +32,20 @@ jobs:
           checkout: false
           save-cache: true
 
+      - name: validate cache key
+        shell: bash
+        run: |
+          re="^node_modules-[0-9a-z]+$"
+          if [[ ${CACHE_KEY} =~ $re ]]; then
+            echo "Cache key ok: ${CACHE_KEY}"
+          else
+            echo "Cache key invalid: ${CACHE_KEY}"
+            exit 1
+          fi
+
   test:
-    needs: prepare
+    needs:
+      - setup
     runs-on: ubuntu-latest
 
     # tests shouldn't need more than 15 min
@@ -79,7 +92,8 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   e2e:
-    needs: prepare
+    needs:
+      - setup
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -174,8 +188,78 @@ jobs:
           command: dummy
           dry-run: true
 
+  e2e-os:
+    needs:
+      - setup
+    runs-on: ${{ matrix.os }}-latest
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        os:
+          - macos
+          - windows
+
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          show-progress: false
+
+      - uses: ./setup
+        with:
+          checkout: false
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: validate cache key
+        shell: bash
+        run: |
+          re="^node_modules-${{runner.os}}-${{ env.NODE_VERSION }}-[0-9a-z]+$"
+          if [[ ${CACHE_KEY} =~ $re ]]; then
+            echo "Cache key ok: ${CACHE_KEY}"
+          else
+            echo "Cache key invalid: ${CACHE_KEY}"
+            exit 1
+          fi
+
+  # Catch-all required check for test matrix and coverage
+  test-success:
+    needs:
+      - setup
+      - test
+      - e2e
+      - e2e-os
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    if: always()
+    steps:
+      - name: Fail for failed or cancelled setup
+        if: |
+          needs.setup.result == 'failure' ||
+          needs.setup.result == 'cancelled'
+        run: exit 1
+
+      - name: Fail for failed or cancelled test
+        if: |
+          needs.test.result == 'failure' ||
+          needs.test.result == 'cancelled'
+        run: exit 1
+
+      - name: Fail for failed or cancelled e2e
+        if: |
+          needs.e2e.result == 'failure' ||
+          needs.e2e.result == 'cancelled'
+        run: exit 1
+
+      - name: Fail for failed or cancelled e2e-os
+        if: |
+          needs.e2e-os.result == 'failure' ||
+          needs.e2e-os.result == 'cancelled'
+        run: exit 1
+
   release:
-    needs: [test, e2e]
+    needs:
+      - test-success
+
     runs-on: ubuntu-latest
 
     # tests shouldn't need more than 15 min
@@ -191,8 +275,6 @@ jobs:
         id: init
         shell: bash
         run: |
-          git config --global core.autocrlf false
-          git config --global core.symlinks true
           # Use github action user for the commit
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
