@@ -1,0 +1,10 @@
+# no packages yet
+packages: []
+
+# need to publish workspace root with correct version
+includeWorkspaceRoot: true
+
+ignoredBuiltDependencies:
+  - unrs-resolver
+
+strictPeerDependencies: true
