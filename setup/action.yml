@@ -48,11 +48,11 @@ runs:
           echo "CACHE_KEY=node_modules${os}${arch}-${{
             inputs.node-version
           }}-${{
-            hashFiles('package.json', 'pnpm-lock.yaml')
+            hashFiles('package.json', 'pnpm-lock.yaml', 'pnpm-workspace.yaml')
           }}" >> "$GITHUB_ENV"
         else
           echo "CACHE_KEY=node_modules${os}${arch}-${{
-            hashFiles('.node-version', 'package.json', 'pnpm-lock.yaml')
+            hashFiles('.node-version', 'package.json', 'pnpm-lock.yaml', 'pnpm-workspace.yaml')
           }}" >> "$GITHUB_ENV"
         fi
 
