@@ -40,15 +40,15 @@ runs:
       run: |
         os='${{ runner.os != 'Linux' && format('-{0}', runner.os) || '' }}'
         if [ -n "${{ inputs.node-version }}" ]; then
-          echo 'CACHE_KEY=node_modules${os}-${{
+          echo "CACHE_KEY=node_modules${os}-${{
             inputs.node-version
           }}-${{
             hashFiles('package.json', 'pnpm-lock.yaml')
-          }}' >> "$GITHUB_ENV"
+          }}" >> "$GITHUB_ENV"
         else
-          echo 'CACHE_KEY=node_modules${os}-${{
+          echo "CACHE_KEY=node_modules${os}-${{
             hashFiles('.node-version', 'package.json', 'pnpm-lock.yaml')
-          }}' >> "$GITHUB_ENV"
+          }}" >> "$GITHUB_ENV"
         fi
 
     - uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
