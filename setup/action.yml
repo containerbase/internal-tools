@@ -87,7 +87,7 @@ runs:
 
       # Ensure npm 11.5.1 or later for trusted publishing
     - shell: bash
-      if: inputs.node == 'true'
+      if: inputs.node == 'true' && runner.os == 'Linux'
       run: |
         set -ex
         npm --version

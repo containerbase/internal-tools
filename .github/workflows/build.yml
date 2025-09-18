@@ -206,6 +206,10 @@ jobs:
         with:
           show-progress: false
 
+      - name: Prepare OS
+        if: runner.os == 'Windows'
+        run: corepack pnpm config set scriptShell "C:\\Program Files\\git\\bin\\bash.exe"
+
       - uses: ./setup
         with:
           checkout: false
@@ -225,8 +229,6 @@ jobs:
             echo "Cache key invalid: ${CACHE_KEY}"
             exit 1
           fi
-        env:
-          npm_config_shell_emulator: true
 
   # Catch-all required check for test matrix and coverage
   test-success:
