@@ -80,7 +80,13 @@ runs:
       # Ensure npm 11.5.1 or later for trusted publishing
     - shell: bash
       if: inputs.node == 'true'
-      run: npm install -g npm@latest
+      run: |
+        set -ex
+        npm --version
+        command -v npm
+        pnpm install -g npm
+        npm --version
+        command -v npm
 
     - if: inputs.node == 'true' && env.CACHE_HIT != 'true'
       shell: bash
