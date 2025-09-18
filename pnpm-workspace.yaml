@@ -7,8 +7,7 @@ includeWorkspaceRoot: true
 strictPeerDependencies: true
 strictDepBuilds: true
 
-neverBuiltDependencies:
-  - dtrace-provider
+onlyBuiltDependencies: []
 
 ignoredBuiltDependencies:
   - better-sqlite3

@@ -90,9 +90,6 @@
     "pnpm": "^10.0.0"
   },
   "pnpm": {
-    "neverBuiltDependencies": [
-      "dtrace-provider"
-    ],
     "overrides": {
       "esbuild": "0.25.9"
     },
