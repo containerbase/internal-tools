@@ -208,7 +208,9 @@ jobs:
 
       - name: Prepare OS
         if: runner.os == 'Windows'
-        run: corepack pnpm config set scriptShell "C:\\Program Files\\git\\bin\\bash.exe"
+        shell: bash
+        run: |
+          echo 'scriptShell: "C:\\Program Files\\git\\bin\\bash.exe"' >> pnpm-workspace.yaml
 
       - uses: ./setup
         with:
