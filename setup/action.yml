@@ -84,7 +84,7 @@ runs:
         set -ex
         npm --version
         command -v npm
-        pnpm install -g npm
+        npm install -g npm
         npm --version
         command -v npm
 
