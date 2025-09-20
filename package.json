@@ -40,7 +40,7 @@
     "chalk": "5.6.2",
     "escape-string-regexp": "5.0.0",
     "find-up": "7.0.0",
-    "got": "14.4.8",
+    "got": "14.4.9",
     "renovate": "41.113.3",
     "semver": "7.7.2",
     "strip-ansi": "7.1.2",
