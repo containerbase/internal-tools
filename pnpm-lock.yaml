@@ -4064,11 +4064,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  mkdirp@3.0.1:
-    resolution: {integrity: sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   module-details-from-path@1.0.4:
     resolution: {integrity: sha512-EGWKgxALGMgzvxYF1UyGTy0HXX/2vHLkw6+NvDKW2jypWbHpjQuj4UMcqQWXHERJhVGKikolT06G3bcKe4fi7w==}
 
@@ -5182,8 +5177,8 @@ packages:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
 
-  tar@7.4.3:
-    resolution: {integrity: sha512-5S7Va8hKfV7W5U6g3aYxXmlPoZVAwUMy9AOKyF2fVuZa2UD3qZjg578OrLRt8PcNN1PleVaL/5/yYATNL0ICUw==}
+  tar@7.4.4:
+    resolution: {integrity: sha512-O1z7ajPkjTgEgmTGz0v9X4eqeEXTDREPTO77pVC1Nbs86feBU1Zhdg+edzavPmYW1olxkwsqA2v4uOw6E8LeDg==}
     engines: {node: '>=18'}
 
   temp-dir@3.0.0:
@@ -7254,7 +7249,7 @@ snapshots:
 
   '@renovatebot/detect-tools@1.1.0':
     dependencies:
-      fs-extra: 11.3.2
+      fs-extra: 11.3.1
       toml-eslint-parser: 0.10.0
       upath: 2.0.1
       zod: 3.25.76
@@ -7282,7 +7277,7 @@ snapshots:
     dependencies:
       '@renovatebot/osv-offline-db': 1.7.5
       adm-zip: 0.5.16
-      fs-extra: 11.3.2
+      fs-extra: 11.3.1
       got: 11.8.6
       luxon: 3.7.2
 
@@ -8457,7 +8452,7 @@ snapshots:
       minipass-pipeline: 1.2.4
       p-map: 7.0.3
       ssri: 12.0.0
-      tar: 7.4.3
+      tar: 7.4.4
       unique-filename: 4.0.0
     optional: true
 
@@ -10784,9 +10779,6 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
-  mkdirp@3.0.1:
-    optional: true
-
   module-details-from-path@1.0.4: {}
 
   moment@2.30.1:
@@ -10882,7 +10874,7 @@ snapshots:
       nopt: 8.1.0
       proc-log: 5.0.0
       semver: 7.7.2
-      tar: 7.4.3
+      tar: 7.4.4
       tinyglobby: 0.2.15
       which: 5.0.0
     transitivePeerDependencies:
@@ -12107,13 +12099,12 @@ snapshots:
       mkdirp: 1.0.4
       yallist: 4.0.0
 
-  tar@7.4.3:
+  tar@7.4.4:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
       minipass: 7.1.2
       minizlib: 3.1.0
-      mkdirp: 3.0.1
       yallist: 5.0.0
     optional: true
 
