@@ -51,8 +51,8 @@ importers:
         specifier: 14.4.9
         version: 14.4.9
       renovate:
-        specifier: 41.122.3
-        version: 41.122.3(encoding@0.1.13)(typanion@3.14.0)
+        specifier: 41.131.9
+        version: 41.131.9(encoding@0.1.13)(typanion@3.14.0)
       semver:
         specifier: 7.7.2
         version: 7.7.2
@@ -1109,19 +1109,19 @@ packages:
     peerDependencies:
       '@redis/client': ^1.0.0
 
-  '@renovatebot/detect-tools@1.1.0':
-    resolution: {integrity: sha512-0GEOOX4QhUBQIY4xsr0g9sb/PrwO3C+uGPsAXlXklTDFnmXenFQ/XcEiQMTLAxPoeHofQCQ79BVCxlDVhcJ8DA==}
+  '@renovatebot/detect-tools@1.2.4':
+    resolution: {integrity: sha512-qKkRWDmwfgPN5vrD6QzMa6UNqb06VXaZL1hxxLFsOauiSTAxz/TVKPhb/hFyf27yu35JyXIN40PiNQR+bidKbQ==}
 
   '@renovatebot/kbpgp@4.0.3':
     resolution: {integrity: sha512-RMj9zekThsU/rCZxY0DeXl4hXU0rJOJm9wrFfLoFJnNsLQO1v2nfkK7sdYiMe/9+i99W/JWCtGDfySxIhC8CmA==}
     engines: {node: ^20.9.0 || ^22.11.0, pnpm: ^10.0.0}
 
-  '@renovatebot/osv-offline-db@1.7.5':
-    resolution: {integrity: sha512-LrwPAPecRLL/lYb9mDyeM6ndRLXCvUPHpMJ7dhOZFRiIXMLIo6Lu+1fAEPDxtBwYh21aFgtWVOoltGoTKuwzXQ==}
+  '@renovatebot/osv-offline-db@1.7.6':
+    resolution: {integrity: sha512-1M17R6wzUvvRLKZegmAGDXTV/HhRCDMqipaqQn/bZ+8JMDeY0WQfl07EZKI/x5hyin1v2tMcmCTvJZYFCm6Y7Q==}
     engines: {node: '>=18.12.0'}
 
-  '@renovatebot/osv-offline@1.6.10':
-    resolution: {integrity: sha512-17hbS9EYv+3DgoWrV+x3jk3dz/8ovipBY36HRgYZlHRTYtm0s6Qmw8q/O1x8O3MGSNWKWw9lw2VGTP/X0CvVsw==}
+  '@renovatebot/osv-offline@1.6.11':
+    resolution: {integrity: sha512-eWy9aKrsUIJctnghdwUHt+DIweVNC0ppdsfmyf3jYocs9c/W9SFUOswBUnZAgvTPQ3qvQ3yWNIzjADFFRjD2SQ==}
     engines: {node: '>=18.12.0'}
 
   '@renovatebot/pep440@4.2.1':
@@ -1298,10 +1298,6 @@ packages:
   '@sindresorhus/is@4.6.0':
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
     engines: {node: '>=10'}
-
-  '@sindresorhus/is@7.0.2':
-    resolution: {integrity: sha512-d9xRovfKNz1SKieM0qJdO+PQonjnnIfSNWfHYnBSJ9hkjm0ZPw6HlxscDXYstp3z+7V2GOFHc+J0CYrYTjqCJw==}
-    engines: {node: '>=18'}
 
   '@sindresorhus/is@7.1.0':
     resolution: {integrity: sha512-7F/yz2IphV39hiS2zB4QYVkivrptHHh0K8qJJd9HhuWSdvf8AN7NpebW3CcDZDBQsUPMoDKWsY2WWgW7bqOcfA==}
@@ -1851,8 +1847,8 @@ packages:
   '@vitest/utils@3.2.4':
     resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
 
-  '@yarnpkg/core@4.4.3':
-    resolution: {integrity: sha512-PMyCPTsA39Mw4WApfoIpAPnYjSDki7uMGPVYjvTtF5fTKoqxWTJN1toBzxmrFmqonC3sL33e55wgaCrerkzakQ==}
+  '@yarnpkg/core@4.4.4':
+    resolution: {integrity: sha512-0bcUFx4wzq0szvInY0PkzqjsAlM69lgzOsEbltbiyE6q/h0hRb1oOHWSBvq7rUGA+Ob5vuyhoDYWyyXY/1W4VQ==}
     engines: {node: '>=18.12.0'}
 
   '@yarnpkg/fslib@3.1.3':
@@ -1897,8 +1893,8 @@ packages:
     resolution: {integrity: sha512-TGw5yVi4saajsSEgz25grObGHEUaDrniwvA2qwSC060KfqGPdglhvPMA2lPIoxs3PQIItj2iag35fONcQqgUaQ==}
     engines: {node: '>=12.0'}
 
-  ae-cvss-calculator@1.0.8:
-    resolution: {integrity: sha512-ud8g+BQTSJoeuB4nOnbhu/Fd7TnGEnnr1AYOA+uFaEDQB0IOgjxHA2ds5iOmLh5Os6ziGCJJqjEFOFeWMOVQ4Q==}
+  ae-cvss-calculator@1.0.9:
+    resolution: {integrity: sha512-CTeSR6Cm/cOJQLRNIw3wvRnNUMp9du+qKwH6IAf/DHwgGFsVeoCiuvtH6BWl5gaYVn1RTMBdQmT2D5Ul31Mh5Q==}
 
   agent-base@7.1.4:
     resolution: {integrity: sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ==}
@@ -2439,10 +2435,6 @@ packages:
   des.js@1.1.0:
     resolution: {integrity: sha512-r17GxjhUCjSRy8aiJpr8/UadFIzMzJGexI3Nmz4ADi9LYSFx4gTBp80+NaX/YsXWWLhpZ7v/v/ubEc/bCNfKwg==}
 
-  detect-indent@7.0.1:
-    resolution: {integrity: sha512-Mc7QhQ8s+cLrnUfU/Ji94vG/r8M26m8f++vyres4ZoojaRDpZ1eSIh/EpzLNwlWuvzSZ3UbDFspjFvTDXe6e/g==}
-    engines: {node: '>=12.20'}
-
   detect-indent@7.0.2:
     resolution: {integrity: sha512-y+8xyqdGLL+6sh0tVeHcfP/QDd8gUgbasolJJpY7NgeQGSZ739bDtSiaiDgtoicy+mtYB81dKLxO9xRhCyIB3A==}
     engines: {node: '>=12.20'}
@@ -2928,10 +2920,6 @@ packages:
 
   fs-extra@11.3.0:
     resolution: {integrity: sha512-Z4XaCL6dUDHfP/jT25jJKMmtxvuwbkrD1vNSMFlo9lNLY2c5FHYSQgHPRZUjAB26TpDEoW9HCOgplrdbaPV/ew==}
-    engines: {node: '>=14.14'}
-
-  fs-extra@11.3.1:
-    resolution: {integrity: sha512-eXvGGwZ5CL17ZSwHWd3bbgk7UUpF6IFHtP57NYYakPvHOs8GDgDe5KJI36jIJzDkJ6eJjuzRA8eBQb6SkKue0g==}
     engines: {node: '>=14.14'}
 
   fs-extra@11.3.2:
@@ -4350,8 +4338,8 @@ packages:
     resolution: {integrity: sha512-qFOyK5PjiWZd+QQIh+1jhdb9LpxTF0qs7Pm8o5QHYZ0M3vKqSqzsZaEB6oWlxZ+q2sJBMI/Ktgd2N5ZwQoRHfg==}
     engines: {node: '>= 0.4'}
 
-  p-all@5.0.0:
-    resolution: {integrity: sha512-pofqu/1FhCVa+78xNAptCGc9V45exFz2pvBRyIvgXkNM0Rh18Py7j8pQuSjA+zpabI46v9hRjNWmL9EAFcEbpw==}
+  p-all@5.0.1:
+    resolution: {integrity: sha512-LMT7WX9ZSaq3J1zjloApkIVmtz0ZdMFSIqbuiEa3txGYPLjUPOvgOPOx3nFjo+f37ZYL+1aY666I2SG7GVwLOA==}
     engines: {node: '>=16'}
 
   p-cancelable@2.1.1:
@@ -4740,8 +4728,8 @@ packages:
   remark@15.0.1:
     resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
-  renovate@41.122.3:
-    resolution: {integrity: sha512-D6ibbwwjtt3NYdHe+O5KLxXpI7Sg7y5ELqKtzrPJyIMSquyHSNaoOlYDA2g01n1i++H6K8FX8cgTQkg4PzDKTw==}
+  renovate@41.131.9:
+    resolution: {integrity: sha512-TqHaEp0OEPjpMoVa+ItQtHB6kfQNABz8utuYK5zfWohAoKeRI13Xex8P5VeZpdTi4h674CqR999RpaC7BNkJAw==}
     engines: {node: ^22.13.0, pnpm: ^10.0.0}
     hasBin: true
 
@@ -7248,9 +7236,9 @@ snapshots:
     dependencies:
       '@redis/client': 1.6.1
 
-  '@renovatebot/detect-tools@1.1.0':
+  '@renovatebot/detect-tools@1.2.4':
     dependencies:
-      fs-extra: 11.3.1
+      fs-extra: 11.3.2
       toml-eslint-parser: 0.10.0
       upath: 2.0.1
       zod: 3.25.76
@@ -7270,15 +7258,15 @@ snapshots:
       triplesec: 4.0.3
       tweetnacl: 1.0.3
 
-  '@renovatebot/osv-offline-db@1.7.5':
+  '@renovatebot/osv-offline-db@1.7.6':
     dependencies:
       '@seald-io/nedb': 4.1.2
 
-  '@renovatebot/osv-offline@1.6.10':
+  '@renovatebot/osv-offline@1.6.11':
     dependencies:
-      '@renovatebot/osv-offline-db': 1.7.5
+      '@renovatebot/osv-offline-db': 1.7.6
       adm-zip: 0.5.16
-      fs-extra: 11.3.1
+      fs-extra: 11.3.2
       got: 11.8.6
       luxon: 3.7.2
 
@@ -7454,8 +7442,6 @@ snapshots:
   '@sinclair/typebox@0.27.8': {}
 
   '@sindresorhus/is@4.6.0': {}
-
-  '@sindresorhus/is@7.0.2': {}
 
   '@sindresorhus/is@7.1.0': {}
 
@@ -8151,7 +8137,7 @@ snapshots:
       loupe: 3.2.1
       tinyrainbow: 2.0.0
 
-  '@yarnpkg/core@4.4.3(typanion@3.14.0)':
+  '@yarnpkg/core@4.4.4(typanion@3.14.0)':
     dependencies:
       '@arcanis/slice-ansi': 1.1.1
       '@types/semver': 7.7.1
@@ -8225,7 +8211,7 @@ snapshots:
 
   adm-zip@0.5.16: {}
 
-  ae-cvss-calculator@1.0.8: {}
+  ae-cvss-calculator@1.0.9: {}
 
   agent-base@7.1.4: {}
 
@@ -8793,8 +8779,6 @@ snapshots:
     dependencies:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
-
-  detect-indent@7.0.1: {}
 
   detect-indent@7.0.2: {}
 
@@ -9410,12 +9394,6 @@ snapshots:
     optional: true
 
   fs-extra@11.3.0:
-    dependencies:
-      graceful-fs: 4.2.11
-      jsonfile: 6.2.0
-      universalify: 2.0.1
-
-  fs-extra@11.3.1:
     dependencies:
       graceful-fs: 4.2.11
       jsonfile: 6.2.0
@@ -11014,7 +10992,7 @@ snapshots:
       object-keys: 1.1.1
       safe-push-apply: 1.0.0
 
-  p-all@5.0.0:
+  p-all@5.0.1:
     dependencies:
       p-map: 6.0.0
 
@@ -11442,7 +11420,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@41.122.3(encoding@0.1.13)(typanion@3.14.0):
+  renovate@41.131.9(encoding@0.1.13)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.879.0
       '@aws-sdk/client-ec2': 3.879.0
@@ -11470,15 +11448,15 @@ snapshots:
       '@opentelemetry/semantic-conventions': 1.37.0
       '@pnpm/parse-overrides': 1001.0.3
       '@qnighy/marshal': 0.1.3
-      '@renovatebot/detect-tools': 1.1.0
+      '@renovatebot/detect-tools': 1.2.4
       '@renovatebot/kbpgp': 4.0.3
-      '@renovatebot/osv-offline': 1.6.10
+      '@renovatebot/osv-offline': 1.6.11
       '@renovatebot/pep440': 4.2.1
       '@renovatebot/ruby-semver': 4.1.2
-      '@sindresorhus/is': 7.0.2
-      '@yarnpkg/core': 4.4.3(typanion@3.14.0)
+      '@sindresorhus/is': 7.1.0
+      '@yarnpkg/core': 4.4.4(typanion@3.14.0)
       '@yarnpkg/parsers': 3.0.3
-      ae-cvss-calculator: 1.0.8
+      ae-cvss-calculator: 1.0.9
       agentkeepalive: 4.6.0
       async-mutex: 0.5.0
       auth-header: 1.0.0
@@ -11495,7 +11473,7 @@ snapshots:
       cronstrue: 3.3.0
       deepmerge: 4.3.1
       dequal: 2.0.3
-      detect-indent: 7.0.1
+      detect-indent: 7.0.2
       diff: 8.0.2
       editorconfig: 3.0.1
       email-addresses: 5.0.0
@@ -11505,7 +11483,7 @@ snapshots:
       extract-zip: 2.0.1
       find-packages: 10.0.4
       find-up: 7.0.0
-      fs-extra: 11.3.1
+      fs-extra: 11.3.2
       git-url-parse: 16.1.0
       github-url-from-git: 1.5.0
       glob: 11.0.3
@@ -11532,7 +11510,7 @@ snapshots:
       nanoid: 5.1.5
       neotraverse: 0.6.18
       node-html-parser: 7.0.1
-      p-all: 5.0.0
+      p-all: 5.0.1
       p-map: 7.0.3
       p-queue: 8.1.1
       p-throttle: 8.0.0
