@@ -5,7 +5,6 @@ import { run } from '../../../src/commands/binary';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
 import * as _github from '../../../src/utils/github';
-import { mocked } from '../../utils';
 
 vi.mock('renovate/dist/modules/datasource');
 vi.mock('../../../src/util');
@@ -17,11 +16,11 @@ vi.mock('../../../src/utils/github');
 vi.mock('../../../src/utils/datasource');
 vi.mock('../../../src/utils/sum');
 
-const core = mocked(_core);
-const utils = mocked(_utils);
-const docker = mocked(_docker);
-const datasources = mocked(_datasources);
-const github = mocked(_github);
+const core = vi.mocked(_core);
+const utils = vi.mocked(_utils);
+const docker = vi.mocked(_docker);
+const datasources = vi.mocked(_datasources);
+const github = vi.mocked(_github);
 const version = '2.7.2';
 
 describe('commands/binary/index', () => {
@@ -176,7 +175,9 @@ describe('commands/binary/index', () => {
     await run();
     expect(docker.dockerRun).not.toHaveBeenCalled();
     expect(github.updateRelease).not.toHaveBeenCalled();
-    expect(core.setFailed).toHaveBeenCalledWith('No versions found.');
+    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
+      'No versions found.',
+    );
   });
 
   it('null releases', async () => {
@@ -184,7 +185,9 @@ describe('commands/binary/index', () => {
     await run();
     expect(docker.dockerRun).not.toHaveBeenCalled();
     expect(github.updateRelease).not.toHaveBeenCalled();
-    expect(core.setFailed).toHaveBeenCalledWith('No versions found.');
+    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
+      'No versions found.',
+    );
   });
 
   it('catch errors', async () => {
