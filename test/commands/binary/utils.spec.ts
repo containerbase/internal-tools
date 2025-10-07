@@ -8,14 +8,14 @@ import {
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
 import type { BinaryBuilderConfig } from '../../../src/utils/types';
-import { mocked, partial } from '../../utils';
+import { partial } from '../../utils';
 
 vi.mock('../../../src/util');
 vi.mock('../../../src/utils/docker/common');
 
-const core = mocked(_core);
-const docker = mocked(_docker);
-const utils = mocked(_utils);
+const core = vi.mocked(_core);
+const docker = vi.mocked(_docker);
+const utils = vi.mocked(_utils);
 
 vi.mock('../../../src/util');
 

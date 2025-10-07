@@ -5,11 +5,10 @@ import {
   dockerPrune,
   dockerRun,
 } from '../../../src/utils/docker/common';
-import { mocked } from '../../utils';
 
 vi.mock('../../../src/util');
 
-const utils = mocked(_utils);
+const utils = vi.mocked(_utils);
 
 describe('utils/docker/common', () => {
   it('dockerPrune', async () => {

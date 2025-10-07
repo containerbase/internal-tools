@@ -2,11 +2,11 @@ import { describe, expect, it, vi } from 'vitest';
 import * as _utils from '../../src/util';
 import { getBinaryName } from '../../src/utils/config';
 import type { BinaryBuilderConfig } from '../../src/utils/types';
-import { mocked, partial } from '../utils';
+import { partial } from '../utils';
 
 vi.mock('../../src/util');
 
-const utils = mocked(_utils);
+const utils = vi.mocked(_utils);
 
 describe('utils/config', () => {
   it('works', () => {

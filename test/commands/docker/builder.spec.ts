@@ -4,7 +4,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { run } from '../../../src/commands/docker/builder';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker';
-import { mocked } from '../../utils';
 
 vi.mock('renovate/dist/modules/datasource');
 vi.mock('../../../src/util');
@@ -15,10 +14,10 @@ vi.mock('../../../src/utils/docker/buildx', () => ({
 }));
 vi.mock('../../../src/utils/datasource');
 
-const core = mocked(_core);
-const utils = mocked(_utils);
-const docker = mocked(_docker);
-const datasources = mocked(_datasources);
+const core = vi.mocked(_core);
+const utils = vi.mocked(_utils);
+const docker = vi.mocked(_docker);
+const datasources = vi.mocked(_datasources);
 const version = '1.22.4';
 
 describe('commands/docker/builder', () => {
@@ -257,7 +256,9 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build).not.toHaveBeenCalled();
-    expect(core.setFailed).toHaveBeenCalledWith('No versions found.');
+    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
+      'No versions found.',
+    );
   });
 
   it('empty releases', async () => {
@@ -268,7 +269,9 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build).not.toHaveBeenCalled();
-    expect(core.setFailed).toHaveBeenCalledWith('No versions found.');
+    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
+      'No versions found.',
+    );
   });
 
   it('unstable releases', async () => {

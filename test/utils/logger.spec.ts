@@ -2,12 +2,11 @@ import * as _core from '@actions/core';
 import chalk from 'chalk';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import log from '../../src/utils/logger';
-import { mocked } from '../utils';
 
 vi.unmock('../../src/utils/logger');
 vi.mock('strip-ansi');
 
-const core = mocked(_core);
+const core = vi.mocked(_core);
 
 describe('utils/logger', () => {
   const logger = vi.fn();

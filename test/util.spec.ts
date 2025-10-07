@@ -5,7 +5,6 @@ import * as _exec from '@actions/exec';
 import * as _io from '@actions/io';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import * as util from '../src/util';
-import { mocked } from './utils';
 
 vi.mock('@actions/core');
 vi.mock('@actions/exec');
@@ -16,9 +15,9 @@ vi.mock('node:fs/promises', async (imp) => ({
   writeFile: vi.fn(),
 }));
 
-const core = mocked(_core);
-const exec = mocked(_exec);
-const io = mocked(_io);
+const core = vi.mocked(_core);
+const exec = vi.mocked(_exec);
+const io = vi.mocked(_io);
 
 describe('util', () => {
   describe('exists', () => {

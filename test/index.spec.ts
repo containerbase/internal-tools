@@ -1,10 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 import * as _runner from '../src/runner';
-import { mocked } from './utils';
 
 vi.mock('../src/runner');
 
-const runner = mocked(_runner);
+const runner = vi.mocked(_runner);
 
 describe('index', () => {
   it('works', async () => {

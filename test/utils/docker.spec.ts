@@ -3,13 +3,12 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as _utils from '../../src/util';
 import { build } from '../../src/utils/docker';
 import { ExecError } from '../../src/utils/types';
-import { mocked } from '../utils';
 
 vi.mock('node:fs/promises');
 vi.mock('node:timers/promises');
 vi.mock('../../src/util');
 
-const utils = mocked(_utils);
+const utils = vi.mocked(_utils);
 const res = { code: 0, stdout: '', stderr: '' };
 
 const imagePrefix = 'renovate';
