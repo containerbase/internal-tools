@@ -86,15 +86,12 @@ runs:
         package-manager-cache: false
 
       # Ensure npm 11.5.1 or later for trusted publishing
+      # https://docs.npmjs.com/trusted-publishers
     - shell: bash
       if: inputs.node == 'true' && runner.os == 'Linux'
       run: |
         set -ex
-        npm --version
-        command -v npm
-        npm install -g npm
-        npm --version
-        command -v npm
+        dpkg --compare-versions $(npm -v) lt 11.5.1 && (npm update -g npm; echo "updated npm to: $(npm -v)") || echo "npm is new enough: $(npm -v)"
 
     - if: inputs.node == 'true' && (env.CACHE_HIT != 'true' || runner.os == 'Windows')
       shell: bash
