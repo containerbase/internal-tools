@@ -240,6 +240,7 @@ export async function hasAsset(
   sum?: boolean,
 ): Promise<boolean> {
   const name = getBinaryName(cfg, version, sum);
+  log('Checking asset ', name, 'for version', version);
   return (await findAsset(api, name, version)) != null;
 }
 
