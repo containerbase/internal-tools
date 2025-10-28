@@ -15,7 +15,6 @@ permissions:
 
 env:
   LOG_LEVEL: debug
-  NODE_VERSION: 22 # renovate: datasource=node-version depName=node
 
 jobs:
   setup:
@@ -212,19 +211,26 @@ jobs:
         run: |
           echo 'scriptShell: "C:\\Program Files\\git\\bin\\bash.exe"' >> pnpm-workspace.yaml
 
+      - name: fetch node version
+        id: node-version
+        shell: bash
+        run: |
+          node_version=$(grep 'using: node' action.yml | awk -F': ' '{print $2}' | tr -d 'node')
+          echo "node_version=${node_version}" >> $GITHUB_OUTPUT
+
       - uses: ./setup
         with:
           checkout: false
           save-cache: false
           read-cache: false
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{ steps.node-version.outputs.node_version }}
 
       - name: validate cache key
         shell: bash
         run: |
           os="${{ runner.os != 'Linux' && format('-{0}', runner.os) || '' }}"
           arch="${{ runner.arch != 'X64' && format('-{0}', runner.arch) || '' }}"
-          re="^node_modules${os}${arch}-${{ env.NODE_VERSION }}-[0-9a-z]+$"
+          re="^node_modules${os}${arch}-${{ steps.node-version.outputs.node_version }}-[0-9a-z]+$"
           if [[ ${CACHE_KEY} =~ $re ]]; then
             echo "Cache key ok: ${CACHE_KEY}"
           else
