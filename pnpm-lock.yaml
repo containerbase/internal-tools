@@ -33,8 +33,8 @@ importers:
         specifier: 1.1.3
         version: 1.1.3
       '@sindresorhus/is':
-        specifier: 7.1.0
-        version: 7.1.0
+        specifier: 7.1.1
+        version: 7.1.1
       auth-header:
         specifier: 1.0.0
         version: 1.0.0
@@ -1311,6 +1311,10 @@ packages:
 
   '@sindresorhus/is@7.1.0':
     resolution: {integrity: sha512-7F/yz2IphV39hiS2zB4QYVkivrptHHh0K8qJJd9HhuWSdvf8AN7NpebW3CcDZDBQsUPMoDKWsY2WWgW7bqOcfA==}
+    engines: {node: '>=18'}
+
+  '@sindresorhus/is@7.1.1':
+    resolution: {integrity: sha512-rO92VvpgMc3kfiTjGT52LEtJ8Yc5kCWhZjLQ3LwlA4pSgPpQO7bVpYXParOD8Jwf+cVQECJo3yP/4I8aZtUQTQ==}
     engines: {node: '>=18'}
 
   '@sindresorhus/merge-streams@4.0.0':
@@ -7484,6 +7488,8 @@ snapshots:
 
   '@sindresorhus/is@7.1.0': {}
 
+  '@sindresorhus/is@7.1.1': {}
+
   '@sindresorhus/merge-streams@4.0.0': {}
 
   '@smithy/abort-controller@4.2.4':
@@ -9692,7 +9698,7 @@ snapshots:
 
   got@14.6.1:
     dependencies:
-      '@sindresorhus/is': 7.1.0
+      '@sindresorhus/is': 7.1.1
       '@szmarczak/http-timer': 5.0.1
       cacheable-lookup: 7.0.0
       cacheable-request: 13.0.13
