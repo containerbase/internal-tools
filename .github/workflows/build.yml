@@ -50,6 +50,9 @@ jobs:
     # tests shouldn't need more than 15 min
     timeout-minutes: 15
 
+    permissions:
+      id-token: write
+
     steps:
       - name: Init platform
         id: init
@@ -85,10 +88,16 @@ jobs:
           name: coverage
           path: coverage
 
-      - name: Codecov
+      - name: Codecov Coverage
         uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
+
+      - name: Codecov Test Results
+        if: github.event_name != 'merge_group'
+        uses: codecov/test-results-action@47f89e9acb64b76debcd5ea40642d25a4adced9f # v1.1.1
+        with:
+          use_oidc: true
 
   e2e:
     needs:
