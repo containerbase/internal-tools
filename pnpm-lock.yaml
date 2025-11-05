@@ -48,8 +48,8 @@ importers:
         specifier: 8.0.0
         version: 8.0.0
       got:
-        specifier: 14.6.1
-        version: 14.6.1
+        specifier: 14.6.2
+        version: 14.6.2
       renovate:
         specifier: 41.169.1
         version: 41.169.1(encoding@0.1.13)(typanion@3.14.0)
@@ -2093,6 +2093,10 @@ packages:
     engines: {'0': node >=0.10.0}
     hasBin: true
 
+  byte-counter@0.1.0:
+    resolution: {integrity: sha512-jheRLVMeUKrDBjVw2O5+k4EvR4t9wtxHL+bo/LxfkxsVeuGMy3a5SEGgXdAFA4FSzTrU8rQXQIrsZ3oBq5a0pQ==}
+    engines: {node: '>=20'}
+
   bzip-deflate@1.0.0:
     resolution: {integrity: sha512-9RMnpiJqMYMJcLdr4pxwowZ8Zh3P+tVswE/bnX6tZ14UGKNcdV5WVK2P+lGp2As+RCjl+i3SFJ117HyCaaHNDA==}
 
@@ -3113,8 +3117,8 @@ packages:
     resolution: {integrity: sha512-6tfZ91bOr7bOXnK7PRDCGBLa1H4U080YHNaAQ2KsMGlLEzRbk44nsZF2E1IeRc3vtJHPVbKCYgdFbaGO2ljd8g==}
     engines: {node: '>=10.19.0'}
 
-  got@14.6.1:
-    resolution: {integrity: sha512-56lZOw904LHKr6KdKN0Zbgz9Lw6cpEAAqZcS+0iY4D27caHoLiFT0EGCbrX9ZKYvt+I2lGl3a8eeDNSbmhyjkQ==}
+  got@14.6.2:
+    resolution: {integrity: sha512-bnhvxegqufyxHAmzwCZSscjGLVpw6/NzTXOk2tQVu/b9Q9FeMAgLabYulXEQRwP04UYltnkcZwvBq14fsdqvyw==}
     engines: {node: '>=20'}
 
   graceful-fs@4.2.10:
@@ -8449,6 +8453,8 @@ snapshots:
       mv: 2.1.1
       safe-json-stringify: 1.2.0
 
+  byte-counter@0.1.0: {}
+
   bzip-deflate@1.0.0: {}
 
   cac@6.7.14: {}
@@ -9676,10 +9682,11 @@ snapshots:
       p-cancelable: 2.1.1
       responselike: 2.0.1
 
-  got@14.6.1:
+  got@14.6.2:
     dependencies:
       '@sindresorhus/is': 7.1.1
       '@szmarczak/http-timer': 5.0.1
+      byte-counter: 0.1.0
       cacheable-lookup: 7.0.0
       cacheable-request: 13.0.13
       decompress-response: 10.0.0
