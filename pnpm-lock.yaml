@@ -166,8 +166,8 @@ importers:
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
       vite-tsconfig-paths:
-        specifier: 6.0.3
-        version: 6.0.3(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.3)(yaml@2.8.2))
+        specifier: 6.0.4
+        version: 6.0.4(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.3)(yaml@2.8.2))
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.12)(@types/node@22.19.3)(yaml@2.8.2)
@@ -5545,8 +5545,8 @@ packages:
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
-  vite-tsconfig-paths@6.0.3:
-    resolution: {integrity: sha512-7bL7FPX/DSviaZGYUKowWF1AiDVWjMjxNbE8lyaVGDezkedWqfGhlnQ4BZXre0ZN5P4kAgIJfAlgFDVyjrCIyg==}
+  vite-tsconfig-paths@6.0.4:
+    resolution: {integrity: sha512-iIsEJ+ek5KqRTK17pmxtgIxXtqr3qDdE6OxrP9mVeGhVDNXRJTKN/l9oMbujTQNzMLe6XZ8qmpztfbkPu2TiFQ==}
     peerDependencies:
       vite: '*'
     peerDependenciesMeta:
@@ -12540,7 +12540,7 @@ snapshots:
       - tsx
       - yaml
 
-  vite-tsconfig-paths@6.0.3(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.3)(yaml@2.8.2)):
+  vite-tsconfig-paths@6.0.4(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.3)(yaml@2.8.2)):
     dependencies:
       debug: 4.4.3
       globrex: 0.1.2
