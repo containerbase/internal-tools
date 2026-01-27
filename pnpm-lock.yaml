@@ -24,8 +24,8 @@ importers:
         specifier: 2.0.2
         version: 2.0.2
       '@actions/exec':
-        specifier: 1.1.1
-        version: 1.1.1
+        specifier: 2.0.0
+        version: 2.0.0
       '@actions/github':
         specifier: 7.0.0
         version: 7.0.0
@@ -177,9 +177,6 @@ packages:
   '@actions/core@2.0.2':
     resolution: {integrity: sha512-Ast1V7yHbGAhplAsuVlnb/5J8Mtr/Zl6byPPL+Qjq3lmfIgWF1ak1iYfF/079cRERiuTALTXkSuEUdZeDCfGtA==}
 
-  '@actions/exec@1.1.1':
-    resolution: {integrity: sha512-+sCcHHbVdk93a0XT19ECtO/gIXoxvdsgQLzb2fE2/5sIZmWQuluYyjPQtrtTHdU1YzTZ7bAPN4sITq2xi1679w==}
-
   '@actions/exec@2.0.0':
     resolution: {integrity: sha512-k8ngrX2voJ/RIN6r9xB82NVqKpnMRtxDoiO+g3olkIUpQNqjArXrCQceduQZCQj3P3xm32pChRLqRrtXTlqhIw==}
 
@@ -191,9 +188,6 @@ packages:
 
   '@actions/http-client@3.0.1':
     resolution: {integrity: sha512-SbGS8c/vySbNO3kjFgSW77n83C4MQx/Yoe+b1hAdpuvfHxnkHzDq2pWljUpAA56Si1Gae/7zjeZsV0CYjmLo/w==}
-
-  '@actions/io@1.1.3':
-    resolution: {integrity: sha512-wi9JjgKLYS7U/z8PPbco+PvTb/nRWjeoFlJ1Qer83k/3C5PHQi28hiVdeE2kHXmIL99mQFawx8qt/JPjZilJ8Q==}
 
   '@actions/io@2.0.0':
     resolution: {integrity: sha512-Jv33IN09XLO+0HS79aaODsvIRyduiF7NY/F6LYeK5oeUmrsz7aFdRphQjFoESF4jS7lMauDOttKALcpapVDIAg==}
@@ -5758,10 +5752,6 @@ snapshots:
       '@actions/exec': 2.0.0
       '@actions/http-client': 3.0.1
 
-  '@actions/exec@1.1.1':
-    dependencies:
-      '@actions/io': 1.1.3
-
   '@actions/exec@2.0.0':
     dependencies:
       '@actions/io': 2.0.0
@@ -5785,8 +5775,6 @@ snapshots:
     dependencies:
       tunnel: 0.0.6
       undici: 5.29.0
-
-  '@actions/io@1.1.3': {}
 
   '@actions/io@2.0.0': {}
 
