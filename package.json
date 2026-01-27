@@ -31,9 +31,9 @@
     "tsconfig-paths": "4.2.0"
   },
   "dependencies": {
-    "@actions/core": "1.11.1",
-    "@actions/exec": "1.1.1",
-    "@actions/github": "6.0.1",
+    "@actions/core": "2.0.2",
+    "@actions/exec": "2.0.0",
+    "@actions/github": "7.0.0",
     "@actions/io": "2.0.0",
     "@sindresorhus/is": "7.2.0",
     "auth-header": "1.0.0",
@@ -41,7 +41,7 @@
     "escape-string-regexp": "5.0.0",
     "find-up": "8.0.0",
     "got": "14.6.6",
-    "renovate": "42.92.4",
+    "renovate": "42.92.14",
     "semver": "7.7.3",
     "strip-ansi": "7.1.2",
     "tslib": "2.8.1"
