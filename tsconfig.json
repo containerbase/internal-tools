@@ -6,6 +6,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "types": ["node"],
+    "allowJs": true,
     "importHelpers": true,
     "useUnknownInCatchVariables": false /* we aren't prepared for enabling this by default since ts 4.4*/,
     "noPropertyAccessFromIndexSignature": false /* makes code more complex */,
