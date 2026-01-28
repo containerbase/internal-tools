@@ -1,3 +1,4 @@
+import { styleText } from 'node:util';
 import { getInput, setFailed } from '@actions/core';
 import {
   isNonEmptyString,
@@ -5,7 +6,6 @@ import {
   isObject,
   isString,
 } from '@sindresorhus/is';
-import chalk from 'chalk';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { exec, exists, getArg, isDryRun, readJson } from '../../util';
@@ -259,5 +259,5 @@ export async function run(): Promise<void> {
 
   await generateImages(config);
 
-  log.info(chalk.blue('Processing done:', config.image));
+  log.info(styleText('blue', `Processing done: ${config.image}`));
 }

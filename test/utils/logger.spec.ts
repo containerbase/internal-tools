@@ -1,5 +1,5 @@
+import { styleText } from 'node:util';
 import * as _core from '@actions/core';
-import chalk from 'chalk';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import log from '../../src/utils/logger';
 
@@ -10,6 +10,8 @@ const core = vi.mocked(_core);
 
 describe('utils/logger', () => {
   const logger = vi.fn();
+  // needed for tests
+  process.env.FORCE_COLOR = '1';
 
   beforeEach(() => {
     console.log = logger;
@@ -19,9 +21,9 @@ describe('utils/logger', () => {
   it('works', () => {
     log('test');
     log.dir({ name: 'test', code: 1 });
-    log.info(chalk.gray('test'), 'it');
-    log.warn(chalk.yellow('test'), 'it');
-    log.error(chalk.red('test'));
+    log.info(styleText('gray', 'test'), 'it');
+    log.warn(styleText('yellow', 'test'), 'it');
+    log.error(styleText('red', 'test'));
 
     expect(logger.mock.calls).toMatchSnapshot();
     expect(core.warning).toHaveBeenCalled();

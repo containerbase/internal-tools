@@ -38,9 +38,6 @@ importers:
       auth-header:
         specifier: 1.0.0
         version: 1.0.0
-      chalk:
-        specifier: 5.6.2
-        version: 5.6.2
       escape-string-regexp:
         specifier: 5.0.0
         version: 5.0.0

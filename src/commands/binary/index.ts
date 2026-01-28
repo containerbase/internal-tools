@@ -1,6 +1,6 @@
 import { mkdir } from 'node:fs/promises';
+import { styleText } from 'node:util';
 import { setFailed } from '@actions/core';
-import chalk from 'chalk';
 import { getArg, getWorkspace } from '../../util';
 import {
   type BuildsResult,
@@ -33,7 +33,7 @@ export async function run(): Promise<void> {
     const cfg = await getConfig();
 
     if (cfg.dryRun) {
-      log.warn(chalk.yellow('[DRY_RUN] detected'));
+      log.warn(styleText('yellow', '[DRY_RUN] detected'));
       cfg.lastOnly = true;
     }
 
@@ -61,7 +61,10 @@ export async function run(): Promise<void> {
 
     for (const version of builds.versions) {
       if (cfg.dryRun) {
-        log.warn(chalk.yellow('[DRY_RUN] Would update release:'), version);
+        log.warn(
+          styleText('yellow', '[DRY_RUN] Would update release:'),
+          version,
+        );
       } else {
         log('Updating release:', version);
         await updateRelease(api, cfg, version, builds.latestStable);
@@ -71,7 +74,7 @@ export async function run(): Promise<void> {
         if (!(await hasAsset(api, cfg, version, true))) {
           log('Creating checksum for existing version:', version);
           if (!(await downloadAsset(api, cfg, version))) {
-            log.warn(chalk.yellow('Missing binary asset:'), version);
+            log.warn(styleText('yellow', 'Missing binary asset:'), version);
             failed.push(version);
             continue;
           }
@@ -79,7 +82,7 @@ export async function run(): Promise<void> {
             await createChecksum(cfg, version);
             if (cfg.dryRun) {
               log.warn(
-                chalk.yellow('[DRY_RUN] Would upload release asset:'),
+                styleText('yellow', '[DRY_RUN] Would upload release asset:'),
                 version,
               );
             } else {
@@ -96,7 +99,7 @@ export async function run(): Promise<void> {
           continue;
         } else if (cfg.dryRun) {
           log.warn(
-            chalk.yellow('[DRY_RUN] Would skipp existing version:'),
+            styleText('yellow', '[DRY_RUN] Would skipp existing version:'),
             version,
           );
         } else {
@@ -122,7 +125,7 @@ export async function run(): Promise<void> {
 
         if (cfg.dryRun) {
           log.warn(
-            chalk.yellow('[DRY_RUN] Would upload release asset:'),
+            styleText('yellow', '[DRY_RUN] Would upload release asset:'),
             version,
           );
         } else {
@@ -159,7 +162,7 @@ async function uploadVersionAssetIfNeeded(
     const latestStable = builds.latestStable ?? version;
     if (cfg.dryRun) {
       log.warn(
-        chalk.yellow('[DRY_RUN] Would upload version asset:'),
+        styleText('yellow', '[DRY_RUN] Would upload version asset:'),
         latestStable,
       );
     } else {
