@@ -98,7 +98,7 @@ describe('commands/docker/builder', () => {
     utils.readJson.mockResolvedValueOnce(require('./__fixtures__/java.json'));
     datasources.getPkgReleases.mockResolvedValueOnce({
       releases: [
-        { version: '8.0.302+8' },
+        { version: 'v8.0.302+8' },
         { version: '11.0.12+7' },
         { version: '16.0.2+7' },
         { version: '16.0.2+9' },

@@ -80,7 +80,7 @@ export async function getBuildList({
     return null;
   }
   let allVersions = pkgResult.releases
-    .map((v) => v.version)
+    .map((v) => v.version.replace(/^v/, ''))
     .filter((v) => ver.isVersion(v) && ver.isCompatible(v, startVersion));
 
   // filter duplicate versions (16.0.2+7 == 16.0.2+8)
