@@ -17,6 +17,7 @@ export default defineConfig({
       ],
     },
     reporters: ci ? ['default', 'github-actions', 'junit'] : ['default'],
+    mockReset: true,
     restoreMocks: true,
     setupFiles: './test/setup.ts',
   },
