@@ -1,13 +1,13 @@
+import { styleText } from 'node:util';
 import { getInput, setFailed } from '@actions/core';
-import chalk from 'chalk';
 import { Commands } from './types';
 import log from './utils/logger';
 
 export default async function run(): Promise<void> {
   try {
-    log.info(chalk.blue('Renovate Docker Builder'));
+    log.info(styleText('blue', 'Renovate Docker Builder'));
     const cmd = getInput('command') as Commands;
-    log.info(chalk.yellow('Executing:'), ` ${cmd}`);
+    log.info(styleText('yellow', 'Executing:'), ` ${cmd}`);
     switch (cmd) {
       case Commands.BinaryBuilder:
         await (await import('./commands/binary')).run();
@@ -21,7 +21,7 @@ export default async function run(): Promise<void> {
         break;
 
       default:
-        log.error(chalk.red('Unknown command:'), cmd);
+        log.error(styleText('red', 'Unknown command:'), cmd);
         break;
     }
   } catch (error) {
