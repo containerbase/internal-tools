@@ -240,6 +240,7 @@ export async function run(): Promise<void> {
     prune: getArg('prune') === 'true',
     versioning: cfg.versioning ?? getDefaultVersioning(cfg.datasource),
     platforms: getArg('platforms', { multi: true }),
+    skipLatestTag: cfg.skipLatestTag ?? getArg('skip-latest-tag') === 'true',
   };
 
   if (dryRun) {
