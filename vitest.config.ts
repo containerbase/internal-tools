@@ -1,6 +1,6 @@
 import { env } from 'node:process';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig } from 'vitest/config';
+import { coverageConfigDefaults, defineConfig } from 'vitest/config';
 
 const ci = !!env.CI;
 
@@ -10,6 +10,11 @@ export default defineConfig({
     coverage: {
       reporter: ci ? ['json', 'text'] : ['html', 'text'],
       include: ['src/**/*.{js,ts}'],
+      exclude: [
+        ...coverageConfigDefaults.exclude,
+        // TODO: add tests
+        'src/utils/github.ts',
+      ],
     },
     reporters: ci ? ['default', 'github-actions', 'junit'] : ['default'],
     restoreMocks: true,

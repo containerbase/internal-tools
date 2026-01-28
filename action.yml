@@ -56,5 +56,5 @@ inputs:
     default: '${{ github.ref_name != github.event.repository.default_branch }}'
 
 runs:
-  using: node20
+  using: node24
   main: dist/index.js
