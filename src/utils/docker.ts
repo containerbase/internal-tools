@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import { setTimeout } from 'node:timers/promises';
+import { styleText } from 'node:util';
 import { isNonEmptyArray, isString } from '@sindresorhus/is';
-import chalk from 'chalk';
 import { dockerBuildx } from './docker/common';
 import log from './logger';
 import { DockerBuildxMetaData, ExecError } from './types';
@@ -91,7 +91,7 @@ export async function build({
   }
 
   if (dryRun) {
-    log.warn(chalk.yellow('[DRY_RUN]'), chalk.blue('Would push'));
+    log.warn(styleText('yellow', '[DRY_RUN]'), styleText('blue', 'Would push'));
   } else if (push) {
     args.push('--push', '--provenance=false');
   }
@@ -108,7 +108,7 @@ export async function build({
         break;
       } catch (e) {
         if (e instanceof ExecError && canRetry(e) && build < 2) {
-          log.error(chalk.red(`docker build error on try ${build}`), e);
+          log.error(styleText('red', `docker build error on try ${build}`), e);
           await setTimeout(5000);
           continue;
         }

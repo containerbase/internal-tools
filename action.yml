@@ -50,6 +50,10 @@ inputs:
   platforms:
     description: 'docker-builder: platforms to build for'
     required: false
+  skip-latest-tag:
+    description: 'docker-builder: don not tag add `latest` image tag'
+    required: false
+    default: '${{ github.ref_name != github.event.repository.default_branch }}'
 
 runs:
   using: node20
