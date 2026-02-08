@@ -1,6 +1,6 @@
 {
   "name": "internal-tools",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "private": true,
   "repository": "https://github.com/containerbase/internal-tools.git",
   "license": "AGPL-3.0",
