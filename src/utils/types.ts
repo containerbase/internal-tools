@@ -35,6 +35,7 @@ export interface BuildsConfig {
 
 export interface ConfigFile {
   allowedVersions?: string;
+  // TODO: fix me, it's optional here
   datasource: string;
   image: string;
   depName?: string;
@@ -50,6 +51,9 @@ export interface ConfigFile {
   maxVersions?: number;
   extractVersion?: string;
   skipLatestTag?: boolean;
+
+  registryUrls?: string[];
+
   /**
    * If `true` process versions from highest to lowest,
    * otherwise process from lowest to highest.
