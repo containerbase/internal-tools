@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "image": "helm",
   "startVersion": "3.0.0",
   "extractVersion": "^v(?<version>.*)$"

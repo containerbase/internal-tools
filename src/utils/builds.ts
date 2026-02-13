@@ -38,6 +38,9 @@ export interface BuildsConfig {
   versioning: string;
   versions?: string[];
   extractVersion?: string;
+
+  registryUrls?: string[];
+
   /**
    * If `true` process versions from highest to lowest,
    * otherwise process from lowest to highest.
@@ -64,6 +67,7 @@ export async function getBuildList({
   latestVersion,
   maxVersions,
   extractVersion,
+  registryUrls,
   reverse,
 }: BuildsConfig): Promise<BuildsResult | null> {
   log('Looking up versions');
@@ -75,6 +79,7 @@ export async function getBuildList({
         packageName: lookupName ?? depName,
         versioning,
         extractVersion,
+        registryUrls,
       });
   if (!pkgResult) {
     return null;

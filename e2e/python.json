@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "image": "python",
   "startVersion": "3.7.0",
   "latestVersion": "3.7.5",

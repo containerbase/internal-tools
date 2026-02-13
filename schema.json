@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConfigFile Schema",
+  "description": "Configuration file schema for build operations",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "The schema to verify this document against."
+    },
+    "allowedVersions": {
+      "type": "string"
+    },
+    "datasource": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "depName": {
+      "type": "string"
+    },
+    "lookupName": {
+      "type": "string"
+    },
+    "versioning": {
+      "type": "string"
+    },
+    "startVersion": {
+      "type": "string"
+    },
+    "cache": {
+      "type": "string"
+    },
+    "buildArg": {
+      "type": "string"
+    },
+    "ignoredVersions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "forceUnstable": {
+      "type": "boolean"
+    },
+    "versions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "latestVersion": {
+      "type": "string"
+    },
+    "maxVersions": {
+      "type": "number"
+    },
+    "extractVersion": {
+      "type": "string"
+    },
+    "skipLatestTag": {
+      "type": "boolean"
+    },
+    "registryUrls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reverse": {
+      "type": "boolean"
+    }
+  },
+  "required": ["startVersion"],
+  "additionalProperties": false
+}

@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "datasource": "npm",
   "versioning": "node",
   "startVersion": "12.16.0",
