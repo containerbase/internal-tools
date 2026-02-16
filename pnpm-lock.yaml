@@ -8398,7 +8398,7 @@ snapshots:
     dependencies:
       '@npmcli/fs': 5.0.0
       fs-minipass: 3.0.3
-      glob: 13.0.3
+      glob: 13.0.1
       lru-cache: 11.2.6
       minipass: 7.1.2
       minipass-collect: 2.0.1
@@ -9499,7 +9499,7 @@ snapshots:
 
   glob@13.0.1:
     dependencies:
-      minimatch: 10.2.0
+      minimatch: 10.1.2
       minipass: 7.1.2
       path-scurry: 2.0.1
 
