@@ -49,8 +49,8 @@ importers:
         specifier: 14.6.6
         version: 14.6.6
       renovate:
-        specifier: 43.10.2
-        version: 43.10.2(encoding@0.1.13)(typanion@3.14.0)
+        specifier: 43.10.3
+        version: 43.10.3(encoding@0.1.13)(typanion@3.14.0)
       semver:
         specifier: 7.7.4
         version: 7.7.4
@@ -4692,8 +4692,8 @@ packages:
   remark@15.0.1:
     resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
-  renovate@43.10.2:
-    resolution: {integrity: sha512-coeHE4lO1GVXb+kg6Vfecvk4RAnLrYAlzhTTTNkwokrHjtT6rEmbAvqyQDwq1NrI7PdWDFxUo1oSxRqPipxw7w==}
+  renovate@43.10.3:
+    resolution: {integrity: sha512-YTKrzRs7dwVUPb/jyrD6rCjiRTMi/pJrrlnIqkhpJ/C2whmsmAnwbqzYBIitlKkW6Nu5ZP9pLtYzxrj3oMcYxg==}
     engines: {node: ^24.11.0, pnpm: ^10.0.0}
     hasBin: true
 
@@ -8398,7 +8398,7 @@ snapshots:
     dependencies:
       '@npmcli/fs': 5.0.0
       fs-minipass: 3.0.3
-      glob: 13.0.1
+      glob: 13.0.3
       lru-cache: 11.2.6
       minipass: 7.1.2
       minipass-collect: 2.0.1
@@ -9499,7 +9499,7 @@ snapshots:
 
   glob@13.0.1:
     dependencies:
-      minimatch: 10.1.2
+      minimatch: 10.2.0
       minipass: 7.1.2
       path-scurry: 2.0.1
 
@@ -11327,7 +11327,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@43.10.2(encoding@0.1.13)(typanion@3.14.0):
+  renovate@43.10.3(encoding@0.1.13)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.980.0
       '@aws-sdk/client-ec2': 3.980.0
