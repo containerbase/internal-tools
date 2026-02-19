@@ -90,7 +90,7 @@
   },
   "pnpm": {
     "overrides": {
-      "@yarnpkg/core@4.5.0>tar": "7.5.8",
+      "@yarnpkg/core@4.5.0>tar": "7.5.9",
       "esbuild": "0.27.3"
     },
     "patchedDependencies": {
