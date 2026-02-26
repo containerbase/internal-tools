@@ -46,7 +46,7 @@
     "tslib": "2.8.1"
   },
   "devDependencies": {
-    "@containerbase/eslint-plugin": "1.1.32",
+    "@containerbase/eslint-plugin": "1.1.33",
     "@eslint/js": "9.39.3",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "12.0.6",
