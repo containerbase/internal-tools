@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@containerbase/eslint-plugin": "1.1.33",
-    "@eslint/js": "9.39.3",
+    "@eslint/js": "10.0.1",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "12.0.6",
     "@semantic-release/npm": "13.1.4",
@@ -62,7 +62,7 @@
     "@vitest/spy": "4.0.18",
     "conventional-changelog-conventionalcommits": "9.1.0",
     "esbuild": "0.27.3",
-    "eslint": "9.39.3",
+    "eslint": "10.0.2",
     "eslint-config-prettier": "10.1.8",
     "eslint-formatter-gha": "2.0.1",
     "eslint-import-resolver-typescript": "4.4.4",
