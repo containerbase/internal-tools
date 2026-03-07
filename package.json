@@ -60,7 +60,7 @@
     "@vitest/coverage-v8": "4.0.18",
     "@vitest/eslint-plugin": "1.6.9",
     "@vitest/spy": "4.0.18",
-    "conventional-changelog-conventionalcommits": "9.2.0",
+    "conventional-changelog-conventionalcommits": "9.3.0",
     "esbuild": "0.27.3",
     "eslint": "9.39.3",
     "eslint-config-prettier": "10.1.8",
