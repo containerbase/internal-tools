@@ -26,7 +26,7 @@ function getVersions(versions: string[]): ReleaseResult {
 
 export interface BuildsConfig {
   allowedVersions?: string;
-  datasource: string;
+  datasource?: string;
   depName: string;
   forceUnstable?: boolean;
   ignoredVersions: string[];
@@ -74,13 +74,15 @@ export async function getBuildList({
   const ver = getVersioning(versioning);
   const pkgResult = versions
     ? getVersions(versions)
-    : await getPkgReleases({
-        datasource,
-        packageName: lookupName ?? depName,
-        versioning,
-        extractVersion,
-        registryUrls,
-      });
+    : datasource
+      ? await getPkgReleases({
+          datasource,
+          packageName: lookupName ?? depName,
+          versioning,
+          extractVersion,
+          registryUrls,
+        })
+      : null;
   if (!pkgResult) {
     return null;
   }

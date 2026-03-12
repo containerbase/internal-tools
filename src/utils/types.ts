@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export interface ExecResult {
   readonly code: number;
   readonly stdout: string;
@@ -33,58 +35,63 @@ export interface BuildsConfig {
   versioning: string;
 }
 
-export interface ConfigFile {
-  allowedVersions?: string;
-  // TODO: fix me, it's optional here
-  datasource: string;
-  image: string;
-  depName?: string;
-  lookupName?: string;
-  versioning?: string;
-  startVersion: string;
-  cache?: string;
-  buildArg?: string;
-  ignoredVersions?: string[];
-  forceUnstable?: boolean;
-  versions?: string[];
-  latestVersion?: string;
-  maxVersions?: number;
-  extractVersion?: string;
-  skipLatestTag?: boolean;
+const ConfigFile = z.object({
+  allowedVersions: z.string().optional(),
+  datasource: z.string().optional(),
+  image: z.string(),
+  depName: z.string().optional(),
+  lookupName: z.string().optional(),
+  versioning: z.string().optional(),
+  startVersion: z.string(),
+  cache: z.string().optional(),
+  buildArg: z.string().optional(),
+  ignoredVersions: z.array(z.string()).optional().default([]),
+  forceUnstable: z.boolean().optional(),
+  versions: z.array(z.string()).optional(),
+  latestVersion: z.string().optional(),
+  maxVersions: z.number().optional(),
+  extractVersion: z.string().optional(),
+  skipLatestTag: z.boolean().optional(),
 
-  registryUrls?: string[];
+  registryUrls: z.array(z.string()).optional(),
 
   /**
    * If `true` process versions from highest to lowest,
    * otherwise process from lowest to highest.
    */
-  reverse?: boolean;
-}
+  reverse: z.boolean().optional(),
+});
 
-export type DockerBuilderConfig = {
-  buildArg: string;
-  buildArgs?: string[];
-  buildOnly: boolean;
-  tagSuffix?: string;
-  depName: string;
-  imagePrefix: string;
-  imagePrefixes: string[];
-  image: string;
-  ignoredVersions: string[];
-  majorMinor: boolean;
-  lastOnly: boolean;
-  dryRun: boolean;
-  prune: boolean;
-  versioning: string;
-  platforms: string[];
-} & ConfigFile;
+export type ConfigFile = z.infer<typeof ConfigFile>;
+
+export const DockerBuilderConfig = ConfigFile.extend({
+  buildArg: z.string(),
+  buildArgs: z.array(z.string()).optional(),
+  buildOnly: z.boolean(),
+  tagSuffix: z.string().optional(),
+
+  datasource: z.string().optional(),
+  depName: z.string(),
+
+  imagePrefix: z.string(),
+  imagePrefixes: z.array(z.string()).default([]),
+  majorMinor: z.boolean(),
+  lastOnly: z.boolean(),
+  dryRun: z.boolean().optional(),
+  prune: z.boolean(),
+  versioning: z.string(),
+  platforms: z.array(z.string()).optional(),
+});
+
+export type DockerBuilderConfig = z.infer<typeof DockerBuilderConfig>;
 
 export type BinaryBuilderConfig = {
   buildArgs?: string[];
+  datasource: string;
   depName: string;
   ignoredVersions: string[];
   lastOnly: boolean;
-  dryRun: boolean;
+  dryRun?: boolean;
   versioning: string;
 } & ConfigFile;
 

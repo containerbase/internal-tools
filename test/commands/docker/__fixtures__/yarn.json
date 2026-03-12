@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../../schema.json",
   "datasource": "npm",
   "depName": "yarn",
   "startVersion": "1.5.0",
