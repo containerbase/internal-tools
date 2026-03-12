@@ -13,6 +13,10 @@ inputs:
     description: 'Override node version from .node-version file'
     required: false
     default: ''
+  pnpm:
+    description: 'Setup pnpm without node'
+    required: false
+    default: 'false'
   pnpm-cache:
     description: 'Paths to pnpm node_modules to cache'
     required: false
@@ -40,7 +44,7 @@ runs:
         show-progress: false
 
     - shell: bash
-      if: inputs.node == 'true'
+      if: inputs.node == 'true' || inputs.pnpm == 'true'
       run: |
         os='${{ runner.os != 'Linux' && format('-{0}', runner.os) || '' }}'
         arch='${{ runner.arch != 'X64' && format('-{0}', runner.arch) || '' }}'
@@ -57,7 +61,7 @@ runs:
         fi
 
     - uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
-      if: inputs.node == 'true' && inputs.read-cache == 'true' && runner.os != 'Windows'
+      if: (inputs.node == 'true' || inputs.pnpm == 'true') && inputs.read-cache == 'true' && runner.os != 'Windows'
       id: node-modules-restore
       with:
         path: ${{ inputs.pnpm-cache }}
@@ -65,14 +69,14 @@ runs:
         enableCrossOsArchive: true
 
     - shell: bash
-      if: inputs.node == 'true' && inputs.read-cache == 'true'
+      if: (inputs.node == 'true' || inputs.pnpm == 'true') && inputs.read-cache == 'true'
       run: |
         echo 'CACHE_HIT=${{
           (steps.node-modules-restore.outputs.cache-hit == 'true') && 'true' || ''
         }}' >> "$GITHUB_ENV"
 
     - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-      if: inputs.node == 'true'
+      if: inputs.node == 'true' || inputs.pnpm == 'true'
       with:
         cache: ${{ (env.CACHE_HIT != 'true' || runner.os == 'Windows') && inputs.read-cache == 'true' }}
 
@@ -86,19 +90,19 @@ runs:
       # Ensure npm 11.5.1 or later for trusted publishing
       # https://docs.npmjs.com/trusted-publishers
     - shell: bash
-      if: inputs.node == 'true' && runner.os == 'Linux'
+      if: (inputs.node == 'true' || inputs.pnpm == 'true') && runner.os == 'Linux'
       run: |
         set -ex
         dpkg --compare-versions $(npm -v) lt 11.5.1 && (npm update -g npm; echo "updated npm to: $(npm -v)") || echo "npm is new enough: $(npm -v)"
 
-    - if: inputs.node == 'true' && (env.CACHE_HIT != 'true' || runner.os == 'Windows')
+    - if: (inputs.node == 'true' || inputs.pnpm == 'true') && (env.CACHE_HIT != 'true' || runner.os == 'Windows')
       shell: bash
       run: pnpm install --frozen-lockfile
       env:
         # Other environment variables
         HUSKY: '0' # By default do not run HUSKY install
 
-    - if: inputs.node == 'true' && inputs.save-cache == 'true' && env.CACHE_HIT != 'true' && runner.os != 'Windows'
+    - if: (inputs.node == 'true' || inputs.pnpm == 'true') && inputs.save-cache == 'true' && env.CACHE_HIT != 'true' && runner.os != 'Windows'
       uses: actions/cache/save@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
       with:
         path: ${{ inputs.pnpm-cache }}
