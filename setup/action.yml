@@ -73,16 +73,14 @@ runs:
 
     - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
       if: inputs.node == 'true'
-      # TODO: Use standalone version?
-      # with:
-      #   standalone: true
+      with:
+        cache: ${{ (env.CACHE_HIT != 'true' || runner.os == 'Windows') && inputs.read-cache == 'true' }}
 
     - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
       if: inputs.node == 'true'
       with:
         node-version: ${{ inputs.node-version }}
         node-version-file: ${{ inputs.node-version == '' && '.node-version' || '' }}
-        cache: ${{ (env.CACHE_HIT != 'true' || runner.os == 'Windows') && inputs.read-cache == 'true' && 'pnpm' || '' }}
         package-manager-cache: false
 
       # Ensure npm 11.5.1 or later for trusted publishing
