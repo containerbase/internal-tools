@@ -77,7 +77,7 @@ export const DockerBuilderConfig = ConfigFile.extend({
   imagePrefixes: z.array(z.string()),
   majorMinor: z.boolean(),
   lastOnly: z.boolean(),
-  dryRun: z.boolean(),
+  dryRun: z.boolean().optional(),
   prune: z.boolean(),
   versioning: z.string(),
   platforms: z.array(z.string()),
@@ -91,7 +91,7 @@ export type BinaryBuilderConfig = {
   depName: string;
   ignoredVersions: string[];
   lastOnly: boolean;
-  dryRun: boolean;
+  dryRun?: boolean;
   versioning: string;
 } & ConfigFile;
 
