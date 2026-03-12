@@ -70,17 +70,17 @@ export const DockerBuilderConfig = ConfigFile.extend({
   buildOnly: z.boolean(),
   tagSuffix: z.string().optional(),
 
-  datasource: z.string(),
+  datasource: z.string().optional(),
   depName: z.string(),
 
   imagePrefix: z.string(),
-  imagePrefixes: z.array(z.string()),
+  imagePrefixes: z.array(z.string()).default([]),
   majorMinor: z.boolean(),
   lastOnly: z.boolean(),
   dryRun: z.boolean().optional(),
   prune: z.boolean(),
   versioning: z.string(),
-  platforms: z.array(z.string()),
+  platforms: z.array(z.string()).optional(),
 });
 
 export type DockerBuilderConfig = z.infer<typeof DockerBuilderConfig>;

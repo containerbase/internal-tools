@@ -16,6 +16,16 @@ const config = partial<BuildsConfig>({
 });
 
 describe('utils/builds', () => {
+  it('returns null', async () => {
+    expect(
+      await getBuildList({
+        ...config,
+        versions: undefined,
+        datasource: undefined,
+      }),
+    ).toBeNull();
+  });
+
   it('works', async () => {
     expect(await getBuildList({ ...config })).toEqual({
       versions: [version, '2.0.0'],
