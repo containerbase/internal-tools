@@ -16,7 +16,7 @@ import { init } from '../../utils/docker/buildx';
 import { dockerDf, dockerPrune } from '../../utils/docker/common';
 import { cosign } from '../../utils/docker/cosign';
 import log from '../../utils/logger';
-import type { ConfigFile, DockerBuilderConfig } from '../../utils/types';
+import { type ConfigFile, DockerBuilderConfig } from '../../utils/types';
 
 function createTag(tagSuffix: string | undefined, version: string): string {
   return isNonEmptyString(tagSuffix) && tagSuffix !== 'latest'
@@ -221,7 +221,7 @@ export async function run(): Promise<void> {
 
   await readDockerConfig(cfg);
 
-  const config: DockerBuilderConfig = {
+  const config = DockerBuilderConfig.parse({
     ...cfg,
     imagePrefix: getArg('image-prefix')?.replace(/\/$/, '') || 'renovate',
     imagePrefixes: getArg('image-prefixes', { multi: true })?.map((ip) =>
@@ -241,7 +241,7 @@ export async function run(): Promise<void> {
     versioning: cfg.versioning ?? getDefaultVersioning(cfg.datasource),
     platforms: getArg('platforms', { multi: true }),
     skipLatestTag: cfg.skipLatestTag ?? getArg('skip-latest-tag') === 'true',
-  };
+  });
 
   if (dryRun) {
     log('GitHub Actions branch detected - Force building latest, no push');
