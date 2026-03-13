@@ -12,11 +12,5 @@ yarn-error.log
 test.mjs
 builder.json
 
-# yarn v2+ https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-# !.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+# temporary nested action
+.actions
