@@ -195,6 +195,12 @@ jobs:
           command: dummy
           dry-run: true
 
+      - name: publish-releases
+        uses: ./publish-releases
+        with:
+          token: ${{ github.token }}
+          dry-run: true
+
   e2e-os:
     needs:
       - setup
