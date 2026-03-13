@@ -20,6 +20,10 @@ export default async function run(): Promise<void> {
         await (await import('./commands/docker/config')).run();
         break;
 
+      case Commands.ReleaseList:
+        await (await import('./commands/release-list')).run();
+        break;
+
       default:
         log.error(styleText('red', 'Unknown command:'), cmd);
         break;
