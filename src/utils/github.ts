@@ -22,12 +22,17 @@ interface GhAsset {
 
 interface GhRelease {
   id: number;
-  name: string | null;
+  name?: string | null;
   body?: string | null;
 
   assets: GhAsset[];
 
+  created_at?: string | null;
+
   prerelease?: boolean;
+  published_at?: string | null;
+
+  tag_name: string;
 
   upload_url: string;
 }
