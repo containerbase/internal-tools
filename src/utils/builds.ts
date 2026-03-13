@@ -3,7 +3,6 @@ import {
   ReleaseResult,
   getPkgReleases,
 } from 'renovate/dist/modules/datasource';
-import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { add as addHostRule } from 'renovate/dist/util/host-rules';
 import { getRegexPredicate } from 'renovate/dist/util/string-match';
@@ -34,7 +33,7 @@ export interface BuildsConfig {
   latestVersion?: string;
   lookupName?: string;
   startVersion: string;
-  versioning?: string;
+  versioning: string;
   versions?: string[];
   extractVersion?: string;
 
@@ -70,7 +69,6 @@ export async function getBuildList({
   reverse,
 }: BuildsConfig): Promise<BuildsResult | null> {
   log('Looking up versions');
-  versioning ??= getDefaultVersioning(datasource);
   const ver = getVersioning(versioning);
   const pkgResult = versions
     ? getVersions(versions)

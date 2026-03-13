@@ -47,6 +47,7 @@ describe('utils/builds', () => {
         startVersion: '3.0.4',
         ignoredVersions: [],
         lastOnly: false,
+        versioning: 'maven',
       }),
     ).toEqual({
       versions: ['3.9.13', '3.9.14'],
@@ -71,6 +72,7 @@ describe('utils/builds', () => {
         startVersion: '3.0.4',
         ignoredVersions: [],
         lastOnly: false,
+        versioning: 'maven',
       }),
     ).toEqual({
       versions: ['3.9.13', '3.9.14'],
