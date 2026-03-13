@@ -153,6 +153,7 @@ export async function updateRelease(
   const body = getBody(cfg, version);
   const rel = await findRelease(api, version);
   if (rel == null || (rel.name === version && rel.body === body)) {
+    log('Release not found:', version);
     return;
   }
   const { data } = await api.rest.repos.updateRelease({
