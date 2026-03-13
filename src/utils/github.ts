@@ -27,6 +27,8 @@ interface GhRelease {
 
   assets: GhAsset[];
 
+  prerelease?: boolean;
+
   upload_url: string;
 }
 
@@ -49,27 +51,39 @@ function isRequestError(err: unknown): err is RequestError {
   return err instanceof Error && 'status' in err;
 }
 
+async function initRelaseCache(
+  api: GitHubOctokit,
+): Promise<Map<string, GhRelease>> {
+  if (!releaseCache) {
+    const cache = new Map<string, GhRelease>();
+
+    const rels = await api.paginate(api.rest.repos.listReleases, {
+      ...context.repo,
+      per_page: 100,
+    });
+
+    for (const rel of rels) {
+      cache.set(rel.tag_name, rel);
+    }
+
+    releaseCache = cache;
+  }
+
+  return releaseCache;
+}
+
+export async function getReleases(api: GitHubOctokit): Promise<GhRelease[]> {
+  const cache = await initRelaseCache(api);
+  return Array.from(cache.values());
+}
+
 async function findRelease(
   api: GitHubOctokit,
   version: string,
 ): Promise<GhRelease | null> {
   try {
-    if (!releaseCache) {
-      const cache = new Map();
-
-      const rels = await api.paginate(api.rest.repos.listReleases, {
-        ...context.repo,
-        per_page: 100,
-      });
-
-      for (const rel of rels) {
-        cache.set(rel.tag_name, rel);
-      }
-
-      releaseCache = cache;
-    }
-
-    return releaseCache.get(version) ?? null;
+    const cache = await initRelaseCache(api);
+    return cache.get(version) ?? null;
   } catch (e) {
     if (isRequestError(e) && e.status !== 404) {
       throw e;
@@ -153,6 +167,7 @@ export async function updateRelease(
   const body = getBody(cfg, version);
   const rel = await findRelease(api, version);
   if (rel == null || (rel.name === version && rel.body === body)) {
+    log('Release not found:', version);
     return;
   }
   const { data } = await api.rest.repos.updateRelease({
