@@ -6,6 +6,7 @@ import { Commands } from '../src/types';
 vi.mock('../src/commands/docker/config');
 vi.mock('../src/commands/docker/builder');
 vi.mock('../src/commands/binary');
+vi.mock('../src/commands/release-list');
 
 const core = vi.mocked(_core);
 
@@ -34,6 +35,13 @@ describe('runner', () => {
 
   it(`${Commands.DockerConfig}`, async () => {
     core.getInput.mockReturnValueOnce(Commands.DockerConfig);
+    await run();
+    expect(core.getInput).toHaveBeenCalledExactlyOnceWith('command');
+    expect(core.setFailed).not.toHaveBeenCalled();
+  });
+
+  it(`${Commands.ReleaseList}`, async () => {
+    core.getInput.mockReturnValueOnce(Commands.ReleaseList);
     await run();
     expect(core.getInput).toHaveBeenCalledExactlyOnceWith('command');
     expect(core.setFailed).not.toHaveBeenCalled();
