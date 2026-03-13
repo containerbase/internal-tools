@@ -80,6 +80,7 @@ export async function build({
       args.push(
         `--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max,ignore-error=true`,
       );
+      // v8 ignore else -- TODO: add test
       if (isNonEmptyArray(cacheToTags)) {
         for (const ctag of cacheToTags) {
           args.push(

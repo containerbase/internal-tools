@@ -3,6 +3,7 @@ import {
   ReleaseResult,
   getPkgReleases,
 } from 'renovate/dist/modules/datasource';
+import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { add as addHostRule } from 'renovate/dist/util/host-rules';
 import { getRegexPredicate } from 'renovate/dist/util/string-match';
@@ -11,8 +12,6 @@ import log from './logger';
 import * as renovate from './renovate';
 
 renovate.register();
-
-let latestStable: string | undefined;
 
 export { addHostRule };
 
@@ -35,7 +34,7 @@ export interface BuildsConfig {
   latestVersion?: string;
   lookupName?: string;
   startVersion: string;
-  versioning: string;
+  versioning?: string;
   versions?: string[];
   extractVersion?: string;
 
@@ -71,6 +70,7 @@ export async function getBuildList({
   reverse,
 }: BuildsConfig): Promise<BuildsResult | null> {
   log('Looking up versions');
+  versioning ??= getDefaultVersioning(datasource);
   const ver = getVersioning(versioning);
   const pkgResult = versions
     ? getVersions(versions)
@@ -135,12 +135,15 @@ export async function getBuildList({
   log(`Found ${allVersions.length} versions within our range`);
   log(`Candidates:`, allVersions.join(', '));
 
-  latestStable =
-    latestVersion ??
-    /* c8 ignore next 2 */
-    /* istanbul ignore next: not testable ts */
-    pkgResult.tags?.latest ??
-    allVersions.filter((v) => ver.isStable(v)).pop();
+  let latestStable = latestVersion;
+  if (
+    !latestStable &&
+    pkgResult.tags?.latest &&
+    ver.isStable(pkgResult.tags.latest)
+  ) {
+    latestStable = pkgResult.tags.latest;
+  }
+  latestStable ??= allVersions.filter((v) => ver.isStable(v)).pop();
   log('Latest stable version is', latestStable);
 
   if (latestStable && !allVersions.includes(latestStable)) {

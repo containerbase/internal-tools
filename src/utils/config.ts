@@ -46,6 +46,7 @@ export function getBinaryName(
   const arch = getArch();
   const ext = sum ? `.${sumType}` : '';
   let image = `${cfg.image}-${version}`;
+  // v8 ignore else -- TODO: add test
   if (isNonEmptyString(distro)) {
     image += `-${distro}`;
   }

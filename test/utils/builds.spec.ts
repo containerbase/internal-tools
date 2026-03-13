@@ -1,3 +1,4 @@
+import { getPkgReleases } from 'renovate/dist/modules/datasource';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { describe, expect, it, vi } from 'vitest';
 import { BuildsConfig, getBuildList } from '../../src/utils/builds';
@@ -30,6 +31,50 @@ describe('utils/builds', () => {
     expect(await getBuildList({ ...config })).toEqual({
       versions: [version, '2.0.0'],
       latestStable: '2.0.0',
+    });
+  });
+
+  it('works with tags', async () => {
+    vi.mocked(getPkgReleases).mockResolvedValueOnce({
+      releases: [{ version: '3.9.13' }, { version: '3.9.14' }],
+      tags: { latest: '3.9.13', release: '3.9.13' },
+    });
+    expect(
+      await getBuildList({
+        datasource: 'maven',
+        depName: 'maven',
+        lookupName: 'org.apache.maven:apache-maven',
+        startVersion: '3.0.4',
+        ignoredVersions: [],
+        lastOnly: false,
+      }),
+    ).toEqual({
+      versions: ['3.9.13', '3.9.14'],
+      latestStable: '3.9.13',
+    });
+  });
+
+  it('works ignores unstable latest', async () => {
+    vi.mocked(getPkgReleases).mockResolvedValueOnce({
+      releases: [
+        { version: '3.9.13' },
+        { version: '3.9.14' },
+        { version: '4.0.0-rc-5' },
+      ],
+      tags: { latest: '4.0.0-rc-5', release: '4.0.0-rc-5' },
+    });
+    expect(
+      await getBuildList({
+        datasource: 'maven',
+        depName: 'maven',
+        lookupName: 'org.apache.maven:apache-maven',
+        startVersion: '3.0.4',
+        ignoredVersions: [],
+        lastOnly: false,
+      }),
+    ).toEqual({
+      versions: ['3.9.13', '3.9.14'],
+      latestStable: '3.9.14',
     });
   });
 
