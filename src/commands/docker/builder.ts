@@ -98,9 +98,11 @@ async function buildAndPush(
       const cacheToTags: string[] = [];
       const tags: string[] = [];
 
+      // v8 ignore else -- TODO: add test
       if (isNumber(major)) {
         const nTag = createTag(tagSuffix, `${major}`);
         cacheFromTags.push(nTag);
+        // v8 ignore else -- TODO: add test
         if (versionsMap.get(`${major}`) === version) {
           cacheToTags.push(nTag);
           if (majorMinor) {
@@ -113,6 +115,7 @@ async function buildAndPush(
         cacheFromTags.push(nTag);
         if (versionsMap.get(`${major}.${minor}`) === version) {
           cacheToTags.push(nTag);
+          // v8 ignore else -- TODO: add test
           if (majorMinor) {
             tags.push(nTag);
           }

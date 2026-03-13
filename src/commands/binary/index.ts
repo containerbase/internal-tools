@@ -158,7 +158,7 @@ async function uploadVersionAssetIfNeeded(
   builds: BuildsResult,
 ): Promise<void> {
   if (!(await hasVersionAsset(api, version))) {
-    /* v8 ignore next -- needs test */
+    // v8 ignore next -- TODO: add test
     const latestStable = builds.latestStable ?? version;
     if (cfg.dryRun) {
       log.warn(
