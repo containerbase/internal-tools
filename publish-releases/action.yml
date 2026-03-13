@@ -24,7 +24,7 @@ runs:
     - name: Copy actions
       run: |
         mkdir -p ${{ github.workspace }}/.actions
-        ln -sf ${{ github.action_path }} ${{ github.workspace }}/.actions/internal-tools
+        ln -sf ${{ github.action_path }}/.. ${{ github.workspace }}/.actions/internal-tools
       shell: bash
     - name: Generate release list
       uses: ./.actions/internal-tools
