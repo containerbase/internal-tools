@@ -18,8 +18,16 @@ runs:
   using: 'composite'
 
   steps:
+    # Workaround
+    # - https://github.com/actions/runner/issues/2101
+    # - https://github.com/orgs/community/discussions/26245#discussioncomment-15601440
+    - name: Copy actions
+      run: |
+        mkdir -p ${{ github.workspace }}/.actions
+        ln -sf ${{ github.action_path }}/.. ${{ github.workspace }}/.actions/internal-tools
+      shell: bash
     - name: Generate release list
-      uses: ./
+      uses: ./.actions/internal-tools
       with:
         command: release-list
         token: ${{ inputs.token }}
