@@ -19,7 +19,7 @@ runs:
 
   steps:
     - name: Generate release list
-      uses: ./..
+      uses: ./
       with:
         command: release-list
         token: ${{ inputs.token }}
