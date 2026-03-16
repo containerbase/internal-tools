@@ -3,6 +3,7 @@ description: 'Publishs the github releases as json file to github pages'
 inputs:
   token:
     description: 'GitHub token'
+    default: ${{ github.token }}
     required: true
   dry-run:
     description: 'do not publish anything'
