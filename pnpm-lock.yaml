@@ -140,8 +140,8 @@ importers:
         specifier: 7.0.0
         version: 7.0.0(typescript@5.9.3)
       lint-staged:
-        specifier: 16.3.3
-        version: 16.3.3
+        specifier: 16.3.4
+        version: 16.3.4
       nock:
         specifier: 14.0.11
         version: 14.0.11
@@ -3605,8 +3605,8 @@ packages:
   linkify-it@5.0.0:
     resolution: {integrity: sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==}
 
-  lint-staged@16.3.3:
-    resolution: {integrity: sha512-RLq2koZ5fGWrx7tcqx2tSTMQj4lRkfNJaebO/li/uunhCJbtZqwTuwPHpgIimAHHi/2nZIiGrkCHDCOeR1onxA==}
+  lint-staged@16.3.4:
+    resolution: {integrity: sha512-U5bxYjQA+yeKm4+8bVlkixlDlXdqlrJJU1Rx/h2h1B/FSlt7zW2rkPcnpRHFkSyjkNX8gLXfgfYaDwWkDXbvsQ==}
     engines: {node: '>=20.17'}
     hasBin: true
 
@@ -9887,7 +9887,7 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
-  lint-staged@16.3.3:
+  lint-staged@16.3.4:
     dependencies:
       commander: 14.0.3
       listr2: 9.0.5
