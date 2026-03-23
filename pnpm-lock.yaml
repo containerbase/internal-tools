@@ -49,8 +49,8 @@ importers:
         specifier: 14.6.6
         version: 14.6.6
       renovate:
-        specifier: 43.66.2
-        version: 43.66.2(typanion@3.14.0)
+        specifier: 43.83.1
+        version: 43.83.1(typanion@3.14.0)
       semver:
         specifier: 7.7.4
         version: 7.7.4
@@ -3495,8 +3495,11 @@ packages:
     resolution: {integrity: sha512-OCzaRMK8HobtX8fp37uIVmL8CY1IGc/a6gLsDqz3quExFR09/U78HUzWYr7T31UEB6+Eu0/8dkVD5fFDOl9a8w==}
     engines: {node: '>= 8'}
 
-  jsonc-parser@3.3.1:
-    resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
+  jsonc-morph@0.3.2:
+    resolution: {integrity: sha512-FmHfnQ3OMs/+HosrGV8RHwerWXjTaco0hvBhn8+hP0gux06Jylynct4H0P+sjsK3QXRvN5zlq+SJxvXgfu8JfQ==}
+
+  jsonc-weaver@0.2.2:
+    resolution: {integrity: sha512-fDO1+8cpEFGlw42kvEqh/HAnXd47Lv19mWQaR30p2k6wOwfL4Dx/B2f8reaQepBc1aupBIOTwWmhThFUgv9zLQ==}
 
   jsonfile@6.2.0:
     resolution: {integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==}
@@ -4648,8 +4651,8 @@ packages:
   remark@15.0.1:
     resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
-  renovate@43.66.2:
-    resolution: {integrity: sha512-WQm/Hub4QpDbJuUHxcAAu0XnXDOHbBL8lnBXyfytOl+EyM0YyMY0FgQI5w6kDL29T1vnDPVN4v/w4Q28JeQFTg==}
+  renovate@43.83.1:
+    resolution: {integrity: sha512-/MMtGUPie+2T6uuFU22ZTkjRxJrr+sZBrmu3NJIWHmn1HCHreJuAxU0wDlssrRgKDbNF/IoazXIGkmqurFIeLg==}
     engines: {node: ^24.11.0, pnpm: ^10.0.0}
     hasBin: true
 
@@ -4855,8 +4858,8 @@ packages:
   simple-get@4.0.1:
     resolution: {integrity: sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==}
 
-  simple-git@3.32.3:
-    resolution: {integrity: sha512-56a5oxFdWlsGygOXHWrG+xjj5w9ZIt2uQbzqiIGdR/6i5iococ7WQ/bNPzWxCJdEUGUCmyMH0t9zMpRJTaKxmw==}
+  simple-git@3.33.0:
+    resolution: {integrity: sha512-D4V/tGC2sjsoNhoMybKyGoE+v8A60hRawKQ1iFRA1zwuDgGZCBJ4ByOzZ5J8joBbi4Oam0qiPH+GhzmSBwbJng==}
 
   skin-tone@2.0.0:
     resolution: {integrity: sha512-kUMbT1oBJCpgrnKoSr0o6wPtvRWT9W9UKvGLwfJYO2WuahZRHOpEyL1ckyMGgMWh0UdpmaoFqKKD29WTomNEGA==}
@@ -9801,7 +9804,11 @@ snapshots:
 
   jsonata@2.1.0: {}
 
-  jsonc-parser@3.3.1: {}
+  jsonc-morph@0.3.2: {}
+
+  jsonc-weaver@0.2.2:
+    dependencies:
+      jsonc-morph: 0.3.2
 
   jsonfile@6.2.0:
     dependencies:
@@ -11139,7 +11146,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@43.66.2(typanion@3.14.0):
+  renovate@43.83.1(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.1000.0
       '@aws-sdk/client-ec2': 3.1000.0
@@ -11219,7 +11226,7 @@ snapshots:
       json-stringify-pretty-compact: 4.0.0
       json5: 2.2.3
       jsonata: 2.1.0
-      jsonc-parser: 3.3.1
+      jsonc-weaver: 0.2.2
       klona: 2.0.6
       luxon: 3.7.2
       markdown-it: 14.1.1
@@ -11246,7 +11253,7 @@ snapshots:
       semver-stable: 3.0.0
       semver-utils: 1.1.4
       shlex: 3.0.0
-      simple-git: 3.32.3
+      simple-git: 3.33.0
       slugify: 1.6.6
       source-map-support: 0.5.21
       strip-json-comments: 5.0.3
@@ -11525,7 +11532,7 @@ snapshots:
       simple-concat: 1.0.1
     optional: true
 
-  simple-git@3.32.3:
+  simple-git@3.33.0:
     dependencies:
       '@kwsites/file-exists': 1.1.1
       '@kwsites/promise-deferred': 1.1.1
