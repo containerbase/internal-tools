@@ -5,7 +5,6 @@ packages: []
 includeWorkspaceRoot: true
 
 strictPeerDependencies: true
-strictDepBuilds: true
 
 allowBuilds:
   re2: true
