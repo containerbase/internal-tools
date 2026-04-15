@@ -1,3 +1,4 @@
+/* eslint-disable */
 // https://github.com/evanw/esbuild/issues/1921#issuecomment-1898197331
 import { createRequire } from 'node:module';
 import path from 'node:path';
