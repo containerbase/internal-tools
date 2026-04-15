@@ -7,13 +7,16 @@ includeWorkspaceRoot: true
 strictPeerDependencies: true
 strictDepBuilds: true
 
-onlyBuiltDependencies:
-  - re2
+allowBuilds:
+  re2: true
 
-ignoredBuiltDependencies:
-  - better-sqlite3
-  - core-js-pure
-  - dtrace-provider
-  - esbuild
-  - protobufjs
-  - unrs-resolver
+overrides:
+  '@yarnpkg/core@4.5.0>tar': 7.5.13
+  esbuild: $esbuild
+  eslint-plugin-import: '-'
+  vite: $vite
+  vitest: $vitest
+
+patchedDependencies:
+  '@baszalmstra/rattler': patches/@baszalmstra__rattler.patch
+  re2: patches/re2.patch
