@@ -3,7 +3,7 @@
 import { setTimeout } from 'node:timers/promises';
 import { context, getOctokit } from '@actions/github';
 import type { GitHub } from '@actions/github/lib/utils';
-import { got } from 'got';
+import got from 'got';
 import { readBuffer, writeFile } from '../util';
 import { getBinaryName } from './config';
 import log from './logger';
@@ -293,8 +293,7 @@ export async function downloadAsset(
   }
 
   try {
-    const buffer = await got({
-      url: asset.browser_download_url,
+    const buffer = await got(asset.browser_download_url, {
       responseType: 'buffer',
       resolveBodyOnly: true,
     });

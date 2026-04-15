@@ -100,7 +100,7 @@ export async function readBuffer(file: string): Promise<Buffer> {
 
 export async function writeFile(
   file: string,
-  contents: string | Buffer,
+  contents: string | NodeJS.ArrayBufferView,
 ): Promise<void> {
   const path = join(getWorkspace(), file);
   await fs.writeFile(path, contents);
