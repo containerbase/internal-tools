@@ -36,7 +36,7 @@
     "auth-header": "1.0.0",
     "escape-string-regexp": "5.0.0",
     "find-up": "8.0.0",
-    "got": "14.6.6",
+    "got": "15.0.1",
     "renovate": "43.110.12",
     "semver": "7.7.4",
     "strip-ansi": "7.2.0",
