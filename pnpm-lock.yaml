@@ -48,8 +48,8 @@ importers:
         specifier: 8.0.0
         version: 8.0.0
       got:
-        specifier: 15.0.2
-        version: 15.0.2
+        specifier: 15.0.3
+        version: 15.0.3
       renovate:
         specifier: 43.126.0
         version: 43.126.0(typanion@3.14.0)
@@ -2894,8 +2894,8 @@ packages:
     resolution: {integrity: sha512-QLV1qeYSo5l13mQzWgP/y0LbMr5Plr5fJilgAIwgnwseproEbtNym8xpLsDzeZ6MWXgNE6kdWGBjdh3zT/Qerg==}
     engines: {node: '>=20'}
 
-  got@15.0.2:
-    resolution: {integrity: sha512-opPIdoQSTOGqX3h0d8QQoqCX0oF728V1PFxbPqquAFSeWPUOlPQ3Gi6IKIqGm6NMcDl+DWUwQb2RR+xvuEJOQQ==}
+  got@15.0.3:
+    resolution: {integrity: sha512-630of5aMTYM6g6epok5nuqvctP8InJISvt39iNt7y0r27rcGCdiPv9Cc6EbwfnkyT1g/shBoVhvDjtXZUbn/Rw==}
     engines: {node: '>=22'}
 
   graceful-fs@4.2.10:
@@ -8637,9 +8637,9 @@ snapshots:
       responselike: 4.0.2
       type-fest: 4.41.0
 
-  got@15.0.2:
+  got@15.0.3:
     dependencies:
-      '@sindresorhus/is': 7.2.0
+      '@sindresorhus/is': 8.0.0
       byte-counter: 0.1.0
       cacheable-lookup: 7.0.0
       cacheable-request: 13.0.18
