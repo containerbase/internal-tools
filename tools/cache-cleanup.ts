@@ -11,7 +11,7 @@ const packageName = 'docker-build-cache';
 const api = getOctokit(process.env['GITHUB_TOKEN']);
 
 const versions = api.paginate.iterator(
-  api.rest.packages.listPackagesForOrganization,
+  api.rest.packages.getAllPackageVersionsForPackageOwnedByOrg,
   {
     package_type: packageType,
     package_name: packageName,
@@ -23,7 +23,7 @@ const versions = api.paginate.iterator(
 let page = 0;
 let deleted = 0;
 
-const before = DateTime.utc().minus({ days: 30 });
+const before = DateTime.utc().minus({ days: 60 });
 
 try {
   for await (const { data } of versions) {
@@ -55,4 +55,6 @@ try {
   console.error('Error while deleting package versions:', error);
 }
 
-console.log(`Deleted ${deleted} versions.`);
+if (deleted > 0) {
+  console.log(`Deleted ${deleted} versions.`);
+}
