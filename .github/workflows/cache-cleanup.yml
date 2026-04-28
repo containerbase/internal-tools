@@ -14,7 +14,7 @@ env:
   LOG_LEVEL: debug
 
 jobs:
-  setup:
+  cache-cleanup:
     runs-on: ubuntu-latest
     timeout-minutes: 120
 
@@ -31,3 +31,5 @@ jobs:
         shell: bash
         run: |
           pnpm node tools/cache-cleanup.ts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
