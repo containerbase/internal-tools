@@ -22,12 +22,14 @@ const versions = api.paginate.iterator(
 
 let page = 0;
 let deleted = 0;
+let versionCount = 0;
 
 const before = DateTime.utc().minus({ days: 60 });
 
 try {
   for await (const { data } of versions) {
     for (const version of data) {
+      versionCount++;
       const updatedAt = DateTime.fromISO(version.updated_at);
       if (updatedAt < before) {
         console.log(
@@ -41,19 +43,19 @@ try {
         });
         deleted++;
       } else {
-        console.log(
-          `Keeping version ${version.name} (${version.id}) updated at ${version.updated_at}`,
-        );
+        // console.log(
+        //   `Keeping version ${version.name} (${version.id}) updated at ${version.updated_at}`,
+        // );
       }
     }
-
-    if (page++ >= 100) {
-      break;
-    }
+    page++;
   }
 } catch (error) {
   console.error('Error while deleting package versions:', error);
 }
+
+console.log(`Checked ${page} pages.`);
+console.log(`Checked ${versionCount} versions on ${page} pages.`);
 
 if (deleted > 0) {
   console.log(`Deleted ${deleted} versions.`);
