@@ -1,0 +1,33 @@
+name: cache-cleanup
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  LOG_LEVEL: debug
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          show-progress: false
+
+      - uses: ./setup
+        with:
+          checkout: false
+
+      - name: Run cache cleanup
+        shell: bash
+        run: |
+          pnpm node tools/cache-cleanup.ts
