@@ -3,14 +3,25 @@ packages: []
 
 allowBuilds:
   better-sqlite3: false
+  core-js-pure: false
+  dtrace-provider: false
   protobufjs: false
   re2: false
+  unrs-resolver: false
 
 # need to publish workspace root with correct version
 includeWorkspaceRoot: true
 
+# in line with https://github.com/containerbase/.github/blob/main/default.json,
+# all non-Renovate or non-Containerbase packages should only be installed after
+# 3 days
+minimumReleaseAge: 4320
+minimumReleaseAgeExclude:
+  - '@renovatebot/*'
+  - '@containerbase/*'
+
 overrides:
-  '@yarnpkg/core@4.5.0>tar': 7.5.13
+  dtrace-provider: '-'
   vite: $vite
   vitest: $vitest
 
