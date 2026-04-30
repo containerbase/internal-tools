@@ -1,24 +1,29 @@
 import { env } from 'node:process';
-import { build } from 'esbuild';
+import { rolldown } from 'rolldown';
+import { replacePlugin } from 'rolldown/plugins';
 
-await build({
-  entryPoints: ['./src/index.ts'],
-  bundle: true,
+console.log('Bundling ...');
+const bundle = await rolldown({
+  input: ['./src/index.ts'],
   platform: 'node',
-  target: ['es2022', 'node20'],
-  minify: !!env.CI,
-  tsconfig: 'tsconfig.dist.json',
-  sourcemap: true,
-  format: 'esm',
-  outdir: './dist/',
-  loader: {
-    '.node': 'copy',
-    '.wasm': 'copy',
-  },
   external: ['dtrace-provider'],
-  inject: ['tools/cjs-shim.ts'],
-  // https://github.com/microsoft/node-jsonc-parser/issues/57#issuecomment-1634726605
-  // https://esbuild.github.io/api/#main-fields
-  mainFields: ['module', 'main'],
-  conditions: ['module', 'import', 'require', 'default'],
+  plugins: [
+    replacePlugin(
+      {
+        'eval("quire".replace(/^/,"re"))': 'require',
+      },
+      {
+        delimiters: ['', ''],
+      },
+    ),
+  ],
+});
+
+console.log('Writing bundle ...');
+await bundle.write({
+  dir: 'dist',
+  format: 'esm',
+  minify: !!env.CI,
+  cleanDir: true,
+  sourcemap: true,
 });
