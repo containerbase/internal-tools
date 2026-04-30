@@ -6,7 +6,6 @@ await build({
   bundle: true,
   platform: 'node',
   target: ['es2022', 'node20'],
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   minify: !!env.CI,
   tsconfig: 'tsconfig.dist.json',
   sourcemap: true,

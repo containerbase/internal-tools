@@ -107,6 +107,8 @@ export default tseslint.config(
 
       '@typescript-eslint/camelcase': 0,
       '@typescript-eslint/no-floating-promises': 2,
+
+      '@containerbase/enforce-ts-extension': 0,
     },
   },
   {
