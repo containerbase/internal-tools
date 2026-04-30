@@ -1,13 +1,13 @@
 # no packages yet
 packages: []
 
+allowBuilds:
+  better-sqlite3: false
+  protobufjs: false
+  re2: true
+
 # need to publish workspace root with correct version
 includeWorkspaceRoot: true
-
-strictPeerDependencies: true
-
-allowBuilds:
-  re2: true
 
 overrides:
   '@yarnpkg/core@4.5.0>tar': 7.5.13
@@ -19,3 +19,5 @@ overrides:
 patchedDependencies:
   '@baszalmstra/rattler': patches/@baszalmstra__rattler.patch
   re2: patches/re2.patch
+
+strictPeerDependencies: true
