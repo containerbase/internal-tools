@@ -22,8 +22,8 @@ minimumReleaseAgeExclude:
 
 overrides:
   dtrace-provider: '-'
-  vite: $vite
-  vitest: $vitest
+  vite: 8.0.10
+  vitest: 4.1.5
 
 patchedDependencies:
   '@baszalmstra/rattler': patches/@baszalmstra__rattler.patch

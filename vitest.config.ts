@@ -7,7 +7,9 @@ export default defineConfig({
   resolve: { tsconfigPaths: true },
   test: {
     coverage: {
-      reporter: ci ? ['json', 'text'] : ['html', 'text'],
+      reporter: ci
+        ? ['json', 'text']
+        : ['@containerbase/istanbul-reports-html', 'text'],
       include: ['src/**/*.{js,ts}'],
       exclude: [
         ...coverageConfigDefaults.exclude,
