@@ -4,15 +4,13 @@ packages: []
 allowBuilds:
   better-sqlite3: false
   protobufjs: false
-  re2: true
+  re2: false
 
 # need to publish workspace root with correct version
 includeWorkspaceRoot: true
 
 overrides:
   '@yarnpkg/core@4.5.0>tar': 7.5.13
-  esbuild: $esbuild
-  eslint-plugin-import: '-'
   vite: $vite
   vitest: $vitest
 
