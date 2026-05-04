@@ -10,12 +10,8 @@ overrides:
   vitest: 4.1.5
 
 patchedDependencies:
-  '@baszalmstra/rattler':
-    hash: 8687a9135d78e728717a618b37890eb5a716e63940c70fe3d1dc44b0674364b7
-    path: patches/@baszalmstra__rattler.patch
-  re2:
-    hash: 018babd22b7ce951bcd10d6246f1e541a7ac7ba212f7fa8985e774ece67d08e1
-    path: patches/re2.patch
+  '@baszalmstra/rattler': 8687a9135d78e728717a618b37890eb5a716e63940c70fe3d1dc44b0674364b7
+  re2: 018babd22b7ce951bcd10d6246f1e541a7ac7ba212f7fa8985e774ece67d08e1
 
 importers:
 
