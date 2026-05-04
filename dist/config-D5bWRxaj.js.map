@@ -1,1 +1,0 @@
-{"version":3,"file":"config-D5bWRxaj.js","names":[],"sources":["../src/commands/docker/config.ts"],"sourcesContent":["import { init } from '../../utils/docker/buildx';\n\nexport async function run(): Promise<void> {\n  await init(true);\n}\n"],"mappings":"yCAEA,eAAsB,GAAqB,CACzC,MAAM,EAAK,GAAK"}
