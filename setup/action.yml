@@ -117,6 +117,10 @@ runs:
         set -e
         sudo apt-get -qq update
         sudo apt-get install -y squid-deb-proxy
-        echo "ppa.launchpad.net" | sudo tee -a /etc/squid-deb-proxy/mirror-dstdomain.acl.d/containerbase.acl
+        {
+          echo "ppa.launchpad.net"
+          echo "ppa.launchpadcontent.net"
+        } | sudo tee -a /etc/squid-deb-proxy/mirror-dstdomain.acl.d/containerbase.acl
+        cat /etc/squid-deb-proxy/mirror-dstdomain.acl.d/containerbase.acl
         sudo systemctl reload squid-deb-proxy
         echo "::endgroup::"
