@@ -112,6 +112,7 @@ jobs:
       - uses: ./setup
         with:
           checkout: false
+          apt-proxy: true
 
       - run: pnpm compile
 
