@@ -7,6 +7,7 @@
       "enabled": false
     },
     {
+      "description": "Use `build` semantic commit scope for lockfile maintenance.",
       "matchUpdateTypes": ["lockFileMaintenance"],
       "semanticCommitType": "build"
     },
