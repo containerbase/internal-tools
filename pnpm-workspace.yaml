@@ -20,6 +20,10 @@ minimumReleaseAgeExclude:
   - '@renovatebot/*'
   - '@containerbase/*'
 
+# currently broken
+# https://github.com/pnpm/pnpm/issues/11238
+minimumReleaseAgeStrict: false
+
 overrides:
   dtrace-provider: '-'
   vite: 8.0.10
