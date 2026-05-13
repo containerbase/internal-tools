@@ -1,5 +1,8 @@
 packages: []
 
+# renovate is handling this
+updateNotifier: false
+
 allowBuilds:
   better-sqlite3: false
   core-js-pure: false
