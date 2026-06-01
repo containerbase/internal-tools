@@ -6,7 +6,7 @@ settings:
 
 overrides:
   dtrace-provider: '-'
-  protobufjs@8.0.1: 8.4.2
+  protobufjs@8.0.1: 8.5.0
   vite: 8.0.14
   vitest: 4.1.7
 
@@ -3988,8 +3988,8 @@ packages:
   proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
 
-  protobufjs@8.4.2:
-    resolution: {integrity: sha512-64rfNzkWOZAIazXzpBFPWq6F9up6gMvTzjE2oWIzApx2N/dqVUEE7+bCn2+40780dFVtKOUab8QfxJ6KJDWbqA==}
+  protobufjs@8.5.0:
+    resolution: {integrity: sha512-df1jWDPA5VIBNRtuAHjqr09f2qN5D4Vke1wYqOQg1XJ7ZDpA7BD6L7E4tyChgGRLB5hqk2m79Zsy0WHwV9a84A==}
     engines: {node: '>=12.0.0'}
 
   protocols@2.0.2:
@@ -5907,7 +5907,7 @@ snapshots:
       '@opentelemetry/sdk-logs': 0.215.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-metrics': 2.7.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-trace-base': 2.7.0(@opentelemetry/api@1.9.1)
-      protobufjs: 8.4.2
+      protobufjs: 8.5.0
 
   '@opentelemetry/redis-common@0.38.3': {}
 
@@ -9271,7 +9271,7 @@ snapshots:
 
   proto-list@1.2.4: {}
 
-  protobufjs@8.4.2:
+  protobufjs@8.5.0:
     dependencies:
       long: 5.3.2
 
@@ -9511,7 +9511,7 @@ snapshots:
       p-throttle: 8.1.0
       parse-link-header: 2.0.0
       prettier: 3.8.1
-      protobufjs: 8.4.2
+      protobufjs: 8.5.0
       punycode: 2.3.1
       remark: 15.0.1
       remark-gfm: 4.0.1
