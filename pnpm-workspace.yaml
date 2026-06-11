@@ -21,10 +21,7 @@ minimumReleaseAge: 4320
 minimumReleaseAgeExclude:
   - '@renovatebot/*'
   - '@containerbase/*'
-
-# currently broken
-# https://github.com/pnpm/pnpm/issues/11238
-minimumReleaseAgeStrict: false
+  - renovate
 
 overrides:
   dtrace-provider: '-'
