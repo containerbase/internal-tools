@@ -1,0 +1,2 @@
+import{m as e,u as t}from"./index.js";import{n,t as r}from"./sts-BkUifR78.js";var i=t((t=>{Object.defineProperty(t,"__esModule",{value:!0}),t.STSClient=t.AssumeRoleCommand=void 0;let i=(r(),e(n));Object.defineProperty(t,"AssumeRoleCommand",{enumerable:!0,get:function(){return i.AssumeRoleCommand}}),Object.defineProperty(t,"STSClient",{enumerable:!0,get:function(){return i.STSClient}})}));export default i();export{};
+//# sourceMappingURL=loadSts-BliEGXog.js.map
