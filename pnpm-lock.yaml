@@ -46,8 +46,8 @@ importers:
         specifier: 15.0.5
         version: 15.0.5
       renovate:
-        specifier: 43.220.0
-        version: 43.220.0(typanion@3.14.0)
+        specifier: 43.222.1
+        version: 43.222.1(typanion@3.14.0)
       semver:
         specifier: 7.8.4
         version: 7.8.4
@@ -871,8 +871,8 @@ packages:
     resolution: {integrity: sha512-91cFM32/pnOAvC7W1W1kPPI9QM2y6OrYCeomz7pop4A+3Ksh2XnZXGznUMlzR7YbOQlg7X/MNlF27s9Yt9hhTA==}
     engines: {node: ^22.11.0 || >=24.10.0, pnpm: '>=10.0.0'}
 
-  '@renovatebot/pgp@1.3.12':
-    resolution: {integrity: sha512-3glRBjBTgoFHdFedUsxcQWw7C0LfHYhCKzTo9+jqjoI+kk5YD/g7GWJ2hsPSG6WTQqJqD8VGiM0h2j3xqTS4Qw==}
+  '@renovatebot/pgp@1.3.14':
+    resolution: {integrity: sha512-H2BBZmyMHdGNW4LXLHbDXBymeHjwbWZk9vE57Nd6TJCSPTKmf1nz13vzuZHqwF/BCyLSuzMfL8/eOHYgtymUwg==}
     engines: {node: ^22.11.0 || >=24.10.0, pnpm: '>=10.0.0'}
 
   '@renovatebot/ruby-semver@5.0.0':
@@ -2515,8 +2515,8 @@ packages:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
     engines: {node: '>= 0.4'}
 
-  google-auth-library@10.6.2:
-    resolution: {integrity: sha512-e27Z6EThmVNNvtYASwQxose/G57rkRuaRbQyxM2bvYLLX/GqWZ5chWq2EBoUchJbCc57eC9ArzO5wMsEmWftCw==}
+  google-auth-library@10.7.0:
+    resolution: {integrity: sha512-QpTAbNJ36TliZLx3TTtahR8HG0hN9RllL1e3FymOvQSIKK8JmgV58H924ub2wa2DsS3ANjjP1Aw1N+Ramc8hqQ==}
     engines: {node: '>=18'}
 
   google-logging-utils@1.1.3:
@@ -3546,9 +3546,14 @@ packages:
     resolution: {integrity: sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ==}
     engines: {node: '>=18'}
 
-  openpgp@6.3.0:
-    resolution: {integrity: sha512-pLzCU8IgyKXPSO11eeharQkQ4GzOKNWhXq79pQarIRZEMt1/ssyr+MIuWBv1mNoenJLg04gvPx+fi4gcKZ4bag==}
-    engines: {node: '>= 18.0.0'}
+  openpgp@6.3.1:
+    resolution: {integrity: sha512-7oSPvmlKPojxFoyelT5DWPIAVmqWZh4qU/5pO6bdoShEtRpCw9Sye9IXUQj6EFM3XpgGssqccAr705YtTcLNQw==}
+    engines: {node: '>= 18.0.0', typescript: '>= 5.0.0'}
+    peerDependencies:
+      '@openpgp/web-stream-tools': ~0.3.0
+    peerDependenciesMeta:
+      '@openpgp/web-stream-tools':
+        optional: true
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -3810,8 +3815,8 @@ packages:
   proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
 
-  protobufjs@8.5.0:
-    resolution: {integrity: sha512-df1jWDPA5VIBNRtuAHjqr09f2qN5D4Vke1wYqOQg1XJ7ZDpA7BD6L7E4tyChgGRLB5hqk2m79Zsy0WHwV9a84A==}
+  protobufjs@8.6.1:
+    resolution: {integrity: sha512-s4qQPr4pU0W95iYnUInh95skjIg+3aM2sakYsw60QYanU+qWRDY2zQxOAQV6zU7ROJpSNDG9B+VSmk4dqdWWSA==}
     engines: {node: '>=12.0.0'}
 
   protocols@2.0.2:
@@ -3899,9 +3904,9 @@ packages:
   remark@15.0.1:
     resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
-  renovate@43.220.0:
-    resolution: {integrity: sha512-q3bkIyhnAV+oPirFeiI6jKIjN5IE1sbO7DHiAZgkfjCX68enwNsvm9N9dKYUBqo/GLdPhca9dERm4X0QP7LmvA==}
-    engines: {node: ^24.11.0, pnpm: ^10.0.0}
+  renovate@43.222.1:
+    resolution: {integrity: sha512-rNYfr0wyvPcb2klwdgxfvAc4ocz6dWDVcPUkq7UxsAWU3i8q2Azl326hUs6sEYPLsCl7lMYLd/CV9rNYBwep+Q==}
+    engines: {node: ^24.11.0, pnpm: ^11.0.0}
     hasBin: true
 
   require-directory@2.1.1:
@@ -4015,8 +4020,8 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  semver@7.8.1:
-    resolution: {integrity: sha512-rkVq3IXh+4FDGch+KwzX3aV9W3kO54GyEgpvBzSyctDA6Xtd7RJQV1xmXbeQp5v7+VzLOfVqiutSE6GICgPFvg==}
+  semver@7.8.2:
+    resolution: {integrity: sha512-c8jsqUZm3omBOI66G90z1Dyw5z622G8oLG+omfsHBJf3CWQTlOcwOjvOG6wtiNfW6anKm/eA39LMwMtMez2TiQ==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -5659,7 +5664,7 @@ snapshots:
 
   '@renovatebot/pep440@5.0.0': {}
 
-  '@renovatebot/pgp@1.3.12': {}
+  '@renovatebot/pgp@1.3.14': {}
 
   '@renovatebot/ruby-semver@5.0.0': {}
 
@@ -7326,7 +7331,7 @@ snapshots:
       define-properties: 1.2.1
       gopd: 1.2.0
 
-  google-auth-library@10.6.2:
+  google-auth-library@10.7.0:
     dependencies:
       base64-js: 1.5.1
       ecdsa-sig-formatter: 1.0.11
@@ -8410,7 +8415,7 @@ snapshots:
     dependencies:
       mimic-function: 5.0.1
 
-  openpgp@6.3.0:
+  openpgp@6.3.1:
     optional: true
 
   optionator@0.9.4:
@@ -8626,7 +8631,7 @@ snapshots:
 
   proto-list@1.2.4: {}
 
-  protobufjs@8.5.0:
+  protobufjs@8.6.1:
     dependencies:
       long: 5.3.2
 
@@ -8763,7 +8768,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@43.220.0(typanion@3.14.0):
+  renovate@43.222.1(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.1053.0
       '@aws-sdk/client-ec2': 3.1053.0
@@ -8797,7 +8802,7 @@ snapshots:
       '@renovatebot/good-enough-parser': 2.0.1
       '@renovatebot/osv-offline': 3.0.3
       '@renovatebot/pep440': 5.0.0
-      '@renovatebot/pgp': 1.3.12
+      '@renovatebot/pgp': 1.3.14
       '@renovatebot/ruby-semver': 5.0.0
       '@sindresorhus/is': 8.1.0
       '@yarnpkg/core': 4.8.0(typanion@3.14.0)
@@ -8832,7 +8837,7 @@ snapshots:
       github-url-from-git: 1.5.0
       glob: 13.0.6
       global-agent: 3.0.0
-      google-auth-library: 10.6.2
+      google-auth-library: 10.7.0
       got: 14.6.6
       graph-data-structure: 4.5.0
       handlebars: 4.7.9
@@ -8859,14 +8864,14 @@ snapshots:
       p-throttle: 8.1.0
       parse-link-header: 2.0.0
       prettier: 3.8.1
-      protobufjs: 8.5.0
+      protobufjs: 8.6.1
       punycode: 2.3.1
       remark: 15.0.1
       remark-gfm: 4.0.1
       remark-github: 12.0.0
       safe-stable-stringify: 2.5.0
       sax: 1.6.0
-      semver: 7.8.1
+      semver: 7.8.2
       semver-stable: 3.0.0
       semver-utils: 1.1.4
       shlex: 3.0.0
@@ -8883,10 +8888,11 @@ snapshots:
       yaml: 2.9.0
       zod: 4.4.3
     optionalDependencies:
-      openpgp: 6.3.0
+      openpgp: 6.3.1
       re2: 1.24.1(patch_hash=018babd22b7ce951bcd10d6246f1e541a7ac7ba212f7fa8985e774ece67d08e1)
     transitivePeerDependencies:
       - '@node-rs/xxhash'
+      - '@openpgp/web-stream-tools'
       - supports-color
       - typanion
 
@@ -9050,7 +9056,7 @@ snapshots:
 
   semver@6.3.1: {}
 
-  semver@7.8.1: {}
+  semver@7.8.2: {}
 
   semver@7.8.4: {}
 
