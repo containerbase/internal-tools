@@ -75,7 +75,7 @@ runs:
           (steps.node-modules-restore.outputs.cache-hit == 'true') && 'true' || ''
         }}' >> "$GITHUB_ENV"
 
-    - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+    - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
       if: inputs.node == 'true' || inputs.pnpm == 'true'
       with:
         cache: ${{ (env.CACHE_HIT != 'true' || runner.os == 'Windows') && inputs.read-cache == 'true' }}
