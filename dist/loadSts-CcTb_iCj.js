@@ -1,0 +1,2 @@
+import{a as e,t}from"./rolldown-runtime-DaDcL9Zw.js";import{n,t as r}from"./sts-udl3fq5O.js";var i=t((t=>{Object.defineProperty(t,"__esModule",{value:!0}),t.STSClient=t.AssumeRoleCommand=void 0;let i=(r(),e(n));Object.defineProperty(t,"AssumeRoleCommand",{enumerable:!0,get:function(){return i.AssumeRoleCommand}}),Object.defineProperty(t,"STSClient",{enumerable:!0,get:function(){return i.STSClient}})}));export default i();export{};
+//# sourceMappingURL=loadSts-CcTb_iCj.js.map
