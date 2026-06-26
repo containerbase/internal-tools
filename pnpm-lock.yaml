@@ -6,7 +6,7 @@ settings:
 
 overrides:
   dtrace-provider: '-'
-  protobufjs@8.0.1: 8.6.4
+  protobufjs@8.0.1: 8.6.5
   vite: 8.1.0
   vitest: 4.1.9
 
