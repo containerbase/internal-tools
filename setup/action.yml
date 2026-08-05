@@ -75,11 +75,12 @@ runs:
           (steps.node-modules-restore.outputs.cache-hit == 'true') && 'true' || ''
         }}' >> "$GITHUB_ENV"
 
-    - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+    - uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
       if: inputs.node == 'true' || inputs.pnpm == 'true'
       with:
         cache: ${{ (env.CACHE_HIT != 'true' || runner.os == 'Windows') && inputs.read-cache == 'true' }}
-        standalone: true
+        # node is installed by actions/setup-node below, install is handled by the dedicated step
+        install: false
 
     - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       if: inputs.node == 'true'
