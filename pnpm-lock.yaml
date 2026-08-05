@@ -95,8 +95,8 @@ importers:
         specifier: 24.13.3
         version: 24.13.3
       '@types/semver':
-        specifier: 7.7.1
-        version: 7.7.1
+        specifier: 7.8.0
+        version: 7.8.0
       '@vitest/coverage-v8':
         specifier: 4.1.10
         version: 4.1.10(vitest@4.1.10)
@@ -230,6 +230,9 @@ packages:
   '@aws-sdk/core@3.977.3':
     resolution: {integrity: sha512-6YZTpF5Zzl0KdSrztM0l6ErKdnXrnnodIDYfayHE9SFfZU8Ubxls7H2XnfWT121jgwiG+WP1z5kyfVDsH5V4qA==}
     engines: {node: '>=20.0.0'}
+    deprecated: |-
+      Deprecated due to Document number parsing bug in JSON, see
+        https://github.com/aws/aws-sdk-js-v3/issues/8246. Newer version available.
 
   '@aws-sdk/credential-provider-cognito-identity@3.972.63':
     resolution: {integrity: sha512-OyxiJkQ8woF00jZrjYmOoufc2RXyaL02K1v4JwavFluHoU31qL188Gw610S4GfWqkcInDRFJB/QPZTxBeM/FXA==}
@@ -1121,8 +1124,8 @@ packages:
   '@types/responselike@1.0.3':
     resolution: {integrity: sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==}
 
-  '@types/semver@7.7.1':
-    resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
+  '@types/semver@7.8.0':
+    resolution: {integrity: sha512-1mAINjtQCXXeLkJ9ehXkwOcBpqtLxiVtKhpUf83DdRNdQKV0iXZpaHYqRr7nj+wvxuJzoAmAwXI+sCNMv1CzLQ==}
 
   '@types/treeify@1.0.3':
     resolution: {integrity: sha512-hx0o7zWEUU4R2Amn+pjCBQQt23Khy/Dk56gQU5xi5jtPL1h83ACJCeFaB2M/+WO1AntvWrSoVnnCAfI1AQH4Cg==}
@@ -5635,7 +5638,7 @@ snapshots:
     dependencies:
       '@types/node': 24.13.3
 
-  '@types/semver@7.7.1': {}
+  '@types/semver@7.8.0': {}
 
   '@types/treeify@1.0.3': {}
 
@@ -5872,7 +5875,7 @@ snapshots:
   '@yarnpkg/core@4.9.0(typanion@3.14.0)':
     dependencies:
       '@arcanis/slice-ansi': 1.1.1
-      '@types/semver': 7.7.1
+      '@types/semver': 7.8.0
       '@types/treeify': 1.0.3
       '@yarnpkg/fslib': 3.1.5
       '@yarnpkg/libzip': 3.2.2(@yarnpkg/fslib@3.1.5)
