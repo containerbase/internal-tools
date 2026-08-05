@@ -47,7 +47,7 @@
     "@containerbase/eslint-plugin": "2.1.1",
     "@containerbase/istanbul-reports-html": "2.0.14",
     "@eslint/js": "10.0.1",
-    "@semantic-release/git": "10.0.1",
+    "@semantic-release/git": "11.0.1",
     "@semantic-release/github": "12.0.9",
     "@semantic-release/npm": "13.1.5",
     "@tsconfig/node24": "24.0.4",
