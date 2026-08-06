@@ -57,7 +57,7 @@
     "@types/node": "24.13.3",
     "@types/semver": "7.8.0",
     "@vitest/coverage-v8": "4.1.10",
-    "@vitest/eslint-plugin": "1.6.25",
+    "@vitest/eslint-plugin": "1.6.26",
     "@vitest/spy": "4.1.10",
     "conventional-changelog-conventionalcommits": "9.3.1",
     "eslint": "10.8.0",
