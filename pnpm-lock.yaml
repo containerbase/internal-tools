@@ -92,8 +92,8 @@ importers:
         specifier: 6.11.3
         version: 6.11.3
       '@types/luxon':
-        specifier: 3.7.3
-        version: 3.7.3
+        specifier: 3.7.4
+        version: 3.7.4
       '@types/node':
         specifier: 24.13.3
         version: 24.13.3
@@ -1094,8 +1094,8 @@ packages:
   '@types/keyv@3.1.4':
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
 
-  '@types/luxon@3.7.3':
-    resolution: {integrity: sha512-pE7BSbKHiojpl4v7iEzdfFLXXJaH5RPJxI3Wr4x3HU59l83PJfhcUx4mGPWq245+DCAENAzRF/+ZoYr2tJCe/g==}
+  '@types/luxon@3.7.4':
+    resolution: {integrity: sha512-V536ZAd6ZJztrrBlLcDFaaZrXNAL2E5uGmssWf/dpSiLkmkLScXUYhUBnWPmtW+cIqnNHzf6//TCMpIc9SCRRQ==}
 
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
@@ -5657,7 +5657,7 @@ snapshots:
     dependencies:
       '@types/node': 24.13.3
 
-  '@types/luxon@3.7.3': {}
+  '@types/luxon@3.7.4': {}
 
   '@types/mdast@4.0.4':
     dependencies:
