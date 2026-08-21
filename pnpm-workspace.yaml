@@ -27,7 +27,7 @@ overrides:
   dtrace-provider: '-'
   protobufjs@8.0.1: 8.7.2
   vite: 8.2.1
-  vitest: 4.1.10
+  vitest: 4.1.11
 
 patchedDependencies:
   '@baszalmstra/rattler': patches/@baszalmstra__rattler.patch
