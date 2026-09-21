@@ -46,8 +46,8 @@ importers:
         specifier: 15.1.0
         version: 15.1.0
       renovate:
-        specifier: 44.104.1
-        version: 44.104.1(supports-color@7.2.0)(typanion@3.14.0)
+        specifier: 44.104.2
+        version: 44.104.2(supports-color@7.2.0)(typanion@3.14.0)
       semver:
         specifier: 7.8.5
         version: 7.8.5
@@ -876,8 +876,8 @@ packages:
       '@opentelemetry/api':
         optional: true
 
-  '@renovatebot/detect-tools@4.0.19':
-    resolution: {integrity: sha512-FEQQQwSq1wQcySnanelF8g89QAjnhC9OqZcuICTrq31jywJBZGbWBFoeQArewc6vQFNl6K0DimGU1VkTxgFo7Q==}
+  '@renovatebot/detect-tools@4.0.20':
+    resolution: {integrity: sha512-hPIbS6EyL/Sy9Bcv3nO6szMDNWsdkCtbaZpJN4EtL93CiRp3N+6DJmNkr6wm6UnNuyaI1CpUzFjPeeTp2jMx5A==}
     engines: {node: '>=22.12.0', pnpm: '>=10.0.0'}
 
   '@renovatebot/good-enough-parser@2.0.1':
@@ -3889,8 +3889,8 @@ packages:
   remark@15.0.1:
     resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
-  renovate@44.104.1:
-    resolution: {integrity: sha512-7b/B7XDlaRH4Ct9wLcDbVCaWTIHP0v1grFS2J+QNnzs6OTfbVh4xD3JjA1c7ub8NecC6labHqnrTtj3qhxoTCA==}
+  renovate@44.104.2:
+    resolution: {integrity: sha512-3PdPKY+O8A/OhQdbkmqDQMmUbfoJiVH1zqLnReAVLkFdZkYnO0ZfzPHMWhSlMHYHqRij+EWaFRU52VibVSBiaQ==}
     engines: {node: ^24.11.0, pnpm: ^11.0.0}
     hasBin: true
 
@@ -5549,7 +5549,7 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
 
-  '@renovatebot/detect-tools@4.0.19':
+  '@renovatebot/detect-tools@4.0.20':
     dependencies:
       fs-extra: 11.4.0
       toml-eslint-parser: 1.0.3
@@ -8640,7 +8640,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@44.104.1(supports-color@7.2.0)(typanion@3.14.0):
+  renovate@44.104.2(supports-color@7.2.0)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.1117.0
       '@aws-sdk/client-ec2': 3.1117.0
@@ -8673,7 +8673,7 @@ snapshots:
       '@pnpm/parse-overrides': 1001.0.4
       '@qnighy/marshal': 0.1.3
       '@redis/client': 6.2.1(@opentelemetry/api@1.9.1)
-      '@renovatebot/detect-tools': 4.0.19
+      '@renovatebot/detect-tools': 4.0.20
       '@renovatebot/good-enough-parser': 2.0.1
       '@renovatebot/osv-offline': 3.0.11(supports-color@7.2.0)
       '@renovatebot/pep440': 5.0.1
