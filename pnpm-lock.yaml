@@ -46,8 +46,8 @@ importers:
         specifier: 15.1.0
         version: 15.1.0
       renovate:
-        specifier: 44.104.0
-        version: 44.104.0(supports-color@7.2.0)(typanion@3.14.0)
+        specifier: 44.104.1
+        version: 44.104.1(supports-color@7.2.0)(typanion@3.14.0)
       semver:
         specifier: 7.8.5
         version: 7.8.5
@@ -3889,8 +3889,8 @@ packages:
   remark@15.0.1:
     resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
-  renovate@44.104.0:
-    resolution: {integrity: sha512-5c6RwxWDPbCld5Idac9gReDRSCwQd0MAGdSbRV5BX1jmabo1IowsM5V3KbqDxH2CR8xBfiJMMy0JiBCMwF1NCQ==}
+  renovate@44.104.1:
+    resolution: {integrity: sha512-7b/B7XDlaRH4Ct9wLcDbVCaWTIHP0v1grFS2J+QNnzs6OTfbVh4xD3JjA1c7ub8NecC6labHqnrTtj3qhxoTCA==}
     engines: {node: ^24.11.0, pnpm: ^11.0.0}
     hasBin: true
 
@@ -4646,9 +4646,6 @@ packages:
   yoctocolors@2.2.0:
     resolution: {integrity: sha512-xYqdZFUK/VYazNl/oCDYN+3WloWQwMfZxBoiNt6qNyk+xfOdi598muWE42rNZFp1kNOiqW936q5RhUdnpqElSg==}
     engines: {node: '>=18'}
-
-  zod@4.6.4:
-    resolution: {integrity: sha512-AXSD6hvGdvRjajG/l1cC+d6IrhH+sjmPKtYeQdJIK8MFJl3LyClzS+o/YsVC+zQZPupAaeH5skwwm8YqYH7BqA==}
 
   zod@4.6.5:
     resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
@@ -8643,7 +8640,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@44.104.0(supports-color@7.2.0)(typanion@3.14.0):
+  renovate@44.104.1(supports-color@7.2.0)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.1117.0
       '@aws-sdk/client-ec2': 3.1117.0
@@ -8767,7 +8764,7 @@ snapshots:
       xmldoc: 3.0.0
       yaml: 2.9.1
       yauzl: 3.4.0
-      zod: 4.6.4
+      zod: 4.6.5
     optionalDependencies:
       openpgp: 6.3.1
       re2: 1.26.1(patch_hash=018babd22b7ce951bcd10d6246f1e541a7ac7ba212f7fa8985e774ece67d08e1)
@@ -9539,8 +9536,6 @@ snapshots:
   yocto-queue@1.2.2: {}
 
   yoctocolors@2.2.0: {}
-
-  zod@4.6.4: {}
 
   zod@4.6.5: {}
 
