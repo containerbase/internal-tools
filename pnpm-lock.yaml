@@ -65,8 +65,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0(eslint-plugin-promise@7.3.0(eslint@10.12.0(supports-color@7.2.0)))(eslint@10.12.0(supports-color@7.2.0))
       '@containerbase/istanbul-reports-html':
-        specifier: 2.0.20
-        version: 2.0.20
+        specifier: 2.0.21
+        version: 2.0.21
       '@eslint/js':
         specifier: 10.0.1
         version: 10.0.1(eslint@10.12.0(supports-color@7.2.0))
@@ -369,8 +369,8 @@ packages:
       eslint: ^9.0.0 || ^10.0.0
       eslint-plugin-promise: ^7.0.0
 
-  '@containerbase/istanbul-reports-html@2.0.20':
-    resolution: {integrity: sha512-48k2Gk5zmGEOoWGsYI76tmqn83OpCEkhMUlg+BYhYi7CMvnUt2KWuWcF8WJnKmb3ckk8ByigIQ1zmxVAdu84Lg==}
+  '@containerbase/istanbul-reports-html@2.0.21':
+    resolution: {integrity: sha512-nO2s9hlUOVV8TxEho7aK0ne+SFaH8v6ZyKQVlJg7BY9RLkwDkMBjtPNP/y/Xlz8VSkRjeWQ53DN08DnKxfcSKA==}
     engines: {node: ^22.11.0 || >=24.0.0, pnpm: '>=10.0.0'}
 
   '@emnapi/core@1.10.0':
@@ -5017,7 +5017,7 @@ snapshots:
       eslint: 10.12.0(supports-color@7.2.0)
       eslint-plugin-promise: 7.3.0(eslint@10.12.0(supports-color@7.2.0))
 
-  '@containerbase/istanbul-reports-html@2.0.20':
+  '@containerbase/istanbul-reports-html@2.0.21':
     dependencies:
       istanbul-reports: 3.2.0
 
