@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { getInput } from '@actions/core';
 import {
   isNonEmptyArray,
@@ -6,8 +7,15 @@ import {
   isString,
 } from '@sindresorhus/is';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
-import { getArch, getArg, getDistro, isDryRun, readJson } from '../../util';
-import { readDockerConfig } from '../../utils/config';
+import {
+  exec,
+  getArch,
+  getArg,
+  getDistro,
+  isDryRun,
+  readJson,
+} from '../../util';
+import { getBinaryName, readDockerConfig } from '../../utils/config';
 import {
   DockerArch,
   DockerPlatform,
@@ -73,4 +81,27 @@ export async function runBuilder(ws: string, version: string): Promise<void> {
     args.push('--platform', DockerPlatform[arch as DockerArch]);
   }
   await dockerRun(...args, 'builder', version);
+}
+
+/**
+ * Runs the optional `test` script from the config against the freshly built archive.
+ * The script gets the absolute archive path and the version as arguments and inherits
+ * the environment, e.g. `DISTRO` and `ARCH`. Does nothing when no test is configured.
+ */
+export async function runTest(
+  ws: string,
+  cfg: BinaryBuilderConfig,
+  version: string,
+): Promise<void> {
+  if (!isNonEmptyString(cfg.test)) {
+    return;
+  }
+  const archive = resolve(ws, '.cache', getBinaryName(cfg, version));
+  log.info('Running test:', version);
+  try {
+    await exec(resolve(ws, cfg.test), [archive, version], { cwd: ws });
+  } catch (e) {
+    log.error('Test failed:', version);
+    throw e;
+  }
 }

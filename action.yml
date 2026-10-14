@@ -22,7 +22,7 @@ inputs:
     description: 'Github PAT, commands which needs a token will fail build without'
     required: false
   config:
-    description: 'docker-builder: config file'
+    description: 'docker-builder, binary-builder: config file, see schema.json'
     required: false
     default: builder.json
   last-only:
