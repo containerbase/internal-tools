@@ -60,6 +60,12 @@ const ConfigFile = z.object({
    * otherwise process from lowest to highest.
    */
   reverse: z.boolean().optional(),
+
+  /**
+   * binary-builder: script path relative to the workspace, run after each build
+   * and before the upload with the archive path and the version as arguments.
+   */
+  test: z.string().optional(),
 });
 
 export type ConfigFile = z.infer<typeof ConfigFile>;
