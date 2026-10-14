@@ -4,6 +4,7 @@ import {
   createBuilderImage,
   getConfig,
   runBuilder,
+  runTest,
 } from '../../../src/commands/binary/utils';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
@@ -80,6 +81,42 @@ describe('commands/binary/utils', () => {
 
       expect(docker.dockerRun).toHaveBeenCalledTimes(1);
       expect(docker.dockerRun.mock.calls).toMatchSnapshot();
+    });
+  });
+
+  describe('runTest', () => {
+    it('does nothing without a test', async () => {
+      await runTest('/ws', partial<BinaryBuilderConfig>({ image: 'git' }), '1');
+
+      expect(utils.exec).not.toHaveBeenCalled();
+    });
+
+    it('runs the test script with archive and version', async () => {
+      utils.getDistro.mockReturnValueOnce('noble');
+      utils.getArch.mockReturnValueOnce('aarch64');
+      await runTest(
+        '/ws',
+        partial<BinaryBuilderConfig>({ image: 'git', test: 'bin/test.sh' }),
+        '2.51.0',
+      );
+
+      expect(utils.exec).toHaveBeenCalledExactlyOnceWith(
+        '/ws/bin/test.sh',
+        ['/ws/.cache/git-2.51.0-noble-aarch64.tar.xz', '2.51.0'],
+        { cwd: '/ws' },
+      );
+    });
+
+    it('rethrows a failing test', async () => {
+      utils.exec.mockRejectedValueOnce(new Error('test failed'));
+
+      await expect(
+        runTest(
+          '/ws',
+          partial<BinaryBuilderConfig>({ image: 'git', test: 'bin/test.sh' }),
+          '2.51.0',
+        ),
+      ).rejects.toThrow('test failed');
     });
   });
 });

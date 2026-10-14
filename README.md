@@ -38,6 +38,24 @@ Configure docker with buildx on second harddrive.
     command: docker-config
 ```
 
+### binary-builder
+
+Build each missing version with the repository's `builder.sh`, then upload the archive and its checksum to the GitHub release.
+The versions to build are configured in `builder.json` (see `schema.json`).
+
+To test an archive before it gets uploaded, set `test` in `builder.json` to a script path relative to the workspace.
+The script runs on the host after each build, also in dry-run mode, with the absolute archive path and the version as arguments and with the environment of the action, e.g. `DISTRO` and `ARCH`.
+It can start the distro images to test in itself.
+When it fails, the version is marked as failed and nothing gets uploaded for it.
+
+```json
+{
+  "image": "git",
+  "startVersion": "2.40.0",
+  "test": "bin/test.sh"
+}
+```
+
 ## local testing
 
 Without setting `CI=true` the action will always run in dry-run mode. Input must be prefixed with `INPUT_` and uppercase name.

@@ -21,7 +21,7 @@ import {
 import log from '../../utils/logger';
 import { createChecksum } from '../../utils/sum';
 import type { BinaryBuilderConfig } from '../../utils/types';
-import { createBuilderImage, getConfig, runBuilder } from './utils';
+import { createBuilderImage, getConfig, runBuilder, runTest } from './utils';
 
 let toBuild = 99;
 
@@ -121,6 +121,7 @@ export async function run(): Promise<void> {
       try {
         log('Runing builder:', version);
         await runBuilder(ws, version);
+        await runTest(ws, cfg, version);
         await createChecksum(cfg, version);
 
         if (cfg.dryRun) {

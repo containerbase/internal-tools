@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import * as _core from '@actions/core';
 import * as _datasources from 'renovate/dist/modules/datasource';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -5,6 +6,7 @@ import { run } from '../../../src/commands/binary';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
 import * as _github from '../../../src/utils/github';
+import * as _sum from '../../../src/utils/sum';
 
 vi.mock('renovate/dist/modules/datasource');
 vi.mock('../../../src/util');
@@ -21,6 +23,7 @@ const utils = vi.mocked(_utils);
 const docker = vi.mocked(_docker);
 const datasources = vi.mocked(_datasources);
 const github = vi.mocked(_github);
+const sum = vi.mocked(_sum);
 const version = '2.7.2';
 
 describe('commands/binary/index', () => {
@@ -204,6 +207,83 @@ describe('commands/binary/index', () => {
 
     expect(core.setFailed).toHaveBeenCalledTimes(1);
     expect(core.setFailed.mock.calls).toMatchSnapshot();
+  });
+
+  describe('test hook', () => {
+    beforeEach(() => {
+      utils.readJson.mockReset();
+      utils.readJson.mockResolvedValueOnce({
+        image: 'ruby',
+        datasource: 'github-releases',
+        startVersion: '2.5.0',
+        test: 'bin/test.sh',
+      });
+      utils.readFile.mockResolvedValue(
+        `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
+      );
+      datasources.getPkgReleases.mockResolvedValueOnce({
+        releases: [{ version }],
+      });
+      github.hasAsset.mockResolvedValueOnce(false);
+    });
+
+    it('runs the test after the build and before the upload', async () => {
+      await run();
+
+      expect(utils.exec).toHaveBeenCalledExactlyOnceWith(
+        resolve('bin/test.sh'),
+        [resolve('.cache/ruby-2.7.2.tar.xz'), version],
+        { cwd: '.' },
+      );
+      const testOrder = utils.exec.mock.invocationCallOrder[0]!;
+      expect(docker.dockerRun.mock.invocationCallOrder[0]).toBeLessThan(
+        testOrder,
+      );
+      expect(sum.createChecksum.mock.invocationCallOrder[0]).toBeGreaterThan(
+        testOrder,
+      );
+      expect(github.uploadAsset).toHaveBeenCalledTimes(2);
+      expect(core.setFailed).not.toHaveBeenCalled();
+    });
+
+    it('fails the version when the test fails', async () => {
+      utils.exec.mockRejectedValueOnce(new Error('test failed'));
+
+      await run();
+
+      expect(utils.exec).toHaveBeenCalledOnce();
+      expect(sum.createChecksum).not.toHaveBeenCalled();
+      expect(github.uploadAsset).not.toHaveBeenCalled();
+      expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
+        `Versions failed: ${version}`,
+      );
+    });
+
+    it('runs the test in dry-run', async () => {
+      utils.isDryRun.mockReturnValueOnce(true);
+
+      await run();
+
+      expect(utils.exec).toHaveBeenCalledOnce();
+      expect(github.uploadAsset).not.toHaveBeenCalled();
+      expect(core.setFailed).not.toHaveBeenCalled();
+    });
+  });
+
+  it('does not run a test when none is configured', async () => {
+    utils.readFile.mockResolvedValue(
+      `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
+    );
+    datasources.getPkgReleases.mockResolvedValueOnce({
+      releases: [{ version }],
+    });
+    github.hasAsset.mockResolvedValueOnce(false);
+
+    await run();
+
+    expect(docker.dockerRun).toHaveBeenCalledOnce();
+    expect(utils.exec).not.toHaveBeenCalled();
+    expect(github.uploadAsset).toHaveBeenCalledTimes(2);
   });
 
   it('continues on errors', async () => {
