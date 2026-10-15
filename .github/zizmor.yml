@@ -1,0 +1,4 @@
+rules:
+  # the local actions are referenced with `./`, like in the other containerbase repos
+  self-repository:
+    disable: true

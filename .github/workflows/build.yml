@@ -18,12 +18,17 @@ env:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 10
+    env:
+      # node and pnpm come from the setup action, so `mise exec` must not
+      # install them again
+      MISE_EXEC_AUTO_INSTALL: 'false'
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           show-progress: false
 
       - uses: ./setup
@@ -41,6 +46,21 @@ jobs:
             echo "Cache key invalid: ${CACHE_KEY}"
             exit 1
           fi
+
+      - name: Install the workflow linters
+        uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
+        with:
+          install_args: jactionlint shellcheck zizmor
+
+      # the checkout includes the local actions, so jactionlint validates their
+      # use and zizmor audits them
+      - name: Check workflow files
+        run: mise exec -- jactionlint --color
+
+      - name: Run zizmor
+        run: mise exec -- zizmor --config .github/zizmor.yml --format github .
+        env:
+          GH_TOKEN: ${{ github.token }}
 
   test:
     needs:
@@ -64,6 +84,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 10 # required by codecov
+          persist-credentials: false
           show-progress: false
 
       - uses: ./setup
@@ -107,6 +128,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           show-progress: false
 
       - uses: ./setup
@@ -218,20 +240,21 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           show-progress: false
 
       - name: Prepare OS
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          echo 'scriptShell: "C:\\Program Files\\git\\bin\\bash.exe"' >> pnpm-workspace.yaml
+          printf '%s\n' 'scriptShell: "C:\\Program Files\\git\\bin\\bash.exe"' >> pnpm-workspace.yaml
 
       - name: fetch node version
         id: node-version
         shell: bash
         run: |
           node_version=$(grep 'using: node' action.yml | awk -F': ' '{print $2}' | tr -d 'node')
-          echo "node_version=${node_version}" >> $GITHUB_OUTPUT
+          echo "node_version=${node_version}" >> "$GITHUB_OUTPUT"
 
       - uses: ./setup
         with:
@@ -242,10 +265,12 @@ jobs:
 
       - name: validate cache key
         shell: bash
+        env:
+          NODE_VERSION: ${{ steps.node-version.outputs.node_version }}
         run: |
           os="${{ runner.os != 'Linux' && format('-{0}', runner.os) || '' }}"
           arch="${{ runner.arch != 'X64' && format('-{0}', runner.arch) || '' }}"
-          re="^node_modules${os}${arch}-${{ steps.node-version.outputs.node_version }}-[0-9a-z]+$"
+          re="^node_modules${os}${arch}-${NODE_VERSION}-[0-9a-z]+$"
           if [[ ${CACHE_KEY} =~ $re ]]; then
             echo "Cache key ok: ${CACHE_KEY}"
           else
@@ -260,7 +285,7 @@ jobs:
       - test
       - e2e
       - e2e-os
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 1
     if: always()
     steps:
@@ -311,23 +336,26 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      # the job pushes the release branch with the persisted credentials
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
+        with: # zizmor: ignore[artipacked]
           fetch-depth: 0
           ref: 'release'
           show-progress: false
 
       - name: fetch pr
         if: ${{github.event_name == 'pull_request'}}
+        env:
+          REF: ${{ github.ref }}
         run: |
-          git fetch origin +${{ github.sha }}:${{ github.ref }}
+          git fetch origin "+${GITHUB_SHA}:${REF}"
 
       - name: Merge
         id: merge
         run: |
-          git merge --no-ff -Xtheirs -m 'skip: merge (${{ github.sha }}) [skip release]' ${{ github.sha }}
+          git merge --no-ff -Xtheirs -m "skip: merge (${GITHUB_SHA}) [skip release]" "${GITHUB_SHA}"
           commit=$(git rev-parse HEAD)
-          echo "commit=${commit}" >> $GITHUB_OUTPUT
+          echo "commit=${commit}" >> "$GITHUB_OUTPUT"
 
       - uses: ./setup
         with:
@@ -340,8 +368,9 @@ jobs:
       - name: Release
         run: |
           # override for semantic-release
-          export GITHUB_REF=refs/heads/release GITHUB_SHA=${{ steps.merge.outputs.commit }}
+          export GITHUB_REF=refs/heads/release GITHUB_SHA="${MERGE_COMMIT}"
           pnpm release
         if: ${{github.ref == 'refs/heads/main'}}
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          MERGE_COMMIT: ${{ steps.merge.outputs.commit }}

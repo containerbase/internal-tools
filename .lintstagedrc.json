@@ -2,5 +2,10 @@
   "*.sh": "shellcheck",
   ".husky/*": "shellcheck",
   "*.{js,ts,cjs,mjs}": "eslint --fix",
+  ".github/workflows/*.{yml,yaml}": [
+    "jactionlint",
+    "zizmor --offline --config .github/zizmor.yml"
+  ],
+  "action.{yml,yaml}": "zizmor --offline --config .github/zizmor.yml",
   "*": "prettier --ignore-unknown --write"
 }
