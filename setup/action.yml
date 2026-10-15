@@ -5,6 +5,11 @@ inputs:
     description: 'Checkout repository'
     required: false
     default: 'true'
+  persist-credentials:
+    description: 'Persist the git credentials of the checkout, set it to false when the job does not push'
+    required: false
+    # TODO: default to 'false' in the next major
+    default: 'true'
   node:
     description: 'Setup node and pnpm'
     required: false
@@ -40,8 +45,8 @@ runs:
   steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       if: inputs.checkout == 'true'
-      # callers may push with the persisted credentials after the setup
-      with: # zizmor: ignore[artipacked]
+      with:
+        persist-credentials: ${{ inputs.persist-credentials }}
         show-progress: false
 
     - shell: bash
