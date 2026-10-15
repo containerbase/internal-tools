@@ -6,6 +6,7 @@ import { run } from '../../../src/commands/binary';
 import * as _utils from '../../../src/util';
 import * as _docker from '../../../src/utils/docker/common';
 import * as _github from '../../../src/utils/github';
+import log from '../../../src/utils/logger';
 import * as _sum from '../../../src/utils/sum';
 
 vi.mock('renovate/dist/modules/datasource');
@@ -284,6 +285,88 @@ describe('commands/binary/index', () => {
     expect(docker.dockerRun).toHaveBeenCalledOnce();
     expect(utils.exec).not.toHaveBeenCalled();
     expect(github.uploadAsset).toHaveBeenCalledTimes(2);
+  });
+
+  describe('build limit', () => {
+    const versions = ['2.7.0', '2.7.1', '2.7.2'];
+
+    beforeEach(() => {
+      utils.readFile.mockResolvedValue(
+        `# renovate: datasource=ruby-version depName=ruby-version versioning=ruby\nARG RUBY_VERSION=${version}\n`,
+      );
+      datasources.getPkgReleases.mockResolvedValueOnce({
+        releases: versions.map((v) => ({ version: v })),
+      });
+    });
+
+    /** Mocks the `build-limit` input. */
+    function mockBuildLimit(limit: string): void {
+      utils.getArg.mockImplementation((name, o) =>
+        o?.multi ? [] : name === 'build-limit' ? limit : '',
+      );
+    }
+
+    it('builds all missing versions by default', async () => {
+      await run();
+
+      expect(docker.dockerRun.mock.calls.map((c) => c.at(-1))).toEqual(
+        versions,
+      );
+      expect(log.info).not.toHaveBeenCalledWith(
+        'Build limit reached:',
+        expect.anything(),
+      );
+      expect(core.setFailed).not.toHaveBeenCalled();
+    });
+
+    it('stops after the limit', async () => {
+      mockBuildLimit('2');
+
+      await run();
+
+      expect(docker.dockerRun.mock.calls.map((c) => c.at(-1))).toEqual([
+        '2.7.0',
+        '2.7.1',
+      ]);
+      expect(github.uploadAsset).toHaveBeenCalledTimes(4);
+      expect(log.info).toHaveBeenCalledWith('Build limit reached:', 2);
+      expect(core.setFailed).not.toHaveBeenCalled();
+    });
+
+    it('does not count existing versions', async () => {
+      mockBuildLimit('1');
+      github.hasAsset
+        // 2.7.0: archive and checksum exist
+        .mockResolvedValueOnce(true)
+        .mockResolvedValueOnce(true)
+        // 2.7.1: only the checksum is missing
+        .mockResolvedValueOnce(true)
+        .mockResolvedValueOnce(false)
+        // 2.7.2: missing
+        .mockResolvedValueOnce(false);
+      github.downloadAsset.mockResolvedValueOnce(true);
+
+      await run();
+
+      expect(docker.dockerRun).toHaveBeenCalledOnce();
+      expect(docker.dockerRun.mock.calls[0]?.at(-1)).toBe('2.7.2');
+      expect(log.info).not.toHaveBeenCalledWith(
+        'Build limit reached:',
+        expect.anything(),
+      );
+      expect(core.setFailed).not.toHaveBeenCalled();
+    });
+
+    it('fails on an invalid limit', async () => {
+      mockBuildLimit('0');
+
+      await run();
+
+      expect(docker.dockerRun).not.toHaveBeenCalled();
+      expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
+        new Error('Invalid build-limit: 0'),
+      );
+    });
   });
 
   it('continues on errors', async () => {
