@@ -5,6 +5,11 @@ inputs:
     description: 'Checkout repository'
     required: false
     default: 'true'
+  persist-credentials:
+    description: 'Persist the git credentials of the checkout, set it to false when the job does not push'
+    required: false
+    # TODO: default to 'false' in the next major
+    default: 'true'
   node:
     description: 'Setup node and pnpm'
     required: false
@@ -41,17 +46,24 @@ runs:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       if: inputs.checkout == 'true'
       with:
+        persist-credentials: ${{ inputs.persist-credentials }}
         show-progress: false
 
     - shell: bash
       if: inputs.node == 'true' || inputs.pnpm == 'true'
-      run: |
+      env:
+        NODE_VERSION: ${{ inputs.node-version }}
+      # CACHE_KEY is read by later steps and callers; the only input in it is
+      # the validated node version
+      run: | # zizmor: ignore[github-env]
+        if [[ ! "${NODE_VERSION}" =~ ^[0-9A-Za-z.+-]*$ ]]; then
+          echo "::error::Invalid node-version input: ${NODE_VERSION}"
+          exit 1
+        fi
         os='${{ runner.os != 'Linux' && format('-{0}', runner.os) || '' }}'
         arch='${{ runner.arch != 'X64' && format('-{0}', runner.arch) || '' }}'
-        if [ -n "${{ inputs.node-version }}" ]; then
-          echo "CACHE_KEY=node_modules${os}${arch}-${{
-            inputs.node-version
-          }}-${{
+        if [ -n "${NODE_VERSION}" ]; then
+          echo "CACHE_KEY=node_modules${os}${arch}-${NODE_VERSION}-${{
             hashFiles('package.json', 'pnpm-lock.yaml', 'pnpm-workspace.yaml')
           }}" >> "$GITHUB_ENV"
         else
@@ -70,10 +82,10 @@ runs:
 
     - shell: bash
       if: (inputs.node == 'true' || inputs.pnpm == 'true') && inputs.read-cache == 'true'
-      run: |
-        echo 'CACHE_HIT=${{
-          (steps.node-modules-restore.outputs.cache-hit == 'true') && 'true' || ''
-        }}' >> "$GITHUB_ENV"
+      env:
+        CACHE_HIT: ${{ (steps.node-modules-restore.outputs.cache-hit == 'true') && 'true' || '' }}
+      # CACHE_HIT is read by later steps and callers, it's only ever 'true' or empty
+      run: echo "CACHE_HIT=${CACHE_HIT}" >> "$GITHUB_ENV" # zizmor: ignore[github-env]
 
     - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
       if: inputs.node == 'true' || inputs.pnpm == 'true'

@@ -1,0 +1,5 @@
+paths:
+  .github/workflows/**/*.{yml,yaml}:
+    ignore:
+      # `uses: ./` runs the compiled action, `dist/` only exists after `pnpm compile`
+      - 'file "dist/index\.js" does not exist'
