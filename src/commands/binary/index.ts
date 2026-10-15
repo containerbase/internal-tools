@@ -23,8 +23,9 @@ import { createChecksum } from '../../utils/sum';
 import type { BinaryBuilderConfig } from '../../utils/types';
 import { createBuilderImage, getConfig, runBuilder, runTest } from './utils';
 
-let toBuild = 99;
-
+/**
+ * Builds, tests and uploads the missing versions, at most `build-limit` per run.
+ */
 export async function run(): Promise<void> {
   try {
     log.info('Builder started');
@@ -58,6 +59,7 @@ export async function run(): Promise<void> {
     await createBuilderImage(ws, cfg);
 
     const failed: string[] = [];
+    let toBuild = cfg.buildLimit;
 
     for (const version of builds.versions) {
       if (cfg.dryRun) {
@@ -108,13 +110,10 @@ export async function run(): Promise<void> {
         }
       }
 
-      /* c8 ignore start */
-      // istanbul ignore if
       if (toBuild-- <= 0) {
-        log.info('Build limit reached');
+        log.info('Build limit reached:', cfg.buildLimit);
         break;
       }
-      /* c8 ignore stop */
 
       log.info('Processing version:', version);
 

@@ -42,6 +42,7 @@ Configure docker with buildx on second harddrive.
 
 Build each missing version with the repository's `builder.sh`, then upload the archive and its checksum to the GitHub release.
 The versions to build are configured in `builder.json` (see `schema.json`).
+The `build-limit` input caps the number of versions built in one run (default `99`), so a run fits the job timeout.
 
 To test an archive before it gets uploaded, set `test` in `builder.json` to a script path relative to the workspace.
 The script runs on the host after each build, also in dry-run mode, with the absolute archive path and the version as arguments and with the environment of the action, e.g. `DISTRO` and `ARCH`.
