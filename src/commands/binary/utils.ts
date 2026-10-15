@@ -25,6 +25,27 @@ import {
 import log from '../../utils/logger';
 import type { BinaryBuilderConfig, ConfigFile } from '../../utils/types';
 
+const defaultBuildLimit = 99;
+
+/**
+ * Reads the `build-limit` input.
+ * Returns the default when it's empty and throws when it isn't a positive integer.
+ */
+function getBuildLimit(): number {
+  const value = getArg('build-limit');
+  if (!isNonEmptyString(value)) {
+    return defaultBuildLimit;
+  }
+  const limit = Number(value);
+  if (!Number.isSafeInteger(limit) || limit <= 0) {
+    throw new Error(`Invalid build-limit: ${value}`);
+  }
+  return limit;
+}
+
+/**
+ * Reads the binary builder config from the config file and the action inputs.
+ */
 export async function getConfig(): Promise<BinaryBuilderConfig> {
   const configFile = getInput('config') || 'builder.json';
 
@@ -50,6 +71,7 @@ export async function getConfig(): Promise<BinaryBuilderConfig> {
     dryRun: isDryRun(),
     lastOnly: getArg('last-only') == 'true',
     buildArgs: getArg('build-args', { multi: true }),
+    buildLimit: getBuildLimit(),
     versioning: cfg.versioning ?? getDefaultVersioning(cfg.datasource),
   } as BinaryBuilderConfig;
 }

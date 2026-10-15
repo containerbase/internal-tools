@@ -33,6 +33,10 @@ inputs:
     description: 'docker-builder: no docker push'
     required: false
     default: 'false'
+  build-limit:
+    description: 'binary-builder: maximum number of versions to build in one run'
+    required: false
+    default: '99'
   build-args:
     description: 'docker-builder: additional docker build args'
     required: false

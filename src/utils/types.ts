@@ -93,6 +93,8 @@ export type DockerBuilderConfig = z.infer<typeof DockerBuilderConfig>;
 
 export type BinaryBuilderConfig = {
   buildArgs?: string[];
+  /** Maximum number of versions to build in one run. */
+  buildLimit: number;
   datasource: string;
   depName: string;
   ignoredVersions: string[];

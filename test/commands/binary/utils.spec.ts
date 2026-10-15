@@ -52,6 +52,27 @@ describe('commands/binary/utils', () => {
       utils.readJson.mockResolvedValueOnce(null);
       await expect(getConfig()).rejects.toThrow();
     });
+
+    it('reads the build limit', async () => {
+      utils.getArg.mockImplementation((name, o) =>
+        o?.multi ? [] : name === 'build-limit' ? '5' : '',
+      );
+      utils.readJson.mockResolvedValueOnce({ image: 'git' });
+      expect(await getConfig()).toMatchObject({ buildLimit: 5 });
+    });
+
+    it.each(['0', '-1', '1.5', 'abc'])(
+      'throws on build limit %s',
+      async (limit) => {
+        utils.getArg.mockImplementation((name, o) =>
+          o?.multi ? [] : name === 'build-limit' ? limit : '',
+        );
+        utils.readJson.mockResolvedValueOnce({ image: 'git' });
+        await expect(getConfig()).rejects.toThrow(
+          `Invalid build-limit: ${limit}`,
+        );
+      },
+    );
   });
 
   describe('createBuilderImage', () => {
