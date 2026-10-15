@@ -64,3 +64,15 @@ Without setting `CI=true` the action will always run in dry-run mode. Input must
 export INPUT_COMMAND=docker-builder
 pnpm start
 ```
+
+## Development
+
+`mise install` installs Node.js, pnpm, jactionlint, shellcheck, zizmor and the dependencies.
+
+```sh
+pnpm lint                                # eslint and prettier
+jactionlint                              # the GitHub workflows
+zizmor --config .github/zizmor.yml .     # security audit of the workflows and actions
+```
+
+CI runs jactionlint and zizmor through mise in the `setup` job, and the commit hook runs them on staged workflow and action files.
