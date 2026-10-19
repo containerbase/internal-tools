@@ -306,7 +306,6 @@ export async function downloadAsset(
     const name = getBinaryName(cfg, version);
     await writeFile(`.cache/${name}`, buffer);
   } catch (e) {
-    // eslint-disable-next-line
     log(`Version ${version} failed: ${e.message}`, e.stack);
     return false;
   }

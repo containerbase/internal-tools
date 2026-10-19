@@ -140,7 +140,7 @@ let _pkg: Promise<string | undefined>;
  * @param file a file to resolve
  */
 export async function resolveFile(file: string): Promise<string> {
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  // oxlint-disable-next-line typescript/no-misused-promises
   if (!_pkg) {
     _pkg = findUp('package.json', { cwd: __dirname, type: 'file' });
   }
