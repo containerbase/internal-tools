@@ -93,8 +93,8 @@ jobs:
 
       - name: lint
         run: |
-          pnpm eslint -f gha
-          pnpm prettier
+          pnpm oxlint --format github
+          pnpm oxfmt
 
       - run: pnpm compile
 

@@ -118,7 +118,7 @@ describe('util', () => {
 
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
-      expect(await util.readJson('.prettierrc.json')).toMatchObject({
+      expect(await util.readJson('.oxfmtrc.json')).toMatchObject({
         singleQuote: true,
         trailingComma: 'all',
       });

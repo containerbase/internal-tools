@@ -95,7 +95,6 @@ export async function run(): Promise<void> {
             await uploadVersionAssetIfNeeded(api, version, cfg, builds);
           } catch (e) {
             failed.push(version);
-            // eslint-disable-next-line
             log(`Version ${version} failed: ${e.message}`);
           }
           continue;
@@ -137,7 +136,6 @@ export async function run(): Promise<void> {
         await uploadVersionAssetIfNeeded(api, version, cfg, builds);
       } catch (e) {
         failed.push(version);
-        // eslint-disable-next-line
         log(`Version ${version} failed: ${e.message}`, e.stack);
       }
     }
