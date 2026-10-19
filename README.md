@@ -71,7 +71,7 @@ pnpm start
 `mise install` installs Node.js, pnpm, jactionlint, shellcheck, zizmor and the dependencies.
 
 ```sh
-pnpm lint                                # eslint and prettier
+pnpm lint                                # oxlint and oxfmt
 jactionlint                              # the GitHub workflows
 zizmor --config .github/zizmor.yml .     # security audit of the workflows and actions
 ```
