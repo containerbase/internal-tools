@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@containerbase/istanbul-reports-html": "2.0.22",
-    "@containerbase/oxlint-plugin": "1.0.0",
+    "@containerbase/oxlint-plugin": "1.0.2",
     "@semantic-release/git": "11.0.1",
     "@semantic-release/github": "12.0.10",
     "@semantic-release/npm": "13.2.0",
@@ -56,7 +56,6 @@
     "@types/luxon": "3.7.6",
     "@types/node": "24.19.2",
     "@types/semver": "7.8.0",
-    "@typescript/native": "npm:typescript@7.0.2",
     "@vitest/coverage-v8": "4.1.12",
     "@vitest/spy": "4.1.12",
     "conventional-changelog-conventionalcommits": "9.3.1",
@@ -72,7 +71,7 @@
     "rimraf": "6.1.3",
     "rolldown": "1.2.14",
     "semantic-release": "25.0.9",
-    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "typescript": "7.0.2",
     "vite": "8.3.4",
     "vitest": "4.1.12"
   },
