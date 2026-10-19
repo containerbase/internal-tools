@@ -12,10 +12,7 @@ const keys: (keyof ConfigFile)[] = [
   'latestVersion',
 ];
 
-function checkArgs(
-  cfg: ConfigFile,
-  groups: Record<string, string | undefined>,
-): void {
+function checkArgs(cfg: ConfigFile, groups: Record<string, string | undefined>): void {
   for (const key of keys) {
     if (!isString(cfg[key]) && isNonEmptyString(groups[key])) {
       cfg[key] = groups[key] as never;
@@ -37,11 +34,7 @@ export async function readDockerConfig(cfg: ConfigFile): Promise<void> {
   }
 }
 
-export function getBinaryName(
-  cfg: BinaryBuilderConfig,
-  version: string,
-  sum?: boolean,
-): string {
+export function getBinaryName(cfg: BinaryBuilderConfig, version: string, sum?: boolean): string {
   const distro = getDistro();
   const arch = getArch();
   const ext = sum ? `.${sumType}` : '';

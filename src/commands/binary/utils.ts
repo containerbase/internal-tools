@@ -1,27 +1,10 @@
 import { resolve } from 'node:path';
 import { getInput } from '@actions/core';
-import {
-  isNonEmptyArray,
-  isNonEmptyString,
-  isObject,
-  isString,
-} from '@sindresorhus/is';
+import { isNonEmptyArray, isNonEmptyString, isObject, isString } from '@sindresorhus/is';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
-import {
-  exec,
-  getArch,
-  getArg,
-  getDistro,
-  isDryRun,
-  readJson,
-} from '../../util';
+import { exec, getArch, getArg, getDistro, isDryRun, readJson } from '../../util';
 import { getBinaryName, readDockerConfig } from '../../utils/config';
-import {
-  DockerArch,
-  DockerPlatform,
-  dockerBuildx,
-  dockerRun,
-} from '../../utils/docker/common';
+import { DockerArch, DockerPlatform, dockerBuildx, dockerRun } from '../../utils/docker/common';
 import log from '../../utils/logger';
 import type { BinaryBuilderConfig, ConfigFile } from '../../utils/types';
 

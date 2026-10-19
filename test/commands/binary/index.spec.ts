@@ -179,9 +179,7 @@ describe('commands/binary/index', () => {
     await run();
     expect(docker.dockerRun).not.toHaveBeenCalled();
     expect(github.updateRelease).not.toHaveBeenCalled();
-    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
-      'No versions found.',
-    );
+    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith('No versions found.');
   });
 
   it('null releases', async () => {
@@ -189,9 +187,7 @@ describe('commands/binary/index', () => {
     await run();
     expect(docker.dockerRun).not.toHaveBeenCalled();
     expect(github.updateRelease).not.toHaveBeenCalled();
-    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
-      'No versions found.',
-    );
+    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith('No versions found.');
   });
 
   it('catch errors', async () => {
@@ -237,12 +233,8 @@ describe('commands/binary/index', () => {
         { cwd: '.' },
       );
       const testOrder = utils.exec.mock.invocationCallOrder[0]!;
-      expect(docker.dockerRun.mock.invocationCallOrder[0]).toBeLessThan(
-        testOrder,
-      );
-      expect(sum.createChecksum.mock.invocationCallOrder[0]).toBeGreaterThan(
-        testOrder,
-      );
+      expect(docker.dockerRun.mock.invocationCallOrder[0]).toBeLessThan(testOrder);
+      expect(sum.createChecksum.mock.invocationCallOrder[0]).toBeGreaterThan(testOrder);
       expect(github.uploadAsset).toHaveBeenCalledTimes(2);
       expect(core.setFailed).not.toHaveBeenCalled();
     });
@@ -255,9 +247,7 @@ describe('commands/binary/index', () => {
       expect(utils.exec).toHaveBeenCalledOnce();
       expect(sum.createChecksum).not.toHaveBeenCalled();
       expect(github.uploadAsset).not.toHaveBeenCalled();
-      expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
-        `Versions failed: ${version}`,
-      );
+      expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(`Versions failed: ${version}`);
     });
 
     it('runs the test in dry-run', async () => {
@@ -309,13 +299,8 @@ describe('commands/binary/index', () => {
     it('builds all missing versions by default', async () => {
       await run();
 
-      expect(docker.dockerRun.mock.calls.map((c) => c.at(-1))).toEqual(
-        versions,
-      );
-      expect(log.info).not.toHaveBeenCalledWith(
-        'Build limit reached:',
-        expect.anything(),
-      );
+      expect(docker.dockerRun.mock.calls.map((c) => c.at(-1))).toEqual(versions);
+      expect(log.info).not.toHaveBeenCalledWith('Build limit reached:', expect.anything());
       expect(core.setFailed).not.toHaveBeenCalled();
     });
 
@@ -324,10 +309,7 @@ describe('commands/binary/index', () => {
 
       await run();
 
-      expect(docker.dockerRun.mock.calls.map((c) => c.at(-1))).toEqual([
-        '2.7.0',
-        '2.7.1',
-      ]);
+      expect(docker.dockerRun.mock.calls.map((c) => c.at(-1))).toEqual(['2.7.0', '2.7.1']);
       expect(github.uploadAsset).toHaveBeenCalledTimes(4);
       expect(log.info).toHaveBeenCalledWith('Build limit reached:', 2);
       expect(core.setFailed).not.toHaveBeenCalled();
@@ -350,10 +332,7 @@ describe('commands/binary/index', () => {
 
       expect(docker.dockerRun).toHaveBeenCalledOnce();
       expect(docker.dockerRun.mock.calls[0]?.at(-1)).toBe('2.7.2');
-      expect(log.info).not.toHaveBeenCalledWith(
-        'Build limit reached:',
-        expect.anything(),
-      );
+      expect(log.info).not.toHaveBeenCalledWith('Build limit reached:', expect.anything());
       expect(core.setFailed).not.toHaveBeenCalled();
     });
 
@@ -363,9 +342,7 @@ describe('commands/binary/index', () => {
       await run();
 
       expect(docker.dockerRun).not.toHaveBeenCalled();
-      expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
-        new Error('Invalid build-limit: 0'),
-      );
+      expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(new Error('Invalid build-limit: 0'));
     });
   });
 

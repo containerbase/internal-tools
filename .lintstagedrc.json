@@ -2,10 +2,7 @@
   "*.sh": "shellcheck",
   ".husky/*": "shellcheck",
   "*.{js,ts,cjs,mjs}": ["oxlint --fix", "oxfmt"],
-  ".github/workflows/*.{yml,yaml}": [
-    "jactionlint",
-    "zizmor --offline --config .github/zizmor.yml"
-  ],
+  ".github/workflows/*.{yml,yaml}": ["jactionlint", "zizmor --offline --config .github/zizmor.yml"],
   "action.{yml,yaml}": "zizmor --offline --config .github/zizmor.yml",
   "!*.{js,ts,cjs,mjs}": "oxfmt --no-error-on-unmatched-pattern"
 }
