@@ -1,8 +1,5 @@
 import { isNumber, isString } from '@sindresorhus/is';
-import {
-  ReleaseResult,
-  getPkgReleases,
-} from 'renovate/dist/modules/datasource';
+import { ReleaseResult, getPkgReleases } from 'renovate/dist/modules/datasource';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { add as addHostRule } from 'renovate/dist/util/host-rules';
 import { getRegexPredicate } from 'renovate/dist/util/string-match';
@@ -112,13 +109,9 @@ export async function getBuildList({
     if (isAllowedPred) {
       allVersions = allVersions.filter((version) => isAllowedPred(version));
     } else if (ver.isValid(allowedVersions)) {
-      allVersions = allVersions.filter((version) =>
-        ver.matches(version, allowedVersions),
-      );
+      allVersions = allVersions.filter((version) => ver.matches(version, allowedVersions));
     } else if (semver.validRange(allowedVersions)) {
-      allVersions = allVersions.filter((v) =>
-        semver.satisfies(semver.coerce(v)!, allowedVersions),
-      );
+      allVersions = allVersions.filter((v) => semver.satisfies(semver.coerce(v)!, allowedVersions));
     } else {
       log.warn(`Invalid 'allowedVersions' options: ${allowedVersions}`);
       return null;
@@ -134,21 +127,14 @@ export async function getBuildList({
   log(`Candidates:`, allVersions.join(', '));
 
   let latestStable = latestVersion;
-  if (
-    !latestStable &&
-    pkgResult.tags?.latest &&
-    ver.isStable(pkgResult.tags.latest)
-  ) {
+  if (!latestStable && pkgResult.tags?.latest && ver.isStable(pkgResult.tags.latest)) {
     latestStable = pkgResult.tags.latest;
   }
   latestStable ??= allVersions.filter((v) => ver.isStable(v)).pop();
   log('Latest stable version is', latestStable);
 
   if (latestStable && !allVersions.includes(latestStable)) {
-    log.warn(
-      `LatestStable '${latestStable}' not buildable, candidates:`,
-      allVersions.join(', '),
-    );
+    log.warn(`LatestStable '${latestStable}' not buildable, candidates:`, allVersions.join(', '));
   }
 
   const lastVersion = allVersions.at(-1)!;

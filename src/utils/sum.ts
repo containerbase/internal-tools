@@ -7,10 +7,7 @@ export function hash(file: BinaryLike): string {
   return createHash(sumType).update(file).digest('hex');
 }
 
-export async function createChecksum(
-  cfg: BinaryBuilderConfig,
-  version: string,
-): Promise<void> {
+export async function createChecksum(cfg: BinaryBuilderConfig, version: string): Promise<void> {
   const name = getBinaryName(cfg, version);
   const sumName = getBinaryName(cfg, version, true);
   const buffer = await readBuffer(`.cache/${name}`);

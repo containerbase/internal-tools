@@ -1,11 +1,6 @@
 import { styleText } from 'node:util';
 import { getInput, setFailed } from '@actions/core';
-import {
-  isNonEmptyString,
-  isNumber,
-  isObject,
-  isString,
-} from '@sindresorhus/is';
+import { isNonEmptyString, isNumber, isObject, isString } from '@sindresorhus/is';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { exec, exists, getArg, isDryRun, readJson } from '../../util';
@@ -60,12 +55,7 @@ async function buildAndPush(
         versionsMap.set(`${major}`, version);
       }
 
-      if (
-        isStable &&
-        isNumber(major) &&
-        isNumber(minor) &&
-        `${major}.${minor}` !== version
-      ) {
+      if (isStable && isNumber(major) && isNumber(minor) && `${major}.${minor}` !== version) {
         versionsMap.set(`${major}.${minor}`, version);
       }
     }
@@ -144,15 +134,8 @@ async function buildAndPush(
 
       if (!buildOnly && shouldSign) {
         for (const prefix of [imagePrefix, ...imagePrefixes]) {
-          log(
-            'Signing image',
-            `${prefix}/${image}@${meta['containerimage.digest']}`,
-          );
-          await cosign(
-            'sign',
-            '--yes',
-            `${prefix}/${image}@${meta['containerimage.digest']}`,
-          );
+          log('Signing image', `${prefix}/${image}@${meta['containerimage.digest']}`);
+          await cosign('sign', '--yes', `${prefix}/${image}@${meta['containerimage.digest']}`);
         }
       }
 
@@ -227,9 +210,7 @@ export async function run(): Promise<void> {
   const config = DockerBuilderConfig.parse({
     ...cfg,
     imagePrefix: getArg('image-prefix')?.replace(/\/$/, '') || 'renovate',
-    imagePrefixes: getArg('image-prefixes', { multi: true })?.map((ip) =>
-      ip.replace(/\/$/, ''),
-    ),
+    imagePrefixes: getArg('image-prefixes', { multi: true })?.map((ip) => ip.replace(/\/$/, '')),
     image: cfg.image,
     depName: cfg.depName ?? cfg.image,
     buildArg: cfg.buildArg,

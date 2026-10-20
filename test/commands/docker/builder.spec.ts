@@ -85,11 +85,7 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build.mock.calls).toHaveLength(3);
-    expect(docker.build.mock.calls.map(([args]) => args.tag)).toEqual([
-      '3.5.5',
-      '4.5',
-      '6.0',
-    ]);
+    expect(docker.build.mock.calls.map(([args]) => args.tag)).toEqual(['3.5.5', '4.5', '6.0']);
     expect(docker.build.mock.calls).toMatchSnapshot('build');
   });
 
@@ -144,11 +140,7 @@ describe('commands/docker/builder', () => {
     ]);
 
     expect(docker.build.mock.calls).toHaveLength(3);
-    expect(docker.build.mock.calls.map(([args]) => args.tag)).toEqual([
-      '3.4.0',
-      '3.7.0',
-      '3.7.1',
-    ]);
+    expect(docker.build.mock.calls.map(([args]) => args.tag)).toEqual(['3.4.0', '3.7.0', '3.7.1']);
     expect(docker.build.mock.calls).toMatchSnapshot('build');
   });
 
@@ -256,9 +248,7 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build).not.toHaveBeenCalled();
-    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
-      'No versions found.',
-    );
+    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith('No versions found.');
   });
 
   it('empty releases', async () => {
@@ -269,9 +259,7 @@ describe('commands/docker/builder', () => {
     await run();
 
     expect(docker.build).not.toHaveBeenCalled();
-    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith(
-      'No versions found.',
-    );
+    expect(core.setFailed).toHaveBeenCalledExactlyOnceWith('No versions found.');
   });
 
   it('unstable releases', async () => {

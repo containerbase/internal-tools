@@ -1,10 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import * as _utils from '../../../src/util';
-import {
-  dockerDf,
-  dockerPrune,
-  dockerRun,
-} from '../../../src/utils/docker/common';
+import { dockerDf, dockerPrune, dockerRun } from '../../../src/utils/docker/common';
 
 vi.mock('../../../src/util');
 

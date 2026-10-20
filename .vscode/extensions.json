@@ -1,7 +1,3 @@
 {
-  "recommendations": [
-    "EditorConfig.editorconfig",
-    "oxc.oxc-vscode",
-    "vitest.explorer"
-  ]
+  "recommendations": ["EditorConfig.editorconfig", "oxc.oxc-vscode", "vitest.explorer"]
 }

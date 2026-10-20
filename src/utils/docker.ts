@@ -22,11 +22,7 @@ export interface BuildOptions {
   push?: boolean;
 }
 
-const errors = [
-  'unexpected status: 400 Bad Request',
-  ': no response',
-  'error writing layer blob',
-];
+const errors = ['unexpected status: 400 Bad Request', ': no response', 'error writing layer blob'];
 
 function canRetry(err: ExecError): boolean {
   return errors.some((str) => err.stderr.includes(str));
@@ -64,9 +60,7 @@ export async function build({
   }
 
   if (isString(cache)) {
-    const cachePrefix = cache.split('/')[0]?.match(/[.:]/)
-      ? ''
-      : `${imagePrefix}/`;
+    const cachePrefix = cache.split('/')[0]?.match(/[.:]/) ? '' : `${imagePrefix}/`;
     const cacheImage = `${cachePrefix}${cache}:${image.replace(/\//g, '-')}`;
     args.push(`--cache-from=${cacheImage}-${tag}`);
 
@@ -77,9 +71,7 @@ export async function build({
     }
 
     if (!dryRun && push) {
-      args.push(
-        `--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max,ignore-error=true`,
-      );
+      args.push(`--cache-to=type=registry,ref=${cacheImage}-${tag},mode=max,ignore-error=true`);
       // v8 ignore else -- TODO: add test
       if (isNonEmptyArray(cacheToTags)) {
         for (const ctag of cacheToTags) {
@@ -97,9 +89,7 @@ export async function build({
     args.push('--push', '--provenance=false');
   }
 
-  const tmpDir = await fs.mkdtemp(
-    `${os.tmpdir()}/internal-tools-docker-build-`,
-  );
+  const tmpDir = await fs.mkdtemp(`${os.tmpdir()}/internal-tools-docker-build-`);
   const metadataFile = `${tmpDir}/metadata.json`;
   args.push('--metadata-file', metadataFile);
   try {
@@ -117,9 +107,7 @@ export async function build({
       }
     }
 
-    return JSON.parse(
-      await fs.readFile(metadataFile, 'utf8'),
-    ) as DockerBuildxMetaData;
+    return JSON.parse(await fs.readFile(metadataFile, 'utf8')) as DockerBuildxMetaData;
   } finally {
     await fs.rm(tmpDir, { recursive: true, force: true });
   }

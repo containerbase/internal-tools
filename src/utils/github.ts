@@ -56,9 +56,7 @@ function isRequestError(err: unknown): err is RequestError {
   return err instanceof Error && 'status' in err;
 }
 
-async function initRelaseCache(
-  api: GitHubOctokit,
-): Promise<Map<string, GhRelease>> {
+async function initRelaseCache(api: GitHubOctokit): Promise<Map<string, GhRelease>> {
   if (!releaseCache) {
     const cache = new Map<string, GhRelease>();
 
@@ -82,10 +80,7 @@ export async function getReleases(api: GitHubOctokit): Promise<GhRelease[]> {
   return Array.from(cache.values());
 }
 
-async function findRelease(
-  api: GitHubOctokit,
-  version: string,
-): Promise<GhRelease | null> {
+async function findRelease(api: GitHubOctokit, version: string): Promise<GhRelease | null> {
   try {
     const cache = await initRelaseCache(api);
     return cache.get(version) ?? null;
@@ -97,10 +92,7 @@ async function findRelease(
   return null;
 }
 
-async function getRelease(
-  api: GitHubOctokit,
-  version: string,
-): Promise<GhRelease | null> {
+async function getRelease(api: GitHubOctokit, version: string): Promise<GhRelease | null> {
   try {
     const { data } = await api.rest.repos.getReleaseByTag({
       ...context.repo,
@@ -135,27 +127,14 @@ async function createRelease(
       tag_name: version,
       name: version,
       body: getBody(cfg, version),
-      make_latest: latestStable
-        ? latestStable === version
-          ? 'true'
-          : 'false'
-        : 'legacy',
+      make_latest: latestStable ? (latestStable === version ? 'true' : 'false') : 'legacy',
     }));
 
     releaseCache?.set(version, data);
     return data;
   } catch (err) {
-    if (
-      retry &&
-      isRequestError(err) &&
-      err.status == 422 &&
-      err.response?.data
-    ) {
-      log(
-        'Release probably created by other process, retrying:',
-        version,
-        err.message,
-      );
+    if (retry && isRequestError(err) && err.status == 422 && err.response?.data) {
+      log('Release probably created by other process, retrying:', version, err.message);
       await setTimeout(250);
       return await createRelease(api, cfg, version, latestStable, false);
     }
@@ -180,11 +159,7 @@ export async function updateRelease(
     release_id: rel.id,
     name: version,
     body,
-    make_latest: latestStable
-      ? latestStable === version
-        ? 'true'
-        : 'false'
-      : 'legacy',
+    make_latest: latestStable ? (latestStable === version ? 'true' : 'false') : 'legacy',
   });
 
   releaseCache?.set(data.tag_name, data);
@@ -264,10 +239,7 @@ export async function hasAsset(
   return (await findAsset(api, name, version)) != null;
 }
 
-export async function hasVersionAsset(
-  api: GitHubOctokit,
-  version: string,
-): Promise<boolean> {
+export async function hasVersionAsset(api: GitHubOctokit, version: string): Promise<boolean> {
   return (await findAsset(api, 'version', version)) != null;
 }
 
