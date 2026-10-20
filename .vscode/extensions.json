@@ -2,6 +2,6 @@
   "recommendations": [
     "EditorConfig.editorconfig",
     "oxc.oxc-vscode",
-    "Orta.vscode-jest"
+    "vitest.explorer"
   ]
 }

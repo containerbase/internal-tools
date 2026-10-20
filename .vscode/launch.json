@@ -4,38 +4,38 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Jest Current File",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "name": "Vitest Current File",
+      "autoAttachChildProcesses": true,
+      "program": "${workspaceFolder}/node_modules/vitest/vitest.mjs",
       "args": [
-        "--runInBand",
-        "--collectCoverage=false",
-        "--runTestsByPath",
+        "run",
+        "--no-file-parallelism",
+        "--no-coverage",
+        "--test-timeout=0",
+        "--hook-timeout=0",
         "${relativeFile}"
       ],
-      "env": { "NODE_ENV": "test", "LOG_LEVEL": "debug" },
+      "env": { "LOG_LEVEL": "debug" },
       "console": "integratedTerminal",
-      "disableOptimisticBPs": true,
-      "windows": {
-        "program": "${workspaceFolder}/node_modules/jest/bin/jest"
-      },
       "runtimeArgs": ["--nolazy", "--preserve-symlinks"],
-      "protocol": "inspector",
       "skipFiles": ["<node_internals>/**/*.js"]
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Jest All",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": ["--runInBand", "--collectCoverage=false"],
-      "env": { "NODE_ENV": "test", "LOG_LEVEL": "debug" },
+      "name": "Vitest All",
+      "autoAttachChildProcesses": true,
+      "program": "${workspaceFolder}/node_modules/vitest/vitest.mjs",
+      "args": [
+        "run",
+        "--no-file-parallelism",
+        "--no-coverage",
+        "--test-timeout=0",
+        "--hook-timeout=0"
+      ],
+      "env": { "LOG_LEVEL": "debug" },
       "console": "integratedTerminal",
-      "disableOptimisticBPs": true,
-      "windows": {
-        "program": "${workspaceFolder}/node_modules/jest/bin/jest"
-      },
       "runtimeArgs": ["--nolazy", "--preserve-symlinks"],
-      "protocol": "inspector",
       "skipFiles": ["<node_internals>/**/*.js"]
     }
   ]
