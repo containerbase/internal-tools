@@ -109,10 +109,7 @@ export async function writeFile(
 export const MultiArgsSplitRe = /\s*(?:[;,]|$)\s*/;
 
 export function getArg(name: string, opts?: { required?: boolean }): string;
-export function getArg(
-  name: string,
-  opts?: { required?: boolean; multi: true },
-): string[];
+export function getArg(name: string, opts?: { required?: boolean; multi: true }): string[];
 export function getArg(
   name: string,
   opts?: { required?: boolean; multi?: boolean },
@@ -128,9 +125,7 @@ export function getArg(
   }
   /* c8 ignore stop */
   const val = getInput(name, opts);
-  return opts?.multi
-    ? val.split(MultiArgsSplitRe).filter(isNonEmptyStringAndNotWhitespace)
-    : val;
+  return opts?.multi ? val.split(MultiArgsSplitRe).filter(isNonEmptyStringAndNotWhitespace) : val;
 }
 
 let _pkg: Promise<string | undefined>;

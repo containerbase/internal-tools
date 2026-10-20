@@ -154,9 +154,7 @@ describe('util', () => {
 
     it('works', async () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
-      expect(
-        (await util.readBuffer('Dockerfile')).toString(),
-      ).toMatchSnapshot();
+      expect((await util.readBuffer('Dockerfile')).toString()).toMatchSnapshot();
     });
   });
 
@@ -168,11 +166,7 @@ describe('util', () => {
 
     it('multi', () => {
       core.getInput.mockReturnValueOnce('test;latest;slim');
-      expect(util.getArg('dockerfile', { multi: true })).toEqual([
-        'test',
-        'latest',
-        'slim',
-      ]);
+      expect(util.getArg('dockerfile', { multi: true })).toEqual(['test', 'latest', 'slim']);
     });
 
     it('multi (null)', () => {

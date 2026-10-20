@@ -10,8 +10,7 @@ describe('utils/docker/buildx', () => {
   it('works', async () => {
     utils.exec.mockResolvedValueOnce({
       code: 0,
-      stdout:
-        'NAME/NODE           DRIVER/ENDPOINT                STATUS   PLATFORMS\n',
+      stdout: 'NAME/NODE           DRIVER/ENDPOINT                STATUS   PLATFORMS\n',
       stderr: '',
     });
     await init();

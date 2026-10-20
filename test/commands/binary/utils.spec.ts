@@ -36,9 +36,7 @@ describe('commands/binary/utils', () => {
     });
 
     it('dummy', async () => {
-      utils.readJson.mockResolvedValueOnce(
-        require('./__fixtures__/dummy.json'),
-      );
+      utils.readJson.mockResolvedValueOnce(require('./__fixtures__/dummy.json'));
       expect(await getConfig()).toMatchSnapshot();
     });
 
@@ -61,34 +59,24 @@ describe('commands/binary/utils', () => {
       expect(await getConfig()).toMatchObject({ buildLimit: 5 });
     });
 
-    it.each(['0', '-1', '1.5', 'abc'])(
-      'throws on build limit %s',
-      async (limit) => {
-        utils.getArg.mockImplementation((name, o) =>
-          o?.multi ? [] : name === 'build-limit' ? limit : '',
-        );
-        utils.readJson.mockResolvedValueOnce({ image: 'git' });
-        await expect(getConfig()).rejects.toThrow(
-          `Invalid build-limit: ${limit}`,
-        );
-      },
-    );
+    it.each(['0', '-1', '1.5', 'abc'])('throws on build limit %s', async (limit) => {
+      utils.getArg.mockImplementation((name, o) =>
+        o?.multi ? [] : name === 'build-limit' ? limit : '',
+      );
+      utils.readJson.mockResolvedValueOnce({ image: 'git' });
+      await expect(getConfig()).rejects.toThrow(`Invalid build-limit: ${limit}`);
+    });
   });
 
   describe('createBuilderImage', () => {
     it('works', async () => {
-      await expect(
-        createBuilderImage('', partial<BinaryBuilderConfig>({})),
-      ).toResolve();
+      await expect(createBuilderImage('', partial<BinaryBuilderConfig>({}))).toResolve();
     });
 
     it('works with build args', async () => {
       utils.getArch.mockReturnValueOnce('aarch64');
       utils.getDistro.mockReturnValueOnce('focal');
-      await createBuilderImage(
-        '',
-        partial<BinaryBuilderConfig>({ buildArgs: ['FLAVOR=focal'] }),
-      );
+      await createBuilderImage('', partial<BinaryBuilderConfig>({ buildArgs: ['FLAVOR=focal'] }));
 
       expect(docker.dockerBuildx).toHaveBeenCalledTimes(1);
       expect(docker.dockerBuildx.mock.calls).toMatchSnapshot();
