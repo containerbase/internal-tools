@@ -2,11 +2,7 @@ import { mkdir } from 'node:fs/promises';
 import { styleText } from 'node:util';
 import { setFailed } from '@actions/core';
 import { getArg, getWorkspace } from '../../util';
-import {
-  type BuildsResult,
-  addHostRule,
-  getBuildList,
-} from '../../utils/builds';
+import { type BuildsResult, addHostRule, getBuildList } from '../../utils/builds';
 import { init } from '../../utils/docker/buildx';
 import {
   type GitHubOctokit,
@@ -63,10 +59,7 @@ export async function run(): Promise<void> {
 
     for (const version of builds.versions) {
       if (cfg.dryRun) {
-        log.warn(
-          styleText('yellow', '[DRY_RUN] Would update release:'),
-          version,
-        );
+        log.warn(styleText('yellow', '[DRY_RUN] Would update release:'), version);
       } else {
         log('Updating release:', version);
         await updateRelease(api, cfg, version, builds.latestStable);
@@ -83,10 +76,7 @@ export async function run(): Promise<void> {
           try {
             await createChecksum(cfg, version);
             if (cfg.dryRun) {
-              log.warn(
-                styleText('yellow', '[DRY_RUN] Would upload release asset:'),
-                version,
-              );
+              log.warn(styleText('yellow', '[DRY_RUN] Would upload release asset:'), version);
             } else {
               log('Uploading release:', version);
               await uploadAsset(api, cfg, version, builds.latestStable, true);
@@ -99,10 +89,7 @@ export async function run(): Promise<void> {
           }
           continue;
         } else if (cfg.dryRun) {
-          log.warn(
-            styleText('yellow', '[DRY_RUN] Would skipp existing version:'),
-            version,
-          );
+          log.warn(styleText('yellow', '[DRY_RUN] Would skipp existing version:'), version);
         } else {
           log('Skipping existing version:', version);
           continue;
@@ -123,10 +110,7 @@ export async function run(): Promise<void> {
         await createChecksum(cfg, version);
 
         if (cfg.dryRun) {
-          log.warn(
-            styleText('yellow', '[DRY_RUN] Would upload release asset:'),
-            version,
-          );
+          log.warn(styleText('yellow', '[DRY_RUN] Would upload release asset:'), version);
         } else {
           log('Uploading release:', version);
           await uploadAsset(api, cfg, version, builds.latestStable);
@@ -159,10 +143,7 @@ async function uploadVersionAssetIfNeeded(
     // v8 ignore next -- TODO: add test
     const latestStable = builds.latestStable ?? version;
     if (cfg.dryRun) {
-      log.warn(
-        styleText('yellow', '[DRY_RUN] Would upload version asset:'),
-        latestStable,
-      );
+      log.warn(styleText('yellow', '[DRY_RUN] Would upload version asset:'), latestStable);
     } else {
       log('Uploading version file:', latestStable);
       await uploadVersionAsset(api, cfg, version, builds.latestStable);

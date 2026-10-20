@@ -17,21 +17,10 @@ export async function init(use?: boolean): Promise<void> {
   await docker('info');
   // install emulations
   // https://github.com/docker/setup-qemu-action/blob/9d419fda7df46b2bcd38fadda3ec44f4748d25e1/src/main.ts#L22
-  await dockerRun(
-    '--privileged',
-    'tonistiigi/binfmt',
-    '--install',
-    SupportedPlatforms,
-  );
+  await dockerRun('--privileged', 'tonistiigi/binfmt', '--install', SupportedPlatforms);
   await dockerBuildx('version');
 
-  await dockerBuildx(
-    'create',
-    '--name',
-    'renovatebot-builder',
-    '--driver',
-    'docker-container',
-  );
+  await dockerBuildx('create', '--name', 'renovatebot-builder', '--driver', 'docker-container');
 
   /* c8 ignore start */
   // istanbul ignore if

@@ -57,11 +57,7 @@ describe('utils/builds', () => {
 
   it('works ignores unstable latest', async () => {
     vi.mocked(getPkgReleases).mockResolvedValueOnce({
-      releases: [
-        { version: '3.9.13' },
-        { version: '3.9.14' },
-        { version: '4.0.0-rc-5' },
-      ],
+      releases: [{ version: '3.9.13' }, { version: '3.9.14' }, { version: '4.0.0-rc-5' }],
       tags: { latest: '4.0.0-rc-5', release: '4.0.0-rc-5' },
     });
     expect(
@@ -81,9 +77,7 @@ describe('utils/builds', () => {
   });
 
   it('uses allowedVersions with regex', async () => {
-    expect(
-      await getBuildList({ ...config, allowedVersions: '/^1\\./' }),
-    ).toEqual({
+    expect(await getBuildList({ ...config, allowedVersions: '/^1\\./' })).toEqual({
       versions: [version],
       latestStable: version,
     });
