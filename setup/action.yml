@@ -133,5 +133,9 @@ runs:
           echo "ppa.launchpad.net"
           echo "ppa.launchpadcontent.net"
         } | sudo tee -a /etc/squid-deb-proxy/mirror-dstdomain.acl.d/containerbase.acl
-        sudo systemctl reload squid-deb-proxy
+        # newer squid-deb-proxy versions (ubuntu 26.04) listen on 3563, the
+        # consumers use 8000
+        sudo sed -i -E 's/^http_port [0-9]+/http_port 8000/' /etc/squid-deb-proxy/squid-deb-proxy.conf
+        sudo systemctl restart squid-deb-proxy
+        timeout 30 bash -c 'until (echo > /dev/tcp/127.0.0.1/8000) 2> /dev/null; do sleep 1; done'
         echo "::endgroup::"
