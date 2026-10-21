@@ -148,9 +148,10 @@ jobs:
 
       - name: Prepare e2e
         run: |
-          docker pull alpine
-          docker tag alpine renovate/ubuntu
-          docker tag alpine renovate/ubuntu:18.04
+          image=alpine:3.24.2@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6
+          docker pull "${image}"
+          docker tag "${image}" renovate/ubuntu
+          docker tag "${image}" renovate/ubuntu:18.04
 
       - name: docker-builder (node)
         uses: ./
