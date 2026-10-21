@@ -68,7 +68,7 @@ pnpm start
 
 ## Development
 
-`mise install` installs Node.js, pnpm, jactionlint, shellcheck, zizmor and the dependencies.
+`mise install` installs Node.js, pnpm, jactionlint, shellcheck and zizmor, then `pnpm install --frozen-lockfile` installs the dependencies.
 
 ```sh
 pnpm lint                                # oxlint and oxfmt
