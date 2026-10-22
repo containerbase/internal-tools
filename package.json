@@ -64,7 +64,7 @@
     "luxon": "3.7.2",
     "nock": "14.0.17",
     "npm-run-all2": "9.0.3",
-    "oxfmt": "0.73.0",
+    "oxfmt": "0.74.0",
     "oxlint": "1.88.0",
     "oxlint-tsgolint": "7.0.2004",
     "rimraf": "6.1.3",
