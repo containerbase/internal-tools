@@ -63,7 +63,7 @@
     "lint-staged": "17.6.0",
     "luxon": "3.7.2",
     "nock": "14.0.17",
-    "npm-run-all2": "9.0.3",
+    "npm-run-all2": "9.0.4",
     "oxfmt": "0.74.0",
     "oxlint": "1.89.0",
     "oxlint-tsgolint": "7.0.2004",
