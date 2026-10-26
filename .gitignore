@@ -15,3 +15,8 @@ builder.json
 
 # temporary nested action
 .actions
+
+# claude code
+/.claude/loop.md
+/.claude/settings.local.json
+/.claude/worktrees
