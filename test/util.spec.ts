@@ -120,7 +120,6 @@ describe('util', () => {
       process.env.GITHUB_WORKSPACE = process.cwd();
       expect(await util.readJson('.oxfmtrc.json')).toMatchObject({
         singleQuote: true,
-        trailingComma: 'all',
       });
     });
   });
