@@ -1,6 +1,8 @@
 import fs from 'node:fs/promises';
+
 import * as _core from '@actions/core';
 import { describe, expect, it, vi } from 'vitest';
+
 import { run } from '../../src/commands/release-list';
 import * as _utils from '../../src/util';
 import * as _github from '../../src/utils/github';

@@ -1,9 +1,10 @@
 import { isNumber, isString } from '@sindresorhus/is';
-import { ReleaseResult, getPkgReleases } from 'renovate/dist/modules/datasource';
+import { getPkgReleases, ReleaseResult } from 'renovate/dist/modules/datasource';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { add as addHostRule } from 'renovate/dist/util/host-rules';
 import { getRegexPredicate } from 'renovate/dist/util/string-match';
 import * as semver from 'semver';
+
 import log from './logger';
 import * as renovate from './renovate';
 

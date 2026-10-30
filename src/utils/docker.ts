@@ -2,7 +2,9 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import { setTimeout } from 'node:timers/promises';
 import { styleText } from 'node:util';
+
 import { isNonEmptyArray, isString } from '@sindresorhus/is';
+
 import { dockerBuildx } from './docker/common';
 import log from './logger';
 import { DockerBuildxMetaData, ExecError } from './types';

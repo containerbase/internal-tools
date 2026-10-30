@@ -1,10 +1,12 @@
 import { styleText } from 'node:util';
+
 import { getInput, setFailed } from '@actions/core';
 import { isNonEmptyString, isNumber, isObject, isString } from '@sindresorhus/is';
 import { getDefaultVersioning } from 'renovate/dist/modules/datasource/common';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
+
 import { exec, exists, getArg, isDryRun, readJson } from '../../util';
-import { BuildsResult, addHostRule, getBuildList } from '../../utils/builds';
+import { addHostRule, BuildsResult, getBuildList } from '../../utils/builds';
 import { readDockerConfig } from '../../utils/config';
 import { build } from '../../utils/docker';
 import { init } from '../../utils/docker/buildx';

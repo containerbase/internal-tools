@@ -1,5 +1,7 @@
 import { styleText } from 'node:util';
+
 import { getInput, setFailed } from '@actions/core';
+
 import { Commands } from './types';
 import log from './utils/logger';
 
