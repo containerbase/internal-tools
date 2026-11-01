@@ -1,1 +1,0 @@
-{"version":3,"file":"config-B83XWAYG.js","names":["init","run"],"sources":["../src/commands/docker/config.ts"],"sourcesContent":["import { init } from '../../utils/docker/buildx';\n\nexport async function run(): Promise<void> {\n  await init(true);\n}\n"],"mappings":"A,yCAEA,eAAsBC,GAAqB,CACzC,MAAMD,EAAK,EAAI,CACjB,C"}
