@@ -1,6 +1,7 @@
 import { getPkgReleases } from 'renovate/dist/modules/datasource';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
 import { describe, expect, it, vi } from 'vitest';
+
 import { BuildsConfig, getBuildList } from '../../src/utils/builds';
 import { partial } from '../utils';
 

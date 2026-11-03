@@ -1,6 +1,8 @@
 import { styleText } from 'node:util';
+
 import * as _core from '@actions/core';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import log from '../../src/utils/logger';
 
 vi.unmock('../../src/utils/logger');

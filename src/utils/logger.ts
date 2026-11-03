@@ -1,4 +1,5 @@
 import { styleText } from 'node:util';
+
 import { error as _error, warning as _warn } from '@actions/core';
 import stripAnsi from 'strip-ansi';
 

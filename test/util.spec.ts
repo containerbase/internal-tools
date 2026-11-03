@@ -1,9 +1,11 @@
 import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
+
 import * as _core from '@actions/core';
 import * as _exec from '@actions/exec';
 import * as _io from '@actions/io';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import * as util from '../src/util';
 
 vi.mock('@actions/core');

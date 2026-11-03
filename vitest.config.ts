@@ -1,4 +1,5 @@
 import { env } from 'node:process';
+
 import { coverageConfigDefaults, defineConfig } from 'vitest/config';
 
 const ci = !!env.CI;
