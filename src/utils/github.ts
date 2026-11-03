@@ -6,6 +6,7 @@ import { context, getOctokit } from '@actions/github';
 import type { GitHub } from '@actions/github/lib/utils';
 import got from 'got';
 import { get as getVersioning } from 'renovate/dist/modules/versioning';
+import * as semver from 'semver';
 
 import { readBuffer, writeFile } from '../util';
 import { getBinaryName } from './config';
@@ -49,10 +50,21 @@ function getBody(cfg: BinaryBuilderConfig, version: string): string {
 }
 
 /**
- * Whether a version is a prerelease by the configured versioning, so its
- * release is published as a GitHub prerelease.
+ * Whether a version is a prerelease, so its release is published as a GitHub
+ * prerelease: a semver version with a prerelease tag, like `27.0.0-alpha.0` or
+ * `4.0.0-rc-7`, and other versions which the configured versioning calls
+ * unstable. Semver versions don't ask the versioning, as eg. the `node`
+ * versioning calls every non-LTS major unstable.
+ * @param cfg - the builder config with the versioning
+ * @param version - the version of the release
  */
-function isPrerelease(cfg: BinaryBuilderConfig, version: string): boolean {
+export function isPrerelease(
+  cfg: Pick<BinaryBuilderConfig, 'versioning'>,
+  version: string,
+): boolean {
+  if (semver.valid(version)) {
+    return semver.prerelease(version) !== null;
+  }
   return !getVersioning(cfg.versioning).isStable(version);
 }
 
