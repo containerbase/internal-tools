@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import * as _utils from '../../../src/util';
 import { cosign } from '../../../src/utils/docker/cosign';
 

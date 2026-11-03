@@ -1,5 +1,6 @@
 import { isNonEmptyString, isString } from '@sindresorhus/is';
 import escapeStringRegexp from 'escape-string-regexp';
+
 import { getArch, getDistro, readFile } from '../util';
 import { BinaryBuilderConfig, ConfigFile, sumType } from './types';
 

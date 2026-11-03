@@ -1,13 +1,15 @@
 import { mkdir } from 'node:fs/promises';
 import { styleText } from 'node:util';
+
 import { setFailed } from '@actions/core';
+
 import { getArg, getWorkspace } from '../../util';
-import { type BuildsResult, addHostRule, getBuildList } from '../../utils/builds';
+import { addHostRule, type BuildsResult, getBuildList } from '../../utils/builds';
 import { init } from '../../utils/docker/buildx';
 import {
-  type GitHubOctokit,
   downloadAsset,
   getOctokit,
+  type GitHubOctokit,
   hasAsset,
   hasVersionAsset,
   updateRelease,

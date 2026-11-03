@@ -1,6 +1,8 @@
 import { mkdir, writeFile } from 'node:fs/promises';
+
 import { setFailed } from '@actions/core';
 import type { Release } from 'renovate/dist/modules/datasource';
+
 import { getArg, getWorkspace } from '../util';
 import { getOctokit, getReleases } from '../utils/github';
 import log from '../utils/logger';

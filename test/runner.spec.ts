@@ -1,5 +1,6 @@
 import * as _core from '@actions/core';
 import { describe, expect, it, vi } from 'vitest';
+
 import run from '../src/runner';
 import { Commands } from '../src/types';
 
