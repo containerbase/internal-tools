@@ -5,6 +5,8 @@ import { setTimeout } from 'node:timers/promises';
 import { context, getOctokit } from '@actions/github';
 import type { GitHub } from '@actions/github/lib/utils';
 import got from 'got';
+import { get as getVersioning } from 'renovate/dist/modules/versioning';
+import * as semver from 'semver';
 
 import { readBuffer, writeFile } from '../util';
 import { getBinaryName } from './config';
@@ -45,6 +47,43 @@ function getBody(cfg: BinaryBuilderConfig, version: string): string {
   return `### Bug Fixes
 
 * **deps:** update dependency ${cfg.image} to v${version}`;
+}
+
+/**
+ * Whether a version is a prerelease, so its release is published as a GitHub
+ * prerelease: a semver version with a prerelease tag, like `27.0.0-alpha.0` or
+ * `4.0.0-rc-7`, and other versions which the configured versioning calls
+ * unstable. Semver versions don't ask the versioning, as eg. the `node`
+ * versioning calls every non-LTS major unstable.
+ * @param cfg - the builder config with the versioning
+ * @param version - the version of the release
+ */
+export function isPrerelease(
+  cfg: Pick<BinaryBuilderConfig, 'versioning'>,
+  version: string,
+): boolean {
+  if (semver.valid(version)) {
+    return semver.prerelease(version) !== null;
+  }
+  return !getVersioning(cfg.versioning).isStable(version);
+}
+
+/**
+ * The `make_latest` value of a release: only the latest stable version is the
+ * latest release, a prerelease never is.
+ * @param version - the version of the release
+ * @param latestStable - the latest stable version, `legacy` lets GitHub decide without one
+ * @param prerelease - whether the release is a prerelease
+ */
+function getMakeLatest(
+  version: string,
+  latestStable: string | undefined,
+  prerelease: boolean,
+): 'true' | 'false' | 'legacy' {
+  if (prerelease) {
+    return 'false';
+  }
+  return latestStable ? (latestStable === version ? 'true' : 'false') : 'legacy';
 }
 
 type RequestError = Error & {
@@ -111,6 +150,17 @@ async function getRelease(api: GitHubOctokit, version: string): Promise<GhReleas
   }
 }
 
+/**
+ * Creates the release of a version, unless it already exists. Prereleases are
+ * created as GitHub prereleases, and only the latest stable version is made
+ * the latest release. A conflict from a concurrent run is retried once.
+ * @param api - the GitHub client
+ * @param cfg - the builder config
+ * @param version - the version of the release
+ * @param latestStable - the latest stable version
+ * @param retry - whether a conflict is retried
+ * @returns the existing or created release
+ */
 async function createRelease(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
@@ -124,12 +174,14 @@ async function createRelease(
       return data;
     }
 
+    const prerelease = isPrerelease(cfg, version);
     ({ data } = await api.rest.repos.createRelease({
       ...context.repo,
       tag_name: version,
       name: version,
       body: getBody(cfg, version),
-      make_latest: latestStable ? (latestStable === version ? 'true' : 'false') : 'legacy',
+      prerelease,
+      make_latest: getMakeLatest(version, latestStable, prerelease),
     }));
 
     releaseCache?.set(version, data);
@@ -144,6 +196,15 @@ async function createRelease(
   }
 }
 
+/**
+ * Updates the name, body and prerelease flag of an existing release when they
+ * changed, and its `make_latest` with them. A missing or unchanged release is
+ * left alone.
+ * @param api - the GitHub client
+ * @param cfg - the builder config
+ * @param version - the version of the release
+ * @param latestStable - the latest stable version
+ */
 export async function updateRelease(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
@@ -151,9 +212,14 @@ export async function updateRelease(
   latestStable: string | undefined,
 ): Promise<void> {
   const body = getBody(cfg, version);
+  const prerelease = isPrerelease(cfg, version);
   const rel = await findRelease(api, version);
-  if (rel == null || (rel.name === version && rel.body === body)) {
+  if (rel == null) {
     log('Release not found:', version);
+    return;
+  }
+  if (rel.name === version && rel.body === body && Boolean(rel.prerelease) === prerelease) {
+    log('Release up to date:', version);
     return;
   }
   const { data } = await api.rest.repos.updateRelease({
@@ -161,7 +227,8 @@ export async function updateRelease(
     release_id: rel.id,
     name: version,
     body,
-    make_latest: latestStable ? (latestStable === version ? 'true' : 'false') : 'legacy',
+    prerelease,
+    make_latest: getMakeLatest(version, latestStable, prerelease),
   });
 
   releaseCache?.set(data.tag_name, data);
