@@ -150,6 +150,17 @@ async function getRelease(api: GitHubOctokit, version: string): Promise<GhReleas
   }
 }
 
+/**
+ * Creates the release of a version, unless it already exists. Prereleases are
+ * created as GitHub prereleases, and only the latest stable version is made
+ * the latest release. A conflict from a concurrent run is retried once.
+ * @param api - the GitHub client
+ * @param cfg - the builder config
+ * @param version - the version of the release
+ * @param latestStable - the latest stable version
+ * @param retry - whether a conflict is retried
+ * @returns the existing or created release
+ */
 async function createRelease(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
@@ -185,6 +196,15 @@ async function createRelease(
   }
 }
 
+/**
+ * Updates the name, body and prerelease flag of an existing release when they
+ * changed, and its `make_latest` with them. A missing or unchanged release is
+ * left alone.
+ * @param api - the GitHub client
+ * @param cfg - the builder config
+ * @param version - the version of the release
+ * @param latestStable - the latest stable version
+ */
 export async function updateRelease(
   api: GitHubOctokit,
   cfg: BinaryBuilderConfig,
