@@ -480,6 +480,15 @@ packages:
       zod:
         optional: true
 
+  '@containerbase/base@14.66.12':
+    resolution: {integrity: sha512-ZXKagkLn46FSx1ZHzAZxfQvHstTrcD/VHMprH5Hgy7zcZIlGYuJF+pNTtmO88uZWkNshRE7FopQtULOpiAVShg==}
+    engines: {node: '>=24.10.0'}
+    peerDependencies:
+      zod: ^4.0.0
+    peerDependenciesMeta:
+      zod:
+        optional: true
+
   '@containerbase/istanbul-reports-html@2.0.24':
     resolution: {integrity: sha512-UfeTUcZgBM58EYdvMiH8rpVU4YFI++0C2NGb26l0C+Zm1DAeoxUxfIn9F9WXZYEA/RsiuMs3Q21hWq0Y6jl8LQ==}
     engines: {node: ^22.11.0 || >=24.0.0, pnpm: '>=10.0.0'}
@@ -5005,6 +5014,12 @@ snapshots:
     optionalDependencies:
       zod: 4.6.7
 
+  '@containerbase/base@14.66.12(zod@4.6.7)':
+    dependencies:
+      semver: 7.8.5
+    optionalDependencies:
+      zod: 4.6.7
+
   '@containerbase/istanbul-reports-html@2.0.24':
     dependencies:
       istanbul-reports: 3.2.0
@@ -5633,7 +5648,7 @@ snapshots:
 
   '@renovatebot/osv-offline-db@4.5.10(supports-color@7.2.0)(zod@4.6.7)':
     dependencies:
-      '@containerbase/base': 14.66.11(zod@4.6.7)
+      '@containerbase/base': 14.66.12(zod@4.6.7)
       debug: 4.4.3(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
