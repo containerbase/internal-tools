@@ -222,8 +222,8 @@ importers:
         version: 4.6.7
     devDependencies:
       '@containerbase/istanbul-reports-html':
-        specifier: 2.0.25
-        version: 2.0.25
+        specifier: 2.0.26
+        version: 2.0.26
       '@containerbase/oxlint-plugin':
         specifier: 1.1.0
         version: 1.1.0(oxlint@1.93.0(oxlint-tsgolint@7.0.2006))
@@ -498,8 +498,8 @@ packages:
       zod:
         optional: true
 
-  '@containerbase/istanbul-reports-html@2.0.25':
-    resolution: {integrity: sha512-+1JX3OHlLA6vL+NkB0CJsRHIQSvjPHSkpIuahFBhWj5Ux/toPhU0DWSx6Lh6iRwORAvIR1pbktlWRykb9BltIg==}
+  '@containerbase/istanbul-reports-html@2.0.26':
+    resolution: {integrity: sha512-FD1lFJf53J2zzwWlQKOaQBFSOq04Dyk8OSq2/sg3hsSVw2GeqJOejDGcmoiGGuftxFyXN6kWvGmjeim5QDuXdA==}
     engines: {node: ^22.11.0 || >=24.0.0, pnpm: '>=10.0.0'}
 
   '@containerbase/oxlint-plugin@1.1.0':
@@ -5034,7 +5034,7 @@ snapshots:
     optionalDependencies:
       zod: 4.6.7
 
-  '@containerbase/istanbul-reports-html@2.0.25':
+  '@containerbase/istanbul-reports-html@2.0.26':
     dependencies:
       istanbul-reports: 3.2.0
 
