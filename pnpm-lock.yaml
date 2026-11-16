@@ -206,8 +206,8 @@ importers:
         specifier: 15.1.0
         version: 15.1.0
       renovate:
-        specifier: 44.239.1
-        version: 44.239.1(supports-color@7.2.0)(typanion@3.14.0)
+        specifier: 44.239.2
+        version: 44.239.2(supports-color@7.2.0)(typanion@3.14.0)
       semver:
         specifier: 7.8.6
         version: 7.8.6
@@ -3890,8 +3890,8 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
-  re2@1.27.0:
-    resolution: {integrity: sha512-z5Vascmj7lQbU3YdfYJUDkBGGTnoAObcVW/CSbpI3WbVb1vZQsSzSWcGkfKU0JKrrGfPZwPr8EVHwYXKQKLVXw==}
+  re2@1.27.1:
+    resolution: {integrity: sha512-J0RHubiwH/isNWD2Z+TX+hpVZCkaS/X30KPtYwckK5sjEaW8BRhnd15EPIjBB5GxD174iEVtJmmCoqfErH1qDQ==}
     engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
 
   react-is@18.3.1:
@@ -3946,8 +3946,8 @@ packages:
   remark@15.0.1:
     resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
-  renovate@44.239.1:
-    resolution: {integrity: sha512-sUTtJVAgsly93sQWwe+3CpOCWp5ncadJfnkSIDDvaLcd5boRAYt3NIvWkEKCWetzmQV9tvRqTUVNvrYJ6nQvPw==}
+  renovate@44.239.2:
+    resolution: {integrity: sha512-q7y23hopoaaFeLJ5N+yePPlTNp5Jnzn6wKPNIxcqXj4xb5+NUS0JJ95w7fsXroup3EyaS46nmqe7MFPmQiFylA==}
     engines: {node: ^24.11.0 || ^26.13.0, pnpm: ^11.0.0}
     hasBin: true
 
@@ -8313,7 +8313,7 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
-  re2@1.27.0:
+  re2@1.27.1:
     dependencies:
       install-artifact-from-github: 1.8.1
       nan: 2.30.0
@@ -8420,7 +8420,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  renovate@44.239.1(supports-color@7.2.0)(typanion@3.14.0):
+  renovate@44.239.2(supports-color@7.2.0)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.1139.0
       '@aws-sdk/client-ec2': 3.1139.0
@@ -8546,7 +8546,7 @@ snapshots:
       zod: 4.6.7
     optionalDependencies:
       openpgp: 6.3.2
-      re2: 1.27.0
+      re2: 1.27.1
     transitivePeerDependencies:
       - '@node-rs/xxhash'
       - '@openpgp/web-stream-tools'
