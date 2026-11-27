@@ -5,6 +5,13 @@ on:
     branches:
       - main
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      # the `ci:skip-build` label skips or restores the e2e tests
+      - labeled
+      - unlabeled
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}

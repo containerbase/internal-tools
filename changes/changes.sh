@@ -49,12 +49,19 @@ pull_request_labeled() {
 # Succeeds when every pull request of the merge group has the skip label.
 # The pull requests are read from the subjects of the commits between the base and the
 # group head, `(#123)` for squash merges and `Merge pull request #123` for merge commits,
-# because the group ref only names its last pull request. A commit without a pull request
-# number or a failing lookup never skips.
+# because the group ref only names its last pull request. Each pull request must also be in
+# the merge queue, so a subject citing an older, labeled pull request can't skip the build.
+# A commit without a pull request number or a failing lookup never skips.
 merge_group_labeled() {
   local number_re='\(#([0-9]+)\)$'
   local merge_re='^Merge pull request #([0-9]+)'
-  local subjects subject number labels
+  # shellcheck disable=SC2016 # GraphQL variables, not shell expansions
+  local query='query($owner: String!, $name: String!, $number: Int!) {
+    repository(owner: $owner, name: $name) {
+      pullRequest(number: $number) { isInMergeQueue labels(first: 100) { nodes { name } } }
+    }
+  }'
+  local subjects subject number pr
   subjects="$(gh api --paginate "repos/${REPOSITORY}/compare/${BASE_SHA}...${HEAD_SHA}" \
     --jq '.commits[].commit.message | split("\n")[0]')" || return 1
   [[ -n "${subjects}" ]] || return 1
@@ -65,10 +72,12 @@ merge_group_labeled() {
       echo "No pull request found for commit: ${subject}"
       return 1
     fi
-    labels="$(gh pr view "${number}" --repo "${REPOSITORY}" --json labels \
-      --jq '[.labels[].name]')" || return 1
-    jq -e --arg label "${SKIP_LABEL}" 'index($label) != null' <<< "${labels}" > /dev/null \
+    pr="$(gh api graphql -f query="${query}" -f owner="${REPOSITORY%%/*}" \
+      -f name="${REPOSITORY#*/}" -F number="${number}" --jq '.data.repository.pullRequest')" \
       || return 1
+    jq -e --arg label "${SKIP_LABEL}" \
+      '.isInMergeQueue and ([.labels.nodes[].name] | index($label) != null)' \
+      <<< "${pr}" > /dev/null || return 1
   done <<< "${subjects}"
 }
 

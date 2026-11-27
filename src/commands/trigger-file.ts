@@ -87,7 +87,9 @@ function parse(
     if (!group.length) {
       return;
     }
-    const versionLine = group.find((l) => versionLineRe.test(l));
+    // a block has exactly one version line, else a stream would get lost
+    const versionLines = group.filter((l) => versionLineRe.test(l));
+    const versionLine = versionLines.length === 1 ? versionLines[0] : undefined;
     const renovate = group.find((l) => l.startsWith('# renovate:'));
     const m = versionLineRe.exec(versionLine ?? '');
     if (!m?.groups || !renovate) {

@@ -91,7 +91,10 @@ The skip paths file is one extended regex per line and always read from the base
 Empty lines and `#` comments are ignored, a file without patterns never skips the build.
 For merge groups, the pull requests are read from the subjects of the commits between the base and the group head (`(#123)` or `Merge pull request #123`) and all of them need the label.
 A commit without a pull request number or a failing lookup never skips the build.
+For merge groups, each of these pull requests must also be in the merge queue, so a subject citing an older pull request can't skip the build.
 The action needs a checkout and the `pull-requests: read` permission for the lookup in merge groups.
+It fetches the base commit without credentials, so it only supports public repositories or a checkout with persisted credentials.
+Add the `labeled` and `unlabeled` types to the `pull_request` trigger, so adding or removing the label starts a new run.
 
 ```yml
 permissions:

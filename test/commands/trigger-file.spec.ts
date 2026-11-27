@@ -322,6 +322,21 @@ describe('commands/trigger-file', () => {
     ).toThrow('Invalid latest version of cycle 8.5');
   });
 
+  it('rejects blocks with more than one version line', () => {
+    expect(() =>
+      update(
+        file(
+          '# renovate: datasource=docker depName=php',
+          'ENV PHP_VERSION=8.3.1',
+          'ENV PHP_VERSION=8.4.1',
+        ),
+        [],
+        { product: 'php', stream: 'minor' },
+        '2026-11-27',
+      ),
+    ).toThrow('Unsupported block');
+  });
+
   it('rejects unsupported blocks', () => {
     expect(() =>
       update(
