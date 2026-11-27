@@ -16,8 +16,15 @@ output() {
 # A missing file never skips, an invalid one fails the step.
 paths_skip() {
   local skip_paths="${RUNNER_TEMP}/build-skip-paths"
-  if ! git show "${BASE_SHA}:${SKIP_PATHS}" > "${skip_paths}"; then
+  local raw_paths="${RUNNER_TEMP}/build-skip-paths.raw"
+  if ! git show "${BASE_SHA}:${SKIP_PATHS}" > "${raw_paths}"; then
     echo "::warning::The base has no ${SKIP_PATHS}, running the full build"
+    return 1
+  fi
+  # an empty pattern matches every path, so drop empty and comment lines
+  grep -vE '^[[:space:]]*(#|$)' "${raw_paths}" > "${skip_paths}" || true
+  if [[ ! -s "${skip_paths}" ]]; then
+    echo "::warning::${SKIP_PATHS} in the base has no patterns, running the full build"
     return 1
   fi
   # 0: some file needs the build, 1: none does, else an invalid pattern

@@ -37,6 +37,7 @@ interface Result {
 }
 
 const blockStartRe = /^# (?:EOL\b|renovate:)/;
+const versionRe = /^[0-9A-Za-z][0-9A-Za-z.+_-]*$/;
 const versionLineRe = /^(?<prefix>ENV \S+=|RUN install-tool \S+ )(?<version>\S+)$/;
 
 /**
@@ -133,7 +134,9 @@ export function update(content: string, cycles: Cycle[], cfg: EolConfig, today: 
   const { preamble, blocks } = parse(content, cfg.stream);
   const byCycle = new Map(cycles.map((c) => [c.cycle, c]));
   const summary: string[] = [];
-  const isEol = (c: Cycle): boolean => typeof c.eol === 'string' && c.eol <= today;
+  // `eol: true` is an EOL cycle without a known date
+  const isEol = (c: Cycle): boolean =>
+    c.eol === true || (typeof c.eol === 'string' && c.eol <= today);
 
   const seen = new Set<string>();
   const kept: Block[] = [];
@@ -149,7 +152,9 @@ export function update(content: string, cycles: Cycle[], cfg: EolConfig, today: 
       log.warn(styleText('yellow', 'Unknown stream:'), block.stream);
       kept.push(block);
     } else if (isEol(cycle)) {
-      summary.push(`- Dropped \`${block.stream}\` (EOL ${String(cycle.eol)})`);
+      summary.push(
+        `- Dropped \`${block.stream}\` (${cycle.eol === true ? 'EOL' : `EOL ${String(cycle.eol)}`})`,
+      );
       dropped.push(block);
     } else {
       kept.push(block);
@@ -171,6 +176,10 @@ export function update(content: string, cycles: Cycle[], cfg: EolConfig, today: 
         compareStreams(cycle.cycle, baseline) <= 0
       ) {
         continue;
+      }
+      // the version is written into the Dockerfile, so it must be a plain version
+      if (!versionRe.test(cycle.latest)) {
+        throw new Error(`Invalid latest version of cycle ${cycle.cycle}: ${cycle.latest}`);
       }
       summary.push(`- Added \`${cycle.cycle}\` (${cycle.latest})`);
       kept.push({

@@ -278,6 +278,50 @@ describe('commands/trigger-file', () => {
     expect(result).toEqual({ content: file(...header), summary: '' });
   });
 
+  it('drops and never adds EOL cycles without a date', () => {
+    const result = update(
+      file(
+        '# EOL: TBD',
+        '# renovate: datasource=docker depName=php',
+        'ENV PHP_VERSION=8.3.1',
+        '',
+        '# EOL: TBD',
+        '# renovate: datasource=docker depName=php',
+        'ENV PHP_VERSION=8.4.1',
+      ),
+      [
+        { cycle: '8.3', eol: true, latest: '8.3.9' },
+        { cycle: '8.4', eol: false, latest: '8.4.1' },
+        { cycle: '8.5', eol: true, latest: '8.5.0' },
+      ],
+      { product: 'php', stream: 'minor' },
+      '2026-11-27',
+    );
+
+    expect(result).toEqual({
+      content: file(
+        '# EOL: TBD',
+        '# renovate: datasource=docker depName=php',
+        'ENV PHP_VERSION=8.4.1',
+      ),
+      summary: '- Dropped `8.3` (EOL)',
+    });
+  });
+
+  it('rejects latest versions which are no plain version', () => {
+    expect(() =>
+      update(
+        file('# renovate: datasource=docker depName=php', 'ENV PHP_VERSION=8.4.1'),
+        [
+          { cycle: '8.4', eol: false, latest: '8.4.1' },
+          { cycle: '8.5', eol: false, latest: '8.5.0\nRUN evil' },
+        ],
+        { product: 'php', stream: 'minor' },
+        '2026-11-27',
+      ),
+    ).toThrow('Invalid latest version of cycle 8.5');
+  });
+
   it('rejects unsupported blocks', () => {
     expect(() =>
       update(

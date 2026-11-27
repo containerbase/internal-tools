@@ -88,6 +88,7 @@ The command sets the outputs `changed` and `summary`, a markdown list to use as 
 The `changes` action checks if a pull request or merge group needs the build, so the workflow can skip the expensive jobs.
 Its output `skip-build` is `true` when all changed files match the patterns of the `skip-paths` file or when the skip label is set, `changed-files` is the path of the list of changed files.
 The skip paths file is one extended regex per line and always read from the base commit, so a pull request can't skip its own build.
+Empty lines and `#` comments are ignored, a file without patterns never skips the build.
 For merge groups, the pull requests are read from the subjects of the commits between the base and the group head (`(#123)` or `Merge pull request #123`) and all of them need the label.
 A commit without a pull request number or a failing lookup never skips the build.
 The action needs a checkout and the `pull-requests: read` permission for the lookup in merge groups.
