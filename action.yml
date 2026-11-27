@@ -15,14 +15,14 @@ inputs:
     description: 'docker image to operate on'
     required: false
   dry-run:
-    description: 'do not publish anything'
+    description: 'do not publish anything, trigger-file: only log the result'
     required: false
     default: 'false'
   token:
     description: 'Github PAT, commands which needs a token will fail build without'
     required: false
   config:
-    description: 'docker-builder, binary-builder: config file, see schema.json'
+    description: 'docker-builder, binary-builder, trigger-file: config file, see schema.json'
     required: false
     default: builder.json
   last-only:
@@ -58,6 +58,12 @@ inputs:
     description: 'docker-builder: don not tag add `latest` image tag'
     required: false
     default: '${{ github.ref_name != github.event.repository.default_branch }}'
+
+outputs:
+  changed:
+    description: 'trigger-file: `true` when the trigger file changed'
+  summary:
+    description: 'trigger-file: markdown list of the dropped and added release streams'
 
 runs:
   using: node24

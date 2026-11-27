@@ -1,0 +1,45 @@
+name: 'Changes'
+description: >-
+  Checks if a pull request or merge group needs the build.
+  The build is skipped when every pull request has the skip label or when all changed files match the skip paths.
+  Needs the `pull-requests: read` permission for the label lookup of merge groups.
+inputs:
+  skip-paths:
+    description: 'File with one extended regex per line for the paths which do not need the build, always read from the base commit so a pull request cannot skip its own build'
+    required: false
+    default: '.github/build-skip-paths'
+  skip-label:
+    description: 'Label of the pull requests which do not need the build'
+    required: false
+    default: 'ci:skip-build'
+  token:
+    description: 'GitHub token to read the pull requests of a merge group'
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  skip-build:
+    description: '`true` when the build can be skipped, otherwise `false`'
+    value: ${{ steps.changes.outputs.skip-build }}
+  changed-files:
+    description: 'Path of the file with the changed file names, empty for other events than pull_request and merge_group'
+    value: ${{ steps.changes.outputs.changed-files }}
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: ⚙️ Check for changes that don't need the build
+      id: changes
+      shell: bash
+      env:
+        EVENT_NAME: ${{ github.event_name }}
+        BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+        HEAD_SHA: ${{ github.sha }}
+        REPOSITORY: ${{ github.repository }}
+        PR_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+        SKIP_PATHS: ${{ inputs.skip-paths }}
+        SKIP_LABEL: ${{ inputs.skip-label }}
+        GH_TOKEN: ${{ inputs.token }}
+      # the script is a separate file, so shellcheck checks it
+      run: bash "${GITHUB_ACTION_PATH}/changes.sh"

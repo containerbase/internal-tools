@@ -3,4 +3,5 @@ export enum Commands {
   DockerConfig = 'docker-config',
   DockerBuilder = 'docker-builder',
   ReleaseList = 'release-list',
+  TriggerFile = 'trigger-file',
 }
