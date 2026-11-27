@@ -21,6 +21,28 @@
       "extends": ["schedule:weekly"],
       "automerge": true,
       "separateMinorPatch": false
+    },
+    {
+      "description": "Update the action version of the README examples monthly, a docs change without a release and the e2e tests",
+      "matchFileNames": ["README.md"],
+      "matchDepNames": ["containerbase/internal-tools"],
+      "extends": ["schedule:monthly"],
+      "semanticCommitType": "docs",
+      "separateMajorMinor": false,
+      "separateMinorPatch": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "The action version of the README examples",
+      "managerFilePatterns": ["/^README\\.md$/"],
+      "matchStrings": [
+        "containerbase/internal-tools(?:/[a-z-]+)?@v(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "containerbase/internal-tools",
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v(?<version>.+)$"
     }
   ]
 }

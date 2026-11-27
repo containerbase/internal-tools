@@ -20,6 +20,8 @@ jobs:
   setup:
     runs-on: ubuntu-slim
     timeout-minutes: 10
+    outputs:
+      skip-build: ${{ steps.changes.outputs.skip-build }}
     env:
       # node and pnpm come from the setup action, so `mise exec` must not
       # install them again
@@ -35,6 +37,12 @@ jobs:
         with:
           checkout: false
           save-cache: true
+
+      # pull requests which only change docs or repo settings skip the e2e
+      # tests, see `.github/build-skip-paths`
+      - name: Check for changes that don't need the e2e tests
+        id: changes
+        uses: ./changes
 
       - name: validate cache key
         shell: bash
@@ -61,6 +69,9 @@ jobs:
         run: mise exec -- zizmor --config .github/zizmor.yml --format github .
         env:
           GH_TOKEN: ${{ github.token }}
+
+      - name: shellcheck
+        run: mise exec -- shellcheck changes/changes.sh
 
   test:
     needs:
@@ -122,6 +133,7 @@ jobs:
   e2e:
     needs:
       - setup
+    if: needs.setup.outputs.skip-build != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -228,6 +240,7 @@ jobs:
   e2e-os:
     needs:
       - setup
+    if: needs.setup.outputs.skip-build != 'true'
     runs-on: ${{ matrix.os }}-latest
     timeout-minutes: 10
 

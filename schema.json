@@ -74,6 +74,26 @@
     "test": {
       "type": "string",
       "description": "binary-builder: script path relative to the workspace, run after each build and before the upload with the archive path and the version as arguments."
+    },
+    "eol": {
+      "type": "object",
+      "description": "trigger-file: the endoflife.date product and the stream of the release blocks in the rebuild trigger file.",
+      "properties": {
+        "product": {
+          "type": "string",
+          "description": "The endoflife.date product."
+        },
+        "stream": {
+          "enum": ["major", "minor"],
+          "description": "Whether a release stream is the major or the major.minor version."
+        },
+        "file": {
+          "type": "string",
+          "description": "The trigger file, defaults to renovate.Dockerfile."
+        }
+      },
+      "required": ["product", "stream"],
+      "additionalProperties": false
     }
   },
   "required": ["startVersion"],

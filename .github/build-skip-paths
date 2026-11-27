@@ -1,0 +1,6 @@
+\.md$
+^LICENSE$
+^\.github/renovate\.json$
+^\.github/build-skip-paths$
+^\.vscode/
+^\.editorconfig$
