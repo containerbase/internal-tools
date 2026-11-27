@@ -8,6 +8,7 @@ vi.mock('../src/commands/docker/config');
 vi.mock('../src/commands/docker/builder');
 vi.mock('../src/commands/binary');
 vi.mock('../src/commands/release-list');
+vi.mock('../src/commands/trigger-file');
 
 const core = vi.mocked(_core);
 
@@ -43,6 +44,13 @@ describe('runner', () => {
 
   it(`${Commands.ReleaseList}`, async () => {
     core.getInput.mockReturnValueOnce(Commands.ReleaseList);
+    await run();
+    expect(core.getInput).toHaveBeenCalledExactlyOnceWith('command');
+    expect(core.setFailed).not.toHaveBeenCalled();
+  });
+
+  it(`${Commands.TriggerFile}`, async () => {
+    core.getInput.mockReturnValueOnce(Commands.TriggerFile);
     await run();
     expect(core.getInput).toHaveBeenCalledExactlyOnceWith('command');
     expect(core.setFailed).not.toHaveBeenCalled();

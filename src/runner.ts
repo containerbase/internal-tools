@@ -26,6 +26,10 @@ export default async function run(): Promise<void> {
         await (await import('./commands/release-list')).run();
         break;
 
+      case Commands.TriggerFile:
+        await (await import('./commands/trigger-file')).run();
+        break;
+
       default:
         log.error(styleText('red', 'Unknown command:'), cmd);
         break;

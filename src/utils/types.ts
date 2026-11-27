@@ -66,6 +66,18 @@ const ConfigFile = z.object({
    * and before the upload with the archive path and the version as arguments.
    */
   test: z.string().optional(),
+
+  /**
+   * trigger-file: the endoflife.date product and the stream of the release blocks
+   * in the rebuild trigger file.
+   */
+  eol: z
+    .object({
+      product: z.string(),
+      stream: z.enum(['major', 'minor']),
+      file: z.string().optional(),
+    })
+    .optional(),
 });
 
 export type ConfigFile = z.infer<typeof ConfigFile>;
