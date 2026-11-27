@@ -1,6 +1,6 @@
 {
   "name": "internal-tools",
-  "version": "5.4.19",
+  "version": "5.5.0",
   "private": true,
   "license": "AGPL-3.0",
   "author": "Rhys Arkins <rhys@arkins.net>",
